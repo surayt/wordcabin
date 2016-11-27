@@ -14,15 +14,16 @@
 require 'nokogiri'
 
 class ASCIITable
-  def initialize(string = '')
+  def initialize(string = '', opts)
     @string = string
     @t1 = []
     @t2 = []
     @colwidths = []
+    @opts = opts
   end
 
-  def self.parse(string)
-    instance = self.new(string)
+  def self.parse(string, opts = {header_row: false})
+    instance = self.new(string, opts)
     instance.pass1
     instance.pass2
     instance.to_html
@@ -105,7 +106,7 @@ class ASCIITable
               opts = {}
               opts[:rowspan] = cell[:rowspan] if cell[:rowspan]
               opts[:colspan] = cell[:colspan] if cell[:colspan]
-              if y == 0
+              if y == 0 && opts[:header_row]
                 html.th(opts) {html.text cell[:text]}
               else
                 html.td(opts) {html.text cell[:text]} unless cell[:text].empty?
