@@ -1,5 +1,5 @@
 require 'fileutils'
-require 'pathname'
+require 'pathname' # TODO: use it!
 
 task default: [:all]
 
@@ -18,7 +18,7 @@ task :clean do
   sh "find data/*/ -type d -exec rmdir {} \\; 2>/dev/null"
   INFILES.each do |infile|
     outfile = ext(File.basename(infile), 'html')
-    sh "find data -type f -name #{outfile} -exec rm {} \\;"
+    sh "find data/*/ -type f -name #{outfile} -exec rm {} \\;"
   end
 end
 
