@@ -1,0 +1,10 @@
+#!/usr/bin/env ruby
+
+unless ARGV.length == 1
+  puts "Usage: script/compile <markdown file>"
+  exit
+end
+
+require_relative '../lib/bookdown.rb'
+file = File.read(ARGV.first)
+puts Kramdown::Document.new(file, parse_block_html: true).to_html
