@@ -12,21 +12,29 @@
 #   for ASCIITable#to_hash and ASCIITable.to_ary.
 
 require 'nokogiri'
+require 'kramdown'
+require 'sanitize'
 
 class ASCIITable
-  def initialize(string = '', opts)
+  def initialize(string = '', opts = {})
     @string = string
     @t1 = []
     @t2 = []
     @colwidths = []
     @opts = opts
+    @opts[:header_row] ||= false
+    @opts[:markdown]   ||= true
   end
 
-  def self.parse(string, opts = {header_row: false})
+  def self.parse(string, opts = {})
     instance = self.new(string, opts)
-    instance.pass1
-    instance.pass2
-    instance.to_html
+    begin
+      instance.pass1
+      instance.pass2
+      instance.to_html
+    rescue
+      string
+    end
   end
 
   def pass1
@@ -95,27 +103,38 @@ class ASCIITable
     rowspan
   end
 
+  def parse_md(text)
+    unless text.empty?
+      text = Kramdown::Document.new(text).to_html
+      text = Sanitize.fragment(text, Sanitize::Config::RESTRICTED)
+      text = text.split.join(' ') # Get rid of linebreaks, multiple spaces
+    end
+    text
+  end
+
+  # TODO: Wrap appropriately in <thead> and <tbody>
   def to_html
     n = 0
     @doc = Nokogiri::XML::DocumentFragment.parse('')
     Nokogiri::XML::Builder.with(@doc) do |html|
-      html.table do
+      html.table('class' => 'asciitable') do
         @t2.each_with_index do |row,y|
           html.tr do
             row.each_with_index do |cell,x|
               opts = {}
               opts[:rowspan] = cell[:rowspan] if cell[:rowspan]
               opts[:colspan] = cell[:colspan] if cell[:colspan]
+              text = parse_md(cell[:text]) if @opts[:markdown]
               if y == 0 && opts[:header_row]
-                html.th(opts) {html.text cell[:text]}
+                html.th(opts) {html << text}
               else
-                html.td(opts) {html.text cell[:text]} unless cell[:text].empty?
+                html.td(opts) {html << text} unless text.empty?
               end
             end
           end
         end
       end
     end
-    @doc.to_xhtml
+    @doc.to_xhtml(encoding: 'UTF-8')
   end
 end
