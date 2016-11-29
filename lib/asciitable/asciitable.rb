@@ -31,10 +31,14 @@ class ASCIITable
     begin
       instance.pass1
       instance.pass2
-      instance.to_html
-    rescue
-      string
+      html = instance.to_html
+    rescue Exception => e
+	  trace = "ASCIITable: Error: Malformed table. Parser trace follows:\n\t" +
+		e.backtrace.map {|l| l.split('/').last}[0...3].join("\n\t")
+      STDERR.puts trace
+	  html = "<pre class=\"error\">#{trace.gsub(/[<>]/, '')}</pre>"
     end
+	html
   end
 
   def pass1
@@ -103,6 +107,7 @@ class ASCIITable
     rowspan
   end
 
+  # TODO: Figure out how to do this in a way that preserves the Syriac letter forms!
   def parse_md(text)
     unless text.empty?
       text = Kramdown::Document.new(text).to_html
