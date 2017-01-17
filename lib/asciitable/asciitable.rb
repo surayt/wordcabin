@@ -91,7 +91,8 @@ class ASCIITable
 
   def compute_rowspan(x, y, row, col)
     rowspan = 1
-    border = @t1[y+1][x]
+    # checking ahead in case of two-row-only table
+    border = @t1[y+1] ? @t1[y+1][x] : false
     # only if it's at least 2 do we check whether it goes further to save on cycles
     if border && border.match(/ /)
       (y+1..@t1.size).step(2) do |ystep|
@@ -133,7 +134,13 @@ class ASCIITable
               if y == 0 && opts[:header_row]
                 html.th(opts) {html << text}
               else
-                html.td(opts) {html << text} unless text.empty?
+                if [x,y] == [0,0] && text.empty?
+                  # cell at this location must exist in any case
+                  html.td(opts) {html << ''}
+                else
+                  # any other location empty means row-/colspan
+                  html.td(opts) {html << text} unless text.empty?
+                end
               end
             end
           end
