@@ -1,10 +1,14 @@
 #!/usr/bin/env ruby
 
-unless ARGV.length == 1
-  puts "Usage: script/compile <markdown file>"
+unless ARGV.length == 3
+  puts "Usage: script/compile <locale> <cefr_level> <chapter_name>"
   exit
 end
 
-require_relative '../lib/bookdown.rb'
-file = File.read(ARGV.first)
-puts Kramdown::Document.new(file, parse_block_html: true, input: 'GFM').to_html
+require 'pathname'
+
+ROOT = Pathname(__FILE__).dirname.parent
+require_relative (ROOT + 'config.rb').expand_path
+require_relative (ROOT + 'lib' + 'textbookr.rb').expand_path
+
+Bookdown::Chapter.convert(locale: ARGV[0], cefr_level: ARGV[1], chapter_name: ARGV[2])
