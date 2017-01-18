@@ -1,29 +1,8 @@
 #!/usr/bin/env ruby
 
-require 'sinatra'
-require 'sass/plugin/rack'
-require 'haml'
 require 'pathname'
-
 ROOT = Pathname(__FILE__).dirname.parent
 require_relative (ROOT + 'config.rb').expand_path
 require_relative (ROOT + 'lib' + 'server.rb').expand_path
 
-Sass::Plugin.options[:style] = :compressed
-Sass::Plugin.options[:cache_location] = (Pathname(CONFIG[:cache_path])+'sass').expand_path.to_s
-Sass::Plugin.options[:template_location] = (Pathname(CONFIG[:data_path])+'template').expand_path.to_s
-Sass::Plugin.options[:css_location] = Pathname('public/stylesheets').expand_path.to_s
-puts Sass::Plugin.options.inspect
-use Sass::Plugin::Rack
-
-set :root, ROOT
-set :haml, format: :html5
-
-get '/' do
-  @locales = locales
-  haml :list_of_locales
-end
-
-get '/:locale/:chapter?' do
-  haml :chapter
-end
+Textbookr::Server.run!

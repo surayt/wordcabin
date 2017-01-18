@@ -2,7 +2,7 @@ require_relative 'kramdown_parser'
 require_relative 'string'
 require 'nokogiri'
 
-module Bookdown
+module Textbookr
   class Chapter
     def initialize(args)
       dir_name = "#{args[:cefr_level]}-#{args[:chapter_name]}"

@@ -11,4 +11,4 @@ ROOT = Pathname(__FILE__).dirname.parent
 require_relative (ROOT + 'config.rb').expand_path
 require_relative (ROOT + 'lib' + 'textbookr.rb').expand_path
 
-Bookdown::Chapter.convert(locale: ARGV[0], cefr_level: ARGV[1], chapter_name: ARGV[2])
+Textbookr::Chapter.convert(locale: ARGV[0], cefr_level: ARGV[1], chapter_name: ARGV[2])
