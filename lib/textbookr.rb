@@ -9,22 +9,17 @@ module Textbookr
       md_file_name = "#{dir_name}.md"
       html_file_name = "#{dir_name}.html"
       @infile = {
-        filename: (Pathname(CONFIG[:data_path])  +
-                   'chapters'                    +
-                   dir_name                      +
-                   'texts'                       +
-                   args[:locale]                 +
-                   md_file_name).expand_path}
+        filename: Config.data_path                         + 
+                  'chapters'+dir_name+'texts'+args[:locale] +
+                  md_file_name }
       @tocfile = {
-        filename: (Pathname(CONFIG[:cache_path]) +
-                   'tocs'                        +
-                   args[:locale]                 +
-                   html_file_name).expand_path}
+        filename: Config.cache_path    +
+                  'tocs'+args[:locale] +
+                  html_file_name }
       @outfile = {
-        filename: (Pathname(CONFIG[:cache_path]) +
-                   'chapters'                    +
-                   args[:locale]                 +
-                   html_file_name).expand_path}
+        filename: Config.cache_path        +
+                  'chapters'+args[:locale] +
+                  html_file_name }
     end
 
     def write_files

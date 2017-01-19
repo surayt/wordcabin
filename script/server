@@ -1,8 +1,0 @@
-#!/usr/bin/env ruby
-
-require 'pathname'
-ROOT = Pathname(__FILE__).dirname.parent
-require_relative (ROOT + 'config.rb').expand_path
-require_relative (ROOT + 'lib' + 'server.rb').expand_path
-
-Textbookr::Server.run!

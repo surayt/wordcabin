@@ -11,7 +11,7 @@ module Textbookr
   class Server < Sinatra::Base
     configure do
       set :environment, :development
-      set :root, ROOT
+      set :root, Config.root_path
       set :haml, format: :html5
       # Internationalisation
       # http://recipes.sinatrarb.com/p/development/i18n
@@ -19,14 +19,14 @@ module Textbookr
       # corresponding file in locales/*.yml contains at
       # least one string!
       I18n::Backend::Simple.send(:include, I18n::Backend::Fallbacks)
-      I18n.load_path = Dir[(ROOT+'locales'+'*.yml').expand_path]
+      I18n.load_path = Dir[Config.root_path+'locales'+'*.yml']
       I18n.backend.load_translations
       # use Rack::Locale # TODO: Fix this so that it does not inject region as well!
       # CSS compiler
       Sass::Plugin.options[:style] = :compressed
-      Sass::Plugin.options[:cache_location] = (Pathname(CONFIG[:cache_path])+'sass').expand_path.to_s
-      Sass::Plugin.options[:template_location] = (Pathname(CONFIG[:data_path])+'template').expand_path.to_s
-      Sass::Plugin.options[:css_location] = Pathname('public/stylesheets').expand_path.to_s
+      Sass::Plugin.options[:cache_location] = (Config.cache_path+'sass').to_s
+      Sass::Plugin.options[:template_location] = (Config.data_path+'template').to_s
+      Sass::Plugin.options[:css_location] = (Config.public_path+'stylesheets').to_s
       use Sass::Plugin::Rack
     end
 
@@ -49,10 +49,8 @@ module Textbookr
       params[:cefr_level]   = cefr_level   || 'a1'
       params[:chapter_name] = chapter_name || 'intro'
       params[:heading]      = heading      || '1'
-      content_file = Pathname(CONFIG[:cache_path]) +
-                     'chapters'                    +
-                     @locale.to_s                  +
-                     "#{params[:cefr_level]}-#{params[:chapter_name]}.html"
+      content_file_name = "#{params[:cefr_level]}-#{params[:chapter_name]}.html"
+      content_file = Config.cache_path+'chapters'+@locale.to_s+content_file_name
       @contents = begin
         File.read(content_file)
       rescue
