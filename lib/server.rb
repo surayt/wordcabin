@@ -45,14 +45,14 @@ module Textbookr
     # Displaying the contents themselves
     get '/*' do |splat|
       @locale = I18n.locale
-      cefr_level, chapter, heading = splat.split("/")
-      params[:cefr_level] = cefr_level || 'a1'
-      params[:chapter]    = chapter    || 'intro'
-      params[:heading]    = heading    || '1'
+      cefr_level, chapter_name, heading = splat.split("/")
+      params[:cefr_level]   = cefr_level   || 'a1'
+      params[:chapter_name] = chapter_name || 'intro'
+      params[:heading]      = heading      || '1'
       content_file = Pathname(CONFIG[:cache_path]) +
                      'chapters'                    +
                      @locale.to_s                  +
-                     "#{params[:cefr_level]}-#{params[:chapter]}.html"
+                     "#{params[:cefr_level]}-#{params[:chapter_name]}.html"
       @contents = begin
         File.read(content_file)
       rescue
