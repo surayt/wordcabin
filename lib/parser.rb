@@ -1,9 +1,9 @@
-require_relative 'kramdown_parser'
-require_relative 'string'
+require_relative 'kramdown/kramdown_parser'
+require_relative 'core/string'
 require 'nokogiri'
 
 module Textbookr
-  class Chapter
+  class Parser
     def initialize(args)
       dir_name = "#{args[:cefr_level]}-#{args[:chapter_name]}"
       md_file_name = "#{dir_name}.md"
@@ -15,31 +15,28 @@ module Textbookr
       @tocfile = {
         filename: Config.cache_path    +
                   'tocs'+args[:locale] +
-                  html_file_name }
+                  args[:cefr_level]    +
+                  "#{args[:chapter_name]}.html" }
       @outfile = {
         filename: Config.cache_path        +
                   'chapters'+args[:locale] +
                   html_file_name }
     end
 
-    def write_files
-      [@tocfile, @outfile].each do |f|
-        FileUtils.mkdir_p(f[:filename].dirname)
-        File.open(f[:filename], 'w') do |d|
-          puts "Writing #{f[:filename]}"
-          d.puts f[:contents]
-        end
-      end
-    end
-
-    def self.convert(args = {})
+    def self.parse(args = {})
       ch = self.new(args)
-      ch.parse_infile
-      ch.extract_toc
-      ch.write_files
+      ch.parse
     end
+    
+    def parse
+      read_infile
+      extract_toc
+      write_outfiles
+    end
+    
+    private
 
-    def parse_infile
+    def read_infile
       @infile[:contents] = IO.read(@infile[:filename])
       # Using GitHub-flavored Markdown because that's arguably
       # what most non-technical authors may already have been
@@ -60,27 +57,61 @@ module Textbookr
 
     def extract_toc
       @tocfile[:kramdown] = Kramdown::Converter::Toc.convert(@infile[:kramdown].root).first
-      @tocfile[:contents] = ''
       items = []
       # kramdown/master/lib/kramdown/converter/pdf.rb:550
-      text_of_header = lambda do |el|
-        if el.type == :text
-          el.value
+      header_info = lambda do |el,type|
+        if el.type == type
+          case type
+            when :header then el.attr['id']
+            when :text then el.value
+          end
         else
-          el.children.map {|c| text_of_header.call(c)}.join('')
+          el.children.map {|c| header_info.call(c, type)}.join('')
         end
       end
       # kramdown/master/lib/kramdown/converter/pdf.rb:550, modified
       # TODO: rewrite to produce nested unordered HTML list
-      add_section = lambda do |item,depth|
-        text = text_of_header.call(item.value)
-        items << [text, depth]
-        item.children.each {|c| add_section.call(c, depth+1)}
+      add_section = lambda do |item, parent|
+        data = {
+          text: header_info.call(item.value, :text),
+          id: header_info.call(item.value, :header)
+        }
+# TODO: Fix below!
+=begin
+        if parent
+          toc << [data]
+        else
+          toc << data
+        end
+=end
+        items << data
+        item.children.each {|c| add_section.call(c, parent)}
       end
       @tocfile[:kramdown].children.each do |item|
-        add_section.call(item, 0)
+        add_section.call(item, nil)
       end
-      @tocfile[:contents] += items.inspect # TODO: Make proper HTML!
+      @tocfile[:html] = Nokogiri::HTML::DocumentFragment.parse('')
+      Nokogiri::HTML::Builder.with(@tocfile[:html]) do |d|
+        d.ul {
+          items.each {|item|
+            d.li {
+              d.a(href: "##{item[:id]}") {d.text item[:text]}
+            }
+          }
+        }
+      end
+      # Careful, as Nokogiri does not by default use UTF-8!
+      @tocfile[:contents] = @tocfile[:html].to_html(encoding: 'UTF-8')
+    end
+    
+    def write_outfiles
+      [@tocfile, @outfile].each do |f|
+        FileUtils.mkdir_p(f[:filename].dirname)
+        File.open(f[:filename], 'w') do |d|
+          puts "Writing #{f[:filename]}"
+          d.puts f[:contents]
+        end
+      end
     end
   end
 end

@@ -23,7 +23,7 @@ module Textbookr
       I18n.backend.load_translations
       # use Rack::Locale # TODO: Fix this so that it does not inject region as well!
       # CSS compiler
-      Sass::Plugin.options[:style] = :compressed
+      Sass::Plugin.options[:style] = :expanded
       Sass::Plugin.options[:cache_location] = (Config.cache_path+'sass').to_s
       Sass::Plugin.options[:template_location] = (Config.data_path+'template').to_s
       Sass::Plugin.options[:css_location] = (Config.public_path+'stylesheets').to_s
@@ -55,6 +55,12 @@ module Textbookr
         File.read(content_file)
       rescue
         I18n.t(:no_contents)
+      end
+      toc_file = Config.cache_path+'tocs'+@locale.to_s+'all.html'
+      @toc = begin
+        File.read(toc_file)
+      rescue
+        I18n.t(:no_toc)
       end
       haml :show_contents
     end

@@ -1,4 +1,5 @@
-%ul
-  - @locales.each do |locale|
-    %li
-      %a{href: "/#{locale}/a1"}= I18n.t(locale)
+%article
+  %ul
+    - @locales.each do |locale|
+      %li
+        %a{href: "/#{locale}/a1"}= I18n.t(locale)

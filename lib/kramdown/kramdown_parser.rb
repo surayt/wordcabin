@@ -2,7 +2,7 @@
 
 require 'bundler/setup'
 require 'kramdown'
-require_relative 'asciitable/asciitable'
+require_relative '../asciitable/asciitable'
 
 module Kramdown
   module Parser
