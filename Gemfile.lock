@@ -1,4 +1,15 @@
 GIT
+  remote: git@github.com:michaelfranzl/docx_converter.git
+  revision: efc991570ecf5367f10abb7e5cc0c4cb193f2456
+  specs:
+    docx_converter (1.0.0)
+      kramdown
+      nokogiri
+      rmagick
+      ruby-filemagic
+      rubyzip
+
+GIT
   remote: git@github.com:sixtyfive/kramdown.git
   revision: 39619b374012cac4c60c7cf5ee7e76f2fb645812
   branch: asciitable
@@ -68,16 +79,19 @@ GEM
       ffi (>= 0.5.0)
     rerun (0.11.0)
       listen (~> 3.0)
+    rmagick (2.16.0)
     rubocop (0.47.1)
       parser (>= 2.3.3.1, < 3.0)
       powerpack (~> 0.1)
       rainbow (>= 1.99.1, < 3.0)
       ruby-progressbar (~> 1.7)
       unicode-display_width (~> 1.0, >= 1.0.1)
+    ruby-filemagic (0.7.1)
     ruby-progressbar (1.8.1)
     ruby_dep (1.5.0)
     ruby_parser (3.8.4)
       sexp_processor (~> 4.1)
+    rubyzip (1.2.0)
     sanitize (4.4.0)
       crass (~> 1.0.2)
       nokogiri (>= 1.4.4)
@@ -104,6 +118,7 @@ PLATFORMS
 DEPENDENCIES
   awesome_print
   bourbon
+  docx_converter!
   haml
   html2haml
   i18n
