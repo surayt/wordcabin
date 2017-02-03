@@ -6,7 +6,7 @@ require_relative Config.lib_path+'parser.rb'
 task default: [:clean, :build_all, :copy_legacy_files]
 
 task :clean do
-  sh "find #{Config.cache_path} -type f -name '*.html' -exec rm {} \\;"
+  sh "rm -rf #{Config.cache_path}/chapters #{Config.cache_path}/sass #{Config.cache_path}/tocs"
 end
 
 task :build, [:locale, :cefr_level, :chapter_name] do |t, args|
@@ -54,10 +54,9 @@ end
 # but that's fine as it is only meant to be here until the
 # transition to Markdown input files is complete.
 task :copy_legacy_files do
-  %x[find data/aop/chapters/*/texts -type f -name '*-*' ! -name '*.md'].split("\n").each do |source|
+  %x[find data/aop/chapters/*/texts/?? -type f ! -name '*.md'].split("\n").each do |source|
     unless File.exist?("#{source}.md")
-      metadata = Pathname(source).each_filename.to_a.last(2).join('/')
-      /(?<locale>.*)\/(?<cefr_level>.*)-(?<chapter_name>.*)/ =~ metadata
+      /.*\/(?<cefr_level>.*)-(?<chapter_name>.*)\/texts\/(?<locale>[a-z][a-z])\/.*/ =~ source
       target_file_name = "#{cefr_level}-#{chapter_name}.html"
       target = Config.cache_path+'chapters'+locale+target_file_name
       unless File.exist?(target)
