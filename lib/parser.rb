@@ -9,16 +9,16 @@ module Textbookr
       md_file_name = "#{dir_name}.md"
       html_file_name = "#{dir_name}.html"
       @infile = {
-        filename: Config.data_path                         + 
-                  'chapters'+dir_name+'texts'+args[:locale] +
-                  md_file_name }
+        dirname: Config.data_path +
+                 'chapters'+dir_name+'texts'+args[:locale],
+        contents: String.new }
       @tocfile = {
-        filename: Config.cache_path    +
+        filename: Config.cache_path +
                   'tocs'+args[:locale] +
-                  args[:cefr_level]    +
+                  args[:cefr_level] +
                   "#{args[:chapter_name]}.html" }
       @outfile = {
-        filename: Config.cache_path        +
+        filename: Config.cache_path +
                   'chapters'+args[:locale] +
                   html_file_name }
     end
@@ -27,17 +27,19 @@ module Textbookr
       ch = self.new(args)
       ch.parse
     end
-    
+
     def parse
-      read_infile
+      read_infiles
       extract_toc
       write_outfiles
     end
-    
+
     private
 
-    def read_infile
-      @infile[:contents] = IO.read(@infile[:filename])
+    def read_infiles
+      Dir[@infile[:dirname]+'*.md'].each do |f|
+        @infile[:contents] += IO.read(f)
+      end
       # Using GitHub-flavored Markdown because that's arguably
       # what most non-technical authors may already have been
       # exposed to by their more technical peers.
@@ -103,7 +105,7 @@ module Textbookr
       # Careful, as Nokogiri does not by default use UTF-8!
       @tocfile[:contents] = @tocfile[:html].to_html(encoding: 'UTF-8')
     end
-    
+
     def write_outfiles
       [@tocfile, @outfile].each do |f|
         FileUtils.mkdir_p(f[:filename].dirname)

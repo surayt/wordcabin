@@ -26,7 +26,7 @@ module Textbookr
       Sass::Plugin.options[:style] = :expanded
       Sass::Plugin.options[:cache_location] = (Config.cache_path+'sass').to_s
       Sass::Plugin.options[:template_location] = (Config.data_path+'template').to_s
-      Sass::Plugin.options[:css_location] = (Config.public_path+'stylesheets').to_s
+      Sass::Plugin.options[:css_location] = (Config.public_path).to_s
       use Sass::Plugin::Rack
     end
 
