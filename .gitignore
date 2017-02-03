@@ -1,3 +1,7 @@
 data/*
 cache/*
 public/stylesheets/*
+public/images/*
+docs
+test
+backup
