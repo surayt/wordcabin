@@ -17,6 +17,7 @@ task :build, [:locale, :cefr_level, :chapter_name] do |t, args|
   # TODO: Encapsulate properly and put into a sensible place
   Dir.glob(Config.cache_path+'tocs'+'*').each do |locale_path|
     %x{find #{locale_path} -type f -name '*.html' ! -name 'all.html'}.split("\n").each do |fragment|
+      # TODO: Overly complicated; the regex alone can do it - rework!
       metadata = Pathname(fragment).each_filename.to_a.last(3).join('/')
       /(?<locale>.*)\/(?<cefr_level>.*)\/(?<chapter_name>.*)\.html/ =~ metadata
       @html = Nokogiri::HTML::DocumentFragment.parse('')
@@ -42,8 +43,8 @@ end
 
 task :build_all do
   %x{find #{Config.data_path} -type f -name '*.md'}.split("\n").each do |source|
-    metadata = Pathname(source).each_filename.to_a.last(2).join('/')
-    /(?<locale>.*)\/(?<cefr_level>.*)-(?<chapter_name>.*)\.md/ =~ metadata
+    # By way of '=~' and named matching groups, Ruby directly creates a local variable for each group
+    /.*\/(?<cefr_level>.*)-(?<chapter_name>.*)\/texts\/(?<locale>[a-z][a-z])\/.*/ =~ source
     Rake::Task[:build].reenable
     Rake::Task[:build].invoke(locale, cefr_level, chapter_name)
   end
@@ -69,5 +70,5 @@ task :copy_legacy_files do
 end
 
 task :serve do
-  sh "rerun config.ru"
+  sh "ruby config.ru" # FIXME: why does rerun not work anymore?
 end
