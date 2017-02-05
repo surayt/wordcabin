@@ -2,6 +2,8 @@ data/*
 cache/*
 public/stylesheets/*
 public/images/*
+public/fonts/*
+public/media
 docs
 test
 backup
