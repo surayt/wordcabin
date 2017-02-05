@@ -56,7 +56,7 @@ module Textbookr
       rescue
         I18n.t(:no_contents)
       end
-      toc_file = Config.cache_path+'tocs'+@locale.to_s+'all.html'
+      toc_file = Config.cache_path+'tocs'+"#{@locale}.html"
       @toc = begin
         File.read(toc_file)
       rescue

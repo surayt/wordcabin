@@ -15,8 +15,7 @@ module Textbookr
       @tocfile = {
         filename: Config.cache_path +
                   'tocs'+args[:locale] +
-                  args[:cefr_level] +
-                  "#{args[:chapter_name]}.html" }
+                  "#{args[:cefr_level]}-#{args[:chapter_name]}.html" }
       @outfile = {
         filename: Config.cache_path +
                   'chapters'+args[:locale] +
