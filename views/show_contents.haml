@@ -1,6 +1,8 @@
-%nav.sidebar
+%nav#sidebar
+  %div#logo
+    %img{src: '/images/logo_kl.png'}
   %h3= I18n.t('toc')
   = @toc
-%div.content
+%div#content
   %article
     = @contents

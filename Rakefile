@@ -3,7 +3,10 @@ require 'nokogiri'
 require_relative 'config.rb'
 require_relative Config.lib_path+'parser.rb'
 
-task default: [:clean, :build_all, :copy_legacy_files, :copy_assets, :build_tocs]
+# Legacy files must be copied *before* creating the TOCs
+# as otherwise they will not appear in the main TOC then.
+
+task default: [:clean, :build_all_chapters, :copy_legacy_files, :copy_assets, :build_tocs]
 
 # TODO: The whole asset handling (:clean and :copy_assets)
 # should really be done by a proper asset pipeline. Holding
@@ -16,7 +19,7 @@ task :clean do
 end
 
 desc "Compile the Markdown file(s) specified by the arguments into HTML"
-task :build_one, [:locale, :cefr_level, :chapter_name] do |t, args|
+task :build_chapter, [:locale, :cefr_level, :chapter_name] do |t, args|
   unless args.to_a.size == 3
     fail "You must supply locale, cefr_level and chapter_name"
   end
@@ -24,12 +27,12 @@ task :build_one, [:locale, :cefr_level, :chapter_name] do |t, args|
 end
 
 desc "Compile all Markdown files into HTML"
-task :build_all do
+task :build_all_chapters do
   %x{find #{Config.data_path} -type f -name '*.md'}.split("\n").each do |source|
     # By way of '=~' and named matching groups, Ruby directly creates a local variable for each group
     /.*\/(?<cefr_level>.*)-(?<chapter_name>.*)\/texts\/(?<locale>[a-z][a-z])\/.*/ =~ source
-    Rake::Task[:build_one].reenable
-    Rake::Task[:build_one].invoke(locale, cefr_level, chapter_name)
+    Rake::Task[:build_chapter].reenable
+    Rake::Task[:build_chapter].invoke(locale, cefr_level, chapter_name)
   end
 end
 
@@ -60,11 +63,11 @@ task :build_tocs do
     Nokogiri::HTML::Builder.with(@html) do |d|
       d.ul {
         toc.each do |cefr_level,v1|
-          d.li {
+          d.li(class: 'level_1') {
             d.a(href: "/#{locale}/#{cefr_level}") {d.text cefr_level}
             d.ul {
               v1.each do |chapter_name,v2|
-                d.li {
+                d.li(class: 'level_2') {
                   d.a(href: "/#{locale}/#{cefr_level}/#{chapter_name}") {d.text chapter_name}
                   d.cdata v2[:contents] if v2[:contents]
                 }
@@ -85,6 +88,7 @@ end
 # Yes, this task duplicates a lot of what's in the build task,
 # but that's fine as it is only meant to be here until the
 # transition to Markdown input files is complete.
+
 desc "Copy all legacy HTML files to their appropriate location to be served by the webapp"
 task :copy_legacy_files do
   %x[find data/aop/chapters/*/texts/?? -type f ! -name '*.md'].split("\n").each do |source|
