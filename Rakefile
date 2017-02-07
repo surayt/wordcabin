@@ -5,21 +5,21 @@ require_relative Config.lib_path+'parser.rb'
 
 # Legacy files must be copied *before* creating the TOCs
 # as otherwise they will not appear in the main TOC then.
+task default: [:clean, :copy_legacy_files, :copy_assets, :compile_markdown_files, :build_tocs]
 
-task default: [:clean, :build_all_chapters, :copy_legacy_files, :copy_assets, :build_tocs]
-
-# TODO: The whole asset handling (:clean and :copy_assets)
-# should really be done by a proper asset pipeline. Holding
-# off on it until the legacy conversion is finished.
-
+# TODO: Once a proper asset pipeline is installed, check to see if this is still needed.
 desc "Remove all automatically compiled or copied files from the cache and public dirs"
 task :clean do
-  sh "rm -rf #{Config.cache_path}/chapters #{Config.cache_path}/sass #{Config.cache_path}/tocs #{Config.public_path}/images #{Config.public_path}/fonts #{Config.public_path}/stylesheets"
-  sh "rm -f #{Config.public_path}/media" # TODO: Remove when legacy conversion complete!
+  asset_files = Dir.glob(Config.public_path+'{media,fonts,images,stylesheets/*.{css,map}}') # TODO: Remove 'media' once legacy conversion complete.
+  cache_files = Dir.glob(Config.cache_path+'*')
+  (asset_files+cache_files).each do |p|
+    puts "Deleting #{p}"
+    FileUtils.rm_rf p
+  end
 end
 
 desc "Compile the Markdown file(s) specified by the arguments into HTML"
-task :build_chapter, [:locale, :cefr_level, :chapter_name] do |t, args|
+task :compile_markdown_file, [:locale, :cefr_level, :chapter_name] do |t, args|
   unless args.to_a.size == 3
     fail "You must supply locale, cefr_level and chapter_name"
   end
@@ -27,12 +27,12 @@ task :build_chapter, [:locale, :cefr_level, :chapter_name] do |t, args|
 end
 
 desc "Compile all Markdown files into HTML"
-task :build_all_chapters do
+task :compile_markdown_files do
   %x{find #{Config.data_path} -type f -name '*.md'}.split("\n").each do |source|
     # By way of '=~' and named matching groups, Ruby directly creates a local variable for each group
     /.*\/(?<cefr_level>.*)-(?<chapter_name>.*)\/texts\/(?<locale>[a-z][a-z])\/.*/ =~ source
-    Rake::Task[:build_chapter].reenable
-    Rake::Task[:build_chapter].invoke(locale, cefr_level, chapter_name)
+    Rake::Task[:compile_markdown_file].reenable
+    Rake::Task[:compile_markdown_file].invoke(locale, cefr_level, chapter_name)
   end
 end
 
@@ -88,7 +88,6 @@ end
 # Yes, this task duplicates a lot of what's in the build task,
 # but that's fine as it is only meant to be here until the
 # transition to Markdown input files is complete.
-
 desc "Copy all legacy HTML files to their appropriate location to be served by the webapp"
 task :copy_legacy_files do
   %x[find data/aop/chapters/*/texts/?? -type f ! -name '*.md'].split("\n").each do |source|
@@ -107,9 +106,20 @@ end
 
 desc "Copy all assets (images, fonts, etc.) to their appropriate locations to be served by the webapp"
 task :copy_assets do
-  sh "cp -a #{Config.template_path}/images #{Config.template_path}/fonts #{Config.public_path}"
-  sh "ln -sf #{Config.data_path} #{Config.public_path}/media" # TODO: Remove when legacy conversion complete!
-  sh "find #{Config.data_path}/chapters/*/images -type f -exec cp {} #{Config.public_path}/images \\;"
+  # TODO: remove next four lines ones legacy conversion complete.
+  legacy_media_path = Config.public_path+'media'
+  puts "Deleting and re-linking #{legacy_media_path}"
+  FileUtils.rm_f legacy_media_path # Only required because 'ln -sf' is f***** up...
+  FileUtils.ln_s Config.data_path, legacy_media_path
+  # TODO: Replace by calling a proper asset pipeline at some point.
+  global_assets  = Dir.glob(Config.template_path+'{images,fonts}')
+  puts "Copying #{global_assets.join(', ')}"
+  FileUtils.cp_r global_assets, Config.public_path
+  chapter_assets = Dir.glob(Config.data_path+'chapters'+'*'+'images'+'*')
+  Dir.glob('/home/jrs/Projects/textbookr/data/aop/chapters/*/images/*').each do |p|
+    puts "Copying #{p}"
+    FileUtils.cp p, Config.public_path+'images' if FileTest.file?(p)
+  end
 end
 
 desc "Start the webapp server on port 4567"

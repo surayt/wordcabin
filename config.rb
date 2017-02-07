@@ -8,5 +8,7 @@ Config = OpenStruct.new(c.merge({
   template_path: c[:root_path]+'data'+'aop'+'template',
   cache_path:    c[:root_path]+'cache',
   lib_path:      c[:root_path]+'lib',
-  public_path:   c[:root_path]+'public'
+  public_path:   c[:root_path]+'public',
+  sass_path:     c[:root_path]+'public'+'stylesheets'+'sass',
+  css_path:      c[:root_path]+'public'+'stylesheets'
 }))
