@@ -31,6 +31,12 @@ task :compile_markdown_files do
   %x{find #{Config.data_path} -type f -name '*.md'}.split("\n").each do |source|
     # By way of '=~' and named matching groups, Ruby directly creates a local variable for each group
     /.*\/(?<cefr_level>.*)-(?<chapter_name>.*)\/texts\/(?<locale>[a-z][a-z])\/.*/ =~ source
+    # This is only to be able to have a 'test' folder, at the moment
+    if (cefr_level || chapter_name || locale).nil?
+      /.*\/(?<name>.*)\/texts\/(?<locale>[a-z][a-z])\/.*/ =~ source
+      cefr_level = chapter_name = name
+    end
+    # File by file...
     Rake::Task[:compile_markdown_file].reenable
     Rake::Task[:compile_markdown_file].invoke(locale, cefr_level, chapter_name)
   end
@@ -120,6 +126,15 @@ task :copy_assets do
   Dir.glob('/home/jrs/Projects/textbookr/data/aop/chapters/*/images/*').each do |p|
     puts "Copying #{p}"
     FileUtils.cp p, Config.public_path+'images' if FileTest.file?(p)
+  end
+end
+
+desc "Convert all existing Word XML files to Markdown"
+task :convert_docx_files do
+  %x[find data/aop/chapters/word -type f -name '*.docx'].split("\n").each do |source|
+    target_file_name = source.gsub(/\/word\//, '/test/texts/').gsub(/\.docx/, '.md')
+    FileUtils.mkdir_p File.dirname(target_file_name)
+    sh "pandoc -f docx -t markdown_github -o '#{target_file_name}' '#{source}'"
   end
 end
 

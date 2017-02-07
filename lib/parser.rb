@@ -11,6 +11,8 @@ module Textbookr
       @infile = {
         dirname: Config.data_path +
                  'chapters'+dir_name+'texts'+args[:locale],
+        testdirname: Config.data_path +
+                 'chapters'+args[:cefr_level]+'texts'+args[:locale],
         contents: String.new }
       @tocfile = {
         filename: Config.cache_path +
@@ -36,7 +38,8 @@ module Textbookr
     private
 
     def read_infiles
-      Dir[@infile[:dirname]+'*.md'].each do |f|
+      (Dir[@infile[:dirname]+'*.md']+Dir[@infile[:testdirname]+'*.md']).each do |f|
+        puts "Reading #{f}"
         @infile[:contents] += IO.read(f)
       end
       # Using GitHub-flavored Markdown because that's arguably
