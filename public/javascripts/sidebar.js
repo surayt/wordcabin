@@ -1,10 +1,7 @@
 $(document).ready(function() {
-  // Restore TOC scrollbar position from cookie, if present
+  // Restore or initially set TOC state
   restore_toc_scrollbar_position();
-
-  // Only show the first top level item's children when page opens.
-  collapse_top_level_items();
-  $('nav#sidebar li.level_1:first-child > ul').show()
+  restore_toc_expansion_state();
   
   // Disable the top level links and make them open their parents' child <ul>.
   // An advantage of doing things in the below order is that clicking an 
@@ -13,6 +10,7 @@ $(document).ready(function() {
   $('nav#sidebar li.level_1 > a').click(function(e) {
     e.preventDefault();
     collapse_top_level_items();
+    Cookies.set('textbookr_toc_scrollbar_expansion_state', $(this).parent().index());
     $(this).parent().children('ul').toggle();
   });
   
@@ -30,4 +28,13 @@ function collapse_top_level_items() {
 function restore_toc_scrollbar_position() {
   pos = Cookies.get('textbookr_toc_scrollbar_position')
   $('nav#sidebar').scrollTop(pos || 0);
+}
+
+function restore_toc_expansion_state() {
+  // Only one top-level item is supposed to be expanded
+  collapse_top_level_items();
+  // Figure out which one it is and expand it
+  state = Cookies.get('textbookr_toc_scrollbar_expansion_state');
+  if (state) {child = parseInt(state) + 1} else {child = 1};
+  $('nav#sidebar li.level_1:nth-child('+child+') > ul').show()
 }
