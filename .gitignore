@@ -7,3 +7,4 @@ public/media
 docs
 test
 backup
+.rake_tasks~
