@@ -1,0 +1,43 @@
+@import 'normalize/normalize'
+@import 'bourbon/bourbon'
+@import 'neat/neat-helpers'
+@import 'colors'
+@import 'errorscreen'
+@import 'neat/neat'
+
+body
+  font-family: 'Charis SIL', serif
+  font-size: 11pt
+  line-height: 20px
+  font-weight: 400
+  text-align: left
+  -webkit-font-smoothing: antialiased
+  font-smoothing: antialiased
+  margin: 0
+  
+@import 'i18n'
+  
+nav#sidebar
+  position: fixed
+  width: 300px
+  height: 100%
+  overflow: hidden
+  margin: 0
+  &:hover
+    overflow-y: auto
+  h3
+    display: none
+  ul ul ul li
+    max-width: 275px
+
+@import 'sidebar'
+  
+div#content
+  margin-left: 310px
+  padding-top: 1em
+  padding-bottom: .5em
+  article
+    max-width: 95%
+    margin: 0 auto
+    
+@import 'content'

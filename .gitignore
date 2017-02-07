@@ -1,6 +1,7 @@
 data/*
 cache/*
-public/stylesheets/*
+public/stylesheets/*.css
+public/stylesheets/*.map
 public/images/*
 public/fonts/*
 public/media

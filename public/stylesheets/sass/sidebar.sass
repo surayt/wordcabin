@@ -1,0 +1,60 @@
+nav#sidebar
+  background-color: $orange
+  
+  div#logo
+    padding: .5em 0 .3em 1em
+    margin-right: 1em
+    width: 100%
+    
+  // all nesting levels
+  ul
+    background-color: $orange-darker
+    margin: 0
+    padding: 0
+    list-style-type: none
+    display: inline-block
+    width: 100%
+    a
+      text-decoration: none
+    // levels 2 and 3
+    ul, ul ul
+      margin-top: 0
+  
+  // just the top level
+  li.level_1 > ul
+    padding-top: .5em
+  li.level_1 > a
+    display: inline-block
+    width: 100%
+    text-transform: uppercase
+    line-height: 2.5
+    border-bottom: 1px solid $orange
+    cursor: pointer
+    padding-left: .5em
+    color: $white
+    font-weight: bold
+  
+  // second and third level
+  ul ul
+    line-height: 1.5
+    background-color: $orange
+    a
+      color: $orange-darker
+      &:hover
+        color: $red
+  
+  // just the second level
+  ul ul > li
+    padding-left: .5em
+  li.level_2 > a
+    text-transform: uppercase
+    line-height: 1.25
+    color: $darkblue
+  
+  // just the third level (doesn't have its own class)
+  li.level_2 ul
+    li
+      text-indent: -1em
+      padding-left: 1.5em      
+    a
+      font-style: italic
