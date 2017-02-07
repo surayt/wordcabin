@@ -78,8 +78,9 @@ task :build_tocs do
       }
     end
     # Write the nested <ul> structure to a cache file
-    File.open(Config.cache_path+'tocs'+"#{locale}.html", 'w') do |f|
-      puts "Writing to #{locale}.html"
+    toc_file = Config.cache_path+'tocs'+"#{locale}.html"
+    File.open(toc_file, 'w') do |f|
+      puts "Writing #{toc_file}"
       f.write @html.to_html(encoding: 'UTF-8')
     end
   end
