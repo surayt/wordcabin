@@ -13,6 +13,7 @@ module Textbookr
       set :environment, :development
       set :root, Config.root_path
       set :haml, format: :html5
+      set :bind, '0.0.0.0'
       # Internationalisation
       # http://recipes.sinatrarb.com/p/development/i18n
       # A locale is only considered 'available' if the
