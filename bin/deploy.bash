@@ -15,7 +15,8 @@ function update_project_data()
   IFS=$(echo -en "\n\b")
   # Go through list of Markdown files
   RAKE_OPTS=$(for FILE in $MD_FILES; do echo "$FILE" | ruby -ne '/.*\/(?<cefr_level>.*)-(?<chapter_name>.*)\/texts\/(?<locale>[a-z][a-z])\/.*/ =~ $_; if (cefr_level || chapter_name || locale).nil?; /.*\/(?<name>.*)\/texts\/(?<locale>[a-z][a-z])\/.*/ =~ $_; cefr_level = chapter_name = name; end; puts [locale,cefr_level,chapter_name].join(",")'; done)
-  # Finally run Rake to compile each of the changed files
+  # Finally pull, then run Rake to compile each of the changed files
+  git pull
   for OPTS in $RAKE_OPTS; do rake compile_markdown_file[$OPTS] > /tmp/deploy.bash.log; done
 }
 
