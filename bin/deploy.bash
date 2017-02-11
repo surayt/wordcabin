@@ -5,6 +5,7 @@ SCRIPT_DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
 
 # Change to textbookr installation directory
 cd $SCRIPT_DIR/..
+echo "(deploy.bash: I am running as user $(whoami) in $(pwd).)"
 
 function update_project_data()
 {
