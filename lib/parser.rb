@@ -73,6 +73,9 @@ module Textbookr
           el.children.map {|c| header_info.call(c, type)}.join('')
         end
       end
+      # FIXME: what are the two TODO comments below good for?
+      # Everything seems to be working the way it's supposed to...
+      #
       # kramdown/master/lib/kramdown/converter/pdf.rb:550, modified
       # TODO: rewrite to produce nested unordered HTML list
       add_section = lambda do |item, parent|
@@ -113,7 +116,9 @@ module Textbookr
         FileUtils.mkdir_p(f[:filename].dirname)
         File.open(f[:filename], 'w') do |d|
           puts "Writing #{f[:filename]}"
+          d.puts "<article class='textbookr'>"
           d.puts f[:contents]
+          d.puts "</article>"
         end
       end
     end
