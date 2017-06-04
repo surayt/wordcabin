@@ -1,0 +1,26 @@
+form#login_form
+  font-family: sans-serif
+  width: 22em
+  height: 10.5em
+  top: 50%
+  left: 50%
+  position: absolute
+  background-color: #ccc
+  padding: 1em
+  margin-left: -11em
+  margin-top: -7em
+  border: 5px solid #eee
+  input
+    &:invalid,
+    &:not(focus):invalid
+      outline: 1px solid red
+    &:focus:invalid
+      color: red
+      outline: 1px solid blue
+    &[type=submit]
+      float: right
+      margin-right: .7em
+  label
+    display: inline-block
+    width: 5em
+    font-size: 95%

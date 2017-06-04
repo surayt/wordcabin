@@ -1,0 +1,323 @@
+@font-face
+  font-family: ALWPiktos
+  src: url(/fonts/ALWPiktos.woff)
+
+@font-face
+  font-family: CharisSILW
+  src: url(/fonts/CharisSIL-R.woff)
+
+@font-face
+  font-family: CharisSILW
+  font-style: italic
+  src: url(/fonts/CharisSIL-I.woff)
+
+@font-face
+  font-family: CharisSILW
+  font-weight: bold
+  src: url(/fonts/CharisSIL-B.woff)
+
+@font-face
+  font-family: CharisSILW
+  font-weight: bold
+  font-style: italic
+  src: url(/fonts/CharisSIL-BI.woff)
+
+@font-face
+  font-family: Serto
+  src: url(/fonts/SyrCOMJerusalem.woff)
+
+@font-face
+  font-family: Serto
+  font-style: italic
+  src: url(/fonts/SyrCOMJerusalemItalic.woff)
+
+@font-face
+  font-family: Serto
+  font-weight: bold
+  src: url(/fonts/SyrCOMJerusalemBold.woff)
+
+article.legacy
+
+  .alwpikto
+    font: 22pt ALWPiktos
+    font-style: normal
+    color: black
+    vertical-align: bottom
+
+  .mceContentBody
+    min-width: 0
+  p
+    width: 100%
+  td > p
+    width: auto
+  p[dir="rtl"]
+    font: 18px Cambria, sans-serif
+  td >
+    p, span
+      margin: 1px 6px
+  hr
+    display: block
+    height: 5px
+    background: url('/images/hr.png')
+    border: 0
+    margin: 5px 0
+    &.fileBreak
+      display: none
+  pre
+    margin-top: 8px
+    margin-bottom: 8px
+    font-size: 11px
+  .section-title
+    font: 32px verdana, sans-serif
+    color: #31849B
+    float: none
+    text-align: center
+  .section-no
+    color: red
+    display: block
+    font: bold 36px "Traditional Arabic", sans-serif
+    float: none
+    margin-top: 30px
+    margin-left: auto
+    margin-right: auto
+    margin-bottom: 30px
+    text-align: center
+  .caption
+    font-weight: bold
+    color: #31849B
+    float: left
+    width: 100%
+    margin-bottom: 20px
+  .red
+    color: #F00
+  .rahmenLinks
+    border-left: 1px solid rgb(182, 221, 232)
+  .rahmenRechts
+    border-right: 1px solid rgb(182, 221, 232)
+  .rahmenUnten, table.rahmenUnten tr:last-child
+    border-bottom: 1px solid rgb(182, 221, 232)
+  .darkblue
+    background: rgb(84, 141, 212)
+  .darkblue-lighter
+    background: rgb(141, 179, 226)
+  .darkblue-lightest
+    background: rgb(198, 217, 241)
+  .orange
+    background: rgb(253, 233, 217)
+  .page, .mceContentBody, .page td, .mceContentBody td, td
+    color: #595959
+    font-family: CharisSILW, serif
+  .page p[dir=RTL], .mceContentBody p[dir=RTL], p[dir=RTL]
+    font: 16pt Serto
+    line-height: 25pt
+  .page a, .mceContentBody a, a
+    text-decoration: none
+  .page > table, .mceContentBody > table
+    width: 100% !important
+  table
+    &.gray-line-borders td, > tbody.gray-line-borders td
+      border-bottom: solid #BFBFBF 1.0pt
+      padding: 0 5.4pt
+
+  #view
+    width: 100%
+    overflow: hidden
+  #globalContainer
+    &.allpages
+      -moz-box-shadow: 0 0 20px rgba(0, 0, 0, 0.4)
+      -webkit-box-shadow: 0 0 20px rgba(0, 0, 0, 0.4)
+      box-shadow: 0 0 20px rgba(0, 0, 0, 0.4)
+      margin: 50px auto
+      padding: 0 50px
+      border: 1px solid #aaa
+    &.singlepages
+      margin: 50px auto 0
+      position: relative
+      width: 100000px
+  .printarea #globalContainer
+    margin-top: 70px
+  #controls
+    position: absolute
+    top: 20px
+    right: 100px
+  .printAreaBegin, .printAreaEnd
+    display: none
+  div.page
+    display: none
+    &:first-child
+      display: block
+  #globalContainer
+    &.allpages div.page
+      border: 2px solid green
+      min-height: 1100px
+    &.singlepages div.page
+      width: 1000px
+      margin: 30px auto
+      padding: 50px
+      min-height: 1100px
+      position: relative
+      float: left
+      visibility: hidden
+      display: block
+      background: white
+      -moz-box-shadow: 0 0 20px rgba(0, 0, 0, 0.4)
+      -webkit-box-shadow: 0 0 20px rgba(0, 0, 0, 0.4)
+      box-shadow: 0 0 20px rgba(0, 0, 0, 0.4)
+      border: 1px solid #aaa
+  .subfooter
+    bottom: 0
+    height: 60px
+    left: 0
+    margin-bottom: -60px
+    position: absolute
+    width: 100%
+  a.page-anchor
+    display: block
+    width: 1000px
+  #flashInfoContainer
+    position: absolute
+    top: 0
+    right: 0
+    text-align: right
+  #flashInfoBox
+    padding: 3pt 6pt
+    color: black
+    font: 9pt Verdana, sans-serif
+    border: 1px solid #666
+    -moz-border-radius: 3pt
+    -webkit-border-radius: 3pt
+    border-radius: 3pt
+    -moz-box-shadow: 0 0 3pt #666
+    -webkit-box-shadow: 0 0 3pt #666
+    box-shadow: 0 0 3pt #666
+    background: #ffb
+    z-index: 10
+    cursor: default
+    text-align: center
+  .soundPanel
+    width: 100px
+    height: 40px
+    padding: 4px 10px
+    position: absolute
+    margin-top: 30px
+    border: 1px solid #aaa
+    background: #ccc
+    -moz-box-shadow: 0 0 10px #ccc
+    -webkit-box-shadow: 0 0 10px #ccc
+    box-shadow: 0 0 10px #ccc
+    -moz-border-radius: 6px
+    -webkit-border-radius: 6px
+    border-radius: 6px
+    z-index: 10
+    .close
+      position: absolute
+      right: 4px
+      top: 2px
+      font: 10px Arial, sans-serif
+      a
+        text-decoration: none
+        color: black
+        font: 14px Arial, sans-serif
+    .buttons
+      margin-top: 2px
+      a
+        border: none
+        text-decoration: none
+        font-size: 1pt
+        img
+          float: left
+          margin-right: 5px
+          width: 36px
+          height: 36px
+          cursor: pointer
+      > img
+        float: left
+        margin-right: 5px
+        width: 36px
+        height: 36px
+        cursor: pointer
+    .sliderContainer
+      position: absolute
+      right: 28px
+      bottom: 14px
+      width: 10px
+      height: 10px
+      padding: 10px
+      overflow: visible
+      z-index: 20
+      img
+        position: relative
+        left: 16px
+        bottom: 8px
+        width: 36px
+        height: 36px
+        z-index: 17
+    .volumeSlider
+      position: absolute
+      right: 4px
+      bottom: 25px
+      width: 13px
+      display: none
+      z-index: 15
+      > a
+        z-index: 18
+        background: url("/images/vSlider.png") repeat scroll 0 0 transparent
+        border: none
+        cursor: pointer
+        height: 23px
+        left: -1px
+        width: 15px
+  .answer
+    border-bottom: 1px dotted red
+    color: transparent
+    cursor: default
+    transition: color 0.2s
+    img
+      opacity: 0
+      transition: opacity 0.2s
+    &:hover
+      color: red
+      cursor: inherit
+      img
+        opacity: 1
+        
+  #globalContainer.singlepages div.page
+    padding: 50px 50px 120px
+  .page-footer
+    position: absolute
+    left: 0
+    bottom: 30px
+    width: 100%
+    &.page-footer-aramaic
+      .pull-left
+        float: left
+        padding-left: 50px
+      .pull-right
+        float: right
+        padding-right: 50px
+      a
+        color: #338DD4
+      .links
+        margin-top: 10px
+        
+  #page-action-prev, #page-action-next
+    display: none
+    position: fixed
+    top: 45%
+    cursor: pointer
+    z-index: 2
+  #page-action-prev.active, #page-action-next.active
+    display: block
+  #page-action-prev
+    left: 30pt
+  #page-action-next
+    right: 30pt
+  #page-action-prev img, #page-action-next img
+    border: none
+    opacity: 0.2
+    transition: opacity 0.4s
+  #page-action-prev img:hover, #page-action-next img:hover
+    opacity: 1
+  @media print
+    #page-action-prev, #page-action-next
+      display: none !important

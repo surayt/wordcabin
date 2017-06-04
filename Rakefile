@@ -1,8 +1,28 @@
 require 'fileutils'
 require 'nokogiri'
-require_relative 'config.rb'
+require_relative 'config/app.rb'
 require_relative Config.lib_path+'parser.rb'
+require 'sinatra/activerecord/rake'
 
+namespace :db do
+  task :load_config do
+    require Config.lib_path+'server.rb'
+  end
+end
+
+desc "Start the webapp server on port 4567"
+task :server do
+  sh "ruby config/rack.rb" # FIXME: why does rerun not work anymore?
+end
+
+# https://gist.github.com/vast/381881
+desc "Start an interactive console"
+task :console, :environment do |t, args|
+  ENV['RACK_ENV'] = args[:environment] || 'development'
+  sh "pry -I . -r config/app.rb -r #{Config.lib_path+'server.rb'} -e 'include Textbookr; User.connection;'"
+end
+
+=begin
 # Legacy files must be copied *before* creating the TOCs
 # as otherwise they will not appear in the main TOC then.
 task default: [:clean, :copy_legacy_files, :copy_assets, :compile_markdown_files, :build_tocs]
@@ -23,12 +43,13 @@ task :compile_markdown_file, [:locale, :cefr_level, :chapter_name] do |t, args|
   unless args.to_a.size == 3
     fail "You must supply locale, cefr_level and chapter_name"
   end
-  Textbookr::Parser.parse(args)
+  Textbookr::Parser.parse(args) # knows what file to write to based on the args
 end
 
 desc "Compile all Markdown files into HTML"
 task :compile_markdown_files do
-  %x{find #{Config.data_path} -type f -name '*.md'}.split("\n").each do |source|
+  # Anything with 'test' in its path is excluded as those files could be rather large...
+  %x{find #{Config.data_path} -type f ! -path '*test*' -name '*.md'}.split("\n").each do |source|
     # By way of '=~' and named matching groups, Ruby directly creates a local variable for each group
     /.*\/(?<cefr_level>.*)-(?<chapter_name>.*)\/texts\/(?<locale>[a-z][a-z])\/.*/ =~ source
     # This is only to be able to have a 'test' folder, at the moment
@@ -104,8 +125,12 @@ task :copy_legacy_files do
       target = Config.cache_path+'chapters'+locale+target_file_name
       unless File.exist?(target)
         puts "Copying #{source}"
-        FileUtils.mkdir_p(target.dirname)
-        FileUtils.cp(source, target)
+        FileUtils.mkdir_p(target.dirname) 
+        File.open(target, 'w') do |f|
+          f.puts "<article class='legacy'>"
+          f.puts File.read(source)
+          f.puts "</article>"
+        end
       end
     end
   end
@@ -137,8 +162,4 @@ task :convert_docx_files do
     sh "pandoc -f docx -t markdown_github -o '#{target_file_name}' '#{source}'"
   end
 end
-
-desc "Start the webapp server on port 4567"
-task :serve do
-  sh "ruby config.ru" # FIXME: why does rerun not work anymore?
-end
+=end

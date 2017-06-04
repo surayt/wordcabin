@@ -1,0 +1,12 @@
+%nav#sidebar
+  %div#logo
+    %img{src: '/images/logo_kl.png'}
+  %h3= I18n.t('toc')
+  = @toc
+%div#content
+  - if current_user && current_user.is_admin?
+    %form{action: '/', method: :post}
+      %textarea= @contents
+    %a{href: "/#{locale}/logout", id: :logout_link} Logout
+  - else
+    = @contents

@@ -5,6 +5,14 @@
 @import 'errorscreen'
 @import 'neat/neat'
 
+div.mce-branding-powered-by
+  display: none !important
+
+html, body, div#content, div#content form
+  height: 100%
+  margin: 0
+  padding: 0
+
 body
   font-family: 'Charis SIL', serif
   font-size: 11pt
@@ -13,10 +21,9 @@ body
   text-align: left
   -webkit-font-smoothing: antialiased
   font-smoothing: antialiased
-  margin: 0
-  
+
 @import 'i18n'
-  
+
 nav#sidebar
   position: fixed
   width: 300px
@@ -31,13 +38,19 @@ nav#sidebar
     max-width: 275px
 
 @import 'sidebar'
-  
+
 div#content
-  margin-left: 310px
-  padding-top: 1em
-  padding-bottom: .5em
+  margin-left: 300px
   article
+    padding-top: 1em
+    padding-bottom: .5em
     max-width: 95%
     margin: 0 auto
-    
+  textarea
+    margin: 0
+    padding: 0
+    width: 100%
+
+@import 'login_form'
 @import 'content'
+@import 'legacy'
