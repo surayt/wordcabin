@@ -13,6 +13,7 @@ require 'bcrypt'
 # require 'simple_form'
 
 require_relative 'user_model'
+require_relative 'data_fragment_model'
 
 module Textbookr
   class Server < Sinatra::Base
@@ -88,20 +89,23 @@ module Textbookr
     end
 
     # Displaying the contents themselves.
-    get '/*' do |splat|
-      @locale = I18n.locale
-      cefr_level, chapter_name, heading = splat.split("/")
-      params[:cefr_level]   = cefr_level   || 'a1'
-      params[:chapter_name] = chapter_name || 'intro'
-      params[:heading]      = heading      || '1'
-      content_file_name = "#{params[:cefr_level]}-#{params[:chapter_name]}.html"
-      content_file = Config.cache_path+'chapters'+@locale.to_s+content_file_name
-      @contents = begin
-        File.read(content_file)
-      rescue
-        I18n.t(:no_contents)
+    get '/*' do |path|
+      if fragment = DataFragment.find_by_path(path)
+        @contents = fragment.html
+      else
+        cefr_level, chapter_name, heading = path.split("/")
+        params[:cefr_level]   = cefr_level   || 'a1'
+        params[:chapter_name] = chapter_name || 'intro'
+        params[:heading]      = heading      || '1'
+        content_file_name = "#{params[:cefr_level]}-#{params[:chapter_name]}.html"
+        content_file = Config.cache_path+'chapters'+locale.to_s+content_file_name
+        @contents = begin
+          File.read(content_file)
+        rescue
+          I18n.t(:no_contents)
+        end
       end
-      toc_file = Config.cache_path+'tocs'+"#{@locale}.html"
+      toc_file = Config.cache_path+'tocs'+"#{locale}.html"
       @toc = begin
         File.read(toc_file)
       rescue
@@ -111,8 +115,15 @@ module Textbookr
     end
 
     # Save modified contents
-    post '/' do
-      # Referer available? If so: process request and redirect back. Alternatively: possible to submit form remotely to here?
+    post '/*' do |path|
+      # TODO: Make pretty.
+      if fragment = DataFragment.find_by_path(path)
+        fragment.update_attribute(:html, params[:data_fragment_html])
+      else
+        DataFragment.create(path: path, html: params[:data_fragment_html])
+      end      
+      # TODO: Some sort of message?
+      redirect back
     end
   end
 end

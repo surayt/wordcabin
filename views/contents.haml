@@ -5,8 +5,8 @@
   = @toc
 %div#content
   - if current_user && current_user.is_admin?
-    %form{action: '/', method: :post}
-      %textarea= @contents
+    %form{method: :post}
+      %textarea{name: :data_fragment_html}= @contents
     %a{href: "/#{locale}/logout", id: :logout_link} Logout
   - else
     = @contents
