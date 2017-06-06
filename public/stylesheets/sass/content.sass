@@ -1,15 +1,19 @@
-a.session_link
-  position: absolute
+div#session_links
+  position: fixed
   top: .5em
   right: .75em
-  font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif
-  font-size: 14px
-  text-decoration: none
+  a
+    font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif
+    font-size: 14px
+    text-decoration: none
+div#session_links,
+div#session_links a
   color: #333
 
 div#content.user
-  padding: 1em 0 0 1em
+  padding: 1em 0 0 0
   max-width: 75%
+  min-width: 25%
   *:first-child
     margin-top: 0
 

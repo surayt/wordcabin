@@ -1,4 +1,0 @@
-- if current_user
-  %a{href: "/#{locale}/logout", class: :session_link} Logout
-- else
-  %a{href: "/#{locale}/login?referer=/#{locale}#{request.path_info}", class: :session_link} Login

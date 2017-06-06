@@ -1,0 +1,11 @@
+#session_links
+  - if current_user
+    %a{href: "/#{locale}/logout"} Logout
+    - if current_user.is_admin?
+      |
+      - if params[:view_mode] != 'preview'
+        %a{href: "?view_mode=preview"} Preview
+      - else
+        %a{href: "?view_mode=edit"} Edit      
+  - else
+    %a{href: "/#{locale}/login?referer=/#{locale}#{request.path_info}"} Login

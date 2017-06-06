@@ -7,9 +7,9 @@ config = $.extend(config, {
   autoresize: true,
   selector: 'div#content textarea',
   removed_menuitems: 'newdocument',
-  plugins: 'table save',
+  plugins: 'table save directionality',
   statusbar: false,
-  toolbar: 'save | undo redo | styleselect | bold italic | alignleft aligncenter alignright | bullist numlist outdent indent'
+  toolbar: 'save | undo redo | bold italic | alignleft aligncenter alignright | bullist numlist outdent indent | ltr rtl'
 });
 
 function resize() {

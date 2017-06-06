@@ -4,11 +4,11 @@
       %img{src: '/images/logo_kl.png'}
   %h3= I18n.t('toc')
   = @toc
-- if current_user && current_user.is_admin?
+- if current_user && current_user.is_admin? && params[:view_mode] != 'preview'
   %div#content.editor
     %form{method: :post}
       %textarea{name: :data_fragment_html}= @contents
 - else
   %div#content.user
     = @contents
-= haml :login_logout_link
+= haml :session_links
