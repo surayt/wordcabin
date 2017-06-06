@@ -9,14 +9,16 @@ require 'i18n/backend/fallbacks'
 require 'sinatra/activerecord'
 require 'sinatra/strong-params'
 require 'bcrypt'
-# require 'cells'
-# require 'simple_form'
 
 require_relative 'user_model'
 require_relative 'data_fragment_model'
 
 module Textbookr
   class Server < Sinatra::Base
+    ###########################################################################
+    # Configuration                                                           #
+    ###########################################################################
+  
     # Load extensions.
     register Sinatra::ActiveRecordExtension
     register Sinatra::StrongParams
@@ -43,6 +45,10 @@ module Textbookr
       Sass::Plugin.options[:css_location] = (Config.css_path).to_s
       use Sass::Plugin::Rack
     end
+    
+    ###########################################################################
+    # Helper Methods                                                          #
+    ###########################################################################
 
     helpers do
       # Just some convenience (nicer to type current_user in views, etc.)
@@ -54,6 +60,10 @@ module Textbookr
         I18n.locale
       end
     end
+    
+    ###########################################################################
+    # Routes                                                                  #
+    ###########################################################################
 
     # Prepending the rest of the route with the locale code.
     before '/:locale/?*' do

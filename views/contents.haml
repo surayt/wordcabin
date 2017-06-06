@@ -4,10 +4,11 @@
       %img{src: '/images/logo_kl.png'}
   %h3= I18n.t('toc')
   = @toc
-%div#content
-  - if current_user && current_user.is_admin?
+- if current_user && current_user.is_admin?
+  %div#content.editor
     %form{method: :post}
       %textarea{name: :data_fragment_html}= @contents
-    %a{href: "/#{locale}/logout", id: :logout_link} Logout
-  - else
+- else
+  %div#content.user
     = @contents
+= haml :login_logout_link

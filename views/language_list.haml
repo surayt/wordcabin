@@ -3,7 +3,4 @@
     - @locales.each do |locale|
       %li
         %a{href: "/#{locale}/a1"}= I18n.t(locale)
-- if current_user
-  %a{href: "/#{locale}/logout", class: :session_link} Logout
-- else
-  %a{href: "/#{locale}/login", class: :session_link} Login
+  = haml :login_logout_link

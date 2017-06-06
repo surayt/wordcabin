@@ -6,4 +6,5 @@
     %label{for: :user_password} Password:
     %input{type: :password, name: :user_password, id: :user_password}
   %p
+    %input{type: :hidden, name: :referer, value: params[:referer]}
     %input{type: :submit, value: 'Login'}
