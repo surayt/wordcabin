@@ -8,7 +8,7 @@ $(document).ready(function() {
   // already expanded section won't close it but just keep it open, which
   // I find preferable from a UI perspective.
   $('nav#sidebar li.level_1 > a').click(function(e) {
-    e.preventDefault();
+    // e.preventDefault();
     collapse_top_level_items();
     Cookies.set('textbookr_toc_scrollbar_expansion_state', $(this).parent().index());
     $(this).parent().children('ul').toggle();

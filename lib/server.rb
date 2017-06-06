@@ -100,8 +100,8 @@ module Textbookr
 
     # Displaying the contents themselves.
     get '/*' do |path|
-      if fragment = DataFragment.find_by_path(path)
-        @contents = fragment.html
+      if fragment = DataFragment.find_by_locale_and_path(locale, path)
+        @contents = fragment
       else
         cefr_level, chapter_name, heading = path.split("/")
         params[:cefr_level]   = cefr_level   || 'a1'
@@ -128,9 +128,11 @@ module Textbookr
     post '/*' do |path|
       # TODO: Make pretty.
       if fragment = DataFragment.find_by_path(path)
-        fragment.update_attribute(:html, params[:data_fragment_html])
+        fragment.update_attributes(params[:data_fragment])
       else
-        DataFragment.create(path: path, html: params[:data_fragment_html])
+        params[:data_fragment][:path] = path
+        params[:data_fragment][:locale] = locale
+        DataFragment.create(params[:data_fragment])
       end      
       # TODO: Some sort of message?
       redirect back

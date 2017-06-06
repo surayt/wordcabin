@@ -4,11 +4,31 @@
       %img{src: '/images/logo_kl.png'}
   %h3= I18n.t('toc')
   = @toc
+
 - if current_user && current_user.is_admin? && params[:view_mode] != 'preview'
   %div#content.editor
     %form{method: :post}
-      %textarea{name: :data_fragment_html}= @contents
+      - if @contents.class == String
+        %textarea{name: 'data_fragment[html]'}= @contents
+        %fieldset
+          Modify the above contents as needed and hit <em>Save</em> to migrate them to the database.
+          %input{type: :submit, value: 'Save'}
+      - else
+        %textarea{name: 'data_fragment[html]'}= @contents.html
+        %fieldset
+          %label{for: 'data_fragment[path]'} Path:
+          %input{type: :text, name: 'data_fragment[path]', value: @contents.path}
+          %label{for: 'data_fragment[location]'} Location:
+          %input{type: :text, name: 'data_fragment[location]', value: @contents.location}
+          %label{for: 'data_fragment[heading]'} Heading:
+          %input{type: :text, name: 'data_fragment[heading]', value: @contents.heading}
+          %input{type: :submit, value: 'Save'}
+
 - else
   %div#content.user
-    = @contents
+    - if @contents.class == String
+      = @contents
+    - else
+      = @contents.html
+
 = haml :session_links
