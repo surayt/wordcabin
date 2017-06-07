@@ -12,9 +12,9 @@ require 'sinatra/strong-params'
 require 'sinatra/flash'
 
 require_relative 'user_model'
-require_relative 'data_fragment_model'
+require_relative 'content_fragment_model'
 
-module Textbookr
+module SinatraApp 
   class Server < Sinatra::Base
     ###########################################################################
     # Configuration                                                           #
@@ -26,10 +26,12 @@ module Textbookr
     register Sinatra::Flash
     # Configure the application using user settings from config.rb.
     configure do
-      set :environment, :development # TODO: Move to config/app.rb!
-      set :root, Config.root_path
+      set :environment, Config.environment
+      set :root, Config.root
+      set :views, Config.haml
       set :haml, {escape_html: false, format: :html5}
-      set :bind, '0.0.0.0' # TODO: Move to config/app.rb!
+      set :bind, Config.bind_address
+      set :port, Config.bind_port
       set :sessions, true
       # Internationalisation
       # http://recipes.sinatrarb.com/p/development/i18n
@@ -37,14 +39,13 @@ module Textbookr
       # corresponding file in locales/*.yml contains at
       # least one string!
       I18n::Backend::Simple.send(:include, I18n::Backend::Fallbacks)
-      I18n.load_path = Dir[Config.root_path+'locales'+'*.yml']
+      I18n.load_path = Dir[Config.locales+'*.yml']
       I18n.backend.load_translations
-      # use Rack::Locale # TODO: Fix this so that it does not inject region as well!
       # CSS compiler
       Sass::Plugin.options[:style] = :expanded
-      Sass::Plugin.options[:cache_location] = (Config.cache_path+'sass').to_s
-      Sass::Plugin.options[:template_location] = (Config.sass_path).to_s
-      Sass::Plugin.options[:css_location] = (Config.css_path).to_s
+      Sass::Plugin.options[:cache_location] = (Config.cache+'sass').to_s
+      Sass::Plugin.options[:template_location] = (Config.sass).to_s
+      Sass::Plugin.options[:css_location] = (Config.css).to_s
       use Sass::Plugin::Rack
     end
     
@@ -69,10 +70,19 @@ module Textbookr
 
     # Prepending the rest of the route with the locale code.
     before '/:locale/?*' do
+      pass if request.path_info.match /^\/javascripts/
       I18n.locale = params[:locale]
       request.path_info = '/'+params[:splat].first
     end
 
+    # Compiled CoffeeScript
+    # https://jaketrent.com/post/serve-coffeescript-with-sinatra/
+    get '/javascripts/*.js' do
+      filename = params[:splat].first
+      fullpath = (Config.coffee+filename).to_s
+      coffee fullpath.to_sym # Weird quirk that it must be a symbol...
+    end
+    
     # Landing page showing the list of available L1s.
     get '/' do
       @locales = I18n.available_locales
@@ -107,7 +117,7 @@ module Textbookr
 
     # Displaying the contents themselves.
     get '/*' do |path|
-      if fragment = DataFragment.find_by_locale_and_path(locale, path)
+      if fragment = ContentFragment.find_by_locale_and_path(locale, path)
         @contents = fragment
       else
         cefr_level, chapter_name, heading = path.split("/")
@@ -115,19 +125,20 @@ module Textbookr
         params[:chapter_name] = chapter_name || 'intro'
         params[:heading]      = heading      || '1'
         content_file_name = "#{params[:cefr_level]}-#{params[:chapter_name]}.html"
-        content_file = Config.cache_path+'chapters'+locale.to_s+content_file_name
+        content_file = Config.cache+'chapters'+locale.to_s+content_file_name
         @contents = begin
           File.read(content_file)
         rescue
-          # TODO: put a flash message here?
-          I18n.t(:no_contents)
+          flash[:notice] = I18n.t(:no_contents)
+          String.new
         end
       end
-      toc_file = Config.cache_path+'tocs'+"#{locale}.html"
+      toc_file = Config.cache+'tocs'+"#{locale}.html"
       @toc = begin
         File.read(toc_file)
       rescue
-        I18n.t(:no_toc)
+        flash[:notice] = I18n.t(:no_toc)
+        String.new
       end
       haml :contents
     end
@@ -136,12 +147,12 @@ module Textbookr
     post '/*' do |path|
       # TODO: Make pretty.
       begin
-        if fragment = DataFragment.find_by_path(path)
-          fragment.update_attributes(params[:data_fragment])
+        if fragment = ContentFragment.find_by_path(path)
+          fragment.update_attributes(params[:content_fragment])
         else
-          params[:data_fragment][:path] = path
-          params[:data_fragment][:locale] = locale
-          DataFragment.create(params[:data_fragment])
+          params[:content_fragment][:path] = path
+          params[:content_fragment][:locale] = locale
+          ContentFragment.create(params[:content_fragment])
         end
         # TODO: i18n!
         flash[:notice] = 'The content fragment was saved successfully.'

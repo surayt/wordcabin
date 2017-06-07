@@ -1,0 +1,9 @@
+[submodule "templates/stylesheets/csslibs"]
+	path = templates/stylesheets/csslibs
+	url = git@github.com:sixtyfive/csslibs.git
+[submodule "public/javascripts/jslibs"]
+	path = public/javascripts/jslibs
+	url = git@github.com:sixtyfive/jslibs.git
+[submodule "public/javascripts/tinymce"]
+	path = public/javascripts/tinymce
+	url = git@github.com:tinymce/tinymce-dist.git

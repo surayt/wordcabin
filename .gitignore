@@ -2,6 +2,7 @@ data/*
 cache/*
 public/stylesheets/*.css
 public/stylesheets/*.map
+public/javascripts/*.js
 public/images/*
 public/fonts/*
 public/media

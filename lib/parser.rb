@@ -2,24 +2,24 @@ require_relative 'kramdown/kramdown_parser'
 require_relative 'core/string'
 require 'nokogiri'
 
-module Textbookr
+module SinatraApp
   class Parser
     def initialize(args)
       dir_name = "#{args[:cefr_level]}-#{args[:chapter_name]}"
       md_file_name = "#{dir_name}.md"
       html_file_name = "#{dir_name}.html"
       @infile = {
-        dirname: Config.data_path +
+        dirname: Config.data +
                  'chapters'+dir_name+'texts'+args[:locale],
-        testdirname: Config.data_path +
+        testdirname: Config.data +
                  'chapters'+args[:cefr_level]+'texts'+args[:locale],
         contents: String.new }
       @tocfile = {
-        filename: Config.cache_path +
+        filename: Config.cache +
                   'tocs'+args[:locale] +
                   "#{args[:cefr_level]}-#{args[:chapter_name]}.html" }
       @outfile = {
-        filename: Config.cache_path +
+        filename: Config.cache +
                   'chapters'+args[:locale] +
                   html_file_name }
     end
@@ -116,7 +116,7 @@ module Textbookr
         FileUtils.mkdir_p(f[:filename].dirname)
         File.open(f[:filename], 'w') do |d|
           puts "Writing #{f[:filename]}"
-          d.puts "<article class='textbookr'>"
+          d.puts "<article class='current'>"
           d.puts f[:contents]
           d.puts "</article>"
         end

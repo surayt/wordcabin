@@ -10,9 +10,9 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170606184223) do
+ActiveRecord::Schema.define(version: 20170607210438) do
 
-  create_table "data_fragments", force: :cascade do |t|
+  create_table "content_fragments", force: :cascade do |t|
     t.string "path"
     t.string "html"
     t.string "location"

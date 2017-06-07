@@ -4,7 +4,7 @@
 SCRIPT_DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
 [[ -s "$HOME/.rvm/scripts/rvm" ]] && source "$HOME/.rvm/scripts/rvm" # Load RVM into a shell session *as a function*
 
-# Change to textbookr installation directory
+# Change to wordcabin installation directory
 cd $SCRIPT_DIR/..
 echo "deploy.bash: I'm running as user $(whoami) in $(pwd)"
 

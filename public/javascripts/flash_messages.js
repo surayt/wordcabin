@@ -1,3 +1,6 @@
-$(document).ready(function() {
-  $('div#flash').delay(3000).fadeOut('slow');
-});
+(function() {
+  $(document).ready(function() {
+    $('div#flash').delay(3000).fadeOut('slow');
+  });
+
+}).call(this);
