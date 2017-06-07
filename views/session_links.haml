@@ -1,11 +1,15 @@
 #session_links
   - if current_user
+    -# TODO: i18n!
     %a{href: "/#{locale}/logout"} Logout
     - if current_user.is_admin?
       |
       - if params[:view_mode] != 'preview'
+        -# TODO: i18n!
         %a{href: "?view_mode=preview"} Preview
       - else
+        -# TODO: i18n!
         %a{href: "?view_mode=edit"} Edit      
   - else
+    -# TODO: i18n!
     %a{href: "/#{locale}/login?referer=/#{locale}#{request.path_info}"} Login

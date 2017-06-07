@@ -1,10 +1,13 @@
 %form{action: "/#{locale}/login", method: 'post', id: :login_form}
   %p
+    -# TODO: i18n!
     %label{for: :user_email} Email:
     %input{type: :text, name: :user_email, id: :user_email, autofocus: true}
   %p
+    -# TODO: i18n!
     %label{for: :user_password} Password:
     %input{type: :password, name: :user_password, id: :user_password}
   %p
     %input{type: :hidden, name: :referer, value: params[:referer]}
+    -# TODO: i18n!
     %input{type: :submit, value: 'Login'}

@@ -11,6 +11,7 @@
       - if @contents.class == String
         %textarea{name: 'data_fragment[html]'}= @contents
         %fieldset
+          -# TODO: i18n!
           Modify the above contents as needed and hit <em>Save</em> to migrate them to the database.
           %input{type: :submit, value: 'Save'}
       - else
