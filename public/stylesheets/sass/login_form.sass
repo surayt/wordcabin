@@ -5,18 +5,19 @@ form#login_form
   top: 50%
   left: 50%
   position: absolute
-  background-color: #ccc
+  background-color: $orange-darker
   padding: 1em
   margin-left: -11em
   margin-top: -7em
-  border: 5px solid #eee
+  border: 5px solid $orange
+  color: $white
   input
     &:invalid,
     &:not(focus):invalid
-      outline: 1px solid red
+      outline: 1px solid $red
     &:focus:invalid
       color: red
-      outline: 1px solid blue
+      outline: 1px solid $darkblue
     &[type=submit]
       float: right
       margin-right: .7em
