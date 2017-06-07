@@ -200,6 +200,8 @@ GEM
     sinatra-activerecord (2.0.13)
       activerecord (>= 3.2)
       sinatra (>= 1.0)
+    sinatra-flash (0.3.0)
+      sinatra (>= 1.0.0)
     sinatra-strong-params (0.0.3)
       sinatra (>= 1.4.0)
     slop (3.6.0)
@@ -266,6 +268,7 @@ DEPENDENCIES
   simple_form
   sinatra
   sinatra-activerecord
+  sinatra-flash
   sinatra-strong-params
   sprockets
   sqlite3

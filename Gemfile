@@ -35,3 +35,4 @@ gem 'tux'
 gem 'cells' # needed for simple_form, which relies on Rails route helpers
 gem 'cells-haml'
 gem 'simple_form'
+gem 'sinatra-flash'

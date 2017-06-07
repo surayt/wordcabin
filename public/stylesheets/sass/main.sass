@@ -27,6 +27,7 @@ body
 
 nav#sidebar
   position: fixed
+  
   width: 300px
   height: 100%
   overflow: hidden
@@ -64,6 +65,25 @@ div#content
       margin-right: 1.25em
     input[type=submit]
       float: right
+
+div#flash
+  font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif
+  position: absolute
+  top: 0px
+  left: 50%
+  margin: 0 0 0 -200px
+  width: 400px
+  line-height: 2
+  text-align: center
+  padding: 0 .25em .25em .25em
+  .notice
+    background-color: $lightgreen
+    border: 1px solid $green
+    border-top: none
+  .error
+    background-color: $lightred
+    border: 1px solid $red
+    border-top: none
 
 @import 'login_form'
 @import 'content'

@@ -6,9 +6,10 @@ require 'rack/contrib'
 require 'hamlit'
 require 'i18n'
 require 'i18n/backend/fallbacks'
+require 'bcrypt'
 require 'sinatra/activerecord'
 require 'sinatra/strong-params'
-require 'bcrypt'
+require 'sinatra/flash'
 
 require_relative 'user_model'
 require_relative 'data_fragment_model'
@@ -22,6 +23,7 @@ module Textbookr
     # Load extensions.
     register Sinatra::ActiveRecordExtension
     register Sinatra::StrongParams
+    register Sinatra::Flash
     # Configure the application using user settings from config.rb.
     configure do
       set :environment, :development # TODO: Move to config/app.rb!
@@ -87,14 +89,19 @@ module Textbookr
       if @user = User.find_by_email(params[:user_email])
         if @user.authenticate(params[:user_password])
           session[:user_id] = @user.id
+          # TODO: i18n!
+          flash[:notice] = "Welcome, #{current_user.email.split('@').first}!"
           redirect to(params[:referer] || '/')
         end
       end
-      # TODO: How about an error message?
+      # TODO: i18n!
+      flash[:error] = 'Sorry, email address or password must have been incorrect.'
       redirect back
     end
     get '/logout' do
       current_user && session[:user_id] = nil
+      # TODO: i18n!
+      flash[:notice] = "Your session has been closed."
       redirect back
     end
 
@@ -112,6 +119,7 @@ module Textbookr
         @contents = begin
           File.read(content_file)
         rescue
+          # TODO: put a flash message here?
           I18n.t(:no_contents)
         end
       end
@@ -127,15 +135,20 @@ module Textbookr
     # Save modified contents
     post '/*' do |path|
       # TODO: Make pretty.
-      if fragment = DataFragment.find_by_path(path)
-        fragment.update_attributes(params[:data_fragment])
-      else
-        params[:data_fragment][:path] = path
-        params[:data_fragment][:locale] = locale
-        DataFragment.create(params[:data_fragment])
-      end      
-      # TODO: Some sort of message?
-      redirect back
+      begin
+        if fragment = DataFragment.find_by_path(path)
+          fragment.update_attributes(params[:data_fragment])
+        else
+          params[:data_fragment][:path] = path
+          params[:data_fragment][:locale] = locale
+          DataFragment.create(params[:data_fragment])
+        end
+        # TODO: i18n!
+        flash[:notice] = 'The content fragment was saved successfully.'
+        redirect back
+      rescue
+        flash[:error] = 'Oops, there was a problem saving that content fragment...'
+      end
     end
   end
 end
