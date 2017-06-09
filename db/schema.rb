@@ -10,12 +10,12 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170607210438) do
+ActiveRecord::Schema.define(version: 20170609040933) do
 
   create_table "content_fragments", force: :cascade do |t|
-    t.string "path"
+    t.string "book"
     t.string "html"
-    t.string "location"
+    t.string "chapter"
     t.string "heading"
     t.string "locale"
   end

@@ -1,5 +1,7 @@
 module SinatraApp
   class ContentFragment < ActiveRecord::Base
-    # For now, the class being there is enough.
+    def path
+      '/'+[locale, book, chapter].join('/')
+    end
   end
 end

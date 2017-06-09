@@ -8,13 +8,36 @@ require 'i18n'
 require 'i18n/backend/fallbacks'
 require 'bcrypt'
 require 'sinatra/activerecord'
+require 'active_record/connection_adapters/sqlite3_adapter'
 require 'sinatra/strong-params'
 require 'sinatra/flash'
+require 'nokogiri'
 
 require_relative 'user_model'
 require_relative 'content_fragment_model'
 
 module SinatraApp 
+  # Adapted from http://joeyates.info/2010/01/31/regular-expressions-in-sqlite/
+  # Implements SQLite's REGEXP function in Ruby (like the commandline client's 'pcre' extension)
+  class ActiveRecord::ConnectionAdapters::SQLite3Adapter
+    def initialize(connection, logger, connection_options, config) # (db, logger, config)
+      # Verbatim from https://github.com/rails/rails/blob/e2e63770f59ce4585944447ee237ec722761e77d/activerecord/lib/active_record/connection_adapters/sqlite3_adapter.rb
+      super(connection, logger, config)
+      @active     = nil
+      @statements = StatementPool.new(self.class.type_cast_config_to_integer(config[:statement_limit]))
+      configure_connection
+      # Unchanged from source
+      connection.create_function('regexp', 2) do |func, pattern, expression|
+         regexp = Regexp.new(pattern.to_s, Regexp::IGNORECASE)
+         if expression.to_s.match(regexp)
+           func.result = 1
+         else
+           func.result = 0
+         end
+       end
+    end
+  end
+
   class Server < Sinatra::Base
     ###########################################################################
     # Configuration                                                           #
@@ -63,6 +86,23 @@ module SinatraApp
         I18n.locale
       end
     end
+
+    # Internal helpers
+
+    def build_toc
+      fragment = Nokogiri::HTML::Builder.new do |doc|
+        books = ContentFragment.where(locale: locale, chapter: '').order(:book).uniq
+        doc.ul {
+          books.each { |book|
+            doc.li(class: 'level_1') {
+              doc.a(href: book.path) { doc.text book.heading }
+              # recurse_chapters
+            }
+          }
+        }
+      end
+      @toc = fragment.to_html
+    end
     
     ###########################################################################
     # Routes                                                                  #
@@ -90,10 +130,12 @@ module SinatraApp
     end
 
     # Handling logging in and logging out.
+
     get '/login' do
       @user = User.new
       haml :login_form
     end
+    
     post '/login' do
       # TODO: What about strong params?
       if @user = User.find_by_email(params[:user_email])
@@ -108,6 +150,7 @@ module SinatraApp
       flash[:error] = 'Sorry, email address or password must have been incorrect.'
       redirect back
     end
+    
     get '/logout' do
       current_user && session[:user_id] = nil
       # TODO: i18n!
@@ -115,51 +158,55 @@ module SinatraApp
       redirect back
     end
 
-    # Displaying the contents themselves.
-    get '/*' do |path|
-      if fragment = ContentFragment.find_by_locale_and_path(locale, path)
-        @contents = fragment
-      else
-        cefr_level, chapter_name, heading = path.split("/")
-        params[:cefr_level]   = cefr_level   || 'a1'
-        params[:chapter_name] = chapter_name || 'intro'
-        params[:heading]      = heading      || '1'
-        content_file_name = "#{params[:cefr_level]}-#{params[:chapter_name]}.html"
-        content_file = Config.cache+'chapters'+locale.to_s+content_file_name
-        @contents = begin
-          File.read(content_file)
-        rescue
-          flash[:notice] = I18n.t(:no_contents)
-          String.new
-        end
-      end
-      toc_file = Config.cache+'tocs'+"#{locale}.html"
-      @toc = begin
-        File.read(toc_file)
-      rescue
-        flash[:notice] = I18n.t(:no_toc)
-        String.new
-      end
+    # Display contents
+    
+    get '/new' do
+      book = params[:content_fragment][:book] if params[:content_fragment]
+      @contents = ContentFragment.new(book: book || '')
+      build_toc
+      haml :contents
+    end
+
+    get '/:book' do |book|
+      @contents = ContentFragment.find_by_locale_and_book_and_chapter(locale, book, '')
+      @contents ||= ContentFragment.new(locale: locale, book: book)
+      build_toc
+      haml :contents
+    end
+
+    get '/:book/:chapter' do |book, chapter|
+      @contents = ContentFragment.find_by_locale_and_book_and_chapter(locale, book, chapter)
+      @contents ||= ContentFragment.new(locale: locale, book: book, chapter: chapter)
+      build_toc
       haml :contents
     end
 
     # Save modified contents
-    post '/*' do |path|
-      # TODO: Make pretty.
-      begin
-        if fragment = ContentFragment.find_by_path(path)
-          fragment.update_attributes(params[:content_fragment])
-        else
-          params[:content_fragment][:path] = path
-          params[:content_fragment][:locale] = locale
-          ContentFragment.create(params[:content_fragment])
-        end
-        # TODO: i18n!
+    
+    post '/new' do
+      params[:content_fragment].merge!(locale: locale)
+      fragment = ContentFragment.create(params[:content_fragment])
+      redirect fragment.path
+    end
+    
+    post '/:book' do |book|
+      fragment = ContentFragment.find_by_locale_and_book_and_chapter(locale, book, '')
+      if fragment.update_attributes(params[:content_fragment])
         flash[:notice] = 'The content fragment was saved successfully.'
-        redirect back
-      rescue
+      else
         flash[:error] = 'Oops, there was a problem saving that content fragment...'
       end
+      redirect back
+    end
+
+    post '/:book/:chapter' do |book, chapter|
+      fragment = ContentFragment.find_by_locale_and_book_and_chapter(locale, book, chapter)
+      if fragment.update_attributes(params[:content_fragment])
+        flash[:notice] = 'The content fragment was saved successfully.'
+      else
+        flash[:error] = 'Oops, there was a problem saving that content fragment...'
+      end
+      redirect back
     end
   end
 end
