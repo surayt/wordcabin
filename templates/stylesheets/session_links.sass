@@ -1,0 +1,19 @@
+#session_links
+  z-index: 1 // to get on top of tinymce
+  position: fixed
+  top: 0
+  right: 0
+  width: 10em
+  height: 5em
+  text-align: right
+  padding: .5em .75em 0 0
+  a
+    text-decoration: none
+#session_links,
+#session_links a
+  color: #333
+#content.user #session_links
+  a
+    display: none
+  &:hover a
+    display: inline-block

@@ -1,6 +1,21 @@
 nav#sidebar
   background-color: $orange
   
+  // layout
+  position: fixed
+  width: 300px
+  height: 100%
+  overflow: hidden
+  margin: 0
+  &:hover
+    overflow-y: auto
+  h3
+    display: none
+  form
+    position: fixed
+    bottom: .5em
+    left: .5em
+  
   div#logo
     padding: .5em 0 .3em 1em
     margin-right: 1em
@@ -19,6 +34,9 @@ nav#sidebar
     // levels 2 and 3
     ul, ul ul
       margin-top: 0
+    // layout
+    ul ul li
+      max-width: 275px
   
   // just the top level
   li.level_1 > ul

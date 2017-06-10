@@ -1,39 +1,25 @@
 (function() {
-  var config, resize;
+  var heading, text;
 
-  config = {};
-
-  resize = function() {
-    setTimeout((function() {
-      var max;
-      max = $('.mce-tinymce').css('border', 'none').parent().outerHeight();
-      max += -$('.mce-menubar.mce-toolbar').outerHeight();
-      max -= $('.mce-toolbar-grp').outerHeight();
-      max -= 45;
-      $('.mce-edit-area').height(max);
-    }), 200);
-  };
-
-  config = $.extend(config, {
-    resize: false,
-    width: '100%',
-    height: '100%',
-    autoresize: true,
-    selector: 'div#content textarea',
-    removed_menuitems: 'newdocument',
-    plugins: 'table save directionality',
+  heading = {
     statusbar: false,
-    toolbar: 'save | undo redo | bold italic | alignleft aligncenter alignright | bullist numlist outdent indent | ltr rtl'
-  });
-
-  $(window).on('resize', function() {
-    resize();
-  });
-
-  config.init_instance_callback = function(editor) {
-    resize();
+    menubar: false,
+    plugins: 'table directionality',
+    selector: 'textarea.heading',
+    toolbar: 'undo redo | table | ltr rtl',
+    height: '3.5em'
   };
 
-  tinymce.init(config);
+  tinymce.init(heading);
+
+  text = {
+    statusbar: false,
+    menubar: false,
+    plugins: 'table directionality lists autoheight',
+    selector: 'textarea.text',
+    toolbar: 'undo redo | formatselect bold italic underline | table alignleft aligncenter alignright | bullist numlist outdent indent | ltr rtl'
+  };
+
+  tinymce.init(text);
 
 }).call(this);

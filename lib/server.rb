@@ -1,6 +1,7 @@
 #!/usr/bin/env ruby
 
 require 'sinatra/base'
+require 'sinatra/reloader'
 require 'sass/plugin/rack'
 require 'rack/contrib'
 require 'hamlit'
@@ -15,6 +16,7 @@ require 'nokogiri'
 
 require_relative 'user_model'
 require_relative 'content_fragment_model'
+require_relative 'toc_model'
 
 module SinatraApp 
   # Adapted from http://joeyates.info/2010/01/31/regular-expressions-in-sqlite/
@@ -47,6 +49,9 @@ module SinatraApp
     register Sinatra::ActiveRecordExtension
     register Sinatra::StrongParams
     register Sinatra::Flash
+    configure :development do
+      register Sinatra::Reloader
+    end
     # Configure the application using user settings from config.rb.
     configure do
       set :environment, Config.environment
@@ -56,6 +61,7 @@ module SinatraApp
       set :bind, Config.bind_address
       set :port, Config.bind_port
       set :sessions, true
+      set :reload_templates, true
       # Internationalisation
       # http://recipes.sinatrarb.com/p/development/i18n
       # A locale is only considered 'available' if the
@@ -85,23 +91,14 @@ module SinatraApp
       def locale
         I18n.locale
       end
-    end
-
-    # Internal helpers
-
-    def build_toc
-      fragment = Nokogiri::HTML::Builder.new do |doc|
-        books = ContentFragment.where(locale: locale, chapter: '').order(:book).uniq
-        doc.ul {
-          books.each { |book|
-            doc.li(class: 'level_1') {
-              doc.a(href: book.path) { doc.text book.heading }
-              # recurse_chapters
-            }
-          }
-        }
+      
+      def content_class
+        if current_user && current_user.is_admin? && params[:view_mode] != 'preview'
+          :editor
+        else
+          :user
+        end
       end
-      @toc = fragment.to_html
     end
     
     ###########################################################################
@@ -163,21 +160,21 @@ module SinatraApp
     get '/new' do
       book = params[:content_fragment][:book] if params[:content_fragment]
       @contents = ContentFragment.new(book: book || '')
-      build_toc
+      @toc = TOC.new(locale)
       haml :contents
     end
 
     get '/:book' do |book|
       @contents = ContentFragment.find_by_locale_and_book_and_chapter(locale, book, '')
       @contents ||= ContentFragment.new(locale: locale, book: book)
-      build_toc
+      @toc = TOC.new(locale, book)
       haml :contents
     end
 
     get '/:book/:chapter' do |book, chapter|
       @contents = ContentFragment.find_by_locale_and_book_and_chapter(locale, book, chapter)
       @contents ||= ContentFragment.new(locale: locale, book: book, chapter: chapter)
-      build_toc
+      @toc = TOC.new(locale, book)
       haml :contents
     end
 
@@ -191,6 +188,10 @@ module SinatraApp
     
     post '/:book' do |book|
       fragment = ContentFragment.find_by_locale_and_book_and_chapter(locale, book, '')
+      unless fragment
+        params[:content_fragment].merge!(locale: locale)
+        fragment = ContentFragment.create(params[:content_fragment])
+      end
       if fragment.update_attributes(params[:content_fragment])
         flash[:notice] = 'The content fragment was saved successfully.'
       else
@@ -201,6 +202,10 @@ module SinatraApp
 
     post '/:book/:chapter' do |book, chapter|
       fragment = ContentFragment.find_by_locale_and_book_and_chapter(locale, book, chapter)
+      unless fragment
+        params[:content_fragment].merge!(locale: locale)
+        fragment = ContentFragment.create(params[:content_fragment])
+      end
       if fragment.update_attributes(params[:content_fragment])
         flash[:notice] = 'The content fragment was saved successfully.'
       else

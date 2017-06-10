@@ -21,22 +21,18 @@ task default: [:clean, :copy_legacy_files, :copy_assets, :compile_markdown_files
 
 desc "Start the webapp server on port 4567"
 task :server do
-  # TODO: remove next four lines ones legacy conversion complete.
-  puts "Deleting and re-linking #{Config.legacy_media}"
-  FileUtils.rm_f Config.legacy_media # Only required because 'ln -sf' is f***** up...
-  FileUtils.ln_s Config.data, Config.legacy_media
-  # Compile CoffeeScript - TODO: make this pretty, perhaps refactor it out into its own task?
-  sourcedir = (Config.templates+'javascripts').to_s
-  Dir.foreach(sourcedir) do |f_in|
-    unless f_in == '.' || f_in == '..'
-      js = CoffeeScript.compile File.read("#{sourcedir}/#{f_in}")
-      open "#{Config.javascript}/#{f_in.gsub('.coffee', '.js')}", 'w' do |f_out|
-        f_out.puts js
-      end
-    end
-  end
-  # Start the server via the Rack-up file
-  sh "ruby config.ru" # FIXME: why does rerun not work anymore?
+  `rackup` # Boot Webrick/Mongrel/Thin via Rack 
+end
+
+desc "Go through the motions of updating all submodules from their respective repositories"
+task :update_submodules do
+  command = "git submodule foreach ' \
+    git fetch origin; \
+    git checkout $(git rev-parse --abbrev-ref HEAD); \
+    git reset --hard origin/$(git rev-parse --abbrev-ref HEAD); \
+    git submodule update --recursive; \
+    git clean -dfx'"
+  sh command.gsub(/\n/, '')
 end
 
 # https://gist.github.com/vast/381881
@@ -46,8 +42,26 @@ task :console, :environment do |t, args|
   sh "pry -I . -r #{MAIN_CONFIG} -r #{Config.lib+'server.rb'} -e 'include SinatraApp; User.connection; ContentFragment.connection;'"
 end
 
+desc "Precompile CoffeeScript"
+task :precompile_coffeescript do
+  sourcedir = (Config.templates+'javascripts').to_s
+  Dir.foreach(sourcedir) do |f_in|
+    unless f_in == '.' || f_in == '..'
+      js = CoffeeScript.compile File.read("#{sourcedir}/#{f_in}")
+      open "#{Config.javascript}/#{f_in.gsub('.coffee', '.js')}", 'w' do |f_out|
+        puts "Writing #{f_in}"
+        f_out.puts js
+      end
+    end
+  end
+end  
+
 desc "Copy all assets (images, fonts, etc.) to their appropriate locations to be served by the webapp"
 task :copy_assets do
+  # TODO: remove next four lines ones legacy conversion complete.
+  puts "Deleting and re-linking #{Config.legacy_media}"
+  FileUtils.rm_f Config.legacy_media # Only required because 'ln -sf' is f***** up...
+  FileUtils.ln_s Config.data, Config.legacy_media
   # TODO: Replace by calling a proper asset pipeline at some point.
   global_assets  = Dir.glob(Config.media+'{images,fonts}')
   puts "Copying #{global_assets.join(', ')}"

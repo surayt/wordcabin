@@ -7,3 +7,6 @@
 [submodule "public/javascripts/tinymce"]
 	path = public/javascripts/tinymce
 	url = git@github.com:tinymce/tinymce-dist.git
+[submodule "public/javascripts/tinymce_plugins"]
+	path = public/javascripts/tinymce_plugins
+	url = git@github.com:sixtyfive/tinymce_plugins.git
