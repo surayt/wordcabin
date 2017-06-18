@@ -18,8 +18,24 @@ restore_toc_expansion_state = ->
     child = 1
   $('nav#sidebar li.level_1:nth-child(' + child + ') > ul').show()
   return
+  
+make_sidebar_user_resizable = (min, max, mainmin) ->
+  $('#divider').mousedown (e) ->
+    e.preventDefault()
+    $(document).mousemove (e) ->
+      e.preventDefault()
+      x = e.pageX - ($('#sidebar').offset().left)
+      if x > min and x < max and e.pageX < $(window).width() - mainmin
+        $('#sidebar').css 'width', x
+        $('#content').css 'margin-left', x
+      return
+    return
+  $(document).mouseup (e) ->
+    $(document).unbind 'mousemove'
+    return
 
 $(document).ready ->
+  make_sidebar_user_resizable(100, 1000, 200)
   # Restore or initially set TOC state
   restore_toc_scrollbar_position()
   restore_toc_expansion_state()

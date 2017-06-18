@@ -1,6 +1,7 @@
 !!!
 %html{lang: locale}
   %head
+  
     %meta{charset: 'utf-8'}/
     %link{href: '/stylesheets/main.css', rel: :stylesheet, type: 'text/css'}/
     %script{src: '/javascripts/jslibs/jquery.min.js', type: 'text/javascript'}
@@ -10,5 +11,20 @@
     %script{src: '/javascripts/flash_messages.js', type: 'text/javascript'}
     %script{src: '/javascripts/sidebar.js', type: 'text/javascript'}
     %script{src: '/javascripts/tinymce.js', type: 'text/javascript'}
+    
   %body{dir: :auto}
+    
+    = styled_flash
+  
+    %nav#sidebar
+      %div#logo
+        %a{href: '/'}
+          %img{src: '/images/logo_kl.png'}
+      %h3= I18n.t('toc')
+      = @toc.html
+      - if current_user && current_user.is_admin?
+        %form{method: :get, action: "/#{locale}/new"}
+          %input{type: :submit, value: '+'}
+      %div#divider
+          
     = yield

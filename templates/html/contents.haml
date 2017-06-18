@@ -1,16 +1,4 @@
-= styled_flash
-  
-%nav#sidebar
-  %div#logo
-    %a{href: '/'}
-      %img{src: '/images/logo_kl.png'}
-  %h3= I18n.t('toc')
-  = @toc.html
-  - if current_user && current_user.is_admin?
-    %form{method: :get, action: "/#{locale}/new"}
-      %input{type: :submit, value: '+'}
-
-%div#content{class: content_class}
+#content{class: content_class}
   = haml :session_links
   - if content_class == :editor
     %form{method: :post}

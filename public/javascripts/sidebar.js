@@ -1,5 +1,5 @@
 (function() {
-  var collapse_top_level_items, restore_toc_expansion_state, restore_toc_scrollbar_position;
+  var collapse_top_level_items, make_sidebar_user_resizable, restore_toc_expansion_state, restore_toc_scrollbar_position;
 
   collapse_top_level_items = function() {
     $('nav#sidebar li.level_1 > ul').hide();
@@ -23,7 +23,26 @@
     $('nav#sidebar li.level_1:nth-child(' + child + ') > ul').show();
   };
 
+  make_sidebar_user_resizable = function(min, max, mainmin) {
+    $('#divider').mousedown(function(e) {
+      e.preventDefault();
+      $(document).mousemove(function(e) {
+        var x;
+        e.preventDefault();
+        x = e.pageX - ($('#sidebar').offset().left);
+        if (x > min && x < max && e.pageX < $(window).width() - mainmin) {
+          $('#sidebar').css('width', x);
+          $('#content').css('margin-left', x);
+        }
+      });
+    });
+    return $(document).mouseup(function(e) {
+      $(document).unbind('mousemove');
+    });
+  };
+
   $(document).ready(function() {
+    make_sidebar_user_resizable(100, 1000, 200);
     restore_toc_scrollbar_position();
     restore_toc_expansion_state();
     $('nav#sidebar li.level_1 > a').click(function(e) {
