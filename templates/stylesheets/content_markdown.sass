@@ -1,0 +1,97 @@
+div#content article.markdown
+  color: $black
+
+  iframe, img
+    margin: 0 auto
+    margin-bottom: 1em
+    display: block
+      
+  table
+    margin: 0 auto 1em auto
+    width: 100%
+    border: none
+    border-collapse: collapse
+    text-align: center
+    .sixty-percent
+      width: 60%
+    .ninety-percent
+      width: 90%
+  tr
+    display: table-row
+    &:first-child
+      border-bottom: none
+    &:nth-of-type(even)
+      background: #e9e9e9
+    &:nth-of-type(odd)
+      background-color: #f6f6f6
+  th
+    font-weight: 900
+    color: $black
+    font-style: italic
+  td
+    padding: 6px 12px
+    strong
+      text-weight: normal
+      color: $red
+  th:first-child[rowspan]:not([rowspan="1"]), td:first-child[rowspan]:not([rowspan="1"])
+    background-color: $grey-lightest
+
+  h1
+    display: none
+  h2
+    background-color: $darkblue-lighter
+    color: $black
+    padding: .75em .5em 1em .5em
+    font-size: 12pt
+  h3
+    font-size: 11pt
+
+  table.chapter-heading
+    width: 100%
+    border: 2px solid $darkblue
+    margin: 0
+    height: 4em
+    td
+      background-color: $darkblue
+      color: $white
+      font-size: 16pt
+      font-weight: bold
+      border-right: none
+      white-space: nowrap
+      em
+        color: $white
+        font-style: italic
+
+    *[lang=syr]
+      font-size: 20pt
+
+    td:first-child
+      color: #548DD4
+      background-color: $white
+
+  .infobox
+    background-image: url(images/infobox.png)
+    background-repeat: no-repeat
+    font-style: italic
+    ul
+      list-style-type: disc
+      padding: .5em .25em 0 1.125em
+
+  .infobox-lesson
+    border: 1px solid $grey
+    padding: .5em .5em .5em 4.5em
+    list-style-type: none
+
+  .infobox-grammar
+    background-color: $darkblue-lightest
+    table
+      width: 90%
+
+  .infobox-culture
+    border: 1px solid $grey
+    padding: .5em .5em .5em 4.5em
+    list-style-type: none
+    font-size: 14pt
+    ul
+      list-style-type: none
+      padding: .5em 0 0 0
