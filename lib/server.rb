@@ -175,7 +175,7 @@ module SinatraApp
       @contents = ContentFragment.find_by_locale_and_book_and_chapter(locale, book, chapter)
       @contents ||= ContentFragment.new(locale: locale, book: book, chapter: chapter)
       @toc = TOC.new(locale, book)
-      haml :contents
+      haml :contents, layout: !request.xhr?
     end
 
     # Save modified contents
