@@ -3,11 +3,12 @@
   position: fixed
   top: 0
   right: 0
-  width: 10em
+  width: 7.5em
   height: 5em
   text-align: right
   padding: .5em .75em 0 0
-  a
+  a,
+  span
     text-decoration: none
 #session_links,
 #session_links a
@@ -18,4 +19,7 @@
     display: none
   &:hover a,
   &:hover span
-    display: inline-block
+    display: table-cell
+    padding: 0 .25em
+    background-color: white
+    
