@@ -80,7 +80,7 @@ end
 # TODO: Once a proper asset pipeline is installed, check to see if this is still needed.
 desc "Remove all automatically compiled or copied files from the cache and public dirs"
 task :clean do
-  asset_files = Dir.glob(Config.static+'{media,fonts,images,stylesheets/*.{css,map}}') # TODO: Remove 'media' once legacy conversion complete.
+  asset_files = Dir.glob(Config.static+'{media,fonts,images,javascripts/*.js,stylesheets/*.{css,map}}') # TODO: Remove 'media' once legacy conversion complete.
   cache_files = Dir.glob(Config.cache+'*')
   (asset_files+cache_files).each do |p|
     puts "Deleting #{p}"
