@@ -3,7 +3,7 @@
     -# TODO: i18n!
     %a{href: "/#{locale}/logout"} Logout
     - if current_user.is_admin?
-      |
+      %span= '|' # Won't display if not a string literal!
       - if params[:view_mode] != 'preview'
         -# TODO: i18n!
         %a{href: "?view_mode=preview"} Preview
