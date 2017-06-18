@@ -1,11 +1,5 @@
-div#content article.markdown
-  color: $black
+article.current
 
-  iframe, img
-    margin: 0 auto
-    margin-bottom: 1em
-    display: block
-      
   table
     margin: 0 auto 1em auto
     width: 100%
@@ -35,18 +29,8 @@ div#content article.markdown
       color: $red
   th:first-child[rowspan]:not([rowspan="1"]), td:first-child[rowspan]:not([rowspan="1"])
     background-color: $grey-lightest
-
-  h1
-    display: none
-  h2
-    background-color: $darkblue-lighter
-    color: $black
-    padding: .75em .5em 1em .5em
-    font-size: 12pt
-  h3
-    font-size: 11pt
-
-  table.chapter-heading
+    
+  header table
     width: 100%
     border: 2px solid $darkblue
     margin: 0
@@ -61,6 +45,21 @@ div#content article.markdown
       em
         color: $white
         font-style: italic
+        
+  iframe, img
+    margin: 0 auto
+    margin-bottom: 1em
+    display: block
+
+  h1
+    display: none
+  h2
+    background-color: $darkblue-lighter
+    color: $black
+    padding: .75em .5em 1em .5em
+    font-size: 12pt
+  h3
+    font-size: 11pt
 
     *[lang=syr]
       font-size: 20pt
