@@ -14,9 +14,9 @@ require 'sinatra/strong-params'
 require 'sinatra/flash'
 require 'nokogiri'
 
-require_relative 'user_model'
-require_relative 'content_fragment_model'
-require_relative 'toc_model'
+require_relative 'models/user'
+require_relative 'models/content_fragment'
+require_relative 'models/toc'
 
 module SinatraApp 
   # Adapted from http://joeyates.info/2010/01/31/regular-expressions-in-sqlite/
