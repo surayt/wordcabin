@@ -1,0 +1,10 @@
+%nav#sidebar
+  %div#logo
+    %a{href: '/'}
+      %img{src: '/images/logo_kl.png'}
+  %h3= I18n.t('toc')
+  = @toc.html if @toc
+  - if current_user && current_user.is_admin?
+    %form{method: :get, action: "/#{locale}/new"}
+      %input{type: :submit, value: '+'}
+  %div#divider
