@@ -5,7 +5,7 @@ module SinatraApp
     end
     
     def heading_and_text
-      '<header>'+heading+'</header><section>'+html+'</section'
+      "<header>#{heading}</header><section>#{html}</section>"
     end
   end
 end

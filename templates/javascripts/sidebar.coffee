@@ -33,8 +33,16 @@ make_sidebar_user_resizable = (min, max, mainmin) ->
   $(document).mouseup (e) ->
     $(document).unbind 'mousemove'
     return
+    
+add_content_fragment_delete_links = ->
+  $('body.editor #sidebar ul li a').each ->
+    href = $(this).attr('href')
+    $(this).append('&nbsp;<a href="'+href+'" class="btn delete" data-method="delete"><i class="fa fa-trash"></i></a>')
 
 $(document).ready ->
+  # Need to be able to delete content fragments
+  add_content_fragment_delete_links()
+  # See to it that the sidebar's width can be changed
   make_sidebar_user_resizable(100, 1000, 200)
   # Restore or initially set TOC state
   restore_toc_scrollbar_position()

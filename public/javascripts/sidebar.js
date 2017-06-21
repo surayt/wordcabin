@@ -1,5 +1,5 @@
 (function() {
-  var collapse_top_level_items, make_sidebar_user_resizable, restore_toc_expansion_state, restore_toc_scrollbar_position;
+  var add_content_fragment_delete_links, collapse_top_level_items, make_sidebar_user_resizable, restore_toc_expansion_state, restore_toc_scrollbar_position;
 
   collapse_top_level_items = function() {
     $('nav#sidebar li.level_1 > ul').hide();
@@ -41,7 +41,16 @@
     });
   };
 
+  add_content_fragment_delete_links = function() {
+    return $('body.editor #sidebar ul li a').each(function() {
+      var href;
+      href = $(this).attr('href');
+      return $(this).append('&nbsp;<a href="' + href + '" class="btn delete" data-method="delete"><i class="fa fa-trash"></i></a>');
+    });
+  };
+
   $(document).ready(function() {
+    add_content_fragment_delete_links();
     make_sidebar_user_resizable(100, 1000, 200);
     restore_toc_scrollbar_position();
     restore_toc_expansion_state();

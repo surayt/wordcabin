@@ -62,6 +62,7 @@ module SinatraApp
       set :port, Config.bind_port
       set :sessions, true
       set :reload_templates, true
+      set :method_override, true # To be able to use RESTful methods
       # Internationalisation
       # http://recipes.sinatrarb.com/p/development/i18n
       # A locale is only considered 'available' if the
@@ -210,6 +211,30 @@ module SinatraApp
         flash[:notice] = 'The content fragment was saved successfully.'
       else
         flash[:error] = 'Oops, there was a problem saving that content fragment...'
+      end
+      redirect back
+    end
+    
+    # Trash contents, obliterate them, destroy them
+    
+    delete '/:book' do |book|
+      if fragment = ContentFragment.find_by_locale_and_book_and_chapter(locale, book, '')
+        if fragment.destroy
+          flash[:notice] = 'The content fragment was destroyed successfully.'
+        else
+          flash[:error] = 'Unable to delete content fragment!'
+        end
+      end
+      redirect to('/')
+    end
+    
+    delete '/:book/:chapter' do |book, chapter|
+      if fragment = ContentFragment.find_by_locale_and_book_and_chapter(locale, book, chapter)
+        if fragment.destroy
+          flash[:notice] = 'The content fragment was destroyed successfully.'
+        else
+          flash[:error] = 'Unable to delete content fragment!'
+        end
       end
       redirect back
     end

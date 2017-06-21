@@ -1,6 +1,6 @@
 = haml :sidebar
 
-#content{class: content_class}
+#content
   = haml :session_links
   - if content_class == :editor
     %form{method: :post}
