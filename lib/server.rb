@@ -1,5 +1,7 @@
 #!/usr/bin/env ruby
 
+require 'sinatra'
+require 'logger'
 require 'sinatra/base'
 require 'sinatra/reloader'
 require 'sass/plugin/rack'
@@ -51,6 +53,8 @@ module SinatraApp
     register Sinatra::Flash
     configure :development do
       register Sinatra::Reloader
+      # It's simple. It works. Leave me alone.
+      $logger = Logger.new('development.log')
     end
     # Configure the application using user settings from config.rb.
     configure do
@@ -160,7 +164,7 @@ module SinatraApp
     
     get '/new' do
       book = params[:content_fragment][:book] if params[:content_fragment]
-      @contents = ContentFragment.new(book: book || '')
+      @contents = ContentFragment.new(params[:content_fragment])
       @toc = TOC.new(locale)
       haml :contents
     end
@@ -183,8 +187,13 @@ module SinatraApp
     
     post '/new' do
       params[:content_fragment].merge!(locale: locale)
-      fragment = ContentFragment.create(params[:content_fragment])
-      redirect fragment.path
+      fragment = ContentFragment.new(params[:content_fragment])
+      if fragment.save
+        redirect fragment.path
+      else
+        flash[:error] = fragment.errors.to_a.last # We shall content ourselves with showing one error.
+        redirect back
+      end
     end
     
     post '/:book' do |book|
@@ -196,7 +205,7 @@ module SinatraApp
       if fragment.update_attributes(params[:content_fragment])
         flash[:notice] = 'The content fragment was saved successfully.'
       else
-        flash[:error] = 'Oops, there was a problem saving that content fragment...'
+        flash[:error] = fragment.errors.to_a.last
       end
       redirect back
     end
@@ -210,7 +219,7 @@ module SinatraApp
       if fragment.update_attributes(params[:content_fragment])
         flash[:notice] = 'The content fragment was saved successfully.'
       else
-        flash[:error] = 'Oops, there was a problem saving that content fragment...'
+        flash[:error] = fragment.errors.to_a.last
       end
       redirect back
     end

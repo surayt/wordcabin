@@ -29,22 +29,30 @@
       color: $red
   th:first-child[rowspan]:not([rowspan="1"]), td:first-child[rowspan]:not([rowspan="1"])
     background-color: $grey-lightest
-    
-  header table
-    width: 100%
-    border: 2px solid $darkblue
-    margin: 0
-    height: 4em
-    td
-      background-color: $darkblue
-      color: $white
-      font-size: 16pt
-      font-weight: bold
-      border-right: none
-      white-space: nowrap
-      em
+  
+  header
+    background-color: $darkblue-lighter
+    font-size: 12pt
+    padding: .25em 0 0 .25em
+    font-weight: bold
+    table
+      width: 100%
+      border: 2px solid $darkblue
+      margin: 0
+      height: 3.75em
+      td
+        background-color: $darkblue
         color: $white
-        font-style: italic
+        font-size: 16pt
+        font-weight: bold
+        border-right: none
+        white-space: nowrap
+        em
+          color: $white
+          font-style: italic
+
+  ol li
+    font-weight: bold
         
   iframe, img
     margin: 0 auto

@@ -1,5 +1,16 @@
 (function() {
-  var add_content_fragment_delete_links, collapse_top_level_items, make_sidebar_user_resizable, restore_toc_expansion_state, restore_toc_scrollbar_position;
+  var add_content_fragment_delete_links, collapse_top_level_items, make_sidebar_resizable, make_toc_expandable, restore_toc_expansion_state, restore_toc_scrollbar_position;
+
+  make_toc_expandable = function() {
+    $('nav#sidebar li.level_1 > a').click(function(e) {
+      collapse_top_level_items();
+      Cookies.set('wordcabin_toc_scrollbar_expansion_state', $(this).parent().index());
+      $(this).parent().children('ul').toggle();
+    });
+    return $('nav#sidebar li.level_2 a').click(function(e) {
+      Cookies.set('wordcabin_toc_scrollbar_position', $('nav#sidebar').scrollTop());
+    });
+  };
 
   collapse_top_level_items = function() {
     $('nav#sidebar li.level_1 > ul').hide();
@@ -23,7 +34,11 @@
     $('nav#sidebar li.level_1:nth-child(' + child + ') > ul').show();
   };
 
-  make_sidebar_user_resizable = function(min, max, mainmin) {
+  make_sidebar_resizable = function() {
+    var mainmin, max, min;
+    min = 100;
+    max = 3600;
+    mainmin = 200;
     $('#divider').mousedown(function(e) {
       e.preventDefault();
       $(document).mousemove(function(e) {
@@ -50,18 +65,11 @@
   };
 
   $(document).ready(function() {
-    add_content_fragment_delete_links();
-    make_sidebar_user_resizable(100, 1000, 200);
+    make_sidebar_resizable();
     restore_toc_scrollbar_position();
     restore_toc_expansion_state();
-    $('nav#sidebar li.level_1 > a').click(function(e) {
-      collapse_top_level_items();
-      Cookies.set('wordcabin_toc_scrollbar_expansion_state', $(this).parent().index());
-      $(this).parent().children('ul').toggle();
-    });
-    $('nav#sidebar li.level_2 a').click(function(e) {
-      Cookies.set('wordcabin_toc_scrollbar_position', $('nav#sidebar').scrollTop());
-    });
+    make_toc_expandable();
+    add_content_fragment_delete_links();
   });
 
 }).call(this);

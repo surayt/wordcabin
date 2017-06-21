@@ -22,9 +22,8 @@ module SinatraApp
       depth = 1
       toc = ''
       book_level_fragments.each do |f|
-        name = Sanitize.clean(f.heading || f.book)
         toc << "<ul>\n"
-        toc << "<li class='level_#{depth}'><a href='#{f.path}'>#{name}</a></li>\n"
+        toc << "<li class='level_#{depth}'><a href='#{f.path}'>#{f.heading_without_html}</a></li>\n"
         # Get them *all* to save on SQL queries - the only other query will be the one for the specific fragment selected from the TOC
         # Also, we're only selecting the info we need to save on execution and network time
         chapter_level_fragments = ContentFragment.select('id, locale, book, chapter, heading').where("locale = ? AND book = ? AND length(chapter) > 0", f.locale, f.book).order(:chapter)
