@@ -10,9 +10,3 @@
 [submodule "public/javascripts/tinymce_plugins"]
 	path = public/javascripts/tinymce_plugins
   url = git@github.com:sixtyfive/tinymce_plugins.git
-[submodule "public/stylesheets/fontawesome"]
-  path = public/stylesheets/font-awesome
-  url = git@github.com:FortAwesome/Font-Awesome.git
-[submodule "public/javascripts/jquery-ujs"]
-  path = public/javascripts/jquery-ujs
-  url = git@github.com:rails/jquery-ujs.git
