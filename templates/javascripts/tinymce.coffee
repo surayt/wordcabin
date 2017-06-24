@@ -11,8 +11,8 @@ tinymce.init heading
 text = {
   statusbar: false,
   menubar: false,
-  plugins: 'table directionality lists autoheight media',
+  plugins: 'table directionality lists autoheight media link',
   selector: 'textarea.text',
-  toolbar: 'undo redo | formatselect bold italic underline | table alignleft aligncenter alignright | bullist numlist outdent indent | ltr rtl | removeformat | media'}
+  toolbar: 'undo redo | formatselect bold italic underline | table alignleft aligncenter alignright | bullist numlist outdent indent | ltr rtl | link media | removeformat'}
   
 tinymce.init text
