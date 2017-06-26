@@ -31,3 +31,4 @@ gem 'bcrypt-ruby'
 gem 'tux'
 gem 'sinatra-flash'
 gem 'coffee-script'
+gem 'json' # required by TinyMCE uploadfile plugin

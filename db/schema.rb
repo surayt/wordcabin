@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170609040933) do
+ActiveRecord::Schema.define(version: 20170625205217) do
 
   create_table "content_fragments", force: :cascade do |t|
     t.string "book"
@@ -18,6 +18,12 @@ ActiveRecord::Schema.define(version: 20170609040933) do
     t.string "chapter"
     t.string "heading"
     t.string "locale"
+  end
+
+  create_table "file_attachments", force: :cascade do |t|
+    t.string "filename"
+    t.string "content_type"
+    t.binary "binary_data"
   end
 
   create_table "users", force: :cascade do |t|

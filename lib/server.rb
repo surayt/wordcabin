@@ -1,24 +1,27 @@
 #!/usr/bin/env ruby
 
-require 'sinatra'
-require 'logger'
 require 'sinatra/base'
+require 'sinatra/json'
+require 'sinatra/strong-params'
+require 'sinatra/flash'
+require 'sinatra/activerecord'
 require 'sinatra/reloader'
+
+require 'logger'
+require 'json'
 require 'sass/plugin/rack'
 require 'rack/contrib'
 require 'hamlit'
 require 'i18n'
 require 'i18n/backend/fallbacks'
 require 'bcrypt'
-require 'sinatra/activerecord'
 require 'active_record/connection_adapters/sqlite3_adapter'
-require 'sinatra/strong-params'
-require 'sinatra/flash'
 require 'nokogiri'
 
 require_relative 'models/user'
 require_relative 'models/content_fragment'
 require_relative 'models/toc'
+require_relative 'models/file_attachment'
 
 module SinatraApp 
   # Adapted from http://joeyates.info/2010/01/31/regular-expressions-in-sqlite/
@@ -46,16 +49,30 @@ module SinatraApp
     ###########################################################################
     # Configuration                                                           #
     ###########################################################################
-  
+    use Rack::Session::Cookie, secret: "we'll leave it at this during development..."
+                              #, :key => 'rack.session',
+                              #  :domain => 'localhost',
+                              #  :path => '/',
+                              #  :expire_after => 1.year.to_i,
+                              #  :secret => "TODO: use something sensible!"
+
     # Load extensions.
     register Sinatra::ActiveRecordExtension
     register Sinatra::StrongParams
     register Sinatra::Flash
+
+    # Things only needed for development, not production.
     configure :development do
-      register Sinatra::Reloader
       # It's simple. It works. Leave me alone.
       $logger = Logger.new('development.log')
+      # Doesn't recognize all changes but should be good enough.
+      register Sinatra::Reloader
+      also_reload Config.lib+"*/*.rb"
+      after_reload {$logger.info('reloaded')}
+      set :reload_templates, true
+      enable :reloader # Should not be needed ... meh.
     end
+    
     # Configure the application using user settings from config.rb.
     configure do
       set :environment, Config.environment
@@ -64,8 +81,7 @@ module SinatraApp
       set :haml, {escape_html: false, format: :html5}
       set :bind, Config.bind_address
       set :port, Config.bind_port
-      set :sessions, true
-      set :reload_templates, true
+      set :json_content_type, 'text/html' # Required by TinyMCE uploadfile plugin
       set :method_override, true # To be able to use RESTful methods
       # Internationalisation
       # http://recipes.sinatrarb.com/p/development/i18n
@@ -158,6 +174,37 @@ module SinatraApp
       # TODO: i18n!
       flash[:notice] = "Your session has been closed."
       redirect back
+    end
+
+    # Deal with audio/video files, etc. that need to be uploaded and then
+    # served from out of the database.
+
+    get '/files/:id.?:extension?' do |id,ext| # second one is unused
+      file = FileAttachment.find(id)
+      headers['Content-Type'] = file.content_type
+      file.binary_data
+    end
+
+    post '/upload' do
+      begin
+        params[:document][:file][:content_type] = params[:document][:file][:type]
+        file = FileAttachment.new(params[:document][:file])
+        if file.save
+          $logger.info(file.inspect)
+          url  = "/#{locale}/files/#{file.id}"
+          url += ".#{file.extension}" if file.extension
+          json(document: {
+            url: url,
+            title: params['document']['title']
+          })
+        else
+          $logger.warn(file.errors.full_messages.first)
+          json(error: {message: file.errors.full_messages.first})
+        end
+      rescue => e
+        $logger.warn(e.inspect)
+        json(error: {message: e.inspect})
+      end
     end
 
     # Display contents
