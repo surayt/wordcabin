@@ -1,7 +1,7 @@
 require 'fileutils'
 require 'nokogiri'
 require 'pathname'
-MAIN_CONFIG = Pathname('config')+'sinatra_app.rb'
+MAIN_CONFIG = Pathname('config')+'config.rb'
 require_relative MAIN_CONFIG
 require 'sinatra/activerecord/rake'
 

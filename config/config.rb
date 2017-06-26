@@ -22,7 +22,7 @@ media:        r+'data'+'aop'+'template',
 lib:          r+'lib',
 legacy_media: r+'public'+'media',
 translations: r+'locales',
-templates:    r+'views',
+templates:    r+'templates',
 stylesheets:  r+'stylesheets',
 javascripts:  r+'javascripts',
 static_files: r+'public'
