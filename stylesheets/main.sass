@@ -1,9 +1,11 @@
 @import 'bourbon-neat/normalize/normalize'
 @import 'bourbon-neat/bourbon/bourbon'
 @import 'bourbon-neat/neat/neat-helpers'
-@import 'colors'
-@import 'error_screen'
-@import 'session_links'
+
+@import 'early-load/colors'
+@import 'early-load/error_screen'
+@import 'early-load/session_links'
+
 @import 'bourbon-neat/neat/neat'
 
 html, body
@@ -31,17 +33,17 @@ body
 .fa-input
   font-family: 'FontAwesome', sans-serif
 
-@import 'language_list'
-@import 'i18n'
-@import 'sidebar'
-@import 'sidebar_resizing'
-@import 'sidebar_delete_links'
-@import 'flash_messages'
-@import 'login_form'
-@import 'content'
-@import 'content_tinymce_old'
-@import 'content_markdown'
-@import 'content_tinymce_new'
+@import 'views/language_list'
+@import 'views/i18n'
+@import 'views/sidebar'
+@import 'features/sidebar_resizing'
+@import 'features/sidebar_delete_links'
+@import 'views/flash_messages'
+@import 'views/login_form'
+@import 'views/content'
+@import 'contents/tinymce_old'
+@import 'contents/markdown'
+@import 'contents/tinymce_new'
 
 div.mce-branding-powered-by
   display: none !important
