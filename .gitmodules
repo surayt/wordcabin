@@ -1,0 +1,6 @@
+[submodule "stylesheets/bourbon-neat"]
+	path = stylesheets/bourbon-neat
+	url = git@github.com:sixtyfive/csslibs.git
+[submodule "javascripts/jslibs"]
+	path = javascripts/jslibs
+	url = git@github.com:sixtyfive/jslibs.git
