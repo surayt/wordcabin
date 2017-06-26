@@ -12,7 +12,8 @@ module SinatraApp
     end
     
     def extension
-      Rack::Mime::MIME_TYPES.invert[content_type] || filename.split('.').last || nil
+      ext = (Rack::Mime::MIME_TYPES.invert[content_type] || filename.split('.').last || nil)
+      ext.gsub(/\./, '') if ext
     end
   end
 end
