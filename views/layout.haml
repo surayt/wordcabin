@@ -1,0 +1,12 @@
+!!!
+%html{lang: locale}
+
+  %head
+    %meta{charset: 'utf-8'}/
+    %link{href: "/assets/main.css", rel: :stylesheet, type: 'text/css'}/
+    %script{src: "/tinymce/tinymce.min.js", type: 'text/javascript'}
+    %script{src: "/assets/main.js", type: 'text/javascript'}
+    
+  %body{dir: :auto, class: content_class}
+    = styled_flash
+    = yield

@@ -72,6 +72,7 @@ GEM
       nokogiri (>= 1.6.0)
       ruby_parser (~> 3.5)
     i18n (0.8.4)
+    jsmin (1.0.1)
     json (2.0.2)
     libv8 (3.16.14.19)
     listen (3.1.5)
@@ -107,6 +108,8 @@ GEM
       method_source (~> 0.8.1)
       slop (~> 3.4)
     rack (2.0.3)
+    rack-cache (1.7.0)
+      rack (>= 0.4)
     rack-contrib (1.2.0)
       rack (>= 0.9.1)
     rack-protection (2.0.0)
@@ -198,6 +201,7 @@ DEPENDENCIES
   hamlit
   html2haml
   i18n
+  jsmin
   json
   kramdown!
   minitest
@@ -206,6 +210,7 @@ DEPENDENCIES
   normalize-scss
   pandoc-ruby
   pry
+  rack-cache
   rack-contrib
   rake
   rubocop

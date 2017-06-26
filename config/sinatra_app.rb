@@ -4,33 +4,31 @@
 
 require 'pathname'
 require 'ostruct'
-c = {root: Pathname(__FILE__).dirname.parent.expand_path}
-Config = OpenStruct.new(c.merge({
+c={root: Pathname(__FILE__).dirname.parent.expand_path};r=c[:root]
+Config=OpenStruct.new(c.merge({
 
-######################################
-# Edit below to fit your environment #
-######################################
+################################
+# Edit below to fit your needs #
+################################
 
 environment:  'development', # Either development or production
-bind_address: '0.0.0.0', # 0.0.0.0 to bind to all interfaces, otherwise the if's IP
-bind_port:    4567,
-# Important paths follow
-data:         c[:root]+'data'+'aop',
-media:        c[:root]+'data'+'aop'+'template',
-cache:        c[:root]+'cache',
-lib:          c[:root]+'lib',
-templates:    c[:root]+'templates',
-haml:         c[:root]+'templates'+'html',
-sass:         c[:root]+'templates'+'stylesheets',
-coffee:       Pathname('../javascripts'), # Must be relative to haml path
-static:       c[:root]+'public',
-css:          c[:root]+'public'+'stylesheets',
-javascript:   c[:root]+'public'+'javascripts',
-legacy_media: c[:root]+'public'+'media',
-locales:      c[:root]+'locales'
+bind_address: '0.0.0.0',     # Use 0.0.0.0 to bind to all interfaces, otherwise the interface's IP address
+bind_port:    4567,          # Ports below 1024 will require root access, default is 4567
 
-###############
-# Leave alone #
-###############
+# Important paths follow
+
+data:         r+'data'+'aop',
+media:        r+'data'+'aop'+'template',
+lib:          r+'lib',
+legacy_media: r+'public'+'media',
+translations: r+'locales',
+templates:    r+'views',
+stylesheets:  r+'stylesheets',
+javascripts:  r+'javascripts',
+static_files: r+'public'
+
+#####################
+# Leave alone again #
+#####################
 
 }))

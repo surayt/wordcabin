@@ -7,11 +7,19 @@ require 'sinatra/flash'
 require 'sinatra/activerecord'
 require 'sinatra/reloader'
 
-require 'logger'
-require 'json'
-require 'sass/plugin/rack'
-require 'rack/contrib'
 require 'hamlit'
+
+# TODO: Figure out which of these can be removed
+# (some are already require'd by Sinatra modules above)
+require 'logger'
+require 'sprockets'
+require 'json'
+require 'sass'
+require 'sass/plugin/rack'
+require 'uglifier'
+require 'coffee-script'
+require 'execjs'
+require 'rack/contrib'
 require 'i18n'
 require 'i18n/backend/fallbacks'
 require 'bcrypt'
@@ -75,28 +83,28 @@ module SinatraApp
     
     # Configure the application using user settings from config.rb.
     configure do
+      # Stuff (I just wanted a comment here for good looks)
       set :environment, Config.environment
       set :root, Config.root
-      set :views, Config.haml
+      set :views, Config.templates
       set :haml, {escape_html: false, format: :html5}
       set :bind, Config.bind_address
       set :port, Config.bind_port
       set :json_content_type, 'text/html' # Required by TinyMCE uploadfile plugin
       set :method_override, true # To be able to use RESTful methods
+      set :public_folder, Config.static_files
+      # Sprockets
+      set :assets, Sprockets::Environment.new(root)
+      assets.append_path Config.javascripts
+      assets.append_path Config.stylesheets
       # Internationalisation
       # http://recipes.sinatrarb.com/p/development/i18n
       # A locale is only considered 'available' if the
       # corresponding file in locales/*.yml contains at
       # least one string!
       I18n::Backend::Simple.send(:include, I18n::Backend::Fallbacks)
-      I18n.load_path = Dir[Config.locales+'*.yml']
+      I18n.load_path = Dir[Config.translations+'*.yml']
       I18n.backend.load_translations
-      # CSS compiler
-      Sass::Plugin.options[:style] = :expanded
-      Sass::Plugin.options[:cache_location] = (Config.cache+'sass').to_s
-      Sass::Plugin.options[:template_location] = (Config.sass).to_s
-      Sass::Plugin.options[:css_location] = (Config.css).to_s
-      use Sass::Plugin::Rack
     end
     
     ###########################################################################
@@ -126,19 +134,16 @@ module SinatraApp
     # Routes                                                                  #
     ###########################################################################
 
-    # Prepending the rest of the route with the locale code.
+    # Prepend all routes with locale info, but skip asset route
     before '/:locale/?*' do
-      pass if request.path_info.match /^\/javascripts/
+      pass if request.path_info.match /^\/assets/
       I18n.locale = params[:locale]
       request.path_info = '/'+params[:splat].first
     end
-
-    # Compiled CoffeeScript
-    # https://jaketrent.com/post/serve-coffeescript-with-sinatra/
-    get '/javascripts/*.js' do
-      filename = params[:splat].first
-      fullpath = (Config.coffee+filename).to_s
-      coffee fullpath.to_sym # Weird quirk that it must be a symbol...
+    # Serve assets through Sprockets
+    get '/assets/*' do
+      env["PATH_INFO"].sub!('/assets', '')
+      settings.assets.call(env)
     end
     
     # Landing page showing the list of available L1s.
@@ -147,13 +152,11 @@ module SinatraApp
       haml :language_list
     end
 
-    # Handling logging in and logging out.
-
+    # Handle logging in and logging out.
     get '/login' do
       @user = User.new
       haml :login_form
     end
-    
     post '/login' do
       # TODO: What about strong params?
       if @user = User.find_by_email(params[:user_email])
@@ -168,7 +171,6 @@ module SinatraApp
       flash[:error] = 'Sorry, email address or password must have been incorrect.'
       redirect back
     end
-    
     get '/logout' do
       current_user && session[:user_id] = nil
       # TODO: i18n!
@@ -176,15 +178,12 @@ module SinatraApp
       redirect back
     end
 
-    # Deal with audio/video files, etc. that need to be uploaded and then
-    # served from out of the database.
-
+    # Deal with audio/video files, etc.
     get '/files/:id.?:extension?' do |id,ext| # second one is unused
       file = FileAttachment.find(id)
       headers['Content-Type'] = file.content_type
       file.binary_data
     end
-
     post '/upload' do
       begin
         params[:document][:file][:content_type] = params[:document][:file][:type]
@@ -208,21 +207,18 @@ module SinatraApp
     end
 
     # Display contents
-    
     get '/new' do
       book = params[:content_fragment][:book] if params[:content_fragment]
       @contents = ContentFragment.new(params[:content_fragment])
       @toc = TOC.new(locale)
       haml :contents
     end
-
     get '/:book' do |book|
       @contents = ContentFragment.find_by_locale_and_book_and_chapter(locale, book, '')
       @contents ||= ContentFragment.new(locale: locale, book: book)
       @toc = TOC.new(locale, book)
       haml :contents
     end
-
     get '/:book/:chapter' do |book, chapter|
       @contents = ContentFragment.find_by_locale_and_book_and_chapter(locale, book, chapter)
       @contents ||= ContentFragment.new(locale: locale, book: book, chapter: chapter)
@@ -231,7 +227,6 @@ module SinatraApp
     end
 
     # Save modified contents
-    
     post '/new' do
       params[:content_fragment].merge!(locale: locale)
       fragment = ContentFragment.new(params[:content_fragment])
@@ -242,7 +237,6 @@ module SinatraApp
         redirect back
       end
     end
-    
     post '/:book' do |book|
       fragment = ContentFragment.find_by_locale_and_book_and_chapter(locale, book, '')
       unless fragment
@@ -256,7 +250,6 @@ module SinatraApp
       end
       redirect back
     end
-
     post '/:book/:chapter' do |book, chapter|
       fragment = ContentFragment.find_by_locale_and_book_and_chapter(locale, book, chapter)
       unless fragment
@@ -271,8 +264,7 @@ module SinatraApp
       redirect back
     end
     
-    # Trash contents, obliterate them, destroy them
-    
+    # Trash, obliterate and destroy contents
     delete '/:book' do |book|
       if fragment = ContentFragment.find_by_locale_and_book_and_chapter(locale, book, '')
         if fragment.destroy
@@ -283,7 +275,6 @@ module SinatraApp
       end
       redirect to('/')
     end
-    
     delete '/:book/:chapter' do |book, chapter|
       if fragment = ContentFragment.find_by_locale_and_book_and_chapter(locale, book, chapter)
         if fragment.destroy
