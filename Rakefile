@@ -4,10 +4,9 @@ require 'pathname'
 
 MAIN_CONFIG = Pathname('config')+'sinatra_app.rb'
 require_relative MAIN_CONFIG
-require_relative Config.lib+'parser.rb'
 
 require 'sinatra/activerecord/rake'
-require 'coffee-script'
+# require 'coffee_script'
 
 namespace :db do
   task :load_config do
@@ -88,81 +87,6 @@ task :clean do
   end
 end
 
-desc "Compile the Markdown file(s) specified by the arguments into HTML"
-task :compile_markdown_file, [:locale, :cefr_level, :chapter_name] do |t, args|
-  unless args.to_a.size == 3
-    fail "You must supply locale, cefr_level and chapter_name"
-  end
-  SinatraApp::Parser.parse(args) # knows what file to write to based on the args
-end
-
-desc "Compile all Markdown files into HTML"
-task :compile_markdown_files do
-  # Anything with 'test' in its path is excluded as those files could be rather large...
-  %x{find #{Config.data} -type f ! -path '*test*' -name '*.md'}.split("\n").each do |source|
-    # By way of '=~' and named matching groups, Ruby directly creates a local variable for each group
-    /.*\/(?<cefr_level>.*)-(?<chapter_name>.*)\/texts\/(?<locale>[a-z][a-z])\/.*/ =~ source
-    # This is only to be able to have a 'test' folder, at the moment
-    if (cefr_level || chapter_name || locale).nil?
-      /.*\/(?<name>.*)\/texts\/(?<locale>[a-z][a-z])\/.*/ =~ source
-      cefr_level = chapter_name = name
-    end
-    # File by file...
-    Rake::Task[:compile_markdown_file].reenable
-    Rake::Task[:compile_markdown_file].invoke(locale, cefr_level, chapter_name)
-  end
-end
-
-desc "Compile one TOC per locale from the available HTML files, also incorporating chapter TOCs"
-task :build_tocs do
-  locale = '' # Will be redefined later, needs to be available within this scope, though
-  Dir.glob(Config.cache+'chapters'+'??') do |locale_dir|
-    # Build a hash of hashes containing the TOC structure
-    toc = {}
-    %x{find #{locale_dir} -type f -name '*.html' | sort}.split("\n").each do |chapter_file|
-      /.*\/(?<locale>[a-z][a-z])\/(?<cefr_level>.*)-(?<chapter_name>.*)\.html/ =~ chapter_file
-      toc[cefr_level] = {} unless toc[cefr_level]
-      toc[cefr_level][chapter_name] = {contents: nil} unless toc[cefr_level][chapter_name]
-      # Need to read the chapter-internal TOC now, if one exists
-      chapter_toc_file = chapter_file.gsub(/\/chapters\//, '/tocs/')
-      if File.exist?(chapter_toc_file)
-        chapter_toc = File.read(chapter_toc_file)
-        @html = Nokogiri::HTML::DocumentFragment.parse(chapter_toc)
-        @html.css('a').each do |link|
-          link.attributes['href'].value = "/#{locale}/#{cefr_level}/#{chapter_name}#{link.attributes['href']}"
-        end
-        toc[cefr_level][chapter_name][:contents] = @html.to_html(encoding: 'UTF-8')
-      end
-    end
-    # Read the hash of hashes, building a nested <ul>
-    # structure from it to be displayed in the webapp
-    @html = Nokogiri::HTML::DocumentFragment.parse('')
-    Nokogiri::HTML::Builder.with(@html) do |d|
-      d.ul {
-        toc.each do |cefr_level,v1|
-          d.li(class: 'level_1') {
-            d.a(href: "/#{locale}/#{cefr_level}") {d.text cefr_level}
-            d.ul {
-              v1.each do |chapter_name,v2|
-                d.li(class: 'level_2') {
-                  d.a(href: "/#{locale}/#{cefr_level}/#{chapter_name}") {d.text chapter_name}
-                  d.cdata v2[:contents] if v2[:contents]
-                }
-              end
-            }
-          }
-        end
-      }
-    end
-    # Write the nested <ul> structure to a cache file
-    toc_file = Config.cache+'tocs'+"#{locale}.html"
-    File.open(toc_file, 'w') do |f|
-      puts "Writing #{toc_file}"
-      f.write @html.to_html(encoding: 'UTF-8')
-    end
-  end
-end
-
 # Yes, this task duplicates a lot of what's in the build task,
 # but that's fine as it is only meant to be here until the
 # transition to Markdown input files is complete.
@@ -183,14 +107,5 @@ task :copy_legacy_files do
         end
       end
     end
-  end
-end
-
-desc "Convert all existing Word XML files to Markdown"
-task :convert_docx_files do
-  %x[find data/aop/chapters/word -type f -name '*.docx'].split("\n").each do |source|
-    target_file_name = source.gsub(/\/word\//, '/test/texts/').gsub(/\.docx/, '.md')
-    FileUtils.mkdir_p File.dirname(target_file_name)
-    sh "pandoc -f docx -t markdown_github -o '#{target_file_name}' '#{source}'"
   end
 end
