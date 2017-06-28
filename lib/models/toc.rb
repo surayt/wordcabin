@@ -44,10 +44,10 @@ module SinatraApp
         children_fragments.each do |f|
           f['path'] = "/#{[f['locale'], f['book'], f['chapter']].join('/')}"
           f['name'] = Sanitize.clean([f['chapter'], f['heading']].join(' '))
-          toc << "<li class='level_#{depth}'><a href='#{f['path']}'>#{f['name']}</a></li>\n"
+          toc << "<li class='level_#{depth}'><a href='#{f['path']}'>#{f['name']}</a>\n"
           toc << drill_deeper(fragments, f)
         end
-        toc << "</ul>\n"
+        toc << "</ul></li>\n"
       end
       toc
     end

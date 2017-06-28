@@ -43,8 +43,8 @@ add_content_fragment_delete_links = ->
     $(this).append('&nbsp;<a href="'+href+'" class="btn delete" data-method="delete"><i class="fa fa-trash"></i></a>')
 
 $(document).ready ->
-  # restore_toc_scrollbar_position()
-  # restore_toc_expansion_state()
-  # make_toc_expandable()
+  restore_toc_scrollbar_position()
+  restore_toc_expansion_state()
+  make_toc_expandable()
   add_content_fragment_delete_links()
   return

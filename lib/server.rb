@@ -132,6 +132,8 @@ module SinatraApp
       def first_content_fragment(_locale)
         if fragment = @first_content_fragment.where(locale: _locale).first
           fragment.book
+        else
+          'New book or language version' # TODO: i18n!
         end
       end
     end
@@ -238,15 +240,14 @@ module SinatraApp
       params[:content_fragment].merge!(locale: locale)
       fragment = ContentFragment.new(params[:content_fragment])
       if fragment.save
-        redirect fragment.path
+        redirect to(URI.escape(fragment.path))
       else
         flash[:error] = fragment.errors.to_a.last # We shall content ourselves with showing one error.
         redirect back
       end
     end
     post '/:book' do |book|
-      fragment = ContentFragment.find_by_locale_and_book_and_chapter(locale, book, '')
-      unless fragment
+      unless fragment = ContentFragment.find_by_locale_and_book_and_chapter(locale, book, '')
         params[:content_fragment].merge!(locale: locale)
         fragment = ContentFragment.create(params[:content_fragment])
       end
@@ -258,8 +259,7 @@ module SinatraApp
       redirect back
     end
     post '/:book/:chapter' do |book, chapter|
-      fragment = ContentFragment.find_by_locale_and_book_and_chapter(locale, book, chapter)
-      unless fragment
+      unless fragment = ContentFragment.find_by_locale_and_book_and_chapter(locale, book, chapter)
         params[:content_fragment].merge!(locale: locale)
         fragment = ContentFragment.create(params[:content_fragment])
       end
