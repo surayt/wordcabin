@@ -1,50 +1,28 @@
-@import 'bourbon-neat/normalize/normalize'
-@import 'bourbon-neat/bourbon/bourbon'
-@import 'bourbon-neat/neat/neat-helpers'
+@import 'normalize/sass/normalize'
+@import 'bourbon/core/bourbon'
+@import 'neat/core/neat'
+@import 'bitters/core/base'
 
-@import 'early-load/colors'
-@import 'early-load/error_screen'
-@import 'early-load/session_links'
-
-@import 'bourbon-neat/neat/neat'
-
-html, body
-  height: 100%
-  margin-top: 0
-  margin-left: 0
-  margin-bottom: 0
-  margin-right: 1px
-
-#content, #content form
-  height: 100%
-  padding: 0
-  margin: 0
-
-body
-  font-family: 'Helvetica Neue', 'Helvetica', 'Arial', sans-serif
-  font-size: 14px
-  line-height: 20px
-  font-weight: 400
-  text-align: left
-  -webkit-font-smoothing: antialiased
-  font-smoothing: antialiased
-  min-width: 1200px // TODO: make properly responsive!
-
-.fa-input
-  font-family: 'FontAwesome', sans-serif
+@import 'modules/mixins'
+@import 'modules/colors'
+@import 'modules/error_screen'
+@import 'modules/session_links'
 
 @import 'modules/language_list'
 @import 'modules/i18n'
+@import 'modules/layouts'
+
 @import 'modules/sidebar'
-@import 'features/sidebar_resizing'
 @import 'features/sidebar_delete_links'
+// @import 'features/sidebar_resizing'
+
 @import 'modules/flash_messages'
 @import 'modules/login_form'
-@import 'modules/content'
-@import 'contents/tinymce_old'
-@import 'contents/markdown'
-@import 'contents/tinymce_new'
-@import 'features/icons_for_file_links.sass'
 
-div.mce-branding-powered-by
-  display: none !important
+@import 'modules/content_user'
+
+@import 'modules/content_editor'
+@import 'article/tinymce_old'
+@import 'article/markdown'
+@import 'article/tinymce_new'
+@import 'features/icons_for_file_links.sass'

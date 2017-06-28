@@ -1,8 +1,17 @@
 %article#language_list
   -# TODO: i18n!
-  %h1 Please choose the language you would like to read the book in:
+  %h1
+    %img{src: '/images/logo_kl.png'}
+    %br/
+    Choose your language of instruction to use the learning portal.
+  = haml :session_links
+  %p
+    All courses are in alpha version!
   %ul
     - @locales.each do |locale|
       %li
-        %a{href: "/#{locale}/a1"}= I18n.t(locale)
-  = haml :session_links
+        %a.tile{href: "/#{locale}/#{first_content_fragment(locale)}"}= I18n.t(locale)
+  #footer
+    %img{src: '/images/FU_Bergen3.jpg'}
+    %img{src: '/images/Cam_Lpz.jpg'}
+    %img{src: '/images/StE_EU2.jpg'}

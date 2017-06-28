@@ -1,0 +1,36 @@
+body
+  font-family: 'Helvetica Neue', 'Helvetica', 'Arial', sans-serif
+  font-size: 14px
+  #grid-container
+    +grid-container
+  .fa-input
+    font-family: 'FontAwesome', sans-serif
+
+$neat-grid:   (columns: 5,  gutter: 1em)             // default
+$small-grid:  (columns: 1,  gutter: 0, media: 300px) // phone
+$medium-grid: (columns: 6,  gutter: 0, media: 500px) // laptop
+$large-grid:  (columns: 12, gutter: 0, media: 960px) // desktop
+$editor-grid: (columns: 12, gutter: 0, media: 0px)   // admin
+
+body.user
+  min-width: 550px
+  #sidebar
+    +grid-column(1)
+    margin: 0
+    min-width: 100px
+  #content
+    +grid-column(4)
+    margin-left: calc(20%)
+
+body.editor
+  #sidebar
+    +grid-column(3, $editor-grid)
+    border-right: 1px solid #ccc
+  #content
+    +grid-column(9, $editor-grid)
+    margin-left: calc(25%)
++grid-media($editor-grid)
+  body
+    min-width: 600px
+    #sidebar
+      min-width: 150px

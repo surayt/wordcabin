@@ -66,8 +66,8 @@ add_content_fragment_delete_links = ->
 
 $(document).ready ->
   make_sidebar_resizable()
-  restore_toc_scrollbar_position()
-  restore_toc_expansion_state()
-  make_toc_expandable()
+  # restore_toc_scrollbar_position()
+  # restore_toc_expansion_state()
+  # make_toc_expandable()
   add_content_fragment_delete_links()
   return

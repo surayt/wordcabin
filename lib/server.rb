@@ -128,6 +128,12 @@ module SinatraApp
           :user
         end
       end
+      
+      def first_content_fragment(_locale)
+        if fragment = @first_content_fragment.where(locale: _locale).first
+          fragment.book
+        end
+      end
     end
     
     ###########################################################################
@@ -149,6 +155,7 @@ module SinatraApp
     # Landing page showing the list of available L1s.
     get '/' do
       @locales = I18n.available_locales
+      @first_content_fragment = ContentFragment.where(chapter: '').order(:book)
       haml :language_list
     end
 
@@ -164,7 +171,7 @@ module SinatraApp
           session[:user_id] = @user.id
           # TODO: i18n!
           flash[:notice] = "Welcome, #{current_user.email.split('@').first}!"
-          redirect to(params[:referer] || '/')
+          redirect to(URI.escape(params[:referer]) || '/') # The referer may and *will* contain special characters!
         end
       end
       # TODO: i18n!
