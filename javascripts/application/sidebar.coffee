@@ -36,28 +36,6 @@ restore_toc_expansion_state = ->
     child = 1
   $('nav#sidebar li.level_1:nth-child(' + child + ') > ul').show()
   return
-  
-# https://codepen.io/bghryct/pen/HpuaG
-# https://stackoverflow.com/questions/30276340/split-pane-jquery-plugin-for-touch-devices
-# TODO: make this bit of code work with TinyMCE!
-# TODO: save position in cookie!
-make_sidebar_resizable = ->
-  min = 100
-  max = 3600
-  mainmin = 200
-  $('#divider').mousedown (e) ->
-    e.preventDefault()
-    $(document).mousemove (e) ->
-      e.preventDefault()
-      x = e.pageX - ($('#sidebar').offset().left)
-      if x > min and x < max and e.pageX < $(window).width() - mainmin
-        $('#sidebar').css 'width', x
-        $('#content').css 'margin-left', x
-      return
-    return
-  $(document).mouseup (e) ->
-    $(document).unbind 'mousemove'
-    return
     
 add_content_fragment_delete_links = ->
   $('body.editor #sidebar ul li a').each ->
@@ -65,7 +43,6 @@ add_content_fragment_delete_links = ->
     $(this).append('&nbsp;<a href="'+href+'" class="btn delete" data-method="delete"><i class="fa fa-trash"></i></a>')
 
 $(document).ready ->
-  make_sidebar_resizable()
   # restore_toc_scrollbar_position()
   # restore_toc_expansion_state()
   # make_toc_expandable()
