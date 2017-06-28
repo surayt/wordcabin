@@ -22,8 +22,8 @@ module SinatraApp
       depth = 1
       toc = ''
       book_level_fragments.each do |f|
-        toc << "<ul>\n"
-        toc << "<li class='level_#{depth}'><a href='#{f.path}'>#{f.heading_without_html}</a></li>\n"
+        toc << "<ul class='level_#{depth}'>\n"
+        toc << "<li class='level_#{depth}'><a href='#{URI.encode(f.path)}'>#{f.heading_without_html}</a></li>\n"
         # Get them *all* to save on SQL queries - the only other query will be the one for the specific fragment selected from the TOC
         # Also, we're only selecting the info we need to save on execution and network time
         chapter_level_fragments = ContentFragment.select('id, locale, book, chapter, heading').where("locale = ? AND book = ? AND length(chapter) > 0", f.locale, f.book).order(:chapter)
@@ -36,15 +36,17 @@ module SinatraApp
     end
 
     def drill_deeper(fragments, parent = nil)
-      depth = parent ? parent['chapter'].count('.')+2 : 2
+      depth = parent ? parent['chapter'].count('.') + 2 : 2
       toc = ''
       children_fragments = reduce_fragments(fragments, depth, parent)
       if children_fragments.any?
-        toc << "<ul>\n"
+        display_depth = parent ? parent['chapter'].split('.').length + 2 : depth # TODO: test thoroughly!
+        toc << "<ul class='level_#{display_depth}'>\n"
         children_fragments.each do |f|
+          display_depth = f['chapter'].split('.').length + 1 # TODO: this too!
           f['path'] = "/#{[f['locale'], f['book'], f['chapter']].join('/')}"
           f['name'] = Sanitize.clean([f['chapter'], f['heading']].join(' '))
-          toc << "<li class='level_#{depth}'><a href='#{f['path']}'>#{f['name']}</a>\n"
+          toc << "<li class='level_#{display_depth}'><a href='#{URI.encode(f['path'])}'>#{f['name']}</a>\n"
           toc << drill_deeper(fragments, f)
         end
         toc << "</ul></li>\n"

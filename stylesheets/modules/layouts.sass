@@ -14,15 +14,33 @@ $medium-grid: (columns: 6,  gutter: 0, media: 500px) // laptop
 $large-grid:  (columns: 12, gutter: 0, media: 960px) // desktop
 $editor-grid: (columns: 12, gutter: 0, media: 0px)   // admin
 
+// mobile FIRST, so we start by disabling interface elements,
+// then start re-enabling them as we work upwards through the
+// breaking point definitions.
+// the only exception is the menu button, which has to vanish
+// on bigger devices as it's only meant for those with limited
+// real estate.
+
+#sidebar
+  display: none
+#content
+  +grid-column(1)
+  +grid-shift(0)
+  margin-left: none
+  
++grid-media($small-grid)
+  #sidebar
+    display: block
+  #content
+    +grid-column(4)
+    margin-left: calc(20%)
+    
 body.user
   min-width: 550px
   #sidebar
     +grid-column(1)
     margin: 0
     min-width: 100px
-  #content
-    +grid-column(4)
-    margin-left: calc(20%)
 
 body.editor
   #sidebar
