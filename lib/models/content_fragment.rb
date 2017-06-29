@@ -7,6 +7,9 @@ module SinatraApp
     validates :locale, presence: {message: 'must and should be present'}, length: {is: 2, message: 'must be in ISO 3166-1 Alpha 2 encoding.'}
     validates :chapter, uniqueness: {scope: [:locale, :book], message: 'must be unique within book and locale.'}
     validates :chapter, format: {with: /^[\d+.]*\d+$/, multiline: true, message: 'must be in a format like 2.3.4.5, etc.'}, allow_blank: true
+    # TODO: check whether:
+    # - new element would, given its chapter string, have a parent?
+    # - element to be deleted has children that need to be deleted?
   
     def path
       ('/'+[locale, book, chapter].join('/')).chomp('/')

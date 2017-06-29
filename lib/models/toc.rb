@@ -20,17 +20,21 @@ module SinatraApp
   
     def build_toc(book_level_fragments)
       depth = 1
+      li_spaces = '  '
       toc = ''
       book_level_fragments.each do |f|
         toc << "<ul class='level_#{depth}'>\n"
-        toc << "<li class='level_#{depth}'><a href='#{URI.encode(f.path)}'>#{f.heading_without_html}</a></li>\n"
+        toc << "#{li_spaces}<li class='level_#{depth}'><a href='#{URI.encode(f.path)}'>#{f.heading_without_html}</a></li>\n"
         # Get them *all* to save on SQL queries - the only other query will be the one for the specific fragment selected from the TOC
         # Also, we're only selecting the info we need to save on execution and network time
-        chapter_level_fragments = ContentFragment.select('id, locale, book, chapter, heading').where("locale = ? AND book = ? AND length(chapter) > 0", f.locale, f.book).order(:chapter)
+        chapter_level_fragments = ContentFragment.
+          select('id, locale, book, chapter, heading').
+          where("locale = ? AND book = ? AND length(chapter) > 0", f.locale, f.book).
+          order(:chapter)
         # Convert ActiveRecord results into Array of Hashes
         # https://stackoverflow.com/questions/15427936/how-to-convert-activerecord-results-into-a-array-of-hashes
         toc << drill_deeper(chapter_level_fragments.map(&:attributes))
-        toc << "</ul>\n"
+        toc << "</ul>"
       end
       toc
     end
@@ -41,15 +45,17 @@ module SinatraApp
       children_fragments = reduce_fragments(fragments, depth, parent)
       if children_fragments.any?
         display_depth = parent ? parent['chapter'].split('.').length + 2 : depth # TODO: test thoroughly!
-        toc << "<ul class='level_#{display_depth}'>\n"
+        ul_spaces = ''; (display_depth-1).times {ul_spaces << '  '}
+        toc << "#{ul_spaces}<ul class='level_#{display_depth}'>\n"
         children_fragments.each do |f|
           display_depth = f['chapter'].split('.').length + 1 # TODO: this too!
+          li_spaces = ''; (display_depth).times {li_spaces << '  '}
           f['path'] = "/#{[f['locale'], f['book'], f['chapter']].join('/')}"
           f['name'] = Sanitize.clean([f['chapter'], f['heading']].join(' '))
-          toc << "<li class='level_#{display_depth}'><a href='#{URI.encode(f['path'])}'>#{f['name']}</a>\n"
+          toc << "#{li_spaces}<li class='level_#{display_depth}'><a href='#{URI.encode(f['path'])}'>#{f['name']}</a>\n"
           toc << drill_deeper(fragments, f)
         end
-        toc << "</ul></li>\n"
+        toc << "#{ul_spaces}</ul>\n#{ul_spaces}</li>\n"
       end
       toc
     end
