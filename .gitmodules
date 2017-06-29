@@ -1,6 +1,3 @@
-[submodule "javascripts/jslibs"]
-	path = javascripts/jslibs
-	url = git@github.com:sixtyfive/jslibs.git
 [submodule "public/tinymce"]
 	path = public/tinymce
 	url = git@github.com:tinymce/tinymce-dist.git
