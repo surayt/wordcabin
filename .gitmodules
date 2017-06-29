@@ -25,3 +25,9 @@
 [submodule "stylesheets/bitters"]
 	path = stylesheets/bitters
 	url = git@github.com:thoughtbot/bitters.git
+[submodule "javascripts/jquery"]
+	path = javascripts/jquery
+	url = git@github.com:jquery/jquery-dist.git
+[submodule "javascripts/js-cookie"]
+	path = javascripts/js-cookie
+	url = git@github.com:js-cookie/js-cookie.git
