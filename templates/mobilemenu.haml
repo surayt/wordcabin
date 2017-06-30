@@ -1,0 +1,6 @@
+%nav#mobilemenu
+  %a.button{href: '#'}
+    %i.fa.fa-bars
+  %img.logo{src: '/images/logo_kl.png'}
+  - if @toc
+    %div.toc= @toc.html
