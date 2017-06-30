@@ -23,6 +23,5 @@ gem 'jsmin'
 gem 'sprockets'
 gem 'sqlite3'
 gem 'bcrypt'
-gem 'bcrypt-ruby'
 gem 'coffee-script'
 gem 'json' # required by TinyMCE uploadfile plugin
