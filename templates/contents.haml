@@ -14,5 +14,5 @@
         %input{type: :text, name: 'content_fragment[chapter]', value: @contents.chapter}
         %input{type: :submit, value: 'Save'}
   - else
-    %article.current
-      = @contents.heading_and_text
+    %main.articles
+      %article.current= @contents.heading_and_text

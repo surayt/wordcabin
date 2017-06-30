@@ -18,19 +18,24 @@ module SinatraApp
     
     private
     
-    def link_class(p1, p2)
+    def link_class(p1, p2, next_marker = false)
       p1 = p1[3..p1.length]
       p2 = URI.encode p2
-      p1 == p2 ? " class='active'" : ''
+      classes = []
+      classes << :active if p1 == p2
+      classes << :next if !classes.any? && next_marker
+      classes.any? ? " class='#{classes.join(' ')}'" : ''
     end
   
     def build_toc(book_level_fragments, uripath = nil)
+      next_marker = false
       depth = 1
       li_spaces = '  '
       toc = ''
       book_level_fragments.each do |f|
         lp = URI.encode(f.path)
-        lc = link_class(lp, uripath)
+        lc = link_class(lp, uripath, next_marker)
+        next_marker = true if lc != '' # The current element is active, so we need to mark the next element soon!
         toc << "<ul class='level_#{depth}'>\n"
         toc << "#{li_spaces}<li class='level_#{depth}'><a#{lc} href='#{lp}'>#{f.heading_without_html}</a></li>\n"
         # Get them *all* to save on SQL queries - the only other query will be the one for the specific fragment selected from the TOC
@@ -41,13 +46,13 @@ module SinatraApp
           order(:chapter)
         # Convert ActiveRecord results into Array of Hashes
         # https://stackoverflow.com/questions/15427936/how-to-convert-activerecord-results-into-a-array-of-hashes
-        toc << drill_deeper(chapter_level_fragments.map(&:attributes), nil, uripath)
+        toc << drill_deeper(chapter_level_fragments.map(&:attributes), nil, uripath, next_marker)
         toc << "</ul>"
       end
       toc
     end
 
-    def drill_deeper(fragments, parent = nil, uripath = nil)
+    def drill_deeper(fragments, parent = nil, uripath = nil, next_marker = false)
       depth = parent ? parent['chapter'].count('.') + 2 : 2
       toc = ''
       children_fragments = reduce_fragments(fragments, depth, parent)
@@ -60,9 +65,10 @@ module SinatraApp
           li_spaces = ''; (display_depth).times {li_spaces << '  '}
           f['path'] = URI.encode("/#{[f['locale'], f['book'], f['chapter']].join('/')}")
           f['name'] = Sanitize.clean([f['chapter'], f['heading']].join(' '))
-          f['class'] = link_class(f['path'], uripath)
+          f['class'] = link_class(f['path'], uripath, next_marker)
+          next_marker = true if f['class'] != ''
           toc << "#{li_spaces}<li class='level_#{display_depth}'><a#{f['class']} href='#{f['path']}'>#{f['name']}</a>\n"
-          toc << drill_deeper(fragments, f, uripath)
+          toc << drill_deeper(fragments, f, uripath, next_marker)
         end
         toc << "#{ul_spaces}</ul>\n#{ul_spaces}</li>\n"
       end
