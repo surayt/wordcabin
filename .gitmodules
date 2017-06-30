@@ -28,3 +28,6 @@
 [submodule "javascripts/js-cookie"]
 	path = javascripts/js-cookie
 	url = git@github.com:js-cookie/js-cookie.git
+[submodule "javascripts/jscroll"]
+	path = javascripts/jscroll
+	url = git@github.com:pklauzinski/jscroll.git
