@@ -21,7 +21,6 @@ module SinatraApp
     def link_class(p1, p2)
       p1 = p1[3..p1.length]
       p2 = URI.encode p2
-      $logger.info "#{p1} <> #{p2} ?"
       p1 == p2 ? " class='active'" : ''
     end
   
