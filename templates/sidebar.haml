@@ -3,7 +3,7 @@
     %a{href: '/'}
       %img{src: '/images/logo_kl.png'}
   %h3= I18n.t('toc')
-  = @toc.html if @toc
+  = @toc.html(request.path_info) if @toc
   - if current_user && current_user.is_admin?
     %form{method: :get, action: "/#{locale}/new"}
       %input{type: :hidden, name: 'content_fragment[book]', value: params[:book]}

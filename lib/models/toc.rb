@@ -7,24 +7,33 @@ module SinatraApp
       @book = book
     end
     
-    def html
+    def html(uripath = nil)
       fragments = if @book
         ContentFragment.where(locale: @locale, book: @book, chapter: '')
       else
         ContentFragment.where(locale: @locale, chapter: '')
       end
-      build_toc(fragments.order(:book).uniq)
+      build_toc(fragments.order(:book).uniq, uripath)
     end
     
     private
+    
+    def link_class(p1, p2)
+      p1 = p1[3..p1.length]
+      p2 = URI.encode p2
+      $logger.info "#{p1} <> #{p2} ?"
+      p1 == p2 ? " class='active'" : ''
+    end
   
-    def build_toc(book_level_fragments)
+    def build_toc(book_level_fragments, uripath = nil)
       depth = 1
       li_spaces = '  '
       toc = ''
       book_level_fragments.each do |f|
+        lp = URI.encode(f.path)
+        lc = link_class(lp, uripath)
         toc << "<ul class='level_#{depth}'>\n"
-        toc << "#{li_spaces}<li class='level_#{depth}'><a href='#{URI.encode(f.path)}'>#{f.heading_without_html}</a></li>\n"
+        toc << "#{li_spaces}<li class='level_#{depth}'><a#{lc} href='#{lp}'>#{f.heading_without_html}</a></li>\n"
         # Get them *all* to save on SQL queries - the only other query will be the one for the specific fragment selected from the TOC
         # Also, we're only selecting the info we need to save on execution and network time
         chapter_level_fragments = ContentFragment.
@@ -33,13 +42,13 @@ module SinatraApp
           order(:chapter)
         # Convert ActiveRecord results into Array of Hashes
         # https://stackoverflow.com/questions/15427936/how-to-convert-activerecord-results-into-a-array-of-hashes
-        toc << drill_deeper(chapter_level_fragments.map(&:attributes))
+        toc << drill_deeper(chapter_level_fragments.map(&:attributes), nil, uripath)
         toc << "</ul>"
       end
       toc
     end
 
-    def drill_deeper(fragments, parent = nil)
+    def drill_deeper(fragments, parent = nil, uripath = nil)
       depth = parent ? parent['chapter'].count('.') + 2 : 2
       toc = ''
       children_fragments = reduce_fragments(fragments, depth, parent)
@@ -50,10 +59,11 @@ module SinatraApp
         children_fragments.each do |f|
           display_depth = f['chapter'].split('.').length + 1 # TODO: this too!
           li_spaces = ''; (display_depth).times {li_spaces << '  '}
-          f['path'] = "/#{[f['locale'], f['book'], f['chapter']].join('/')}"
+          f['path'] = URI.encode("/#{[f['locale'], f['book'], f['chapter']].join('/')}")
           f['name'] = Sanitize.clean([f['chapter'], f['heading']].join(' '))
-          toc << "#{li_spaces}<li class='level_#{display_depth}'><a href='#{URI.encode(f['path'])}'>#{f['name']}</a>\n"
-          toc << drill_deeper(fragments, f)
+          f['class'] = link_class(f['path'], uripath)
+          toc << "#{li_spaces}<li class='level_#{display_depth}'><a#{f['class']} href='#{f['path']}'>#{f['name']}</a>\n"
+          toc << drill_deeper(fragments, f, uripath)
         end
         toc << "#{ul_spaces}</ul>\n#{ul_spaces}</li>\n"
       end

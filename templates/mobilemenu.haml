@@ -3,4 +3,4 @@
     %i.fa.fa-bars
   %img.logo{src: '/images/logo_kl.png'}
   - if @toc
-    %div.toc= @toc.html
+    %div.toc= @toc.html(request.path_info)
