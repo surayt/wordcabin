@@ -8,11 +8,11 @@ body
   a:focus
     outline: none
 
-$neat-grid:   (columns: 5,  gutter: 1em)             // default
-$small-grid:  (columns: 1,  gutter: 0, media: 300px) // phone
-$medium-grid: (columns: 6,  gutter: 0, media: 500px) // laptop
-$large-grid:  (columns: 12, gutter: 0, media: 960px) // desktop
-$editor-grid: (columns: 12, gutter: 0, media: 0px)   // admin
+$neat-grid:   (columns: 1,  gutter: 1em)             // default (phone)
+$small-grid:  (columns: 1,  gutter: 0, media: 380px) // larger than small phone, unused atm
+$medium-grid: (columns: 6,  gutter: 0, media: 650px) // larger than netbook
+$large-grid:  (columns: 12, gutter: 0, media: 960px) // larger than laptop, unused atm
+$editor-grid: (columns: 12, gutter: 0, media: 0px)   // only if admin logged in
 
 // mobile FIRST, so we start by disabling interface elements,
 // then start re-enabling them as we work upwards through the
@@ -21,36 +21,37 @@ $editor-grid: (columns: 12, gutter: 0, media: 0px)   // admin
 // on bigger devices as it's only meant for those with limited
 // real estate.
 
-#sidebar
-  display: none
-#content
-  +grid-column(1)
-  +grid-shift(0)
-  margin-left: none
-  
-+grid-media($small-grid)
-  #sidebar
-    display: block
-  #content
-    +grid-column(4)
-    margin-left: calc(20%)
-    
 body.user
-  min-width: 550px
   #sidebar
+    display: none
+  #content
     +grid-column(1)
-    margin: 0
-    min-width: 100px
+
+// laptops and desktops, NO admin logged in
+
+body.user
+  +grid-media($medium-grid)
+    #mobilemenu
+      display: none
+    #sidebar
+      display: block
+      +grid-column(1.5)
+    #content
+      +grid-column(4.5)
+      margin-left: calc(25%)
+      padding: 0 1em 0 1em
+      
+// any device, WITH admin logged in
 
 body.editor
-  #sidebar
-    +grid-column(3, $editor-grid)
-    border-right: 1px solid #ccc
-  #content
-    +grid-column(9, $editor-grid)
-    margin-left: calc(25%)
-+grid-media($editor-grid)
-  body
-    min-width: 600px
+  +grid-media($editor-grid)
+    #mobilemenu
+      display: none
     #sidebar
-      min-width: 150px
+      display: block
+      +grid-column(3)
+      border-right: 1px solid #ccc
+    #content
+      +grid-column(9)
+      margin-left: calc(30%)
+      padding: 0 1em 0 1em
