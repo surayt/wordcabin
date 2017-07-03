@@ -1,5 +1,4 @@
 fr:
-  hello_world: Bonjour le monde!
   ar: Arabe
   de: Allemand
   en: Anglais
@@ -7,3 +6,10 @@ fr:
   nl: Néerlandais
   sv: Suédois
   tr: Turc
+  read_in_ar: قراءة الكتاب باللغة العربية
+  read_in_de: Das Buch auf Deutsch lesen
+  read_in_en: Read the book in English
+  read_in_fr: Lire le livre en français
+  read_in_nl: Lees het boek in het Nederlands
+  read_in_sv: Läs boken på svenska
+  read_in_tr: Kitabı Türkçe oku

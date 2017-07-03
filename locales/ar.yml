@@ -1,5 +1,4 @@
 ar:
-  hello_world: هالو يا عالم
   ar: عربي
   de: ألماني
   en: إنكليزي
@@ -7,3 +6,10 @@ ar:
   nl: هولندي
   sv: سويدي
   tr: تركي
+  read_in_ar: قراءة الكتاب باللغة العربية
+  read_in_de: Das Buch auf Deutsch lesen
+  read_in_en: Read the book in English
+  read_in_fr: Lire le livre en français
+  read_in_nl: Lees het boek in het Nederlands
+  read_in_sv: Läs boken på svenska
+  read_in_tr: Kitabı Türkçe oku

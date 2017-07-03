@@ -3,3 +3,19 @@
   top: 50%
   left: 50%
   transform: translate(-50%, -60%)
+
+$button-blue: shade($blue, 25%)
+@mixin button
+  padding: 3px 7px
+  border-radius: 3px
+  background: $button-blue
+  color: contrast-switch($button-blue)
+  transition: all, 0.1s
+  box-shadow: inset 0px 1px 2px 0px rgba(255,255,255, 0.5)
+  border: 1px solid shade($button-blue, 25%)
+  cursor: pointer
+  display: inline-block
+  $button-hover-blue: tint($button-blue, 5%)
+  &:hover
+    background-color: $button-hover-blue
+    color: contrast-switch($button-hover-blue)

@@ -1,5 +1,4 @@
 de:
-  hello_world: Hallo Welt!
   ar: Arabisch
   de: Deutsch
   en: Englisch
@@ -7,6 +6,14 @@ de:
   nl: Niederländisch
   sv: Schwedisch
   tr: Türkisch
+  read_in_ar: قراءة الكتاب باللغة العربية
+  read_in_de: Das Buch auf Deutsch lesen
+  read_in_en: Read the book in English
+  read_in_fr: Lire le livre en français
+  read_in_nl: Lees het boek in het Nederlands
+  read_in_sv: Läs boken på svenska
+  read_in_tr: Kitabı Türkçe oku
+  
   no_contents: Die gewählte Seite ist nicht verfügbar.
   no_toc: Kein Inhaltsverzeichnis für diesen Abschnitt verfügbar.
   toc: Inhaltsverzeichnis

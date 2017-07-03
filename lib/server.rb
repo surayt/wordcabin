@@ -122,11 +122,14 @@ module SinatraApp
       end
       
       def content_class
+        c = []
         if current_user && current_user.is_admin? && params[:view_mode] != 'preview'
-          :editor
+          c << :editor
         else
-          :user
+          c << :user
         end
+        c << :language_list if request.path_info.split('/').length < 2
+        c.length > 0 ? c.join(' ') : nil
       end
       
       def first_content_fragment(_locale)
