@@ -31,7 +31,27 @@ add_content_fragment_delete_links = ->
 #  alert()
 #  e.preventDefault()
 
+toggle_sidebar = ->
+  $('#logo, #sidebar').toggleClass('hidden')
+  $('#content').toggleClass('fullscreen')
+  $('#sidebar-handle i').toggleClass('fa-chevron-right')
+
+make_sidebar_hideable = ->
+  $('#sidebar-handle').click (e) ->
+    toggle_sidebar()
+    if $('#sidebar').hasClass('hidden')
+      Cookies.set 'wordcabin_toc_sidebar_hidden', 'true'
+    else
+      Cookies.set 'wordcabin_toc_sidebar_hidden', 'false'
+
+restore_sidebar_state = ->
+  hidden = Cookies.get('wordcabin_toc_sidebar_hidden')
+  if hidden == 'true'
+    toggle_sidebar()
+
 $(document).ready ->
+  make_sidebar_hideable()
+  restore_sidebar_state()
   make_toc_expandable()
   restore_toc_state()
   add_content_fragment_delete_links()

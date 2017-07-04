@@ -18,3 +18,11 @@ text = {
   branding: false}
   
 tinymce.init text
+
+# TODO: find a way around TinyMCE grabbing the even before we do...
+$(window).bind 'keydown', (event) ->
+  if event.ctrlKey or event.metaKey
+    switch String.fromCharCode(event.which).toLowerCase()
+      when 's'
+        event.preventDefault()
+        $('form.content_fragment').submit()

@@ -1,5 +1,5 @@
 $(document).ready ->
-  $('.articles').infiniteScroll
+  $('body.user main.articles').infiniteScroll
     path: 'nav a.next'
     append: 'article'
     history: false

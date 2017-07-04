@@ -1,0 +1,209 @@
+body
+  #grid-container
+    +grid-container
+
+  &.user
+
+    // mobile FIRST, so we start by disabling interface elements,
+    // then start re-enabling them as we work upwards through the
+    // breaking point definitions.
+    // the only exception is the menu button, which has to vanish
+    // on bigger devices as it's only meant for those with limited
+    // real estate.
+
+    #logo
+      padding: .75em .75em 0 0
+      width: 100%
+      height: 3.125em
+      background: linear-gradient(tint($blue, 75%), tint($grey, 75%))
+      img
+        float: right
+        height: 1.9em
+    #sidebar
+      a.btn.menu
+        position: absolute
+        z-index: 2
+        top: .35em
+        left: .35em
+        font-size: 20px
+        cursor: pointer
+        &.fixed
+          position: fixed
+          i
+            color: shade($blue, 5%) !important
+        i
+          color: $blue
+          font-weight: bold
+        &:hover i
+          color: tint($blue, 25%)
+      heading, section
+        display: none
+      $toc-orange: tint($orange, 25%)
+      section
+        padding: .7em 1em .35em 1.25em
+        position: absolute
+        width: 100%
+        height: 100%
+        top: 0
+        left: 0
+        background: $toc-orange
+        li a
+          color: contrast-switch($toc-orange)
+    #content
+      +grid-column(1)
+      margin-top: .5em
+      
+    // bigger tablets, laptops and desktops,
+    // with NO admin logged in
+    
+    +grid-media($medium-grid)
+      
+      #logo
+        background: none
+        height: auto
+        padding: .75em 0 .25em 0
+        position: fixed
+        top: 0
+        left: 0
+        z-index: 2
+        background-color: $white
+        text-align: center
+        img
+          height: 4em
+          float: none
+      #sidebar
+        border-top: 7.125em solid tint($blue, 25%)
+        box-shadow: 0 0 10px 0 rgba(0,0,0,0.5)
+        position: fixed
+        height: 100%
+        heading, a
+          color: $white !important
+        a.btn.menu
+          display: none
+        heading
+          display: block
+          position: fixed
+          left: 0
+          z-index: 2
+          margin-top: -1.55em
+          padding: 0 0 0 .25em
+          color: contrast-switch($orange)
+          font-weight: bold
+        section
+          background-color: $orange
+          display: block
+          z-index: -1
+          padding: .25em .25em 0 0
+          a:hover
+            color: $blue !important
+      #logo, #sidebar
+        +grid-column(1.5)
+        border-right: 1px solid $black !important
+        &.hidden
+          +grid-column(0)
+          display: none
+      #content
+        +grid-column(4.5)
+        margin-left: calc(25%)
+        main
+          padding: 1em 1.25em .75em 2em
+        &.fullscreen
+          +grid-column(6)
+          margin-left: none
+        #sidebar-handle
+          width: 16px
+          height: 30px
+          background-color: $orange
+          position: fixed
+          margin: 8.5em 0 0 -1px
+          padding: 4px 0 0 2px
+          border-radius: 0 5px 5px 0
+          border: 1px solid $black
+          border-left: 1px solid $orange
+          cursor: pointer
+          i
+            color: $white
+            
+  // any device no matter its size, but
+  // with NO admin logged in
+
+  &.editor
+    min-width: 600px
+    background-color: $tinymce-grey
+    +grid-media($editor-grid)
+    
+      #logo
+        background: none
+        height: auto
+        padding: .75em 0 .25em 0
+        position: fixed
+        top: 0
+        left: 0
+        z-index: 2
+        background-color: $white
+        text-align: center
+        img
+          height: 4em
+          float: none
+      #grid-container, #sidebar, #sidebar section, #content, #content form
+        height: 100%
+      #sidebar
+        border-top: 7.125em solid tint($blue, 25%)
+        box-shadow: none
+        position: fixed
+        heading, a
+          color: $white !important
+        a.btn.menu
+          display: none
+        input.btn
+          position: fixed
+          bottom: .5em
+          left: .5em
+          padding: 5px 9px
+        heading
+          display: block
+          position: fixed
+          left: 0
+          z-index: 2
+          margin-top: -1.55em
+          padding: 0 0 0 .25em
+          color: contrast-switch($orange)
+          font-weight: bold
+        section
+          background-color: $orange
+          display: block
+          z-index: -1
+          padding: .25em .25em 0 0
+          a:hover
+            color: $black !important
+      #logo, #sidebar
+        +grid-column(3, $editor-grid)
+        border-right: 1px solid $tinymce-border-grey !important
+        margin-left: 0
+        margin-right: none
+        &.hidden
+          +grid-column(0, $editor-grid)
+          display: none
+        min-width: 150px
+      #content
+        +grid-column(9, $editor-grid)
+        margin-left: calc(25%)
+        #sidebar-handle
+          display: none
+        fieldset
+          position: fixed
+          height: 2.75em
+          bottom: 0
+          right: 0
+          +grid-column(9, $editor-grid)
+          padding: 0 .5em
+          overflow: hidden
+          input
+            max-width: 20%
+          input, label
+            display: inline-block
+          input[type=text]
+            padding: 4px 4px
+          input[type=submit]
+            padding: 5px 11px
+            float: right

@@ -1,0 +1,11 @@
+%nav#sidebar
+
+  %a.btn.menu= '<i class="fa fa-bars"></i>'
+  %heading= I18n.t('toc')
+  %section= @toc.html(request.path_info) if @toc
+
+  - if current_user && current_user.is_admin?
+    %form{method: :get, action: "/#{locale}/new"}
+      %input{type: :hidden, name: 'content_fragment[book]', value: params[:book]}
+      %input{type: :hidden, name: 'content_fragment[chapter]', value: params[:chapter]}
+      %input{type: :submit, value: '+', class: 'btn fa-input'}

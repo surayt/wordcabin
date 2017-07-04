@@ -1,30 +1,36 @@
+// Libraries
+
 @import 'normalize/sass/normalize'
 @import 'bourbon/core/bourbon'
 @import 'neat/core/neat'
 @import 'bitters/core/base'
 
-@import 'modules/mixins'
+// Basic setup
+
+@import 'modules/breakpoints'
 @import 'modules/colors'
-@import 'modules/webfonts'
-@import 'modules/error_screen'
-@import 'modules/session_links'
-
-@import 'modules/language_list'
+@import 'modules/fonts'
 @import 'modules/i18n'
-@import 'modules/layouts'
+@import 'modules/resets'
+@import 'modules/mixins'
 
-@import 'modules/sidebar'
-@import 'features/sidebar_delete_links'
-@import 'modules/mobilemenu'
-@import 'features/active_toc_link'
+// Anything that's UI in one way or another, and
+// which must not affect book contents in any way.
 
-@import 'modules/flash_messages'
 @import 'modules/login_form'
+@import 'modules/session_links'
+@import 'modules/error_screen'
+@import 'modules/language_list'
+@import 'modules/layout'
+@import 'modules/sidebar'
+@import 'modules/flash_messages'
 
-@import 'modules/content_user'
+@import 'features/active_toc_link'
+@import 'features/icons_for_file_links'
+@import 'features/sidebar_delete_links'
 
-@import 'modules/content_editor'
-@import 'article/tinymce_old'
-@import 'article/markdown'
-@import 'article/tinymce_new'
-@import 'features/icons_for_file_links.sass'
+// Anything affecting the book contents themselves,
+// but which must not affect any UI elements in any
+// way.
+
+@import 'article/user'

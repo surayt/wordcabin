@@ -3,7 +3,6 @@ nav#sidebar ul.level_2 ul
   display: none
 
 nav#sidebar
-  background-color: $orange
   position: fixed
   height: 100%
   overflow: hidden
@@ -21,7 +20,6 @@ nav#sidebar
     
   // all nesting levels
   ul
-    background-color: $orange-darker
     margin: 0
     padding: 0
     list-style-type: none
@@ -53,9 +51,8 @@ nav#sidebar
   // second and third level
   ul ul
     line-height: 1.5
-    background-color: $orange
     a
-      color: $orange-darker
+      color: shade($orange, 25%)
       &:hover
         color: $red
   
@@ -64,7 +61,7 @@ nav#sidebar
     padding-left: .5em
   li.level_2 > a
     line-height: 1.25
-    color: $darkblue
+    color: shade($blue, 25%)
   
   // just the third level (doesn't have its own class)
   li.level_2 ul

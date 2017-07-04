@@ -1,10 +1,14 @@
-= haml :mobilemenu
-= haml :sidebar
+= haml :logo
+= haml :navigation
 
 #content
+
+  %a#sidebar-handle= '<i class="fa fa-chevron-left"></i>'
   = haml :session_links
-  - if content_class == :editor
-    %form{method: :post}
+  
+  - if content_class.include? 'editor'
+  
+    %form.content_fragment{method: :post}
       %textarea{class: 'heading', name: 'content_fragment[heading]'}= @contents.heading
       %textarea{class: 'text', name: 'content_fragment[html]'}= @contents.html
       %fieldset
@@ -13,6 +17,8 @@
         %label{for: 'content_fragment[chapter]'} Chapter:
         %input{type: :text, name: 'content_fragment[chapter]', value: @contents.chapter}
         %input{type: :submit, value: 'Save'}
+
   - else
+  
     %main.articles
       %article.current= @contents.heading_and_text
