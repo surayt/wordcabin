@@ -47,16 +47,21 @@ body
         top: 0
         left: 0
         background: $toc-orange
-        li a
-          color: contrast-switch($toc-orange)
+        li
+          padding-left: 1em 
+          a
+            color: contrast-switch($toc-orange)
     #content
       +grid-column(1)
       margin-top: .5em
+    #sidebar-handle
+      display: none
       
     // bigger tablets, laptops and desktops,
     // with NO admin logged in
     
     +grid-media($medium-grid)
+      +toc
       
       #logo
         background: none
@@ -111,6 +116,7 @@ body
           +grid-column(6)
           margin-left: none
         #sidebar-handle
+          display: block
           width: 16px
           height: 30px
           background-color: $orange
@@ -130,7 +136,9 @@ body
   &.editor
     min-width: 600px
     background-color: $tinymce-grey
+    
     +grid-media($editor-grid)
+      +toc
     
       #logo
         background: none
