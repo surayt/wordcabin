@@ -27,7 +27,7 @@ end
 desc "Enter an interactive application console"
 task :console, :environment do |t, args|
   ENV['RACK_ENV'] = args[:environment] || 'development'
-  sh "pry -I . -r #{MAIN_CONFIG} -r #{Config.lib+'server.rb'} -e 'include SinatraApp; User.connection; ContentFragment.connection;'"
+  sh "pry -I . -r #{MAIN_CONFIG} -r #{Config.lib+'server.rb'} -e 'include SinatraApp; User.connection; ContentFragment.connection; system(\"clear\");'"
 end
 
 desc "Update all git submodules (use carefully)"
