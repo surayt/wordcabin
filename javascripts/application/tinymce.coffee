@@ -20,6 +20,7 @@ text = {
 tinymce.init text
 
 # TODO: find a way around TinyMCE grabbing the even before we do...
+# There may be a solution at https://wordpress.stackexchange.com/questions/167402/how-to-disable-tinymce-4-keyboard-shortcuts
 $(window).bind 'keydown', (event) ->
   if event.ctrlKey or event.metaKey
     switch String.fromCharCode(event.which).toLowerCase()
