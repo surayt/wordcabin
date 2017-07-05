@@ -4,7 +4,7 @@
   left: 50%
   transform: translate(-50%, -60%)
 
-$button-blue: shade($blue, 25%)
+$button-blue: shade($blue, 10%)
 @mixin button
   padding: 3px 7px
   border-radius: 3px
@@ -19,3 +19,5 @@ $button-blue: shade($blue, 25%)
   &:hover
     background-color: $button-hover-blue
     color: contrast-switch($button-hover-blue)
+  &:active, &:focus
+    border: 1px solid $white

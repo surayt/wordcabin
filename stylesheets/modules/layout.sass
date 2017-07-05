@@ -90,10 +90,9 @@ body
           position: fixed
           left: 0
           z-index: 2
-          margin-top: -21px
+          margin-top: -22px
           padding: 0 0 0 .25em
           color: contrast-switch($orange)
-          font-weight: bold
         section
           background-color: $orange
           display: block
@@ -168,15 +167,15 @@ body
           bottom: .5em
           left: .5em
           padding: 5px 9px
+          +button
         heading
           display: block
           position: fixed
           left: 0
           z-index: 2
-          margin-top: -1.55em
+          margin-top: -22px
           padding: 0 0 0 .25em
           color: contrast-switch($orange)
-          font-weight: bold
         section
           background-color: $orange
           display: block
@@ -200,19 +199,25 @@ body
           display: none
         fieldset
           position: fixed
-          height: 38px
+          height: 36px
           bottom: 0
           right: 0
           +grid-column(9, $editor-grid)
           padding: 0 .5em
           overflow: hidden
           input
-            max-width: 20%
+            max-width: 25%
+            font-size: 95%
           input, label
             display: inline-block
+          label
+            font-weight: normal
           input[type=text]
             padding: 4px 4px
+            margin-right: .5em
           input[type=submit]
+            +button
+            font-weight: normal
             margin-top: 1px
             padding: 5px 11px
             float: right
