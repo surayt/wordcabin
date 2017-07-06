@@ -8,8 +8,7 @@ module SinatraApp
     end
     
     def html(uripath = nil)
-      fragments = ContentFragment.book(@locale, @book).uniq
-      build_toc(fragments, uripath)
+      build_toc(ContentFragment.book(@locale, @book).uniq, uripath)
     end
     
     private
@@ -38,7 +37,7 @@ module SinatraApp
         # Also, we're only selecting the info we need to save on execution and network time
         chapter_level_fragments = ContentFragment.
           select('id, locale, book, chapter, heading').
-          where("locale = ? AND book = ? AND length(chapter) > 0", f.locale, f.book)
+            where("locale = ? AND book = ? AND length(chapter) > 0", f.locale, f.book)
         # Convert ActiveRecord results into Array of Hashes
         # https://stackoverflow.com/questions/15427936/how-to-convert-activerecord-results-into-a-array-of-hashes
         toc << drill_deeper(chapter_level_fragments.map(&:attributes), nil, uripath, next_marker)
@@ -59,7 +58,7 @@ module SinatraApp
           display_depth = f['chapter'].split('.').length + 1 # TODO: this too!
           li_spaces = ''; (display_depth).times {li_spaces << '  '}
           f['path'] = URI.encode("/#{[f['locale'], f['book'], f['chapter']].join('/')}")
-          f['name'] = Sanitize.clean([f['chapter'], f['heading']].join(' '))
+          f['name'] = Sanitize.clean([f['chapter'], f['heading']].join(' ')) # Completely remove all markup.
           f['class'] = link_class(f['path'], uripath, next_marker)
           next_marker = true if f['class'] != ''
           toc << "#{li_spaces}<li class='level_#{display_depth}'><a#{f['class']} href='#{f['path']}'>#{f['name']}</a>\n"
