@@ -1,9 +1,18 @@
 require 'fileutils'
 require 'nokogiri'
 require 'pathname'
+require 'find'
+require 'set'
+
 MAIN_CONFIG = Pathname('config')+'config.rb'
 require_relative MAIN_CONFIG
+
 require 'sinatra/activerecord/rake'
+require_relative 'lib/server'
+include SinatraApp
+I18n::Backend::Simple.send(:include, I18n::Backend::Fallbacks)
+I18n.load_path = Dir[Config.translations+'*.yml']
+I18n.backend.load_translations
 
 namespace :db do
   task :load_config do
