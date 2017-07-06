@@ -114,7 +114,7 @@ task :import_aop_data, [:locale] do |t, args|
       html: Sanitize.fragment(File.read(path), Sanitize::Config::AOP_DATA))
     # Wrapping it up.
     if c.save
-      puts (info.join('/')+':').ljust(50, ' ')+([c.locale, c.book, c.chapter].join("\t"))+"\n"
+      puts (info.join('/')+':').ljust(50, ' ')+([c.locale, c.book, c.chapter, c.chapter_padded].join("\t"))+"\n"
     else
       puts c.errors.inspect
     end
