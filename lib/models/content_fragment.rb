@@ -2,7 +2,8 @@ require 'sanitize'
 
 module SinatraApp
   class ContentFragment < ActiveRecord::Base
-    default_scope { order("locale ASC, book ASC, chapter ASC") }
+    default_scope { order("locale ASC, book ASC, chapter_padded ASC") }
+    before_save :fill_sorting_column
 
     # TODO: i18n!
     validates :book, presence: {message: 'must be present, even when chapter is empty.'}
@@ -32,5 +33,12 @@ module SinatraApp
     scope :empty_chapter, -> { where(chapter: [nil, '']) }
     scope :book, ->(locale, book) { where(locale: locale, book: book).empty_chapter }
     scope :chapter, ->(locale, book, chapter) { where(locale: locale, book: book, chapter: chapter) }
+    
+    def fill_sorting_column
+      unless chapter.blank?
+        lmnts = chapter.split '.'
+        self.chapter_padded = lmnts.map {|l| l.rjust(10, '0')}.join '.'
+      end
+    end
   end
 end
