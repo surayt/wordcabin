@@ -3,6 +3,10 @@
   // reset mobile device view settings
   nav#sidebar li
     padding-left: 0
+    &.level_1
+      padding: .5em 0
+    span
+      padding-left: .55em
 
   // start out by hiding everything but the top two levels
   nav#sidebar ul.level_2 ul
@@ -32,20 +36,6 @@
       // layout
       ul ul li
         max-width: 275px
-    
-    // just the top level
-    li.level_1 > ul
-      padding-top: .5em
-    li.level_1 > a
-      display: inline-block
-      width: 100%
-      text-transform: uppercase
-      line-height: 2.5
-      border-bottom: 1px solid $orange
-      cursor: pointer
-      padding-left: .5em
-      color: $white
-      font-weight: bold
     
     // second and third level
     ul ul

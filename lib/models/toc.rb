@@ -22,17 +22,14 @@ module SinatraApp
       classes.any? ? " class='#{classes.join(' ')}'" : ''
     end
   
-    def build_toc(book_level_fragments, uripath = nil)
-      next_marker = false
-      depth = 1
-      li_spaces = '  '
-      toc = ''
+    def build_toc(book_level_fragments, uri_path = nil)
+      toc = ''; next_marker = false
       book_level_fragments.each do |f|
-        lp = URI.encode(f.path)
-        lc = link_class(lp, uripath, next_marker)
-        next_marker = true if lc != '' # The current element is active, so we need to mark the next element soon!
-        toc << "<ul class='level_#{depth}'>\n"
-        toc << "#{li_spaces}<li class='level_#{depth}'><a#{lc} href='#{lp}'>#{f.heading_without_html}</a></li>\n"
+        link_path = URI.encode(f.path)
+        link_class = link_class(link_path, uri_path, next_marker)
+        next_marker = true if link_class != '' # The current element is active, so we need to mark the next element soon!
+        toc << "<ul class='level_1'>\n"
+        toc << "  <li class='level_1'><span#{link_class}>#{f.heading_without_html}</span></li>\n"
         # Get them *all* to save on SQL queries - the only other query will be the one for the specific fragment selected from the TOC
         # Also, we're only selecting the info we need to save on execution and network time
         chapter_level_fragments = ContentFragment.
@@ -40,7 +37,7 @@ module SinatraApp
             where("locale = ? AND book = ? AND length(chapter) > 0", f.locale, f.book)
         # Convert ActiveRecord results into Array of Hashes
         # https://stackoverflow.com/questions/15427936/how-to-convert-activerecord-results-into-a-array-of-hashes
-        toc << drill_deeper(chapter_level_fragments.map(&:attributes), nil, uripath, next_marker)
+        toc << drill_deeper(chapter_level_fragments.map(&:attributes), nil, uri_path, next_marker)
         toc << "</ul>"
       end
       toc

@@ -11,7 +11,7 @@
   %ul
     - @books.each do |book|
       %li
-        %a.btn{href: "/#{book.locale}/#{URI.escape(book.book)}", lang: book.locale}
+        %a.btn{href: "/#{book.locale}/#{[URI.escape(book.book), book.first_child.chapter].join('/')}", lang: book.locale}
           = I18n.t("read_in_#{book.locale}", book: book.book)
   %footer
     %img{src: '/images/FU_Bergen3.jpg'}
