@@ -6,14 +6,16 @@ de:
   nl: Niederländisch
   sv: Schwedisch
   tr: Türkisch
-  read_in_ar: قراءة الكتاب باللغة العربية
-  read_in_de: Das Buch auf Deutsch lesen
-  read_in_en: Read the book in English
-  read_in_fr: Lire le livre en français
-  read_in_nl: Lees het boek in het Nederlands
-  read_in_sv: Läs boken på svenska
-  read_in_tr: Kitabı Türkçe oku
+  
+  read_in_ar: "قراءة الكتاب ((%{book})) باللغة العربية"
+  read_in_de: "%{book} auf Deutsch lesen"
+  read_in_en: "Read %{book} in English"
+  read_in_fr: "Lire %{book} en français"
+  read_in_nl: "Lees %{book} in het Nederlands"
+  read_in_sv: "Läs %{book} på svenska"
+  read_in_tr: "Kitabı %{book} Türkçe oku"
   
   no_contents: Die gewählte Seite ist nicht verfügbar.
   no_toc: Kein Inhaltsverzeichnis für diesen Abschnitt verfügbar.
+  level: Niveau
   toc: Inhaltsverzeichnis

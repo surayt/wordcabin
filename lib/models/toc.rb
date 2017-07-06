@@ -8,12 +8,8 @@ module SinatraApp
     end
     
     def html(uripath = nil)
-      fragments = if @book
-        ContentFragment.where(locale: @locale, book: @book, chapter: '')
-      else
-        ContentFragment.where(locale: @locale, chapter: '')
-      end
-      build_toc(fragments.order(:book).uniq, uripath)
+      fragments = ContentFragment.book(@locale, @book).uniq
+      build_toc(fragments, uripath)
     end
     
     private
@@ -42,8 +38,7 @@ module SinatraApp
         # Also, we're only selecting the info we need to save on execution and network time
         chapter_level_fragments = ContentFragment.
           select('id, locale, book, chapter, heading').
-          where("locale = ? AND book = ? AND length(chapter) > 0", f.locale, f.book).
-          order(:chapter)
+          where("locale = ? AND book = ? AND length(chapter) > 0", f.locale, f.book)
         # Convert ActiveRecord results into Array of Hashes
         # https://stackoverflow.com/questions/15427936/how-to-convert-activerecord-results-into-a-array-of-hashes
         toc << drill_deeper(chapter_level_fragments.map(&:attributes), nil, uripath, next_marker)

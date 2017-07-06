@@ -131,14 +131,6 @@ module SinatraApp
         c << :language_list if request.path_info.split('/').length < 2
         c.length > 0 ? c.join(' ') : nil
       end
-      
-      def first_content_fragment(_locale)
-        if fragment = @first_content_fragment.where(locale: _locale).first
-          fragment.book
-        else
-          'New book or language version' # TODO: i18n!
-        end
-      end
     end
     
     ###########################################################################
@@ -159,8 +151,7 @@ module SinatraApp
     
     # Landing page showing the list of available L1s.
     get '/' do
-      @locales = I18n.available_locales
-      @first_content_fragment = ContentFragment.where(chapter: '').order(:book)
+      @books = ContentFragment.empty_chapter
       haml :language_list
     end
 
@@ -226,13 +217,13 @@ module SinatraApp
       haml :contents
     end
     get '/:book' do |book|
-      @contents = ContentFragment.find_by_locale_and_book_and_chapter(locale, book, '')
+      @contents = ContentFragment.book(locale, book).first
       @contents ||= ContentFragment.new(locale: locale, book: book)
       @toc = TOC.new(locale, book)
       haml :contents
     end
     get '/:book/:chapter' do |book, chapter|
-      @contents = ContentFragment.find_by_locale_and_book_and_chapter(locale, book, chapter)
+      @contents = ContentFragment.chapter(locale, book, chapter).first
       @contents ||= ContentFragment.new(locale: locale, book: book, chapter: chapter)
       @toc = TOC.new(locale, book)
       haml :contents, layout: !request.xhr?
@@ -250,7 +241,7 @@ module SinatraApp
       end
     end
     post '/:book' do |book|
-      unless fragment = ContentFragment.find_by_locale_and_book_and_chapter(locale, book, '')
+      unless fragment = ContentFragment.book(locale, book).first
         params[:content_fragment].merge!(locale: locale)
         fragment = ContentFragment.create(params[:content_fragment])
       end
@@ -262,7 +253,7 @@ module SinatraApp
       redirect back
     end
     post '/:book/:chapter' do |book, chapter|
-      unless fragment = ContentFragment.find_by_locale_and_book_and_chapter(locale, book, chapter)
+      unless fragment = ContentFragment.chapter(locale, book, chapter).first
         params[:content_fragment].merge!(locale: locale)
         fragment = ContentFragment.create(params[:content_fragment])
       end
@@ -276,7 +267,7 @@ module SinatraApp
     
     # Trash, obliterate and destroy contents
     delete '/:book' do |book|
-      if fragment = ContentFragment.find_by_locale_and_book_and_chapter(locale, book, '')
+      if fragment = ContentFragment.book(locale, book).first
         if fragment.destroy
           flash[:notice] = 'The content fragment was destroyed successfully.'
         else
@@ -286,7 +277,7 @@ module SinatraApp
       redirect to('/')
     end
     delete '/:book/:chapter' do |book, chapter|
-      if fragment = ContentFragment.find_by_locale_and_book_and_chapter(locale, book, chapter)
+      if fragment = ContentFragment.book(locale, book).first
         if fragment.destroy
           flash[:notice] = 'The content fragment was destroyed successfully.'
         else

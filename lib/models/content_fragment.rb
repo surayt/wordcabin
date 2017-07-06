@@ -2,6 +2,8 @@ require 'sanitize'
 
 module SinatraApp
   class ContentFragment < ActiveRecord::Base
+    default_scope { order("locale ASC, book ASC, chapter ASC") }
+
     # TODO: i18n!
     validates :book, presence: {message: 'must be present, even when chapter is empty.'}
     validates :locale, presence: {message: 'must and should be present'}, length: {is: 2, message: 'must be in ISO 3166-1 Alpha 2 encoding.'}
@@ -26,5 +28,9 @@ module SinatraApp
       h += "<section>#{html}</section>"  unless html.blank?
       h
     end
+    
+    scope :empty_chapter, -> { where(chapter: [nil, '']) }
+    scope :book, ->(locale, book) { where(locale: locale, book: book).empty_chapter }
+    scope :chapter, ->(locale, book, chapter) { where(locale: locale, book: book, chapter: chapter) }
   end
 end
