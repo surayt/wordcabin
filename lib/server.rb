@@ -152,7 +152,7 @@ module SinatraApp
     # Landing page showing the list of available L1s.
     get '/' do
       @books = ContentFragment.empty_chapter
-      haml :language_list
+      haml :index
     end
 
     # Handle logging in and logging out.
