@@ -1,20 +1,25 @@
 #flash
+  +hcenter
   z-index: 1000 // To get above TinyMCE...
-  position: absolute
-  top: 0px
-  left: 50%
-  margin: 0 0 0 -200px
-  width: 400px
   line-height: 2
-  text-align: center
-  padding: 0 .25em .25em .25em
+  div
+    border-top: none
+    &:before,
+    &:after
+      content: "\00a0\00a0" // Padding isn't working for some reason...
   .notice
     background-color: tint($green, 25%)
     color: contrast-switch(tint($green, 25%))
     border: 1px solid $green
-    border-top: none
   .error
     background-color: tint($red, 25%)
     color: contast-switch(tint($red, 25%))
     border: 1px solid $red
-    border-top: none
+
+body.user,
+body.editor
+  #flash
+    margin-left: calc(12.5%)
+body.language_list
+  #flash
+    margin-left: none

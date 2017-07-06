@@ -48,7 +48,7 @@ body
         left: 0
         background: $toc-orange
         li
-          padding-left: 1em 
+          padding-left: 1em
           a
             color: contrast-switch($toc-orange)
     #content
@@ -80,6 +80,7 @@ body
         border-top: 7.125em solid tint($blue, 25%)
         box-shadow: 0 0 10px 0 rgba(0,0,0,0.5)
         position: fixed
+        background-color: $orange
         height: 100%
         heading, a
           color: $white !important
@@ -94,8 +95,8 @@ body
           padding: 0 0 0 .25em
           color: contrast-switch($orange)
         section
-          background-color: $orange
           display: block
+          background-color: transparent
           z-index: -1
           padding: .25em .25em 0 0
           a:hover
@@ -156,6 +157,7 @@ body
         height: 100%
       #sidebar
         border-top: 7.125em solid tint($blue, 25%)
+        background-color: $orange
         box-shadow: none
         position: fixed
         heading, a
@@ -177,7 +179,7 @@ body
           padding: 0 0 0 .25em
           color: contrast-switch($orange)
         section
-          background-color: $orange
+          background-color: transparent
           display: block
           z-index: -1
           padding: .25em .25em 0 0
