@@ -1,5 +1,6 @@
 require 'fileutils'
 require 'nokogiri'
+require 'sanitize'
 require 'pathname'
 require 'find'
 require 'set'
@@ -67,8 +68,66 @@ task :copy_assets do
   end
 end
 
+desc "Read in legacy HTML content files, rid them of extraneous markup and save them as content_fragments"
+task :import_aop_data, [:locale] do |t, args|
+  unless args[:locale] && args[:locale].length == 2
+    puts "\n  One argument required: locale to be imported.\n" +
+         "  ATTENTION: All ContentFragments of that locale\n"  +
+         "  will be deleted!\n\n"
+    exit
+  end
+  # For cleaning up the old data's messed up HTML
+  # em span strong
+  Sanitize::Config::AOP_DATA = {
+    elements: %w[a audio b bdi bdo br caption cite code col colgroup dd del details dfn div dl dt figcaption figure h1 h2 h3 h4 h5 h6 hr i img li ol p pre q s sub summary sup table tbody td tfoot th thead tr track u ul video],
+    attributes: {
+      'a': %w[href title class id],
+      'audio': %w[src],
+      'span': %w[class id]
+    },
+    remove_contents: false}
+  ContentFragment.where(locale: args[:locale]).delete_all
+  locales = Set.new
+  books = Set.new
+  chapter_top_level = {}
+  Dir[Config.data+'chapters'+'*'+'texts'+args[:locale]+'*'].sort.each do |path|
+    # Yes, the next 5 lines could just be a regex, but c'mon, this is temporary code, leave me alone!
+    lmnts = path.split('/')
+    idx = lmnts.index('chapters')
+    info = lmnts[idx+1, lmnts.length]; info.delete('texts')
+    # See, same result as what we'd get from a regex :). And results rarely stink if they're correct.
+    locale, level, chapter_designator, chapter_name = [info[1], info[0].split('-')[0], info[0].split('-')[1], info[2]]
+    # The real work begins. It's ugly. Noone cares. This is temporary code, remember?
+    book_name = "#{I18n.t(:level)} #{level.upcase}"
+    if !locales.include?(locale) || !books.include?(level)
+      ContentFragment.create(locale: locale, book: book_name) # The top-level element and jump-in point.
+    end
+    locales << locale; books << level
+    book = "#{locale} #{level}"
+    chapter_top_level[book] ? chapter_top_level[book] += 1 : chapter_top_level[book] = (0+1)
+    # One chapter; belongs to the top-level element through having the same 'book' field value.
+    c = ContentFragment.new(
+      locale: locale,
+      book: book_name,
+      chapter: chapter_top_level[book].to_s,
+      heading: "#{chapter_name} (#{chapter_designator || '-'})",
+      html: Sanitize.fragment(File.read(path), Sanitize::Config::AOP_DATA))
+    # Wrapping it up.
+    if c.save
+      puts (info.join('/')+':').ljust(50, ' ')+([c.locale, c.book, c.chapter].join("\t"))+"\n"
+    else
+      puts c.errors.inspect
+    end
+  end
+end
+
+desc "Empty the database of all content fragments (DANGEROUS!)"
+task :prone_database do
+  ContentFragment.delete_all
+end
+
 desc "Remove all automatically compiled or copied files from the static files directory"
-task :clean do
+task :clean_public_files do
   # TODO: Remove 'media' once legacy conversion complete.
   Dir.glob(Config.static_files+'{fonts,images,media}').each do |p|
     puts "Deleting #{p}"
