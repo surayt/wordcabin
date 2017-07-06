@@ -37,7 +37,7 @@ body
           color: $blue
           font-weight: bold
         &:hover i
-          color: tint($blue, 25%)
+          color: contrast_switch($orange) !important
       heading, section
         display: none
       $toc-orange: tint($orange, 25%)
@@ -102,7 +102,7 @@ body
           z-index: -1
           padding: .25em .25em 0 0
           a:hover
-            color: $blue !important
+            color: contrast_switch($orange) !important
       #logo, #sidebar
         +grid-column(1.5)
         border-right: 1px solid shade($grey, 25%) !important
@@ -187,7 +187,7 @@ body
           z-index: -1
           padding: .25em .25em 0 0
           a:hover
-            color: $black !important
+            color: contrast_switch($orange) !important
       #logo, #sidebar
         +grid-column(3, $editor-grid)
         border-right: 1px solid $tinymce-border-grey !important
