@@ -25,8 +25,8 @@ module SinatraApp
     
     def heading_and_text
       h = ""
-      h += "<header>#{heading}</header>" unless heading.blank?
-      h += "<section>#{html}</section>"  unless html.blank?
+      h += "\n<header>#{heading}</header>" unless heading.blank?
+      h += "\n<section>\n#{html}</section>\n"  unless html.blank?
       h
     end
     
