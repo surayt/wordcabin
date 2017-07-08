@@ -104,6 +104,7 @@ namespace :wordcabin do
 
   def clean_html(locale, input)
     doc = Nokogiri::HTML.fragment(input) {|config| config.noblanks}
+    # return input
     %w{style width height cellpadding cellspacing border dir}.each {|a| doc.css('*').remove_attr(a)}
     doc.css('[lang^="EN-US"]').each {|n| n.remove_attribute('lang')}
     doc.css('[lang]').each {|n| n.set_attribute('lang', n.get_attribute('lang').downcase)}
