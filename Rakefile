@@ -1,11 +1,11 @@
 require 'fileutils'
-require 'nokogiri'
-require 'sanitize'
+require 'nokogumbo'
 require 'htmlbeautifier'
 require 'htmlcompressor'
 require 'pathname'
 require 'find'
 require 'set'
+require 'colorize'
 
 MAIN_CONFIG = Pathname('config')+'config.rb'
 require_relative MAIN_CONFIG
@@ -71,52 +71,67 @@ namespace :wordcabin do
     end
   end
 
-  # https://stackoverflow.com/questions/20123176/cleaning-xml-document-recursively-from-empty-tags-with-nokogiri
-  def traverse_and_clean(child)
-    child.children.map { |_child| traverse_and_clean(_child) }
-    child.remove if child.content.blank?
+  def process_attached_file(locale, legacy_path)
+    extension = legacy_path.split('.').last
+    case(extension)
+      when 'mp3'
+        mime = 'audio/mpeg'
+        path = Config.root+'public'+legacy_path.split(':')[1]
+      when 'jpg'
+        mime = 'image/jpeg'
+        path = Config.root+'public'+legacy_path
+      else
+        return legacy_path
+    end; begin
+      data = File.binread(path)
+      if attachment = FileAttachment.find_by_binary_data(data)
+        print '.'.red
+      else
+        print '.'.white
+        attachment = FileAttachment.create(filename: File.basename(path), content_type: mime, binary_data: File.binread(path))
+      end
+      return attachment.url_path
+    rescue Errno::ENOENT
+      return "NO SUCH FILE (was: #{legacy_path})"
+    end
   end
 
-  # For cleaning up the old data's messed up HTML
-  # Removed for the time being: p, span, div, br
-#  Sanitize::Config::AOP_LEGACY_DATA = {
-#    elements:  %w[a audio b bdi bdo caption cite code col colgroup
-#                  dd del details dfn dl dt figcaption figure h1 h2
-#                  h3 h4 h5 h6 hr i img li ol pre q s sub summary sup 
-#                  table tbody td tfoot th thead tr track u ul video em
-#                  strong],
-#    attributes: {
-#      'a':     %w[href title class id],
-#      'audio': %w[src],
-#      'span':  %w[class id],
-#      'td':    %w[rowspan colspan]
-#    },
-#    remove_contents: false
-#  }
-  
-  Sanitize::Config::AOP_LEGACY_DATA = Sanitize::Config.merge(Sanitize::Config::RELAXED,
-    elements: 
-    %w[a audio b bdi bdo caption cite code col colgroup
-       dd del details dfn dl dt figcaption figure h1 h2
-       h3 h4 h5 h6 hr i img li ol pre q s sub summary sup 
-       table tbody td tfoot th thead tr track u ul video em
-       strong],
-    remove_contents: false
-  )
+  def clean_html(locale, input)
+    doc = Nokogiri::HTML.fragment(input) {|config| config.noblanks}
+    %w{style width height cellpadding cellspacing border dir}.each {|a| doc.css('*').remove_attr(a)}
+    doc.css('[lang^="EN-US"]').each {|n| n.remove_attribute('lang')}
+    doc.css('[lang]').each {|n| n.set_attribute('lang', n.get_attribute('lang').downcase)}
+    %w{href src}.each {|a|
+      doc.css("[#{a}]").each {|n|
+        path = n.get_attribute(a)
+        n.set_attribute(a, process_attached_file(locale, path)) if path.include? '.' # Otherwise it's not a file...
+        %w{class target}.each {|trash| n.remove_attribute(trash)}
+      }
+    }
+    nodes = doc.css('span'); nodes.each {|n| n.replace(n.content) unless n.get_attribute('lang')}
+    doc.css('*').each {|n| n.remove if n.content.blank?; n.remove if n.content.strip.empty?}
+    doc.css('p[align]').each {|n| n.parent.set_attribute('align', n.get_attribute('align')) if n.parent.name == 'td'; n.replace(n.children)}
+    3.times {doc.css('div[align^="center"] table').each {|n| n.parent.replace(n.parent.children) if n.name == 'table' && n.parent.name == 'div'}}
+    doc.css('td p').each {|n| n.replace(n.content)}
+    doc.css('*').xpath('text()').each {|n| n.content = n.content.gsub(/\u00a0/, '').gsub(/^\s+|\s+$|\s+(?=\s)/, '')}
+    HtmlBeautifier.beautify(doc.to_html, indent: '  ') # HtmlCompressor::Compressor.new.compress(noko.to_xhtml)
+  end
 
   desc "Read in legacy HTML content files, rid them of extraneous markup and save them as content_fragments"
   task :import_aop_data, [:locale] do |t, args|
     unless args[:locale] && args[:locale].length == 2
       puts "\n  One argument required: locale to be imported.\n" +
            "  ATTENTION: All ContentFragments of that locale\n"  +
-           "  will be deleted!\n\n"
+           "  will be deleted!\n\n"                              +
+           "  You may specify two asterisks (**) for all locales.\n\n"
       exit
     end
     ContentFragment.where(locale: args[:locale]).delete_all
     locales = Set.new
     books = Set.new
     chapter_top_level = {}
-    Dir[Config.data+'chapters'+'*'+'texts'+args[:locale]+'*'].sort.each do |path|
+    locale_to_process = args[:locale] == '**' ? '*' : args[:locale]
+    Dir[Config.data+'chapters'+'*'+'texts'+locale_to_process+'*'].sort.each do |path|
       # Yes, the next 5 lines could just be a regex, but c'mon, this is temporary code, leave me alone!
       lmnts = path.split('/')
       idx = lmnts.index('chapters')
@@ -125,39 +140,29 @@ namespace :wordcabin do
       locale, level, chapter_designator, chapter_name = [info[1], info[0].split('-')[0], info[0].split('-')[1], info[2]]
       # The real work begins. It's ugly. Noone cares. This is temporary code, remember?
       book_name = "#{I18n.t(:level)} #{level.upcase}"
-      if !locales.include?(locale) || !books.include?(level)
+      unless (locales.include?(locale) && books.include?(level))
+        puts "Creating book".green
         ContentFragment.create(locale: locale, book: book_name) # The top-level element and jump-in point.
       end
       locales << locale; books << level
       book = "#{locale} #{level}"
       chapter_top_level[book] ? chapter_top_level[book] += 1 : chapter_top_level[book] = (0+1)
-      html = Sanitize.fragment(File.read(path), Sanitize::Config::AOP_LEGACY_DATA)
-      noko = Nokogiri::HTML.fragment(html, &:noblanks)
-      %w[style width height cellpadding cellspacing border].each do |attribute|
-        noko.xpath("@#{attribute}|.//@#{attribute}").remove
-      end
-      traverse_and_clean(noko)
-      # cleaned_html = HtmlBeautifier.beautify(noko.to_xhtml, indent: '  ')
-      cleaned_html = HtmlCompressor::Compressor.new.compress(noko.to_xhtml)
-      # One chapter; belongs to the top-level element through having the same 'book' field value.
+      # One chapter; belongs to the top-level element by having the same 'book' field value.
+      print "Creating chapter"
       c = ContentFragment.new(
         locale: locale,
         book: book_name,
         chapter: chapter_top_level[book].to_s,
         heading: "#{chapter_name} (#{chapter_designator || '-'})",
-        html: cleaned_html)
+        html: clean_html(locale, File.read(path)))
+      puts # Newline...
       # Wrapping it up.
       if c.save
-        puts (info.join('/')+':').ljust(50, ' ')+([c.locale, c.book, c.chapter, c.chapter_padded].join("\t"))+"\n"
+        puts 'Success: '+info.join('/').ljust(50, ' ')+"->\t"+([c.locale, c.book, c.chapter, c.chapter_padded].join("\t"))+"\n"
       else
-        puts c.errors.inspect
+        puts c.errors.inspect.red
       end
     end
-  end
-
-  desc "Empty the database of all content fragments (DANGEROUS!)"
-  task :prone_database do
-    ContentFragment.delete_all
   end
 
   desc "Remove all automatically compiled or copied files from the static files directory"
