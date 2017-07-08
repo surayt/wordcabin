@@ -21,6 +21,12 @@ namespace :db do
   task :load_config do
     require Config.lib+'server.rb'
   end
+
+  desc "Empty the database of all its data (DANGEROUS, obviously!)"
+  task :prune do
+    ContentFragment.delete_all
+    FileAttachment.delete_all
+  end
 end
 
 task default: [:clean, :copy_assets, :server]
