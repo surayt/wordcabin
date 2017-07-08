@@ -30,6 +30,7 @@ GEM
       coffee-script-source
       execjs
     coffee-script-source (1.12.2)
+    colorize (0.8.1)
     concurrent-ruby (1.0.5)
     crass (1.0.2)
     erubis (2.7.0)
@@ -50,7 +51,6 @@ GEM
     htmlcompressor (0.3.1)
     i18n (0.8.4)
     jsmin (1.0.1)
-    json (2.1.0)
     libv8 (3.16.14.19)
     method_source (0.8.2)
     mini_portile2 (2.2.0)
@@ -114,6 +114,7 @@ GEM
       thread_safe (~> 0.1)
     uglifier (3.2.0)
       execjs (>= 0.3.0, < 3)
+    whatlanguage (1.0.6)
 
 PLATFORMS
   ruby
@@ -122,15 +123,15 @@ DEPENDENCIES
   awesome_print
   bcrypt
   coffee-script
+  colorize
   hamlit
   html2haml
   htmlbeautifier
   htmlcompressor
   i18n
   jsmin
-  json
   minitest
-  nokogiri
+  nokogumbo
   pry
   rack-cache
   rack-contrib
@@ -146,6 +147,7 @@ DEPENDENCIES
   sqlite3
   therubyracer!
   uglifier
+  whatlanguage
 
 BUNDLED WITH
    1.15.1
