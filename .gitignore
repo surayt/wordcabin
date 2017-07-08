@@ -11,3 +11,5 @@ test
 backup
 .rake_tasks~
 *.log
+
+*.sqlite3
