@@ -152,8 +152,8 @@ namespace :wordcabin do
       locale, level, chapter_designator, chapter_name = [info[1], info[0].split('-')[0], info[0].split('-')[1], info[2]]
       # The real work begins. It's ugly. Noone cares. This is temporary code, remember?
       book_name = "#{I18n.t(:level)} #{level.upcase}"
-      unless (locales.include?(locale) && books.include?(level))
-        puts "Creating book".green
+      unless ContentFragment.book(locale, book_name).any?
+        puts "Creating book (#{locale}/#{level})".green
         ContentFragment.create(locale: locale, book: book_name) # The top-level element and jump-in point.
       end
       locales << locale; books << level
