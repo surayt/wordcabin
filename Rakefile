@@ -133,11 +133,16 @@ namespace :wordcabin do
            "  You may specify two asterisks (**) for all locales.\n\n"
       exit
     end
-    ContentFragment.where(locale: args[:locale]).delete_all
     locales = Set.new
     books = Set.new
     chapter_top_level = {}
-    locale_to_process = args[:locale] == '**' ? '*' : args[:locale]
+    if args[:locale] == '**'
+      ContentFragment.delete_all
+      locale_to_process = '*'
+    else
+      ContentFragment(locale: args[:locale]).delete_all
+      locale_to_process = args[:locale]
+    end
     Dir[Config.data+'chapters'+'*'+'texts'+locale_to_process+'*'].sort.each do |path|
       # Yes, the next 5 lines could just be a regex, but c'mon, this is temporary code, leave me alone!
       lmnts = path.split('/')
