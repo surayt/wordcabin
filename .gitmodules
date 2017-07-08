@@ -4,6 +4,7 @@
 [submodule "javascripts/tinymce_plugins"]
 	path = javascripts/tinymce_plugins
 	url = git@github.com:sixtyfive/tinymce_plugins.git
+	branch = master
 [submodule "stylesheets/font-awesome"]
 	path = public/font-awesome
 	url = git@github.com:FortAwesome/Font-Awesome.git
