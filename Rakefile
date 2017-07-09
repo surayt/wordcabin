@@ -165,7 +165,7 @@ namespace :wordcabin do
         locale: locale,
         book: book_name,
         chapter: chapter_top_level[book].to_s,
-        heading: "#{chapter_name} (#{chapter_designator || '-'})",
+        heading: "<table><tr><td>#{chapter_name} (#{chapter_designator || '-'})</td></tr></table>",
         html: clean_html(locale, File.read(path)))
       puts # Newline...
       # Wrapping it up.

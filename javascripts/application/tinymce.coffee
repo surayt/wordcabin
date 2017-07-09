@@ -1,22 +1,37 @@
-heading = {
-  statusbar: false,
-  menubar: false,
-  plugins: 'table directionality',
-  selector: 'textarea.heading',
-  toolbar: 'undo redo | table | ltr rtl | removeformat',
-  height: '3.5em',
-  branding: false}
-  
-tinymce.init heading
+# https://gist.github.com/sheldonh/6089299
+merge = (xs...) ->
+  if xs?.length > 0
+    tap {}, (m) -> m[k] = v for k, v of x for x in xs
+tap = (o, fn) -> fn(o); o
 
-text = {
-  statusbar: false,
-  menubar: false,
-  plugins: 'table directionality lists autoheight uploadfile media link',
-  selector: 'textarea.text',
-  toolbar: 'undo redo | formatselect bold italic underline | table alignleft aligncenter alignright | bullist numlist outdent indent | ltr rtl | link uploadfile media | removeformat',
-  branding: false}
-  
+common_settings =
+  statusbar: false
+  menubar: false
+  branding: false
+  invalid_styles: 'width height'
+  content_css: [
+    '/font-awesome/css/font-awesome.css?' + (new Date).getTime(),
+    '/assets/tinymce.css?' + (new Date).getTime()]
+
+heading = merge(common_settings,
+  plugins:  'table directionality code paste'
+  selector: 'textarea.heading'
+  toolbar:  'undo redo paste removeformat code | table | ltr rtl'
+  height:   '4em'
+  body_id:  'tinymce_heading_instance')
+
+text = merge(common_settings,
+  plugins:  'table directionality lists autoheight uploadfile media link paste code'
+  selector: 'textarea.text'
+  toolbar:  'undo redo code paste removeformat      |
+             formatselect bold italic underline     |
+             table alignleft aligncenter alignright |
+             bullist numlist outdent indent         |
+             ltr rtl                                |
+             link uploadfile media'
+  body_id:  'tinymce_text_instance')
+
+tinymce.init heading
 tinymce.init text
 
 # TODO: find a way around TinyMCE grabbing the even before we do...

@@ -25,16 +25,18 @@ input[type=submit], button, .btn
   border-top: none !important
   border-left: none !important
   border-right: none !important
-  
-// Baseline for how contents are displayed
-
-main article
-  table
-    margin: 0 0 .75em 0
-  td
-    border: 1px solid $grey
-    line-height: 1
-    padding: .75em .5em 0 .5em
-  ul
-    list-style-type: square
-    padding: 0 0 .75em 1em
+  // Caused by bitters; resetting as wellt...
+  #{$all-buttons} 
+    &:hover
+      background-color: $tinymce-grey
+      color: $black
+    &:focus,
+    &:active
+      outline: none
+      outline-offset: 0
+      padding: 3px 7px
+  .mce-listbox button
+    &:focus,
+    &:active
+      border: 0
+      padding: 4px 20px 4px 8px

@@ -1,5 +1,4 @@
 @mixin toc
-
   // reset mobile device view settings
   nav#sidebar li
     padding-left: 0
@@ -7,11 +6,10 @@
       padding: .5em 0
     span
       padding-left: .55em
-
   // start out by hiding everything but the top two levels
   nav#sidebar ul.level_2 ul
     display: none
-
+  // actual styling now
   nav#sidebar
     position: fixed
     height: 100%
@@ -20,7 +18,6 @@
       overflow-y: auto
     h3
       display: none
-      
     // all nesting levels
     ul
       margin: 0
@@ -36,18 +33,15 @@
       // layout
       ul ul li
         max-width: 275px
-    
     // second and third level
     ul ul
       line-height: 1.5
-    
     // just the second level
     ul ul > li
       padding-left: .5em
     li.level_2 > a
       line-height: 1.25
       color: shade($blue, 25%)
-    
     // just the third level (doesn't have its own class)
     li.level_2 ul
       padding-left: 1em

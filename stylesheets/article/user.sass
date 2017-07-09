@@ -1,6 +1,35 @@
-main article
-  font-size: 12pt
-  font-family: $font-stack-helvetica, 'Serto Jerusalem'
-  
-  header, h1, h2, h3, h4, h5, h6
+// User view, heading editor, content editor
+
+main article,
+#tinymce_heading_instance, #tinymce_text_instance
+  *
+    font-size: 12pt
+    font-family: 'Charis SIL', $font-stack-helvetica, 'Serto Jerusalem' !important
+  h1, h2, h3, h4, h5, h6
     font-weight: bold
+  table
+    margin: 0 0 .75em 0
+  td
+    border: 1px solid $grey
+    padding-left: .25em
+    padding-right: .25em
+  ul
+    list-style-type: square
+    padding: 0 0 .75em 1em
+    
+// User view and heading editor only
+
+main article header
+  border: 1px solid tint($blue, 10%)
+  margin-bottom: .75em
+main article header,
+#tinymce_heading_instance
+  table
+    margin: 0
+    font-weight: bold
+    background-color: tint($blue, 50%)
+    td
+      border: none
+      color: contrast-switch(tint($blue, 50%))
+      padding: .35em .5em 
+      margin: 0
