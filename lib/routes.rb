@@ -3,9 +3,15 @@ module SinatraApp
     # Prepend all routes with locale info, but skip locale-independent ones
     
     before '/:locale/?*' do
-      pass if request.path_info.match /^\/[assets|files]/
-      I18n.locale = params[:locale]
-      request.path_info = '/'+params[:splat].first
+      pass if request.path_info.match /^\/(assets|files)/
+      begin
+        I18n.locale = params[:locale]
+        request.path_info = '/'+params[:splat].first
+      rescue I18n::InvalidLocale
+        # TODO: i18n!
+        flash[:error] = "The address you tried to access is not accessible without providing a locale."
+        redirect to('/')
+      end
     end
     
     # Serve assets through Sprockets
