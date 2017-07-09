@@ -1,6 +1,7 @@
 require 'sanitize'
 
 module SinatraApp
+  # A chapter belongs to the top-level element by having the same 'book' field value. There are no formal relationships!
   class ContentFragment < ActiveRecord::Base
     default_scope { order("locale ASC, book ASC, chapter_padded ASC") }
     before_save :fill_sorting_column
@@ -31,10 +32,10 @@ module SinatraApp
     end
     
     def first_child
-      ContentFragment.where(locale: locale, book: book).non_empty_chapter.first
+      ContentFragment.where(locale: locale, book: book).non_empty_chapters.first
     end
     
-    scope :non_empty_chapter, -> { where("chapter <> ''") }
+    scope :non_empty_chapters, -> { where("chapter <> ''") }
     scope :empty_chapter, -> { where(chapter: [nil, '']) }
     scope :book, ->(locale, book) { where(locale: locale, book: book).empty_chapter }
     scope :chapter, ->(locale, book, chapter) { where(locale: locale, book: book, chapter: chapter) }
@@ -44,6 +45,10 @@ module SinatraApp
         lmnts = chapter.split '.'
         self.chapter_padded = lmnts.map {|l| l.rjust(10, '0')}.join '.'
       end
+    end
+    
+    def url_path
+      "/#{locale}/#{[URI.escape(book), first_child ? first_child.chapter : chapter].join('/')}"
     end
   end
 end
