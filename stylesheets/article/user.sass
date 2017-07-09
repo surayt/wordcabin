@@ -1,7 +1,5 @@
 // User view, heading editor, content editor
-
-main article,
-#tinymce_heading_instance, #tinymce_text_instance
+main article, #tinymce_heading_instance, #tinymce_text_instance
   *
     font-size: 12pt
     font-family: 'Charis SIL', $font-stack-helvetica, 'Serto Jerusalem' !important
@@ -15,15 +13,13 @@ main article,
     padding-right: .25em
   ul
     list-style-type: square
-    padding: 0 0 .75em 1em
+    padding: 0 0 0 2em
     
 // User view and heading editor only
-
 main article header
   border: 1px solid tint($blue, 10%)
   margin-bottom: .75em
-main article header,
-#tinymce_heading_instance
+main article header, #tinymce_heading_instance
   table
     margin: 0
     font-weight: bold
@@ -33,3 +29,10 @@ main article header,
       color: contrast-switch(tint($blue, 50%))
       padding: .35em .5em 
       margin: 0
+      
+// User view and content editor only
+main article section, #tinymce_text_instance
+  table
+    td
+      padding-top: 0
+      padding-bottom: 0
