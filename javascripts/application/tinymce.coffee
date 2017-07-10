@@ -19,7 +19,8 @@ common_settings =
       {title: 'Header 6', format: 'h6'}]}
     {title: 'Paragraph', format: 'p'}
     {title: 'Table as Header', selector: 'table', classes: 'header_table'}
-    {title: 'Infobox', selector: 'table', classes: 'infobox'}]
+    {title: 'Infobox (1 column)', selector: 'table', classes: 'infobox_1_col'}
+    {title: 'Infobox (2 columns)', selector: 'table', classes: 'infobox_2_col'}]
   content_css: [
     '/font-awesome/css/font-awesome.css?' + (new Date).getTime(),
     '/assets/tinymce.css?' + (new Date).getTime()]

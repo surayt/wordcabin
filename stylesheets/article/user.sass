@@ -14,10 +14,11 @@ main article, #tinymce_heading_instance, #tinymce_section_instance
   ul
     list-style-type: square
     padding: 0 0 0 2em
+    margin: .5em 0
     
 // User view and heading editor only
 main article header
-  border: 1px solid tint($blue, 10%)
+  border: 3px solid tint($blue, 10%)
   margin-bottom: .75em
 main article header, #tinymce_heading_instance
   table
@@ -36,9 +37,15 @@ main article section, #tinymce_section_instance
     td
       padding-top: 0
       padding-bottom: 0
-    &.infobox
+    &.infobox_1_col, &.infobox_2_col, &.header_table
+      td
+        padding: .35em .5em
+    &.infobox_1_col
       background-color: tint($orange, 50%)
-      border: 1px solid tint($orange, 10%) !important
+      border: 3px solid tint($orange, 10%) !important
+    &.infobox_2_col
+      background-color: tint($orange, 50%)
+      border: 3px solid tint($orange, 10%) !important
       td
         border: none
         padding: .5em
@@ -50,8 +57,7 @@ main article section, #tinymce_section_instance
     &.header_table
       font-weight: bold
       background-color: tint($blue, 50%)
-      border: 1px solid tint($blue, 10%)
+      border: 3px solid tint($blue, 10%)
       td:
         border: none
         color: contrast-switch(tint($blue, 50%))
-        padding: .35em .5em 
