@@ -32,3 +32,6 @@
 [submodule "javascripts/infinite-scroll"]
 	path = javascripts/infinite-scroll
 	url = git@github.com:metafizzy/infinite-scroll.git
+[submodule "javascripts/js-url"]
+	path = javascripts/js-url
+	url = git@github.com:websanova/js-url.git

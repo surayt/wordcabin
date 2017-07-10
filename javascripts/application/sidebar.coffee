@@ -48,6 +48,12 @@ restore_sidebar_state = ->
   hidden = Cookies.get('wordcabin_toc_sidebar_hidden')
   if hidden == 'true'
     toggle_sidebar()
+    
+add_view_mode_to_chapter_links = ->
+  view_mode = url('?view_mode')
+  if view_mode != ''
+    href = $('#sidebar ul a').attr('href')
+    $('#sidebar ul a').attr('href', href+'?view_mode='+view_mode)
 
 $(document).ready ->
   make_sidebar_hideable()
@@ -55,3 +61,4 @@ $(document).ready ->
   make_toc_expandable()
   restore_toc_state()
   add_content_fragment_delete_links()
+  add_view_mode_to_chapter_links()
