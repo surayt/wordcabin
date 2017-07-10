@@ -54,7 +54,7 @@ namespace :db do
   def import_file(path, locale, book_name, chapter_designator, chapter_name, chapter_number)
     print "Creating chapter"
     html = clean_html(locale, File.read(path))
-    heading = extract_heading(html, "#{chapter_name} (#{chapter_designator || '-'}")
+    heading = extract_heading(html, "#{chapter_name} (#{chapter_designator || '-'})")
     # A chapter belongs to the top-level element by having the same 'book' field value. There are no formal relationships!
     c = ContentFragment.new(locale: locale, book: book_name, chapter: chapter_number, heading: heading, html: html)
     puts # Newline...
