@@ -60,5 +60,5 @@ $(document).ready ->
   restore_sidebar_state()
   make_toc_expandable()
   restore_toc_state()
-  add_content_fragment_delete_links()
+  # add_content_fragment_delete_links()
   # add_view_mode_to_chapter_links()

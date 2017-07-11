@@ -10,10 +10,26 @@ module SinatraApp
     validates :book, presence: {message: 'must be present, even when chapter is empty.'}
     validates :locale, presence: {message: 'must and should be present'}, length: {is: 2, message: 'must be in ISO 3166-1 Alpha 2 encoding.'}
     validates :chapter, uniqueness: {scope: [:locale, :book], message: 'must be unique within book and locale.'}
-    validates :chapter, format: {with: /^[\d+.]*\d+$/, multiline: true, message: 'must be in a format like 2.3.4.5, etc.'}, allow_blank: true
+    validates :chapter, format: {with: /^[\d+.]*\d+$/, multiline: true, message: 'must be in a format like 2.10.4.5, etc.'}, allow_blank: true # TODO: allow_nil, even?
     # TODO: check whether:
     # - new element would, given its chapter string, have a parent?
+    validate :ensure_chapter_has_parent
     # - element to be deleted has children that need to be deleted?
+    before_destroy :chapter_has_no_children
+    
+    def ensure_chapter_has_parent
+      if chapter.blank? && !ContentFragment.book(locale, book).any?
+        errors.add(:chapter, 'can only be specified together with an already existing book! To create a new book, leave empty.')
+      end
+    end
+    
+    def ensure_chapter_has_no_children
+      if chapter.blank? && ContentFragment.where(locale: locale, book: book).non_empty_chapters.any?
+        errors.add(:base, "Can't delete book that still has any children!")
+        return false
+      end
+      return true
+    end
   
     def path
       ('/'+[locale, book, chapter].join('/')).chomp('/')
