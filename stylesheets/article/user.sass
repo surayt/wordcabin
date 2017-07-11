@@ -3,36 +3,96 @@ main article, #tinymce_heading_instance, #tinymce_section_instance
   *
     font-size: 12pt
     font-family: 'Charis SIL', $font-stack-helvetica, 'Serto Jerusalem' !important
+  a:hover
+    color: $red !important
   h1, h2, h3, h4, h5, h6
     font-weight: bold
   table
-    margin: 0 0 .75em 0
-  td
-    border: 1px solid $grey
-    padding-left: .25em
-    padding-right: .25em
+    margin: .25em 0 2.5em 0
+    td
+      // TODO: Find out why they look differently inside the editor?
+      border: 1px solid $grey
+      border-left: none
+      border-right: none
+      padding-left: .25em
+      padding-right: .25em
+      vertical-align: middle
+      &:empty
+        border: none
+    tr:first-child td
+      border-top: none
+      font-style: italic
+    &.no_header_row
+      tr:first-child td
+        border-top: 1px solid $grey
+        font-style: normal
+    &.full_border
+      tr:first-child td
+        border-top: 1px solid $grey
+        font-style: normal
+      td
+        border: 1px solid $grey
+        &:empty
+          border: none !important
+    &.first_cell_no_border
+      tr:first-child td
+        font-style: normal
+      td, tr:first-child td
+        border: 1px solid $grey
+      tr td[rowspan]:first-child
+        border-left: none
+        border-top: none
+        border-bottom: none
+    &.no_borders
+      border: none
+      background-color: none
+      margin-bottom: 0
+      td
+        border: none
+        padding: 0
+        font-style: normal !important
+        font-weight: bold
+        
   ul
     list-style-type: square
     padding: 0 0 0 2em
     margin: .5em 0
+  .syriac
+    direction: rtl !important
+    font-family: 'Serto Jerusalem' !important
+    font-size: 16pt
+  .latin
+    direction: ltr !important
+    font-family: 'Charis SIL', $font-stack-helvetica,
+    font-size: 12pt
+  .highlighted
+    color: $red
+  .greyed_out
+    color: $grey
     
 // User view and heading editor only
 main article header
-  border: 3px solid tint($blue, 10%)
+  border: 2px solid tint($blue, 10%)
   margin-bottom: .75em
 main article header, #tinymce_heading_instance
   table
     margin: 0
     font-weight: bold
     background-color: tint($blue, 50%)
+    tr:first-child td
+      font-style: normal
     td
       border: none
-      color: contrast-switch(tint($blue, 50%))
+      color: $black
       padding: .35em .5em 
       margin: 0
       
 // User view and content editor only
 main article section, #tinymce_section_instance
+  // TODO: Find out if there's a way to make this work...
+  p! > iframe
+    width: 100%
+    text-align: center
   table
     td
       padding-top: 0
@@ -40,24 +100,42 @@ main article section, #tinymce_section_instance
     &.infobox_1_col, &.infobox_2_col, &.header_table
       td
         padding: .35em .5em
-    &.infobox_1_col
+    &.infobox
+      // TODO: Move text to the right, add "House" icon in top left corner
       background-color: tint($orange, 50%)
       border: 3px solid tint($orange, 10%) !important
-    &.infobox_2_col
-      background-color: tint($orange, 50%)
-      border: 3px solid tint($orange, 10%) !important
-      td
-        border: none
-        padding: .5em
-        &:first-child
-          padding: .2em 0 0 .5em
-          width: 5%
-          font-weight: bold
-          font-size: 150%
     &.header_table
       font-weight: bold
       background-color: tint($blue, 50%)
-      border: 3px solid tint($blue, 10%)
+      border: 2px solid tint($blue, 10%) !important
       td:
-        border: none
-        color: contrast-switch(tint($blue, 50%))
+        borde: none
+        color: $black
+      tr:first-child td
+        font-style: normal
+      margin-bottom: .75em
+  +grid-media($medium-grid)
+    table
+      width: 80%
+      margin-left: auto
+      margin-right: auto
+      position: relative
+      &.infobox,
+      &.header_table
+        width: 100%
+
+main article section
+  // TODO: Figure out if this can work inside of TinyMCE, too (the centering, that is)
+  iframe
+    display: block
+    position: relative
+    border: none
+    margin: auto
+    margin-bottom: 2.5em
+
+#tinymce_section_instance table
+  border: 1px dotted $black !important
+  tr
+    border: none
+    td
+      border: 1px dotted $black !important

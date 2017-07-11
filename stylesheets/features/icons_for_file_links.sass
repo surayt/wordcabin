@@ -11,11 +11,9 @@
     left: -.125em
 
 a.file[href$='mp3']
-  +file-icon
-  padding-left: .75em
-  &:before
-    content: '\f04b'
-    font-size: 80%
+  color: $blue
+  &:hover
+    color: shade($orange, 25%)
     
 a.file[href$='pdf']
   +file-icon

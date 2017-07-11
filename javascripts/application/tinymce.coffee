@@ -8,7 +8,8 @@ common_settings =
   statusbar: false
   menubar: false
   branding: false
-  invalid_styles: 'width height'
+  invalid_elements: '#td'
+  invalid_styles: 'height'
   style_formats: [
     {title: 'Headers', items: [
       {title: 'Header 1', format: 'h1'},
@@ -18,9 +19,18 @@ common_settings =
       {title: 'Header 5', format: 'h5'},
       {title: 'Header 6', format: 'h6'}]}
     {title: 'Paragraph', format: 'p'}
-    {title: 'Table as Header', selector: 'table', classes: 'header_table'}
-    {title: 'Infobox (1 column)', selector: 'table', classes: 'infobox_1_col'}
-    {title: 'Infobox (2 columns)', selector: 'table', classes: 'infobox_2_col'}]
+    {title: 'Table as header', selector: 'table', classes: 'header_table'}
+    {title: 'Table with no header row', selector: 'table', classes: 'no_header_row'}
+    {title: 'Table with full borders', selector: 'table', classes: 'full_border'}
+    {title: 'Table where first cell has no border', selector: 'table', classes: 'first_cell_no_border'}
+    {title: 'Table without any borders', selector: 'table', classes: 'no_borders'}
+    {title: 'Column width: 20%', selector: 'td', styles: {width: '20%'}}
+    {title: 'Infobox', selector: 'table', classes: 'infobox'}
+    {title: 'ܚܐܪܦܐܬ ܣܘܪܝܘܝܐ', inline: 'span', classes: 'syriac'}
+    {title: 'Latin letters', inline: 'span', classes: 'latin'}
+    {title: 'Highlighted', inline: 'span', classes: 'highlighted'}
+    {title: 'Greyed out', inline: 'span', classes: 'greyed_out'}
+  ]
   content_css: [
     '/font-awesome/css/font-awesome.css?' + (new Date).getTime(),
     '/assets/tinymce.css?' + (new Date).getTime()]
