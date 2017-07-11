@@ -32,6 +32,3 @@
 [submodule "javascripts/js-url"]
 	path = javascripts/js-url
 	url = git@github.com:websanova/js-url.git
-[submodule "stylesheets/neat"]
-	path = stylesheets/neat
-	url = git@github.com:sixtyfive/neat.git 
