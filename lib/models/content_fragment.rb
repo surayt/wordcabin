@@ -13,15 +13,15 @@ module SinatraApp
     validates :chapter, format: {with: /^[\d+.]*\d+$/, multiline: true, message: 'must be in a format like 2.10.4.5, etc.'}, allow_blank: true # TODO: allow_nil, even?
     # TODO: check whether:
     # - new element would, given its chapter string, have a parent?
-    validate :ensure_chapter_has_parent
+    # validate :ensure_chapter_has_parent # TODO: Disabling, because it still has problems.
     # - element to be deleted has children that need to be deleted?
     before_destroy :chapter_has_no_children
     
-    def ensure_chapter_has_parent
-      if chapter.blank? && !ContentFragment.book(locale, book).any?
-        errors.add(:chapter, 'can only be specified together with an already existing book! To create a new book, leave empty.')
-      end
-    end
+#    def ensure_chapter_has_parent
+#      if chapter.blank? && !ContentFragment.book(locale, book).any?
+#        errors.add(:chapter, 'can only be specified together with an already existing book! To create a new book, leave empty.')
+#      end
+#    end
     
     def ensure_chapter_has_no_children
       if chapter.blank? && ContentFragment.where(locale: locale, book: book).non_empty_chapters.any?
