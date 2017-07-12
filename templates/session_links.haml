@@ -4,7 +4,7 @@
     %a{href: "/#{locale}/logout"}= 'Logout'
     - if current_user.is_admin? && !content_class.include?('language_list')
       %span= '|' # The pipe won't display if not a string literal!
-      - if params[:view_mode] != 'preview'
+      - if view_mode == :edit
         -# TODO: i18n!
         %a{href: "?view_mode=preview"}= 'Preview'
       - else

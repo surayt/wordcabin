@@ -6,7 +6,7 @@
   %a#sidebar-handle= '<i class="fa fa-chevron-left"></i>'
   = haml :session_links
   
-  - if content_class.include? 'editor'
+  - if (content_class.include? 'editor') && (view_mode == :edit)
   
     %form.content_fragment{method: :post}
       %textarea{class: 'heading', name: 'content_fragment[heading]'}= @contents.heading

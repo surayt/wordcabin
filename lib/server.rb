@@ -117,7 +117,15 @@ module SinatraApp
     helpers do
       # Just some convenience (nicer to type current_user in views, etc.)
       def current_user
-        User.find(session[:user_id]) if session[:user_id]
+        (User.find(session[:user_id]) if session[:user_id]) || User.new
+      end
+      
+      def view_mode
+        if params[:view_mode]
+          params[:view_mode].to_sym
+        else
+          :preview
+        end
       end
 
       def locale
@@ -126,13 +134,13 @@ module SinatraApp
       
       def content_class
         c = []
-        if current_user && current_user.is_admin? && params[:view_mode] != 'preview'
+        if current_user && current_user.is_admin? && view_mode != :preview
           c << :editor
         else
           c << :user
         end
         c << :language_list if request.path_info.split('/').length < 2
-        c.length > 0 ? c.join(' ') : nil
+        c.join(' ')
       end
     end
   end
