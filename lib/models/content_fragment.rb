@@ -9,7 +9,7 @@ module SinatraApp
     # TODO: i18n!
     validates :book, presence: {message: 'must be present, even when chapter is empty.'}
     validates :locale, presence: {message: 'must and should be present'}, length: {is: 2, message: 'must be in ISO 3166-1 Alpha 2 encoding.'}
-    validates :chapter, uniqueness: {scope: [:locale, :book], message: 'must be unique within book and locale.'}
+    # validates :chapter, uniqueness: {scope: [:locale, :book], message: 'must be unique within book and locale.'}
     validates :chapter, format: {with: /^[\d+.]*\d+$/, multiline: true, message: 'must be in a format like 2.10.4.5, etc.'}, allow_blank: true # TODO: allow_nil, even?
     # TODO: check whether:
     # - new element would, given its chapter string, have a parent?
