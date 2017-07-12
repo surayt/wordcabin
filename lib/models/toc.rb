@@ -55,7 +55,7 @@ module SinatraApp
           display_depth = f['chapter'].split('.').length + 1 # TODO: this too!
           li_spaces = ''; (display_depth).times {li_spaces << '  '}
           f['path'] = URI.encode("/#{[f['locale'], f['book'], f['chapter']].join('/')}")
-          f['name'] = Sanitize.clean([f['chapter'], f['heading']].join(' ')) # Completely remove all markup.
+          f['name'] = Sanitize.clean([f['chapter'], f['heading']].join('')).gsub(/\n+/, ' ').strip # Completely remove all markup.
           f['class'] = link_class(f['path'], uripath, next_marker)
           next_marker = true if f['class'] != ''
           toc << "#{li_spaces}<li class='level_#{display_depth}'><a#{f['class']} href='#{f['path']}'>#{f['name']}</a>\n"
