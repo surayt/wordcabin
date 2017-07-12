@@ -10,13 +10,13 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170706105011) do
+ActiveRecord::Schema.define(version: 20170712001339) do
 
   create_table "content_fragments", force: :cascade do |t|
     t.string "book"
     t.string "html"
     t.string "chapter"
-    t.string "heading"
+    t.string "heading", default: "<table><tr><td></td></tr></table>"
     t.string "locale"
     t.string "chapter_padded"
     t.index ["chapter_padded"], name: "index_content_fragments_on_chapter_padded"
