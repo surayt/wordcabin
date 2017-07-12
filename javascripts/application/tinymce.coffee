@@ -8,8 +8,9 @@ common_settings =
   statusbar: false
   menubar: false
   branding: false
-  invalid_elements: '#td'
-  invalid_styles: 'height'
+  invalid_styles: 'height' 
+  forced_root_block : ''
+  force_p_newlines : true
   style_formats: [
     {title: 'Headers', items: [
       {title: 'Header 1', format: 'h1'},
@@ -39,7 +40,7 @@ heading = merge(common_settings,
   plugins:  'table directionality code paste'
   selector: 'textarea.heading'
   toolbar:  'undo redo paste removeformat code | table | ltr rtl'
-  height:   '4em'
+  height:   '5.25em'
   body_id:  'tinymce_heading_instance')
 
 text = merge(common_settings,
