@@ -62,7 +62,7 @@ namespace :db do
     if c.save
       puts "Success:\t#{([c.locale, c.book, c.chapter, c.chapter_padded].join("\t"))}\t<-\t#{path}"
     else
-      puts c.errors.inspect.red
+      puts "Chapter: #{c.errors.full_messages.join("\n").to_s.red}"
     end
   end
   
@@ -93,8 +93,14 @@ namespace :db do
 
   def clean_html(locale, input)
     doc = Nokogiri::HTML.fragment(input) {|config| config.noblanks}
-    # return input
-    %w{style width height cellpadding cellspacing border dir frame rules}.each {|a| doc.css('*').remove_attr(a)}
+    %w{width height cellpadding cellspacing border dir frame rules}.each {|a| doc.css('*').remove_attr(a)}
+    doc.css('[align]').each {|n| n.set_attribute('style', "text-align: #{n.get_attribute('align')}"); n.remove_attribute('align')}
+    ['[style*="color: red;"]', '[style*="color:red;"]'].each {|s|
+      doc.css(s).each {|n|
+        n.set_attribute('class', [n.get_attribute('class'), 'highlight'].join(' ').strip)
+      }
+    }
+    doc.css('*').remove_attr('style')
     doc.css('[lang^="EN-US"]').each {|n| n.remove_attribute('lang')}
     doc.css('[lang^="EN-GB"]').each {|n| n.remove_attribute('lang')}
     doc.css('[lang]').each {|n| n.set_attribute('lang', n.get_attribute('lang').downcase)}
@@ -103,15 +109,15 @@ namespace :db do
         path = n.get_attribute(a)
         new_href = process_attached_file(locale, path)
         n.set_attribute(a, new_href) if path.include? '.' # Otherwise it's not a file...
-        %w{class target}.each {|trash| n.remove_attribute(trash)}
-        n.set_attribute('class', 'file') if new_href != path
+        n.remove_attribute('target')
+        n.set_attribute('class', [n.get_attribute('class'), 'file'].join(' ').strip) if new_href != path
       }
     }
-    doc.css('span').each {|n| n.replace(n.content) unless n.get_attribute('lang')}
+    doc.css('span').each {|n| n.replace(n.children) unless n.get_attribute('lang')}
     doc.css('*').each {|n| n.remove if n.content.blank?; n.remove if n.content.strip.empty?}
     doc.css('p[align]').each {|n| n.parent.set_attribute('align', n.get_attribute('align')) if n.parent.name == 'td'; n.replace(n.children)}
     3.times {doc.css('div[align^="center"] table').each {|n| n.parent.replace(n.parent.children) if n.name == 'table' && n.parent.name == 'div'}}
-    doc.css('td p').each {|n| n.replace(n.content)}
+    doc.css('td p').each {|n| n.replace(n.children)}
     doc.css('div[class^="WordSection1"]').each {|n| n.replace(n.children)}
     doc.css('div[id^="_mcePaste"]').each {|n| n.name = 'p'; n.remove_attribute('id')}
     doc.css('*').xpath('text()').each {|n| n.content = n.content.gsub(/\u00a0/, '').gsub(/^\s+|\s+$|\s+(?=\s)/, '')}
@@ -180,7 +186,9 @@ namespace :db do
       last_chapter = ContentFragment.where(locale: locale, book: book_name).non_empty_chapters
       chapter_number = last_chapter.any? ? last_chapter.last.chapter.to_i + 1 : 1
       unless ContentFragment.book(locale, book_name).any?
-        ContentFragment.create(locale: locale, book: book_name)
+        puts "Warning: creating new book for chapter to reside in!".yellow
+        book = ContentFragment.create(locale: locale, book: book_name)
+        puts "Book: #{book.errors.full_messages.join("\n").to_s.red}\n(#{book.inspect})" if book.errors.any?
       end
       import_file(path, locale, book_name, chapter_designator, chapter_name, chapter_number)
     else
@@ -208,7 +216,7 @@ namespace :wordcabin do
 
   desc "Copy all required files from data/ to public/"
   task :copy_assets do
-    # TODO: remove next four lines ones legacy conversion complete.
+    # TODO: remove next four lines once legacy conversion complete.
     puts "Deleting and re-linking #{Config.legacy_media}"
     FileUtils.rm_f Config.legacy_media # Only required because 'ln -sf' is f***** up...
     FileUtils.ln_s Config.data, Config.legacy_media

@@ -58,7 +58,7 @@ main article, #tinymce_heading_instance, #tinymce_section_instance
     list-style-type: square
     padding: 0 0 0 2em
     margin: .5em 0
-  .highlighted
+  .highlight
     color: $red
   .greyed_out
     color: $grey
@@ -121,6 +121,7 @@ main article section
     border: none
     margin: auto
     margin-bottom: 2.5em
+    z-index: -2000 !important // TODO: test - does that even work???
 
 #tinymce_section_instance table
   border: 1px dotted $black !important

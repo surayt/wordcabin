@@ -29,7 +29,7 @@ common_settings =
     {title: 'Infobox', selector: 'table', classes: 'infobox'}
     {title: 'ܚܐܪܦܐܬ ܣܘܪܝܘܝܐ', inline: 'span', classes: 'syriac'}
     {title: 'Latin letters', inline: 'span', classes: 'latin'}
-    {title: 'Highlighted', inline: 'span', classes: 'highlighted'}
+    {title: 'Highlighted', inline: 'span', classes: 'highlight'}
     {title: 'Greyed out', inline: 'span', classes: 'greyed_out'}
   ]
   content_css: [
@@ -39,7 +39,7 @@ common_settings =
 heading = merge(common_settings,
   plugins:  'table directionality code paste'
   selector: 'textarea.heading'
-  toolbar:  'undo redo paste removeformat code | table | ltr rtl'
+  toolbar:  'undo redo paste removeformat code | table alignleft aligncenter alignright | ltr rtl'
   height:   '5.25em'
   body_id:  'tinymce_heading_instance')
 
