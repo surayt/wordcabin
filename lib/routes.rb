@@ -116,7 +116,7 @@ module SinatraApp
       if fragment.save
         redirect to(URI.escape(fragment.path))
       else
-        flash[:error] = fragment.errors.to_a.last # We shall content ourselves with showing one error.
+        flash[:error] = fragment.errors.full_messages.to_s.join(" ") # Not pretty, but whatever.
         redirect back
       end
     end
