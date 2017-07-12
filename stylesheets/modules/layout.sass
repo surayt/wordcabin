@@ -33,7 +33,7 @@ body.editor
         color: $blue
         font-weight: bold
       &:hover i
-        color: contrast_switch($orange) !important
+        color: contrast-switch($orange) !important
     heading, section
       display: none
     $toc-orange: tint($orange, 25%)
@@ -100,7 +100,7 @@ body.user
         z-index: -1
         padding: .25em .25em 0 0
         a:hover
-          color: contrast_switch($orange) !important
+          color: contrast-switch($orange) !important
     #logo, #sidebar
       +grid-column(1.5)
       border-right: 1px solid shade($grey, 25%) !important
@@ -136,12 +136,12 @@ body.user
 body.editor
   #grid-container
     display: none // TODO: re-enable when there's a need for a mobile admin screen!
-  background-color: tint($orange, 25%)
   #logo, #sidebar heading
     display: none
   +grid-media($editor-grid)
     #grid-container 
       display: block // TODO: remove when there's a need for a mobile admin screen!
+      background-color: $tinymce-grey
     #grid-container, #sidebar, #sidebar section, #content, #content form
       height: 100%
     #sidebar
@@ -152,7 +152,7 @@ body.editor
       margin-left: 0
       margin-right: none
       a
-        color: $white !important
+        color: white !important
         &.btn.menu
           display: none
       input.btn
@@ -160,19 +160,20 @@ body.editor
         position: fixed
         bottom: .5em
         left: .5em
-        padding: 5px 9px
         +button
+        padding-bottom: 5px
       section
+        background-color: tint($orange, 15%)
         display: block
         padding: 0
         a:hover
-          color: contrast_switch($orange) !important
+          color: contrast-switch($orange) !important
       ul.level_1
         li.level_1
           background-color: $orange
           padding: .25em .25em .25em .35em
           span
-            color: $white
+            color: $black
         ul.level_2
           padding-top: .5em
         li
@@ -196,7 +197,7 @@ body.editor
             display: inline-block
             margin-bottom: .6em
           label
-            color: $white
+            color: contrast-switch($tinymce-grey)
           input[type=text]
             padding: 4px 4px
             margin-right: .5em
