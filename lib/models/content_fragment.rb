@@ -54,6 +54,7 @@ module SinatraApp
     scope :non_empty_chapters, -> { where("chapter <> ''") }
     scope :empty_chapter, -> { where(chapter: [nil, '']) }
     scope :book, ->(locale, book) { where(locale: locale, book: book).empty_chapter }
+    scope :chapters, ->(locale, book) { where(locale: locale, book: book).non_empty_chapters.uniq }
     scope :chapter, ->(locale, book, chapter) { where(locale: locale, book: book, chapter: chapter) }
     
     def fill_sorting_column

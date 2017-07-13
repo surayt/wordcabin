@@ -4,11 +4,11 @@ module SinatraApp
   class TOC
     def initialize(locale, book = nil)
       @locale = locale
-      @book = book
+      @book_or_books = (ContentFragment.book(locale, book) || ContentFragment.empty_chapter).uniq
     end
     
     def html(uripath = nil)
-      build_toc(ContentFragment.book(@locale, @book).uniq, uripath)
+      build_toc(@book_or_books, uripath)
     end
     
     private
