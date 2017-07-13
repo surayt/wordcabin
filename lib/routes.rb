@@ -90,7 +90,7 @@ module SinatraApp
     get '/new' do
       book = ContentFragment.book(locale, params[:content_fragment][:book]) if params[:content_fragment]
       @contents = ContentFragment.new(params[:content_fragment])
-      @toc = TOC.new(locale, book)
+      @toc = TOC.new(locale, book || nil)
       haml :contents
     end
     
