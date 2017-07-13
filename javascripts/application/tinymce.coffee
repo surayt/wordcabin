@@ -5,6 +5,7 @@ merge = (xs...) ->
 tap = (o, fn) -> fn(o); o
 
 common_settings =
+  language_url: '/tinymce_langs/'+url('1')+'.js'
   statusbar: false
   menubar: false
   branding: false
