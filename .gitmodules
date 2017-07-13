@@ -18,10 +18,6 @@
 	path = stylesheets/neat
 	url = git@github.com:surayt/neat.git
 	branch = master
-[submodule "stylesheets/font-awesome"]
-	path = stylesheets/font-awesome
-	url = git@github.com:surayt/Font-Awesome.git
-	branch = master
 [submodule "javascripts/js-url"]
 	path = javascripts/js-url
 	url = git@github.com:surayt/js-url.git
