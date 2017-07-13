@@ -1,5 +1,5 @@
 #session_links
-  - if current_user
+  - if current_user && !current_user.new_record?
     -# TODO: i18n!
     %a{href: "/#{locale}/logout"}= 'Logout'
     - if current_user.is_admin? && !content_class.include?('language_list')
