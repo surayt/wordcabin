@@ -42,3 +42,7 @@
 	path = stylesheets/bitters
 	url = git@github.com:surayt/bitters.git
 	branch = surayt
+[submodule "public/tinymce_langs"]
+	path = public/tinymce_langs
+	url = git@github.com:surayt/tinymce_langs.git
+	branch = master
