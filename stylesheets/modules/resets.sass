@@ -1,7 +1,10 @@
+$font-stack-wordcabin-contents: 'Charis SIL', 'Serto Jerusalem', 'Amiri', 'FontAwesome'
+$font-stack-wordcabin-ui: $font-stack-system, $font-stack-wordcabin-contents
+
 // HTML resets beyond Normalize
 body
   font-size: 10pt
-  font-family: $font-stack-system
+  font-family: $font-stack-wordcabin-ui
 *, a
   text-decoration: none
   color: $black
@@ -17,10 +20,6 @@ input[type=submit], button, .btn
   &:active, &:focus
     outline: none !important
     border: 1px solid $white
-  
-// Setting up FontAwesome, even though that's not really a reset ^^
-.fa-input
-  font-family: 'FontAwesome', sans-serif
 
 // TinyMCE tweaks
 .mce-tinymce
@@ -57,4 +56,4 @@ input[type=submit], button, .btn
 .mce-window
   min-width: 400px !important
   .mce-reset *
-    font-family: $font-stack-system, 'Charis SIL', 'Serto Jerusalem', 'FontAwesome', 'tinymce' !important
+    font-family: $font-stack-wordcabin-ui, 'tinymce'

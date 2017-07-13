@@ -11,15 +11,16 @@ common_settings =
   invalid_styles: 'height' 
   forced_root_block : ''
   force_p_newlines : true
-#  formats: [
+  formats: [
 #    TODO: figure out why these do nothing apparently?
 #    bold: {inline: 'span', styles: {'font-weight', 'bold'}}
 #    italic: {inline: 'span', styles: {'font-family', 'italic'}}
-#    removeformat: [
+    removeformat: [
 #      TODO: figure out whether there's a safe way of doing this...
 #      {selector: 'td', attributes: ['rowspan', 'colspan'], split: false, expand: false, deep: true}
-#    ]
-#  ]
+       {selector: '*', attributes: ['lang'], split: true, expand: true, deep: true}
+    ]
+  ]
   style_formats: [
     {title: 'Headers', items: [
       {title: 'Header 1', format: 'h1'},
@@ -55,12 +56,15 @@ heading = merge(common_settings,
   menubar: false
   plugins:  'table directionality code paste'
   selector: 'textarea.heading'
-  toolbar:  'undo redo paste removeformat code | table alignleft aligncenter alignright | ltr rtl'
+  toolbar:  'undo redo paste removeformat code      |
+             styleselect                            |
+             table alignleft aligncenter alignright |
+             ltr rtl'
   height:   '5.25em'
   body_id:  'tinymce_heading_instance')
 
 text = merge(common_settings,
-  menubar: true
+  menubar: false
   plugins:  'table directionality lists autoheight uploadfile media link paste code'
   selector: 'textarea.text'
   toolbar:  'undo redo code paste removeformat      |

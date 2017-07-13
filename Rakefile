@@ -93,20 +93,57 @@ namespace :db do
 
   def clean_html(locale, input)
     doc = Nokogiri::HTML.fragment(input) {|config| config.noblanks}
-    %w{width height cellpadding cellspacing border dir frame rules}.each {|a| doc.css('*').remove_attr(a)}
+    %w{width height cellpadding cellspacing border dir frame rules valign}.each {|a| doc.css('*').remove_attr(a)}
     doc.css('[align]').each {|n| n.set_attribute('style', "text-align: #{n.get_attribute('align')}"); n.remove_attribute('align')}
+    doc.css('[class^="soundlink"]').remove_attr('class')
+    
     ['[style*="color: red;"]', '[style*="color:red;"]'].each {|s|
       doc.css(s).each {|n|
         n.set_attribute('class', [n.get_attribute('class'), 'highlight'].join(' ').strip)
       }
     }
+    
     doc.css('*').remove_attr('style')
+    
     # TODO: re-enable once TinyMCE agrees to this, too.
     # doc.css('em').each {|n| n.name = 'span'; n.set_attribute('style', 'font-style: italic;')}
     # doc.css('strong').each {|n| n.name = 'span'; n.set_attribute('style', 'font-weight: bold;')}
-    doc.css('[lang^="EN-US"]').each {|n| n.remove_attribute('lang')}
-    doc.css('[lang^="EN-GB"]').each {|n| n.remove_attribute('lang')}
-    doc.css('[lang]').each {|n| n.set_attribute('lang', n.get_attribute('lang').downcase)}
+    
+    [:unmodified, :lowercase, :uppercase].each do |lettercase|
+      ['en-US', 'en-GB', 'ar', 'ar-SA', 'nl', 'es', 'no-BOK'].each do |lang|
+        case lettercase
+          when :lowercase
+            lang.downcase!
+          when :uppercase
+            lang.upcase!
+        end
+        doc.css("[lang^=\"#{lang}\"]").each {|n| n.remove_attribute('lang')}
+      end
+    end
+        
+    doc.css('[lang]').each {|n|
+      updated_lang = n.get_attribute('lang').downcase
+      if n.name == 'span'
+        if n.element_children.any?
+          n.children.first.set_attribute('lang', updated_lang)
+        else
+          parent = n.parent
+          loop do
+            parent.set_attribute('lang', updated_lang)
+            if parent.name == 'span'
+              parent = parent.parent
+            else
+              break
+            end
+          end
+        end
+      else
+        n.set_attribute('lang', updated_lang)
+      end
+    }
+    doc.css('span').each {|n| n.set_attribute('lang', n.get_attribute('lang').downcase) if n.get_attribute('lang')}
+    doc.css('span').each {|n| n.replace(n.children) if n.attributes.empty? || (n.attributes.length == 1 && (n.get_attribute('lang') || '').downcase == 'syr')}
+    
     %w{href src}.each {|a|
       doc.css("[#{a}]").each {|n|
         path = n.get_attribute(a)
@@ -116,14 +153,40 @@ namespace :db do
         n.set_attribute('class', [n.get_attribute('class'), 'file'].join(' ').strip) if new_href != path
       }
     }
-    doc.css('span').each {|n| n.replace(n.children) unless n.get_attribute('lang')}
+    
     doc.css('*').each {|n| n.remove if n.content.blank?; n.remove if n.content.strip.empty?}
+    
     doc.css('p[align]').each {|n| n.parent.set_attribute('align', n.get_attribute('align')) if n.parent.name == 'td'; n.replace(n.children)}
     3.times {doc.css('div[align^="center"] table').each {|n| n.parent.replace(n.parent.children) if n.name == 'table' && n.parent.name == 'div'}}
     doc.css('td p').each {|n| n.replace(n.children)}
-    doc.css('div[class^="WordSection1"]').each {|n| n.replace(n.children)}
-    doc.css('div[id^="_mcePaste"]').each {|n| n.name = 'p'; n.remove_attribute('id')}
-    doc.css('*').xpath('text()').each {|n| n.content = n.content.gsub(/\u00a0/, '').gsub(/^\s+|\s+$|\s+(?=\s)/, '')}
+    # doc.css('div[class^="WordSection1"]').each {|n| n.replace(n.children)}
+    # doc.css('div[id^="_mcePaste"]').each {|n| n.name = 'p'; n.remove_attribute('id')}
+    doc.css('*').xpath('text()').each {|n| n.content = n.content.gsub(/\u00a0/, ' ').gsub(/^\s+|\s+$|\s+(?=\s)/, ' ')}
+    doc.css('div').each {|n| n.replace(n.children)}
+    
+    doc.css('*').xpath('text()').each {|n|
+      if n.content.match /\p{Syriac}/
+        # n.parent.set_attribute('lang', 'syr')
+        marked = false
+        # cdepth = 1
+        parent = n.parent
+        loop do
+          marked = true if parent && (parent.get_attribute('lang') || '') == 'syr'
+          if marked
+            break
+          else
+            if parent
+              parent = parent.parent
+            else
+              break
+            end
+          end
+          # cdepth +=1 ; break if cdepth > 3
+        end
+        n.parent.set_attribute('lang', 'syr') unless marked
+      end
+    }
+    
     HtmlBeautifier.beautify(doc.to_html, indent: '  ') # HtmlCompressor::Compressor.new.compress(noko.to_xhtml)
   end
   

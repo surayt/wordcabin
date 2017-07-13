@@ -12,3 +12,24 @@
 #tinymce_section_instance
   a
     color: $blue !important
+    
+#content *[lang]
+  position: relative
+  span.lang_designator
+    display: none
+    position: absolute
+    left: -1em
+    font-size: 8pt
+    background-color: tint($grey, 25%)
+    color: $black
+    border: 2px solid $black
+    padding: 3px 2px
+    margin: 10px
+    text-transform: uppercase
+    z-index: 5000
+    opacity: .75
+    font-style: normal
+    font-weight: normal
+    text-direction: ltr
+  &:hover span.lang_designator
+    display: block
