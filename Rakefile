@@ -101,6 +101,9 @@ namespace :db do
       }
     }
     doc.css('*').remove_attr('style')
+    # TODO: re-enable once TinyMCE agrees to this, too.
+    # doc.css('em').each {|n| n.name = 'span'; n.set_attribute('style', 'font-style: italic;')}
+    # doc.css('strong').each {|n| n.name = 'span'; n.set_attribute('style', 'font-weight: bold;')}
     doc.css('[lang^="EN-US"]').each {|n| n.remove_attribute('lang')}
     doc.css('[lang^="EN-GB"]').each {|n| n.remove_attribute('lang')}
     doc.css('[lang]').each {|n| n.set_attribute('lang', n.get_attribute('lang').downcase)}

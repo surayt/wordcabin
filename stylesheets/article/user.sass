@@ -86,13 +86,8 @@ main article section, #tinymce_section_instance
     td
       padding-top: 0
       padding-bottom: 0
-    &.infobox_1_col, &.infobox_2_col, &.header_table
-      td
-        padding: .35em .5em
-    &.infobox
-      // TODO: Move text to the right, add "House" icon in top left corner
-      background-color: tint($orange, 50%)
-      border: 3px solid tint($orange, 10%) !important
+    &.header_table td
+      padding: .35em .5em
     &.header_table
       font-weight: bold
       background-color: tint($blue, 50%)
@@ -109,9 +104,14 @@ main article section, #tinymce_section_instance
       margin-left: auto
       margin-right: auto
       position: relative
-      &.infobox,
       &.header_table
         width: 100%
+  table
+    &.infobox
+      // TODO: Move text to the right, add "House" icon in top left corner
+      background-color: tint($orange, 50%)
+      border: 3px solid tint($orange, 10%) !important
+      width: 100%
 
 main article section
   // TODO: Figure out if this can work inside of TinyMCE, too (the centering, that is)
