@@ -42,3 +42,7 @@
 	path = public/tinymce_langs
 	url = git@github.com:surayt/tinymce_langs.git
 	branch = master
+[submodule "public/font-awesome"]
+	path = public/font-awesome
+	url = git@github.com:surayt/Font-Awesome.git
+	branch = master
