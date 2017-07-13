@@ -68,7 +68,7 @@ text = merge(common_settings,
              table alignleft aligncenter alignright |
              bullist numlist outdent indent         |
              ltr rtl                                |
-             link uploadfile media'
+             link unlink uploadfile media'
   body_id:  'tinymce_section_instance')
 
 tinymce.init heading
