@@ -1,13 +1,13 @@
 $(document).ready ->
 
-  $('nav#sidebar a.btn.menu').click (e) ->
+  $('#sidebar a.btn.menu').click (e) ->
     e.preventDefault()
     if $(window).scrollTop() > 0
-      $('nav#sidebar section').show()
+      $('#sidebar section, #session_links').show()
     else
-      $('nav#sidebar a.btn.menu').toggleClass('fixed')
-      $('nav#sidebar section').toggle()
+      $('#sidebar a.btn.menu').toggleClass('fixed')
+      $('#sidebar section, #session_links').toggle()
     window.scrollTo(0, 0)
     
-  $('nav#sidebar section a').click (e) ->
-    $('nav#sidebar section').hide()
+  $('#sidebar section a').click (e) ->
+    $('#sidebar section, #session_links').hide()
