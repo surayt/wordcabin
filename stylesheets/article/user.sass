@@ -1,14 +1,31 @@
 // User view, heading editor, content editor
 main article, #tinymce_heading_instance, #tinymce_section_instance
-  font-family: $font-stack-wordcabin-contents
+  font-family: $font-stack-wordcabin-contents !important
   font-size: 11pt
   a:hover
     color: $red !important
-  h1, h2, h3, h4, h5, h6
+  h2, h3, h4
     font-weight: bold
+    margin-top: .75em
+    margin-bottom: 1.5em
+    font-family: $font-stack-wordcabin-contents !important
+  h2
+    font-size: 130%
+  h3
+    font-size: 120%
+  h4
+    font-size: 110%
+  .grey_background
+    background-color: tint($grey, 35%)
   table
     margin: .25em 0 2.5em 0
     td
+      &.width_20_percent
+        width: 20%
+      &.width_50_percent
+        width: 50%
+      &.width_80_percent
+        width: 80%
       // TODO: Find out why they look differently inside the editor?
       border: 1px solid $grey
       border-left: none
@@ -21,22 +38,30 @@ main article, #tinymce_heading_instance, #tinymce_section_instance
         height: 1.5em
     tr:first-child td
       border-top: none
-      font-style: italic
+      background-color: tint($grey, 50%)
+      font-weight: bold
+      padding: .25em .5em
     &.no_header_row
       tr:first-child td
         border-top: 1px solid $grey
-        font-style: normal
+        background-color: transparent
+        font-weight: normal
+        padding: 0 .25em
     &.full_border
       tr:first-child td
         border-top: 1px solid $grey
-        font-style: normal
+        background-color: transparent
+        font-weight: normal
+        padding: 0 .25em
       td
         border: 1px solid $grey
         &:empty
           border: none !important
     &.first_cell_no_border
       tr:first-child td
-        font-style: normal
+        background-color: transparent
+        font-weight: normal
+        padding: 0 .25em
       td, tr:first-child td
         border: 1px solid $grey
       tr td[rowspan]:first-child
@@ -49,9 +74,10 @@ main article, #tinymce_heading_instance, #tinymce_section_instance
       margin-bottom: 0
       td
         border: none
-        padding: 0
-        font-style: normal !important
-        font-weight: bold
+        padding: 0 .25em
+        background-color: transparent
+        font-weight: normal
+        padding: 0 .25em
         
   ul
     list-style-type: square
@@ -64,20 +90,22 @@ main article, #tinymce_heading_instance, #tinymce_section_instance
     
 // User view and heading editor only
 main article header
-  border: 2px solid tint($blue, 10%)
+  border: 2px solid $blue // TODO: FIXME! Shouldn't ne necessary!
   margin-bottom: .75em
+  table td
+    font-size: 140%
 main article header, #tinymce_heading_instance
   table
     margin: 0
-    font-weight: bold
-    background-color: tint($blue, 50%)
+    background-color: tint($blue, 35%)
     tr:first-child td
-      font-style: normal
+      background-color: transparent
     td
       border: none
-      color: $black
+      color: black
       padding: .35em .5em 
       margin: 0
+      font-weight: bold
       
 // User view and content editor only
 main article section, #tinymce_section_instance
@@ -85,32 +113,63 @@ main article section, #tinymce_section_instance
     td
       padding-top: 0
       padding-bottom: 0
-    &.header_table td
-      padding: .35em .5em
     &.header_table
-      font-weight: bold
-      background-color: tint($blue, 50%)
-      border: 2px solid tint($blue, 10%) !important
-      td:
-        borde: none
-        color: $black
-      tr:first-child td
-        font-style: normal
       margin-bottom: .75em
+      td
+        padding: .35em .5em .35em 0
+        font-weight: bold
+        border: none !important
+        &:first-child
+          padding: .35em .5em
+      tr:first-child td
+        background-color: transparent
+      &.h2
+        background-color: tint($blue, 50%)
+        border: 2px solid tint($blue, 10%) !important
+        color: $black
+      &.h3
+        background-color: tint($blue, 70%)
+        border: 2px solid tint($blue, 30%) !important
+        color: $black
+      &.h4
+        background-color: tint($blue, 90%)
+        border: 2px solid tint($blue, 50%) !important
+        color: $black
   +grid-media($medium-grid)
     table
-      width: 80%
+      &.width_50_percent
+        width: 50%
+      &.width_80_percent
+        width: 80%
       margin-left: auto
       margin-right: auto
       position: relative
-      &.header_table
-        width: 100%
   table
     &.infobox
-      // TODO: Move text to the right, add "House" icon in top left corner
-      background-color: tint($orange, 50%)
-      border: 3px solid tint($orange, 10%) !important
-      width: 100%
+      margin-top: -.75em
+      tr:first-child > td
+        padding: 1em
+        td
+          padding: 0
+      td
+        border-top: 1px solid tint($blue, 50%)
+        border-bottom: 1px solid tint($blue, 50%)
+      td
+        background-color: transparent !important 
+        border: none
+        font-weight: normal !important
+      &.notice
+        // TODO: add "House" icon in top left corner
+        background-color: #FFDAA9
+      &.culture
+        background-color: #BEEEB2
+      &.grammar
+        background-color: tint($blue, 75%)
+        table
+          width: 90%
+          th
+            background-color: tint($blue, 65%)
+            padding: .125em .25em
 
 main article section
   // TODO: Figure out if this can work inside of TinyMCE, too (the centering, that is)
