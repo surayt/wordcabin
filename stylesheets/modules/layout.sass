@@ -1,7 +1,7 @@
-// mobile FIRST, so we start by disabling interface elements,
+// Mobile FIRST, so we start by disabling interface elements,
 // then start re-enabling them as we work upwards through the
 // breaking point definitions.
-// the only exception is the menu button, which has to vanish
+// The only exception is the menu button, which has to vanish
 // on bigger devices as it's only meant for those with limited
 // real estate.
 body.user,
@@ -58,8 +58,8 @@ body.editor
     margin-top: .25em
     padding: 0 .25em
 
-// bigger tablets, laptops and desktops,
-// with NO admin logged in.
+// Bigger tablets, laptops and desktops, with
+// NO admin logged in OR in preview mode.
 body.user
   +grid-media($medium-grid)
     +toc
@@ -75,8 +75,8 @@ body.user
       background-color: $white
       text-align: center
       img
-        height: auto
-        float: none
+        height: 4em !important
+        float: none !important
     #sidebar
       border-top: 2em solid tint($blue, 25%)
       position: fixed
@@ -140,7 +140,7 @@ body.user
         +grid-column(6)
         margin-left: none
             
-// any device no matter its size, but
+// Any device no matter its size, but
 // WITH an admin logged in.
 body.editor
   #grid-container
