@@ -19,7 +19,7 @@ body.editor
       display: none
     a.btn.menu
       position: absolute
-      z-index: 2
+      z-index: 5
       top: .35em
       left: .35em
       font-size: 20px
@@ -38,6 +38,8 @@ body.editor
     $toc-orange: tint($orange, 25%)
     section
       padding: .7em 1em .35em 1.25em
+      opacity: 1
+      z-index: 3
       position: absolute
       width: 100%
       height: 100%
@@ -54,7 +56,10 @@ body.editor
     display: none
   #content
     +grid-column(1)
-    margin-top: .5em
+    +grid-collapse
+    margin-top: .25em
+    main
+      padding: 0 1.25em
 
 // bigger tablets, laptops and desktops,
 // with NO admin logged in.
@@ -130,9 +135,10 @@ body.user
         color: $white
     #content
       +grid-column(4.5)
+      margin-top: .5em
       margin-left: calc(25%)
       main
-        padding: 1em 1.25em .75em 2em
+        padding: 1em 1.5em .75em 2em
       &.fullscreen
         +grid-column(6)
         margin-left: none
