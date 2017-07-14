@@ -142,23 +142,36 @@ body.user
 body.editor
   #grid-container
     display: none // TODO: re-enable when there's a need for a mobile admin screen!
-  #logo, #sidebar heading
+  #sidebar heading
     display: none
   +grid-media($editor-grid)
     #grid-container 
       display: block // TODO: remove when there's a need for a mobile admin screen!
-      background-color: $tinymce-grey
+      background-color: shade($tinymce-grey, 15%)
     #grid-container, #sidebar, #sidebar section, #content, #content form
       height: 100%
+    #logo, #sidebar
+      border-right: 1px solid shade($tinymce-grey, 75%) !important
+    #logo
+      +grid-column(3, $editor-grid)
+      background: none
+      background-color: shade($tinymce-grey, 75%)
+      position: absolute
+      left: -1px
+      height: 3.5em
+      text-align: center
+      img 
+        float: none
     #sidebar
       +grid-column(3, $editor-grid)
       box-shadow: none
       position: fixed
+      top: 3.5em
       border-right: none
       margin-left: 0
       margin-right: none
       a
-        color: white !important
+        color: contrast-switch(shade($tinymce-grey, 35%))
         &.btn.menu
           display: none
       input.btn
@@ -169,14 +182,14 @@ body.editor
         +button
         padding-bottom: 5px
       section
-        background-color: tint($orange, 15%)
+        background-color: shade($tinymce-grey, 35%)
         display: block
         padding: 0
         a:hover
-          color: contrast-switch($orange) !important
+          color: black
       ul.level_1
         li.level_1
-          background-color: $orange
+          background-color: shade($tinymce-grey, 50%)
           padding: .25em .25em .25em .35em
           span
             color: contrast-switch($orange)
@@ -192,10 +205,12 @@ body.editor
       form
         min-width: 918px
         fieldset
+          border-top: 1px solid shade($tinymce-grey, 50%)
+          height: 49px
           +grid-column(9, $editor-grid)
           position: fixed
           bottom: 0
-          padding: 0 .5em
+          padding: 10px .5em 0 .5em
           input
             max-width: 25%
           input, label
