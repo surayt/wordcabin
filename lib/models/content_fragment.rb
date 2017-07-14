@@ -51,6 +51,10 @@ module SinatraApp
       ContentFragment.where(locale: locale, book: book).non_empty_chapters.first
     end
     
+    def parent
+      ContentFragment.book(locale, book).first
+    end
+
     scope :non_empty_chapters, -> { where("chapter <> ''") }
     scope :empty_chapter, -> { where(chapter: [nil, '']) }
     scope :book, ->(locale, book) { where(locale: locale, book: book).empty_chapter }

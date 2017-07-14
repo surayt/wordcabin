@@ -88,23 +88,23 @@ module SinatraApp
     # Display contents
     
     get '/new' do
-      book = ContentFragment.book(locale, params[:content_fragment][:book]) if params[:content_fragment]
+      book = ContentFragment.book(locale, params[:content_fragment][:book]).first if params[:content_fragment]
       @contents = ContentFragment.new(params[:content_fragment])
-      @toc = TOC.new(locale, book || nil)
+      @toc = TOC.new(locale, book)
       haml :contents
     end
     
     get '/:book' do |book|
       @contents = ContentFragment.book(locale, book).first
       @contents ||= ContentFragment.new(locale: locale, book: book)
-      @toc = TOC.new(locale, book)
+      @toc = TOC.new(locale, @contents)
       haml :contents
     end
     
     get '/:book/:chapter' do |book, chapter|
       @contents = ContentFragment.chapter(locale, book, chapter).first
       @contents ||= ContentFragment.new(locale: locale, book: book, chapter: chapter)
-      @toc = TOC.new(locale, book)
+      @toc = TOC.new(locale, @contents.parent)
       haml :contents, layout: !request.xhr?
     end
 
