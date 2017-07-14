@@ -65,6 +65,7 @@ GEM
       coderay (~> 1.1.0)
       method_source (~> 0.8.1)
       slop (~> 3.4)
+    puma (3.9.1)
     rack (2.0.3)
     rack-cache (1.7.0)
       rack (>= 0.4)
@@ -133,6 +134,7 @@ DEPENDENCIES
   minitest
   nokogumbo
   pry
+  puma
   rack-cache
   rack-contrib
   rake

@@ -87,6 +87,7 @@ module SinatraApp
     # Configure the application using user settings from config.rb.
     configure do
       # Stuff (I just wanted a comment here for good looks)
+      set server: :puma
       set :environment, Config.environment
       set :root, Config.root
       set :views, Config.templates
