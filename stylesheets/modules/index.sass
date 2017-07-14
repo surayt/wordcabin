@@ -1,5 +1,5 @@
 // Mobile first!
-
+//
 body.language_list
   h1
     font-weight: bold
@@ -12,17 +12,13 @@ body.language_list
       padding: .5em 0 .5em 0
     span
       font-weight: normal
-      color: tint($orange, 60%)
-      background-color: shade($orange, 25%)
-      border-radius: 5px
-      padding: 1px 5px
-      margin-left: 2px
   ul
     li
       margin: 0 1em .5em 1em
       a
         +button
         width: 100%
+        font-size: 11pt
   footer
     margin-top: 50px
     img
@@ -32,7 +28,7 @@ body.language_list
       display: block
       
 // Larger devices now...
-
+//
 body.language_list
   +grid-media($medium-grid)
     #grid-container, main
@@ -49,6 +45,12 @@ body.language_list
         img
           width: 6.5em
           padding-bottom: .25em
+        span
+          color: tint($orange, 60%)
+          background-color: shade($orange, 25%)
+          border-radius: 5px
+          padding: 1px 5px
+          margin-left: 2px
       ul
         // max-width: 1100px
         // columns: 100px 4
