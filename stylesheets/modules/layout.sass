@@ -106,7 +106,7 @@ body.user
         bottom: .5em
         left: .5em
         +button
-        padding-bottom: 5px
+        padding: 6px 9px 3px 9px
     #logo, #sidebar
       +grid-column(1.5)
       border-right: 1px solid shade($grey, 25%) !important
@@ -180,7 +180,7 @@ body.editor
         bottom: .5em
         left: .5em
         +button
-        padding-bottom: 5px
+        padding: 6px 9px 3px 9px
       section
         background-color: shade($tinymce-grey, 35%)
         display: block
@@ -220,7 +220,10 @@ body.editor
             color: contrast-switch($tinymce-grey)
           input[type=text]
             padding: 4px 4px
+            margin-top: 1px
             margin-right: .5em
+            border: 1px solid shade($tinymce-grey, 25%)
+            font-size: 95%
           input[type=submit]
             +button
             font-weight: normal
