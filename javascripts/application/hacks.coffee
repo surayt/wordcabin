@@ -5,8 +5,7 @@ $ ->
   ).html('')
   
 # Make it obvious where the 'lang' attribute has been set.
-
-$ ->
-  $('#content [lang]').each ->
-    box = "<span class='lang_designator'>"+$(this).attr('lang')+"</div>"
-    $(this).prepend(box)
+# $ ->
+#   $('#content [lang]').each ->
+#     box = "<span class='lang_designator'>"+$(this).attr('lang')+"</div>"
+#     $(this).prepend(box)
