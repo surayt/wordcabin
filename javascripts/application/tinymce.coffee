@@ -60,7 +60,7 @@ heading = merge(common_settings,
   menubar: false
   plugins:  'table directionality code paste'
   selector: 'textarea.heading'
-  toolbar:  'undo redo paste removeformat code      |
+  toolbar:  'undo redo code paste removeformat      |
              styleselect                            |
              table alignleft aligncenter alignright'
   height:   '5.25em'
