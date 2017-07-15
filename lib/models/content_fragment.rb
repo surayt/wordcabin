@@ -55,6 +55,20 @@ module SinatraApp
       ContentFragment.book(locale, book).first
     end
 
+    def next
+      begin
+        chapter_levels = chapter.split('.')
+        chapter_levels[chapter_levels.size-1] = (chapter_levels.last.to_i + 1).to_s
+        next_chapter = chapter_levels.join('.')
+        fragments = ContentFragment.chapter(locale, book, next_chapter)
+      rescue
+        fragments = []
+        last_fragment = ContentFragment.last
+      end
+      next_chapter ||= last_fragment.chapter.blank? ? 1 : (last_fragment.chapter.split('.').first.to_i + 1).to_s
+      fragments.any? ? fragments.first : ContentFragment.new(locale: locale, book: book, chapter: next_chapter)
+    end
+
     scope :non_empty_chapters, -> { where("chapter <> ''") }
     scope :empty_chapter, -> { where(chapter: [nil, '']) }
     scope :book, ->(locale, book) { where(locale: locale, book: book).empty_chapter }

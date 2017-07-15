@@ -112,11 +112,12 @@ module SinatraApp
     
     post '/new' do
       params[:content_fragment].merge!(locale: locale)
-      fragment = ContentFragment.new(params[:content_fragment])
-      if fragment.save
-        redirect to(URI.escape(fragment.path))
+      $logger.warn "these were the params: #{params[:content_fragment].inspect}"
+      @contents = ContentFragment.new(params[:content_fragment])
+      if @contents.save
+        redirect to(URI.escape(@contents.path))
       else
-        flash[:error] = fragment.errors.full_messages.to_s.join(" ") # Not pretty, but whatever.
+        flash[:error] = @contents.errors.full_messages.to_s.join(" ") # Not pretty, but whatever.
         redirect back
       end
     end

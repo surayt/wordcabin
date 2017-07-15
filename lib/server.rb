@@ -143,6 +143,14 @@ module SinatraApp
         c << :language_list if request.path_info.split('/').length < 2
         c.join(' ')
       end
+      
+      def next_fragment
+        if fragment = ContentFragment.last
+          fragment.next
+        else
+          ContentFragment.new
+        end
+      end
     end
   end
 end
