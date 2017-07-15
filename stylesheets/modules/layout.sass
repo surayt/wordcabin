@@ -160,10 +160,10 @@ body.editor
       background-color: shade($tinymce-grey, 75%)
       position: absolute
       left: -1px
-      height: 3.5em
       text-align: center
-      img 
-        float: none
+      height: 3.5em
+      img
+        float: none !important
     #sidebar
       +grid-column(3, $editor-grid)
       box-shadow: none
@@ -204,6 +204,7 @@ body.editor
     #content
       +grid-column(9, $editor-grid)
       margin: 0 0 0 calc(25%)
+      padding: 0
       form
         min-width: 918px
         fieldset
