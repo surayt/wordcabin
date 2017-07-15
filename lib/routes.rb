@@ -3,7 +3,7 @@ module SinatraApp
     # Prepend all routes with locale info, but skip locale-independent ones
     
     before '/:locale/?*' do
-      pass if request.path_info.match /^\/(assets|files)/
+      pass if request.path_info.match(/^\/(assets|files)/)
       begin
         I18n.locale = params[:locale]
         request.path_info = '/'+params[:splat].first
