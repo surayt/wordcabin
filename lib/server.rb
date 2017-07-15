@@ -11,21 +11,6 @@ require 'sinatra/reloader'
 require 'sprockets'
 require 'hamlit' # Sinatra does know to require HAML, but not Hamlit!
 
-# TODO: Figure out which of these can be removed
-# (some are already require'd by Sinatra modules above)
-#require 'logger'
-#require 'sass'
-#require 'sass/plugin/rack'
-#require 'uglifier'
-#require 'coffee-script'
-#require 'execjs'
-#require 'rack/contrib'
-#require 'i18n'
-#require 'i18n/backend/fallbacks'
-#require 'bcrypt'
-#require 'active_record/connection_adapters/sqlite3_adapter'
-#require 'nokogumbo'
-
 # Internal dependencies
 require_relative 'models/user'
 require_relative 'models/content_fragment'
