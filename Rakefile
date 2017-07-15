@@ -13,9 +13,16 @@ require_relative MAIN_CONFIG
 require 'sinatra/activerecord/rake'
 require_relative 'lib/server'
 include SinatraApp
+
 I18n::Backend::Simple.send(:include, I18n::Backend::Fallbacks)
 I18n.load_path = Dir[Config.translations+'*.yml']
 I18n.backend.load_translations
+
+require 'rake/testtask'
+Rake::TestTask.new do |t|
+  t.pattern = 'lib/tests/*.rb'
+  t.warning = false
+end
 
 task default: ["wordcabin:clean_public_files", "wordcabin:copy_assets", "server"]
 
