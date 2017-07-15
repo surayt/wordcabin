@@ -11,7 +11,7 @@ body.editor
     width: 100%
     height: 3.125em
     background: linear-gradient(tint($blue, 75%), tint($grey, 75%))
-    img
+    a img
       float: right
       height: 1.9em
   #sidebar
@@ -55,11 +55,8 @@ body.editor
   #sidebar-handle
     display: none
   #content
-    +grid-column(1)
-    +grid-collapse
     margin-top: .25em
-    main
-      padding: 0 1.25em
+    padding: 0 .25em
 
 // bigger tablets, laptops and desktops,
 // with NO admin logged in.
