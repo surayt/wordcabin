@@ -55,6 +55,13 @@ module SinatraApp
       ContentFragment.book(locale, book).first
     end
 
+    # TODO: Rework. This is what it should work like:
+    # - get our TOC level (i.e. x = 1, x.x = 2, x.x.x = 3)
+    # - calculate the next chapter _in_that_level_
+    # - if there's nothing there, go one higher
+    # - if there's nothing there, go one higher
+    # - ...
+    # - if you reach the top (i.e., x) and there's still nothing there: return nil
     def next
       begin
         chapter_levels = chapter.split('.')
