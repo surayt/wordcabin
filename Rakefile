@@ -78,7 +78,13 @@ namespace :db do
     case(extension)
       when 'mp3'
         mime = 'audio/mpeg'
-        path = Config.root+'public'+legacy_path.split(':')[1]
+        if legacy_path.include? ':'
+          path = Config.root+'public'+legacy_path.split(':')[1]
+        else
+          chapter_dir = legacy_path.split('/')[1]
+          audiofile_name = legacy_path.split('/')[2]
+          path = Config.root+'public'+'media'+'chapters'+chapter_dir+'audios'+audiofile_name
+        end
       when 'jpg'
         mime = 'image/jpeg'
         path = Config.root+'public'+legacy_path
