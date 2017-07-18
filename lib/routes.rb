@@ -60,9 +60,13 @@ module SinatraApp
     # Deal with audio/video files, etc.
     
     get '/files/:id.?:extension?' do |id,ext| # second one is unused
-      file = FileAttachment.find(id)
-      headers['Content-Type'] = file.content_type
-      file.binary_data
+      begin
+        file = FileAttachment.find(id)
+        headers['Content-Type'] = file.content_type
+        file.binary_data
+      rescue ActiveRecord::RecordNotFound
+        flash[:warning] = "One of the attached files could not be found."
+      end
     end
     
     post '/files/upload' do
