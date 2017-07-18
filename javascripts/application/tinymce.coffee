@@ -37,6 +37,7 @@ common_settings =
       {title: 'Without any borders', selector: 'table', classes: 'no_borders'}
       {title: 'Table width: 50%', selector: 'table', classes: 'width_50_percent'}
       {title: 'Table width: 80%', selector: 'table', classes: 'width_80_percent'}
+      {title: 'Column width: 5%', selector: 'td', classes: 'width_5_percent'}
       {title: 'Column width: 20%', selector: 'td', classes: 'width_20_percent'}
       {title: 'Column width: 50%', selector: 'td', classes: 'width_50_percent'}
       {title: 'Column width: 80%', selector: 'td', classes: 'width_80_percent'}
