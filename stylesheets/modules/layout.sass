@@ -167,6 +167,8 @@ body.editor
         float: none
     #sidebar
       +grid-column(3, $editor-grid)
+      overflow-y: scroll
+      background-color: shade($tinymce-grey, 35%) !important
       box-shadow: none
       position: fixed
       top: 3.5em
@@ -186,12 +188,13 @@ body.editor
         padding: 6px 9px 3px 9px
         z-index: 5000
       section
-        background-color: shade($tinymce-grey, 35%)
+        background-color: transparent
         display: block
         padding: 0
         a:hover
           color: black
       ul.level_1
+        padding-bottom: 1em
         li.level_1
           background-color: shade($tinymce-grey, 50%)
           padding: .25em .25em .25em .35em
