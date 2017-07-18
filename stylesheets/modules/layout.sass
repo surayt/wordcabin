@@ -1,7 +1,7 @@
-// mobile FIRST, so we start by disabling interface elements,
+// Mobile FIRST, so we start by disabling interface elements,
 // then start re-enabling them as we work upwards through the
 // breaking point definitions.
-// the only exception is the menu button, which has to vanish
+// The only exception is the menu button, which has to vanish
 // on bigger devices as it's only meant for those with limited
 // real estate.
 body.user,
@@ -58,8 +58,8 @@ body.editor
     margin-top: .25em
     padding: 0 .25em
 
-// bigger tablets, laptops and desktops,
-// with NO admin logged in.
+// Bigger tablets, laptops and desktops, with
+// NO admin logged in OR in preview mode.
 body.user
   +grid-media($medium-grid)
     +toc
@@ -75,8 +75,8 @@ body.user
       background-color: $white
       text-align: center
       img
-        height: auto
-        float: none
+        height: 4em !important
+        float: none !important
     #sidebar
       border-top: 2em solid tint($blue, 25%)
       position: fixed
@@ -108,7 +108,6 @@ body.user
         bottom: .5em
         left: .5em
         +button
-        padding: 6px 9px 3px 9px
     #logo, #sidebar
       +grid-column(1.5)
       border-right: 1px solid shade($grey, 25%) !important
@@ -122,7 +121,7 @@ body.user
       height: 30px
       background-color: $orange
       position: fixed
-      margin: 8.5em 0 0 -1px
+      margin: 8.5em 0 0 -4px
       padding: 4px 0 0 2px
       border-radius: 0 5px 5px 0
       border: 1px solid shade($grey, 25%)
@@ -140,7 +139,7 @@ body.user
         +grid-column(6)
         margin-left: none
             
-// any device no matter its size, but
+// Any device no matter its size, but
 // WITH an admin logged in.
 body.editor
   #grid-container
@@ -161,10 +160,10 @@ body.editor
       background-color: shade($tinymce-grey, 75%)
       position: absolute
       left: -1px
-      height: 3.5em
       text-align: center
-      img 
-        float: none
+      height: 3.5em
+      img
+        float: none !important
     #sidebar
       +grid-column(3, $editor-grid)
       overflow-y: scroll
@@ -185,8 +184,7 @@ body.editor
         bottom: .5em
         left: .5em
         +button
-        padding: 6px 9px 3px 9px
-        z-index: 5000
+        z-index: 10
       section
         background-color: transparent
         display: block
@@ -209,6 +207,7 @@ body.editor
     #content
       +grid-column(9, $editor-grid)
       margin: 0 0 0 calc(25%)
+      padding: 0
       form
         min-width: 918px
         fieldset
@@ -217,7 +216,7 @@ body.editor
           +grid-column(9, $editor-grid)
           position: fixed
           bottom: 0
-          padding: 10px .5em 0 .5em
+          padding: 10px 1em 0 .5em
           input
             max-width: 25%
           input, label
@@ -234,6 +233,6 @@ body.editor
           input[type=submit]
             +button
             font-weight: normal
-            padding: 5px 11px
             float: right
+            margin-top: 2px
             background-color: red !important
