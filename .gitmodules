@@ -46,3 +46,6 @@
 	path = public/font-awesome
 	url = git@github.com:surayt/Font-Awesome.git
 	branch = master
+[submodule "javascripts/underscore"]
+	path = javascripts/underscore
+	url = git@github.com:jashkenas/underscore.git
