@@ -76,16 +76,18 @@ module SinatraApp
         if file.save
           $logger.info(file.inspect)
           json(document: {
-            url: file.url_path(locale),
+            url: file.url_path,
             title: params['document']['title']
           })
         else
-          $logger.warn(file.errors.full_messages.first)
-          json(error: {message: file.errors.full_messages.first})
+          msg = file.errors.full_messages.first
+          $logger.warn(msg)
+          json(error: {message: msg})
         end
       rescue => e
-        $logger.warn(e.inspect)
-        json(error: {message: e.inspect})
+        msg = "Internal server error in /files/upload (#{e})"
+        $logger.warn(msg)
+        json(error: {message: msg})
       end
     end
 

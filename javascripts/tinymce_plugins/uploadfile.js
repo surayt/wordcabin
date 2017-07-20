@@ -132,7 +132,6 @@
       }
 
       function handleResponse(ret) {
-        console.log(ret);
         try {
           var json = tinymce.util.JSON.parse(ret);
 
@@ -156,10 +155,11 @@
       }
 
       function handleError(error) {
+        console.log('Got response from server: '+error);
         var message = win.find(".error")[0].getEl();
 
         if(message)
-          message.getElementsByTagName("p")[0].innerHTML = ed.translate(error);
+          message.getElementsByTagName("p")[0].innerHTML = ed.translate(_.escape(error));
       }
 
       function createElement(element, attributes) {
