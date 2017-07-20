@@ -69,13 +69,13 @@ heading = merge(common_settings,
 
 text = merge(common_settings,
   menubar: false
-  plugins:  'table directionality lists autoheight uploadfile media link paste code'
+  plugins:  'table directionality lists autoheight uploadfile media link paste code image'
   selector: 'textarea.text'
   toolbar:  'undo redo code paste removeformat      |
              styleselect bold italic underline      |
              table alignleft aligncenter alignright |
              bullist numlist outdent indent         |
-             link unlink uploadfile media'
+             link unlink uploadfile image media'
   body_id:  'tinymce_section_instance')
 
 tinymce.init heading

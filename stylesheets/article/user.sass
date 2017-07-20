@@ -180,14 +180,17 @@ main article section, #tinymce_section_instance
             border-top: none
 
 main article section
-  // TODO: Figure out if this can work inside of TinyMCE, too (the centering, that is)
-  iframe
+  iframe, p img
     display: block
     position: relative
     border: none
     margin: auto
     margin-bottom: 2.5em
-    z-index: 1 !important // TODO: test - does that even work???
+    z-index: 1 !important
+    max-width: calc(100%)
+  p img
+    width: auto !important
+    height: auto !important
 
 #tinymce_section_instance table
   border: 1px dotted $black !important
