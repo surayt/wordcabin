@@ -119,7 +119,7 @@ module SinatraApp
       $logger.warn "these were the params: #{params[:content_fragment].inspect}"
       @contents = ContentFragment.new(params[:content_fragment])
       if @contents.save
-        redirect to(URI.escape(@contents.path))
+        redirect to(URI.escape(@contents.path)+"?view_mode=preview")
       else
         flash[:error] = @contents.errors.full_messages.to_s.join(" ") # Not pretty, but whatever.
         redirect back
@@ -132,11 +132,12 @@ module SinatraApp
         fragment = ContentFragment.create(params[:content_fragment])
       end
       if fragment.update_attributes(params[:content_fragment])
+        redirect to(URI.escape(fragment.path)+"?view_mode=preview")
         flash[:notice] = 'The content fragment was saved successfully.'
       else
         flash[:error] = fragment.errors.to_a.last
+        redirect back
       end
-      redirect back
     end
     
     post '/:book/:chapter' do |book, chapter|
@@ -145,11 +146,12 @@ module SinatraApp
         fragment = ContentFragment.create(params[:content_fragment])
       end
       if fragment.update_attributes(params[:content_fragment])
+        redirect to(URI.escape(fragment.path)+"?view_mode=preview")
         flash[:notice] = 'The content fragment was saved successfully.'
       else
         flash[:error] = fragment.errors.to_a.last
+        redirect back
       end
-      redirect back
     end
     
     # Trash, obliterate and destroy contents
