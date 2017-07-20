@@ -1,9 +1,13 @@
+// Responsiveness target:
+//
 // Mobile FIRST, so we start by disabling interface elements,
 // then start re-enabling them as we work upwards through the
 // breaking point definitions.
+//
 // The only exception is the menu button, which has to vanish
 // on bigger devices as it's only meant for those with limited
 // real estate.
+
 body.user,
 body.editor
   #logo
@@ -58,8 +62,11 @@ body.editor
     margin-top: .25em
     padding: 0 .25em
 
+// Responsiveness target:
+//
 // Bigger tablets, laptops and desktops, with
 // NO admin logged in OR in preview mode.
+
 body.user
   +grid-media($medium-grid)
     +toc
@@ -138,101 +145,3 @@ body.user
       &.fullscreen
         +grid-column(6)
         margin-left: none
-            
-// Any device no matter its size, but
-// WITH an admin logged in.
-body.editor
-  #grid-container
-    display: none // TODO: re-enable when there's a need for a mobile admin screen!
-  #sidebar heading
-    display: none
-  +grid-media($editor-grid)
-    #grid-container 
-      display: block // TODO: remove when there's a need for a mobile admin screen!
-      background-color: shade($tinymce-grey, 15%)
-    #grid-container, #sidebar, #sidebar section, #content, #content form
-      height: 100%
-    #logo, #sidebar
-      border-right: 1px solid shade($tinymce-grey, 75%) !important
-    #logo
-      +grid-column(3, $editor-grid)
-      background: none
-      background-color: shade($tinymce-grey, 75%)
-      position: absolute
-      left: -1px
-      text-align: center
-      height: 3.5em
-      img
-        float: none !important
-    #sidebar
-      +grid-column(3, $editor-grid)
-      overflow-y: scroll
-      background-color: shade($tinymce-grey, 35%) !important
-      box-shadow: none
-      position: fixed
-      top: 3.5em
-      border-right: none
-      margin-left: 0
-      margin-right: none
-      a
-        color: contrast-switch(shade($tinymce-grey, 35%))
-        &.btn.menu
-          display: none
-      input.btn
-        display: block
-        position: fixed
-        bottom: .5em
-        left: .5em
-        +button
-        z-index: 10
-      section
-        background-color: transparent
-        display: block
-        padding: 0
-        a:hover
-          color: black
-      ul.level_1
-        padding-bottom: 7em
-        li.level_1
-          background-color: shade($tinymce-grey, 50%)
-          padding: .25em .25em .25em .35em
-          span
-            color: contrast-switch($orange)
-        ul.level_2
-          padding-top: .5em
-        li
-          padding-left: 1em
-    #sidebar-handle
-      display: none
-    #content
-      +grid-column(9, $editor-grid)
-      margin: 0 0 0 calc(25%)
-      padding: 0
-      form
-        min-width: 918px
-        fieldset
-          border-top: 1px solid shade($tinymce-grey, 50%)
-          height: 49px
-          +grid-column(9, $editor-grid)
-          position: fixed
-          bottom: 0
-          padding: 10px 1em 0 .5em
-          input
-            max-width: 25%
-          input, label
-            display: inline-block
-            margin-bottom: .6em
-          label
-            color: contrast-switch($tinymce-grey)
-          input[type=text]
-            padding: 4px 4px
-            margin-top: 1px
-            margin-right: .5em
-            border: 1px solid shade($tinymce-grey, 25%)
-            font-size: 95%
-          input[type=submit]
-            +button
-            font-weight: normal
-            float: right
-            margin-top: 2px
-            background-color: red !important
