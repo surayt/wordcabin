@@ -8,6 +8,7 @@ common_settings =
   language_url: '/tinymce_langs/'+url('1')+'.js?' + (new Date).getTime()
   statusbar: false
   branding: false
+  object_resizing: false
   invalid_styles: 'height' 
   forced_root_block : ''
   force_p_newlines : true
