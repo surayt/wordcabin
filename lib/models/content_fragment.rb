@@ -14,7 +14,7 @@ module SinatraApp
 
     # TODO: i18n!
     # CHECK: tests written!
-    validate :ensure_chapter_is_unique
+    # validate :ensure_chapter_is_unique # TODO: FIXME!
     def ensure_chapter_is_unique
       unique = !(ContentFragment.chapters(locale, book).map {|existing_fragment| existing_fragment.chapter}.include? chapter)
       errors.add(:chapter, 'already exists in this book for the selected language version.') unless unique
