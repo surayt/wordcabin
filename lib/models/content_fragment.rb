@@ -73,7 +73,7 @@ module SinatraApp
     
     def heading_without_html
       h = Sanitize.clean(heading)
-      h == '' ? book : h
+      h.blank? ? book : h
     end
     
     def heading_and_text

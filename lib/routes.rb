@@ -25,7 +25,11 @@ module SinatraApp
     
     get '/' do
       @books = ContentFragment.empty_chapter
-      haml :index
+      if !@books.any? && current_user.is_admin?
+        redirect to("/#{locale}/new")
+      else
+        haml :index
+      end
     end
 
     # Handle logging in and logging out.
