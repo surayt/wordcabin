@@ -2,7 +2,9 @@
 main article, #tinymce_heading_instance, #tinymce_section_instance
   font-family: $font-stack-wordcabin-contents !important
   font-size: 11pt
-  a:hover
+  a *
+    color: $blue
+  a:hover, a:hover *
     color: $red !important
   h2, h3, h4
     font-weight: bold
@@ -93,7 +95,8 @@ main article, #tinymce_heading_instance, #tinymce_section_instance
     
 // User view and heading editor only
 main article header
-  border: 2px solid $blue // TODO: FIXME! Shouldn't ne necessary!
+  // TODO: FIXME! The next line shouldn't ne necessary!
+  border: 2px solid $blue
   margin-bottom: .75em
   table td
     font-size: 140%
