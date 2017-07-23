@@ -127,7 +127,7 @@ module SinatraApp
       if @contents.save
         redirect to(URI.escape(@contents.path)+"?view_mode=preview")
       else
-        flash[:error] = @contents.errors.full_messages.to_s.join(" ") # Not pretty, but whatever.
+        flash[:error] = @contents.errors.full_messages.join(" ") # Not pretty, but whatever.
         redirect back
       end
     end

@@ -42,6 +42,10 @@ module SinatraApp
       @rand.set_seed
     end
     
+    # --------------------------------------------------------------------------
+    # lib/models/content_fragment.rb
+    # --------------------------------------------------------------------------
+    
     def test_can_create_valid_content_fragment
       c = ContentFragment.new(locale: @book1.locale, book: @book1.book, chapter: some_chapter)
       assert c.save
@@ -97,6 +101,12 @@ module SinatraApp
       child.destroy
       parent.destroy
       assert_equal initial_count - 2, ContentFragment.count
+    end
+    
+    def test_its_possible_to_change_a_fragments_chapter
+      c = ContentFragment.new(locale: @book1.locale, book: @book1.book, chapter: '2.3.4.5')
+      assert c.save == true
+      assert c.update_attribute(:chapter, '2.3.4.6') == true
     end
   end
 end
