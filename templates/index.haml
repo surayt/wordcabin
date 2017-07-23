@@ -9,10 +9,10 @@
       = "All courses are in alpha version, please bear with us!"
   = haml :session_links
   %ul
-    - @books.each do |book|
+    - @books.each do |fragment|
       %li
-        %a.btn{href: "#{book.url_path}#{'?view_mode=preview' if current_user.is_admin?}", lang: book.locale}
-          = I18n.t("read_in_#{book.locale}", book: book.book)
+        %a.btn{href: "#{fragment.first_child_url_path}#{'?view_mode=preview' if current_user.is_admin?}", lang: fragment.locale}
+          = I18n.t("read_in_#{fragment.locale}", book: fragment.book)
   %footer
     %img{src: '/images/FU_Bergen3.jpg'}
     %img{src: '/images/Cam_Lpz.jpg'}

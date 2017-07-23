@@ -68,10 +68,6 @@ module SinatraApp
         throw(:abort)
       end
     end
-  
-    def path
-      ('/'+[locale, book, chapter].join('/')).chomp('/')
-    end
     
     def heading_without_html
       h = Sanitize.clean(heading)
@@ -83,14 +79,6 @@ module SinatraApp
       h += "\n<header>#{heading}</header>" unless heading.blank?
       h += "\n<section>\n#{html}</section>\n"  unless html.blank?
       h
-    end
-    
-    def first_child
-      ContentFragment.where(locale: locale, book: book).non_empty_chapters.first
-    end
-    
-    def parent
-      ContentFragment.book(locale, book).first
     end
 
     # TODO: Rework. This is what it should work like:
@@ -130,8 +118,20 @@ module SinatraApp
       end
     end
     
+    def parent
+      ContentFragment.book(locale, book).first
+    end
+    
+    def first_child
+      ContentFragment.where(locale: locale, book: book).non_empty_chapters.first
+    end
+    
+    def first_child_url_path
+      "/#{[locale, book, first_child ? first_child.chapter : chapter].join '/'}".chomp '/'
+    end
+  
     def url_path
-      "/#{locale}/#{[URI.escape(book), first_child ? first_child.chapter : chapter].join('/')}"
+      "/#{[locale, book, chapter].join '/'}".chomp '/'
     end
   end
 end
