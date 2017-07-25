@@ -45,7 +45,7 @@
 
         iframe = win.find("iframe")[0];
         form = createElement('form', {
-          action: ed.getParam("uploadfile_form_url", '/files/upload'),
+          action: ed.getParam("uploadfile_form_url", '/files'),
           target: iframe._id,
           method: "POST",
           enctype: 'multipart/form-data',

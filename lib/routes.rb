@@ -6,7 +6,7 @@ module SinatraApp
       pass if request.path_info.match(/^\/(assets|files)/)
       begin
         I18n.locale = params[:locale]
-        request.path_info = '/'+params[:splat].first
+        request.path_info = "/#{params[:splat].first}"
       rescue I18n::InvalidLocale
         # TODO: i18n!
         flash[:error] = "The address you tried to access is not accessible without providing a locale."
@@ -24,8 +24,8 @@ module SinatraApp
     # Landing page showing the list of available L1s.
     
     get '/' do
-      @books = ContentFragment.empty_chapter
-      if !@books.any? && current_user.is_admin?
+      @fragments = ContentFragment.empty_chapters
+      if !@fragments.any? && current_user.is_admin?
         redirect to("/#{locale}/new")
       else
         haml :index
@@ -61,7 +61,7 @@ module SinatraApp
       redirect back
     end
 
-    # Deal with audio/video files, etc.
+    # FileAttachment
     
     get '/files/:id.?:extension?' do |id,ext| # second one is unused
       begin
@@ -73,7 +73,7 @@ module SinatraApp
       end
     end
     
-    post '/files/upload' do
+    post '/files' do
       begin
         params[:document][:file][:content_type] = params[:document][:file][:type]
         file = FileAttachment.new(params[:document][:file])
@@ -95,93 +95,55 @@ module SinatraApp
       end
     end
 
-    # Display contents
+    # ContentFragment
     
-    get '/new' do
-      book = ContentFragment.book(locale, params[:content_fragment][:book]).first if params[:content_fragment]
-      @contents = ContentFragment.new(params[:content_fragment])
-      @toc = TOC.new(locale, book)
-      haml :contents
-    end
-    
-    get '/:book' do |book|
-      @contents = ContentFragment.book(locale, book).first
-      @contents ||= ContentFragment.new(locale: locale, book: book)
-      @toc = TOC.new(locale, @contents)
-      haml :contents
-    end
-    
-    get '/:book/:chapter' do |book, chapter|
-      @contents = ContentFragment.chapter(locale, book, chapter).first
-      @contents ||= ContentFragment.new(locale: locale, book: book, chapter: chapter)
-      @toc = TOC.new(locale, @contents.parent)
+    get /\/(new|(.*)\/(.*))/ do
+      __new__, book, chapter = params['captures']
+      if book && chapter
+        @fragment = ContentFragment.chapter(locale, book, chapter)
+      else
+        @fragment = ContentFragment.new(params[:content_fragment])
+      end
+      @toc = TOC.new(locale, @fragment)
+      @next_fragment = @fragment.next
       haml :contents, layout: !request.xhr?
     end
-
-    # Save modified contents
     
-    post '/new' do
-      params[:content_fragment].merge!(locale: locale)
-      $logger.warn "these were the params: #{params[:content_fragment].inspect}"
-      @contents = ContentFragment.new(params[:content_fragment])
-      if @contents.save
-        redirect to(URI.escape(@contents.url_path)+"?view_mode=preview")
-      else
-        flash[:error] = @contents.errors.full_messages.join(" ") # Not pretty, but whatever.
-        redirect back
-      end
-    end
-    
-    post '/:book' do |book|
-      unless fragment = ContentFragment.book(locale, book).first
+    post /\/(new|(.*))/ do
+      __new__, id = params['captures']
+      if __new__ && __new__ == 'new'
         params[:content_fragment].merge!(locale: locale)
-        fragment = ContentFragment.create(params[:content_fragment])
-      end
-      if fragment.update_attributes(params[:content_fragment])
-        redirect to(URI.escape(fragment.url_path)+"?view_mode=preview")
-        flash[:notice] = 'The content fragment was saved successfully.'
+        @fragment = ContentFragment.new(params[:content_fragment])
       else
-        flash[:error] = fragment.errors.to_a.last
+        @fragment = ContentFragment.find(id)
+        @fragment.update_attributes(params[:content_fragment])
+      end
+      if @fragment
+        if @fragment.save
+          flash[:notice] = 'The content fragment was saved successfully.' # TODO: i18n!
+          redirect to("#{URI.escape(@fragment.url_path)}?view_mode=preview")
+        else
+          flash[:error] = @fragment.errors.to_a.last
+          flash[:error] = @contents.errors.full_messages.join(" ") # Not pretty, but whatever.
+          redirect back
+        end
+      else
+        flash[:error] = 'No such content fragment could be found.' # TODO: i18n!
         redirect back
       end
     end
     
-    post '/:book/:chapter' do |book, chapter|
-      unless fragment = ContentFragment.chapter(locale, book, chapter).first
-        params[:content_fragment].merge!(locale: locale)
-        fragment = ContentFragment.create(params[:content_fragment])
-      end
-      if fragment.update_attributes(params[:content_fragment])
-        redirect to(URI.escape(fragment.url_path)+"?view_mode=preview")
-        flash[:notice] = 'The content fragment was saved successfully.'
+    delete '/:id' do |id|
+      if @fragment = ContentFragment.find(id)
+        if @fragment.destroy
+          flash[:notice] = 'The content fragment was destroyed successfully.' # TODO: i18n!
+        else
+          flash[:error] = 'Unable to delete content fragment!' # TODO: i18n!
+        end
       else
-        flash[:error] = fragment.errors.to_a.last
-        redirect back
-      end
-    end
-    
-    # Trash, obliterate and destroy contents
-    
-    delete '/:book' do |book|
-      if fragment = ContentFragment.book(locale, book).first
-        if fragment.destroy
-          flash[:notice] = 'The content fragment was destroyed successfully.'
-        else
-          flash[:error] = 'Unable to delete content fragment!'
-        end
-      end
-      redirect to('/')
-    end
-    
-    delete '/:book/:chapter' do |book, chapter|
-      if fragment = ContentFragment.book(locale, book).first
-        if fragment.destroy
-          flash[:notice] = 'The content fragment was destroyed successfully.'
-        else
-          flash[:error] = 'Unable to delete content fragment!'
-        end
+        flash[:error] = 'No such content fragment could be found.' # TODO: i18n!
       end
       redirect back
-    end  
+    end
   end
 end

@@ -1,9 +1,9 @@
-%form.content_fragment{method: :post}
-  %textarea{class: 'heading', name: 'content_fragment[heading]'}= @contents.heading
-  %textarea{class: 'text', name: 'content_fragment[html]'}= @contents.html
+%form.content_fragment{method: :post, action: @fragment.url_path(:post)}
+  %textarea{class: 'heading', name: 'content_fragment[heading]'}= @fragment.heading
+  %textarea{class: 'text', name: 'content_fragment[html]'}= @fragment.html
   %fieldset
     %label{for: 'content_fragment[book]'} Book:
-    %input{type: :text, name: 'content_fragment[book]', value: @contents.book}
+    %input{type: :text, name: 'content_fragment[book]', value: @fragment.book}
     %label{for: 'content_fragment[chapter]'} Chapter:
-    %input{type: :text, name: 'content_fragment[chapter]', value: @contents.chapter}
+    %input{type: :text, name: 'content_fragment[chapter]', value: @fragment.chapter}
     %input{type: :submit, value: 'Save'}

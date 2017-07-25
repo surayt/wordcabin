@@ -32,7 +32,7 @@ module SinatraApp
         errors.add(:book, 'already exists for the selected language version.') unless unique
       else
         # It's not a book!
-        has_parent = ContentFragment.book(locale, book).any?
+        has_parent = ContentFragment.book(locale, book)
         errors.add(:book, 'must already exist or otherwise the new content fragment will not be visible.') unless has_parent
       end
     end
@@ -89,27 +89,32 @@ module SinatraApp
     # - ...
     # - if you reach the top (i.e., x) and there's still nothing there: return nil
     def next
-      begin
-        chapter_levels = chapter.split('.')
-        chapter_levels[chapter_levels.size-1] = (chapter_levels.last.to_i + 1).to_s
-        next_chapter = chapter_levels.join('.')
-        fragments = ContentFragment.chapter(locale, book, next_chapter)
-      rescue
-        fragments = []
-        last_fragment = ContentFragment.last
+      if self.chapter.blank?
+        fragment = ContentFragment.last
+        if fragment.chapter.blank?
+          fragment = ContentFragment.new(locale: locale, book: self.book, chapter: '0')
+        end
+      else
+        fragment = self
       end
-      next_chapter ||= last_fragment.chapter.blank? ? 1 : (last_fragment.chapter.split('.').first.to_i + 1).to_s
-      fragments.any? ? fragments.first : ContentFragment.new(locale: locale, book: book, chapter: next_chapter)
+      chapter_levels = fragment.chapter.split '.'
+      chapter_levels[chapter_levels.size-1] = (chapter_levels.last.to_i + 1).to_s
+      next_chapter = chapter_levels.join('.')      
+      unless next_fragment = ContentFragment.chapter(locale, self.book, next_chapter)
+        next_fragment = ContentFragment.new(locale: locale, book: self.book, chapter: next_chapter)
+      end
+      next_fragment
     end
 
     # Meant for private use, but we'll see...
     scope :non_empty_chapters, -> { where("chapter <> ''") }
-    scope :empty_chapter, -> { where(chapter: [nil, '']) }
+    scope :empty_chapters, -> { where(chapter: [nil, '']) }
     # Meant for public use...
-    scope :books, ->(locale) { where(locale: locale).empty_chapter }
-    scope :book, ->(locale, book) { where(locale: locale, book: book).empty_chapter }
-    scope :chapters, ->(locale, book) { where(locale: locale, book: book).non_empty_chapters.uniq }
-    scope :chapter, ->(locale, book, chapter) { where(locale: locale, book: book, chapter: chapter) }
+    # (The singular methods are not scopes because AR is still sh** sometimes, also cf. https://stackoverflow.com/a/21653695 wrt the solution)
+    def self.book(locale, book); where(locale: locale, book: book).empty_chapters.first; end
+    def self.chapter(locale, book, chapter); where(locale: locale, book: book, chapter: chapter).first; end
+    scope :books, ->(locale) { where(locale: locale).empty_chapters }
+    scope :chapters, ->(locale, book) { where(locale: locale, book: book).non_empty_chapters }
     
     def fill_sorting_column
       unless chapter.blank?
@@ -130,8 +135,12 @@ module SinatraApp
       "/#{[locale, book, first_child ? first_child.chapter : chapter].join '/'}".chomp '/'
     end
   
-    def url_path
-      "/#{[locale, book, chapter].join '/'}".chomp '/'
+    def url_path(method = :get)
+      case method
+      when :get    then "/#{[locale, book, chapter].join '/'}".chomp '/'
+      when :post   then "/#{[locale, new_record? ? 'new' : id].join '/'}"
+      when :delete then "/#{[locale, id].join '/'}"
+      end
     end
   end
 end

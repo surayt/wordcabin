@@ -7,6 +7,6 @@
   - if current_user && current_user.is_admin?
     %form{method: :get, action: "/#{locale}/new"}
       %input{type: :hidden, name: :view_mode, value: :edit}
-      %input{type: :hidden, name: 'content_fragment[book]', value: next_fragment.book}
-      %input{type: :hidden, name: 'content_fragment[chapter]', value: next_fragment.chapter}
+      %input{type: :hidden, name: 'content_fragment[book]', value: @next_fragment.book}
+      %input{type: :hidden, name: 'content_fragment[chapter]', value: @next_fragment.chapter}
       %input{type: :submit, value: '+', class: 'btn fa-input'}

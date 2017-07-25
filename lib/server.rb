@@ -128,18 +128,6 @@ module SinatraApp
         c << :language_list if request.path_info.split('/').length < 2
         c.join(' ')
       end
-      
-      # TODO: Rework.
-      # Once ContentFragment#next has been reworked, go like this:
-      # - if there's a non-book fragment and it has a next fragment, return that one's chapter
-      # - otherwise, there's no fragment, so return 1
-      def next_fragment
-        if fragment = ContentFragment.last
-          fragment.next
-        else
-          ContentFragment.new
-        end
-      end
     end
   end
 end

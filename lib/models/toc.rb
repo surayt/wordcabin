@@ -4,7 +4,7 @@ module SinatraApp
   class TOC
     def initialize(locale, book = nil)
       @locale = locale
-      @book_or_books = (book && !book.new_record? ? [book] : ContentFragment.empty_chapter).uniq
+      @book_or_books = (book && !book.new_record? ? [book] : ContentFragment.empty_chapters).uniq
     end
     
     def html(url_path = nil)
