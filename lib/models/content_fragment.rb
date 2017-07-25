@@ -81,29 +81,25 @@ module SinatraApp
       h
     end
 
-    # TODO: Rework. This is what it should work like:
-    # - get our TOC level (i.e. x = 1, x.x = 2, x.x.x = 3)
-    # - calculate the next chapter _in_that_level_
-    # - if there's nothing there, go one higher
-    # - if there's nothing there, go one higher
-    # - ...
-    # - if you reach the top (i.e., x) and there's still nothing there: return nil
-    def next
+    def next_unused
+      next_chapter = '0'
       if self.chapter.blank?
         fragment = ContentFragment.last
         if fragment.chapter.blank?
-          fragment = ContentFragment.new(locale: locale, book: self.book, chapter: '0')
+          fragment = ContentFragment.new(locale: locale, book: self.book, chapter: next_chapter)
         end
       else
         fragment = self
       end
       chapter_levels = fragment.chapter.split '.'
-      chapter_levels[chapter_levels.size-1] = (chapter_levels.last.to_i + 1).to_s
-      next_chapter = chapter_levels.join('.')      
-      unless next_fragment = ContentFragment.chapter(locale, self.book, next_chapter)
-        next_fragment = ContentFragment.new(locale: locale, book: self.book, chapter: next_chapter)
+      last_segment = chapter_levels.last.to_i
+      loop do
+        last_segment += 1
+        chapter_levels[-1] = last_segment.to_s
+        next_chapter = chapter_levels.join '.'
+        break if !ContentFragment.chapter(locale, book, next_chapter)
       end
-      next_fragment
+      ContentFragment.new(locale: locale, book: book, chapter: next_chapter)
     end
 
     # Meant for private use, but we'll see...

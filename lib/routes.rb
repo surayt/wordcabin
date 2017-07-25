@@ -97,20 +97,21 @@ module SinatraApp
 
     # ContentFragment
     
-    get '/:book' do |book|
-      redirect to(ContentFragment.book(locale, book).url_path)
-    end
-    
     get /\/(new|(.*)\/(.*))/ do
       __new__, book, chapter = params['captures']
       if book && chapter
         @fragment = ContentFragment.chapter(locale, book, chapter)
       else
-        @fragment = ContentFragment.new(params[:content_fragment].merge!(locale: locale))
+        params[:content_fragment].merge!(locale: locale) if params[:content_fragment]
+        @fragment = ContentFragment.new(params[:content_fragment])
       end
       @toc = TOC.new(locale, @fragment.parent)
-      @next_fragment = @fragment.next
+      @next_fragment = @fragment.next_unused
       haml :contents, layout: !request.xhr?
+    end
+    
+    get '/:book' do |book|
+      redirect to(ContentFragment.book(locale, book).url_path)
     end
     
     post /\/(new|(.*))/ do
