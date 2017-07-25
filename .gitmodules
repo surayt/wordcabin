@@ -1,51 +1,51 @@
 [submodule "javascripts/infinite-scroll"]
 	path = javascripts/infinite-scroll
-	url = git@github.com:surayt/infinite-scroll.git
+	url = https://github.com/surayt/infinite-scroll.git
 	branch = master
 [submodule "stylesheets/normalize-scss"]
 	path = stylesheets/normalize-scss
-	url = git@github.com:surayt/normalize-scss.git
+	url = https://github.com/surayt/normalize-scss.git
 	branch = master
 [submodule "javascripts/jquery-ujs"]
 	path = javascripts/jquery-ujs
-	url = git@github.com:surayt/jquery-ujs.git
+	url = https://github.com/surayt/jquery-ujs.git
 	branch = master
 [submodule "stylesheets/bourbon"]
 	path = stylesheets/bourbon
-	url = git@github.com:surayt/bourbon.git
+	url = https://github.com/surayt/bourbon.git
 	branch = master
 [submodule "stylesheets/neat"]
 	path = stylesheets/neat
-	url = git@github.com:surayt/neat.git
+	url = https://github.com/surayt/neat.git
 	branch = master
 [submodule "javascripts/js-url"]
 	path = javascripts/js-url
-	url = git@github.com:surayt/js-url.git
+	url = https://github.com/surayt/js-url.git
 	branch = master
 [submodule "public/tinymce-dist"]
 	path = public/tinymce-dist
-	url = git@github.com:surayt/tinymce-dist.git
+	url = https://github.com/surayt/tinymce-dist.git
 	branch = master
 [submodule "javascripts/js-cookie"]
 	path = javascripts/js-cookie
-	url = git@github.com:surayt/js-cookie.git
+	url = https://github.com/surayt/js-cookie.git
 	branch = master
 [submodule "javascripts/jquery-dist"]
 	path = javascripts/jquery-dist
-	url = git@github.com:surayt/jquery-dist.git
+	url = https://github.com/surayt/jquery-dist.git
 	branch = master
 [submodule "stylesheets/bitters"]
 	path = stylesheets/bitters
-	url = git@github.com:surayt/bitters.git
+	url = https://github.com/surayt/bitters.git
 	branch = surayt
 [submodule "public/tinymce_langs"]
 	path = public/tinymce_langs
-	url = git@github.com:surayt/tinymce_langs.git
+	url = https://github.com/surayt/tinymce_langs.git
 	branch = master
 [submodule "public/font-awesome"]
 	path = public/font-awesome
-	url = git@github.com:surayt/Font-Awesome.git
+	url = https://github.com/surayt/Font-Awesome.git
 	branch = master
 [submodule "javascripts/underscore"]
 	path = javascripts/underscore
-	url = git@github.com:jashkenas/underscore.git
+	url = https://github.com/jashkenas/underscore.git

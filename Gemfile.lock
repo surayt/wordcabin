@@ -1,5 +1,5 @@
 GIT
-  remote: git@github.com:cowboyd/therubyracer.git
+  remote: https://github.com/cowboyd/therubyracer.git
   revision: 466a1f0d4f696acfe971899272359623ec0a7a97
   branch: master
   specs:
@@ -165,4 +165,4 @@ DEPENDENCIES
   whatlanguage
 
 BUNDLED WITH
-   1.15.1
+   1.15.3
