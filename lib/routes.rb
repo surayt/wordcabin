@@ -78,7 +78,6 @@ module SinatraApp
         params[:document][:file][:content_type] = params[:document][:file][:type]
         file = FileAttachment.new(params[:document][:file])
         if file.save
-          $logger.info(file.inspect)
           json(document: {
             url: file.url_path,
             title: params['document']['title']
@@ -115,7 +114,6 @@ module SinatraApp
     end
     
     post /\/(new|(.*))/ do
-      $logger.debug "#{__FILE__}:#{__LINE__}:\n#{params['captures'].inspect}, #{params['content_fragment'].inspect}"
       __new__, id = params['captures']
       if __new__ && __new__ == 'new'
         params[:content_fragment].merge!(locale: locale)
@@ -129,6 +127,7 @@ module SinatraApp
           flash[:notice] = 'The content fragment was saved successfully.' # TODO: i18n!
           redirect to("#{URI.escape(@fragment.url_path)}?view_mode=preview")
         else
+          $logger.warn "#{__FILE__}:#{__LINE__}:\n#{params['captures'].inspect}, #{params['content_fragment'].inspect}"
           flash[:error] = @fragment.errors.full_messages.join(' ') # Not pretty, but whatever.
           redirect back
         end
