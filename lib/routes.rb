@@ -97,6 +97,10 @@ module SinatraApp
 
     # ContentFragment
     
+    get '/:book' do |book|
+      redirect to(ContentFragment.book(locale, book).url_path)
+    end
+    
     get /\/(new|(.*)\/(.*))/ do
       __new__, book, chapter = params['captures']
       if book && chapter
@@ -104,7 +108,7 @@ module SinatraApp
       else
         @fragment = ContentFragment.new(params[:content_fragment].merge!(locale: locale))
       end
-      @toc = TOC.new(locale, @fragment)
+      @toc = TOC.new(locale, @fragment.parent)
       @next_fragment = @fragment.next
       haml :contents, layout: !request.xhr?
     end
@@ -124,8 +128,7 @@ module SinatraApp
           flash[:notice] = 'The content fragment was saved successfully.' # TODO: i18n!
           redirect to("#{URI.escape(@fragment.url_path)}?view_mode=preview")
         else
-          flash[:error] = @fragment.errors.to_a.last
-          flash[:error] = @contents.errors.full_messages.join(" ") # Not pretty, but whatever.
+          flash[:error] = @fragment.errors.full_messages.join(' ') # Not pretty, but whatever.
           redirect back
         end
       else

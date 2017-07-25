@@ -264,7 +264,7 @@ namespace :db do
       puts "Warning: not deleting any content_fragments; chapter is going to be the last in its locale/book!".yellow
       last_chapter = ContentFragment.where(locale: locale, book: book_name).non_empty_chapters
       chapter_number = last_chapter.any? ? last_chapter.last.chapter.to_i + 1 : 1
-      unless ContentFragment.book(locale, book_name).any?
+      unless ContentFragment.book(locale, book_name)
         puts "Warning: creating new book for chapter to reside in!".yellow
         book = ContentFragment.create(locale: locale, book: book_name)
         puts "Book: #{book.errors.full_messages.join("\n").to_s.red}\n(#{book.inspect})" if book.errors.any?

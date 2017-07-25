@@ -132,7 +132,7 @@ module SinatraApp
     end
     
     def parent
-      ContentFragment.book(locale, book).first
+      ContentFragment.book(locale, book)
     end
     
     def first_child
@@ -144,10 +144,14 @@ module SinatraApp
     end
   
     def url_path(method = :get)
-      case method
-      when :get    then "/#{[locale, book, chapter].join '/'}".chomp '/'
-      when :post   then "/#{[locale, (new_record? ? 'new' : id)].join '/'}"
-      when :delete then "/#{[locale, id].join '/'}"
+      if chapter.blank?
+        first_child_url_path
+      else
+        case method
+        when :get    then "/#{[locale, book, chapter].join '/'}".chomp '/'
+        when :post   then "/#{[locale, (new_record? ? 'new' : id)].join '/'}"
+        when :delete then "/#{[locale, id].join '/'}"
+        end
       end
     end
   end
