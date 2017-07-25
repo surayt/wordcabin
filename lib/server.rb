@@ -64,7 +64,7 @@ module SinatraApp
       # Doesn't recognize all changes but should be good enough.
       register Sinatra::Reloader
       also_reload Config.lib+"*/*.rb"
-      after_reload {$logger.info('reloaded')}
+      after_reload {$logger.debug('reloaded')}
       set :reload_templates, true
       enable :reloader # Should not be needed ... meh.
     end

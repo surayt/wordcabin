@@ -107,14 +107,22 @@ module SinatraApp
     end
 
     # Meant for private use, but we'll see...
+    #
     scope :non_empty_chapters, -> { where("chapter <> ''") }
     scope :empty_chapters, -> { where(chapter: [nil, '']) }
+    #
     # Meant for public use...
-    # (The singular methods are not scopes because AR is still sh** sometimes, also cf. https://stackoverflow.com/a/21653695 wrt the solution)
+    # (The singular methods are not scopes because AR is still sh** sometimes,
+    #  also cf. https://stackoverflow.com/a/21653695 for the solution used.)
+    #
     def self.book(locale, book); where(locale: locale, book: book).empty_chapters.first; end
     def self.chapter(locale, book, chapter); where(locale: locale, book: book, chapter: chapter).first; end
-    scope :books, ->(locale) { where(locale: locale).empty_chapters }
-    scope :chapters, ->(locale, book) { where(locale: locale, book: book).non_empty_chapters }
+    #
+    # (For the plural methods, care must be taken to chain them with #where at
+    #  the end of the chain, so that they always return a set, never an item.)
+    #
+    scope :books, ->(locale) { empty_chapters.where(locale: locale) }
+    scope :chapters, ->(locale, book) { non_empty_chapters.where(locale: locale, book: book) }
     
     def fill_sorting_column
       unless chapter.blank?
@@ -138,7 +146,7 @@ module SinatraApp
     def url_path(method = :get)
       case method
       when :get    then "/#{[locale, book, chapter].join '/'}".chomp '/'
-      when :post   then "/#{[locale, new_record? ? 'new' : id].join '/'}"
+      when :post   then "/#{[locale, (new_record? ? 'new' : id)].join '/'}"
       when :delete then "/#{[locale, id].join '/'}"
       end
     end

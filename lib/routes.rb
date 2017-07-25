@@ -102,7 +102,7 @@ module SinatraApp
       if book && chapter
         @fragment = ContentFragment.chapter(locale, book, chapter)
       else
-        @fragment = ContentFragment.new(params[:content_fragment])
+        @fragment = ContentFragment.new(params[:content_fragment].merge!(locale: locale))
       end
       @toc = TOC.new(locale, @fragment)
       @next_fragment = @fragment.next
@@ -110,6 +110,7 @@ module SinatraApp
     end
     
     post /\/(new|(.*))/ do
+      $logger.debug "#{__FILE__}:#{__LINE__}:\n#{params['captures'].inspect}, #{params['content_fragment'].inspect}"
       __new__, id = params['captures']
       if __new__ && __new__ == 'new'
         params[:content_fragment].merge!(locale: locale)
