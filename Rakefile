@@ -286,20 +286,17 @@ namespace :db do
 end
 
 namespace :wordcabin do
+  desc "Update to the latest version from git, performing all the necessary steps"
+  task :update do
+    # Not done inside of here so that the script can be run on its
+    # own, i.e. via a cron job, etc. and not fail even when rake
+    # would not work for some reason.
+    system "sh update.sh"
+  end
+
   desc "Give an overview over the project's structure"
   task :list_directories do
     system "tree -d -I 'data|tinymce|bourbon-neat|font-awesome|media|jquery-ujs'"
-  end
-
-  desc "Update all git submodules (use carefully)"
-  task :update_submodules do
-    command = "git submodule foreach ' \
-      git fetch origin; \
-      git checkout $(git rev-parse --abbrev-ref HEAD); \
-      git reset --hard origin/$(git rev-parse --abbrev-ref HEAD); \
-      git submodule update --recursive; \
-      git clean -dfx'"
-    sh command.gsub(/\n/, '')
   end
 
   desc "Copy all required files from data/ to public/"
