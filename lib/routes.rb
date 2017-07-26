@@ -26,7 +26,7 @@ module SinatraApp
     get '/' do
       @fragments = ContentFragment.empty_chapters
       if !@fragments.any? && current_user.is_admin?
-        redirect to("/#{locale}/new")
+        redirect to("/#{locale}/new?view_mode=edit")
       else
         haml :index
       end
@@ -94,23 +94,34 @@ module SinatraApp
       end
     end
 
-    # ContentFragment
+    # ContentFragment routes. Careful with these as their order is important!
     
     get /\/(new|(.*)\/(.*))/ do
       __new__, book, chapter = params['captures']
       if book && chapter
         @fragment = ContentFragment.chapter(locale, book, chapter)
       else
-        params[:content_fragment].merge!(locale: locale) if params[:content_fragment]
+        params[:content_fragment] ||= {}
+        params[:content_fragment][:locale] = locale
         @fragment = ContentFragment.new(params[:content_fragment])
       end
       @toc = TOC.new(locale, @fragment.parent)
-      @next_fragment = @fragment.next_unused
       haml :contents, layout: !request.xhr?
     end
     
     get '/:book' do |book|
-      redirect to(ContentFragment.book(locale, book).url_path)
+      book = ContentFragment.book(locale, book)
+      if book.first_child
+        location = book.first_child.url_path
+      else
+        if current_user.is_admin?
+          location = "/#{locale}/new?content_fragment[book]=#{book.book}&view_mode=edit"
+        else
+          flash[:warn] = 'The selected book is empty, please check back later.' # TODO: i18n!
+          location = '/'
+        end
+      end
+      redirect to(location)
     end
     
     post /\/(new|(.*))/ do

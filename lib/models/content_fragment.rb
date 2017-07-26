@@ -83,10 +83,10 @@ module SinatraApp
 
     def next_unused
       next_chapter = '0'
-      if self.chapter.blank?
+      if chapter.blank?
         fragment = ContentFragment.last
         if !fragment || fragment.chapter.blank?
-          fragment = ContentFragment.new(locale: locale, book: self.book, chapter: next_chapter)
+          fragment = ContentFragment.new(locale: locale, book: book, chapter: next_chapter)
         end
       else
         fragment = self
@@ -132,7 +132,7 @@ module SinatraApp
     end
     
     def first_child
-      ContentFragment.where(locale: locale, book: book).non_empty_chapters.first
+      ContentFragment.chapters(locale, book).first
     end
     
     def first_child_url_path
@@ -140,14 +140,17 @@ module SinatraApp
     end
   
     def url_path(method = :get)
-      if chapter.blank?
+      logger.debug "*** new_record?: #{new_record?}, chapter.blank?: #{chapter.blank?}, method: #{method}".red
+      if ContentFragment.count > 1 && chapter.blank? && !new_record?
+        # We're dealing with a book.
         first_child_url_path
       else
-        case method
-        when :get    then "/#{[locale, book, chapter].join '/'}".chomp '/'
-        when :post   then "/#{[locale, (new_record? ? 'new' : id)].join '/'}"
-        when :delete then "/#{[locale, id].join '/'}"
-        end
+        # We're dealing with content.
+        path = case method
+        when :get    then new_record? ? 'new' : [book, chapter].join('/').chomp('/')
+        when :post   then new_record? ? 'new' : id
+        when :delete then id
+        end; "/#{locale}/#{path}"
       end
     end
   end

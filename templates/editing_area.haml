@@ -3,7 +3,7 @@
   %textarea{class: 'text', name: 'content_fragment[html]'}= @fragment.html
   %fieldset
     %label{for: 'content_fragment[book]'} Book:
-    %input{type: :text, name: 'content_fragment[book]', value: @fragment.book}
+    %input{type: :text, name: 'content_fragment[book]', value: @fragment.book || @fragment.next_unused.book}
     %label{for: 'content_fragment[chapter]'} Chapter:
-    %input{type: :text, name: 'content_fragment[chapter]', value: @fragment.chapter}
+    %input{type: :text, name: 'content_fragment[chapter]', value: @fragment.chapter || @fragment.next_unused.chapter}
     %input{type: :submit, value: 'Save'}
