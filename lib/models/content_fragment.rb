@@ -85,7 +85,7 @@ module SinatraApp
       next_chapter = '0'
       if self.chapter.blank?
         fragment = ContentFragment.last
-        if fragment.chapter.blank?
+        if !fragment || fragment.chapter.blank?
           fragment = ContentFragment.new(locale: locale, book: self.book, chapter: next_chapter)
         end
       else
