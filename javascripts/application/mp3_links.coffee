@@ -2,6 +2,7 @@
 # towards an mp3 file. So far, nothing else.
 
 $(document).ready ->
+  console.log "mp3_links"
   mp3_file_links = 'a[href$="mp3"]'
   $(mp3_file_links).each ->
     url = $(this).attr('href')

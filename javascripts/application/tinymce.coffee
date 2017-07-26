@@ -79,7 +79,9 @@ text = merge(common_settings,
              link unlink uploadfile image media'
   body_id:  'tinymce_section_instance')
 
+console.log "tinymce heading editor"
 tinymce.init heading
+console.log "tinymce text editor"
 tinymce.init text
 
 # TODO: find a way around TinyMCE grabbing the event before we do...

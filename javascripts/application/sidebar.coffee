@@ -56,6 +56,7 @@ add_view_mode_to_chapter_links = ->
       $(this).attr('href', $(this).attr('href')+'?view_mode='+url('?view_mode'))
 
 $(document).ready ->
+  console.log "sidebar"
   make_sidebar_hideable()
   restore_sidebar_state()
   make_toc_expandable()
