@@ -108,5 +108,43 @@ module SinatraApp
       assert c.save == true
       assert c.update_attribute(:chapter, '2.3.4.6') == true
     end
+    
+    # --------------------------------------------------------------------------
+    # lib/routes.rb
+    # TODO: Implement all of these!
+    # --------------------------------------------------------------------------
+    
+    def test_get_slash_if_no_content_fragments_present
+      # User should see an empty index page.
+    end
+    
+    def test_get_slash_if_only_one_book_fragment_present
+      # User should see one entry on the index page,
+      # which, when clicked, redirects to the index page and
+      # an error message appears saying the book is still empty.
+    end
+    
+    def test_get_slash_if_only_one_book_and_one_child_fragment_present
+      # User should see one entry on the index page,
+      # which, when clicked, should bring the user to
+      # that book's first child fragment.
+    end
+    
+    def test_login_if_no_content_fragments_present
+      # After login,
+      # user should be redirected to "/:locale/new" and
+      # form should be completely empty.
+      #
+      # After saving, user should be redirected to "/:locale/new" and
+      # form should be filled with book that was just created and
+      # with chapter "1".
+    end
+    
+    def test_adding_new_content_fragment_to_existing_book_with_one_child
+      # After pressing "Add Content Fragment" button,
+      # user should see "/:locale/new" and
+      # form should be filled with book from last selected ContentFragment and
+      # chapter should be +1 to that of the last selected ContentFragment.
+    end
   end
 end
