@@ -1,7 +1,6 @@
 source 'https://rubygems.org'
 
 gem 'rake'
-gem 'therubyracer', git: 'https://github.com/cowboyd/therubyracer.git', branch: :master
 gem 'awesome_print'
 gem 'pry'
 gem 'sanitize'
