@@ -1,5 +1,7 @@
 data/*
 cache/*
+config/config.sh
+config/database.yml
 public/stylesheets/*.css
 public/stylesheets/*.map
 public/javascripts/*.js
@@ -11,5 +13,4 @@ test
 backup
 .rake_tasks~
 *.log
-
 *.sqlite3
