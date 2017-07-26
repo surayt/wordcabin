@@ -9,6 +9,7 @@ require 'sinatra/activerecord'
 # Runtime dependencies
 require 'sprockets'
 require 'hamlit' # Sinatra does know to require HAML, but not Hamlit!
+require 'autoprefixer-rails'
 
 # Internal dependencies
 require_relative 'models/user'
@@ -82,9 +83,10 @@ module SinatraApp
       set :method_override, true # To be able to use RESTful methods
       set :public_folder, Config.static_files
       # Sprockets
-      set :assets, Sprockets::Environment.new(root)
+      set :assets, Sprockets::Environment.new(root) # TODO: Also append project-specific paths below!
       assets.append_path Config.javascripts
       assets.append_path Config.stylesheets
+      AutoprefixerRails.install(assets)
       # Internationalisation
       # http://recipes.sinatrarb.com/p/development/i18n
       # A locale is only considered 'available' if the
