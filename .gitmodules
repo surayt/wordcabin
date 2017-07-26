@@ -1,7 +1,3 @@
-[submodule "javascripts/infinite-scroll"]
-	path = javascripts/infinite-scroll
-	url = https://github.com/surayt/infinite-scroll.git
-	branch = master
 [submodule "stylesheets/normalize-scss"]
 	path = stylesheets/normalize-scss
 	url = https://github.com/surayt/normalize-scss.git
