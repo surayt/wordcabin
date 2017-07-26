@@ -1,8 +1,11 @@
 require 'sanitize'
+require 'semantic_logger'
 
 module SinatraApp
   # A chapter belongs to the top-level element by having the same 'book' field value. There are no formal relationships!
   class ContentFragment < ActiveRecord::Base
+    include SemanticLogger::Loggable
+    
     default_scope { order("locale ASC, book ASC, chapter_padded ASC") }
     before_save :fill_sorting_column
 
@@ -140,17 +143,17 @@ module SinatraApp
     end
   
     def url_path(method = :get)
-      logger.debug "*** new_record?: #{new_record?}, chapter.blank?: #{chapter.blank?}, method: #{method}".red
       if ContentFragment.count > 1 && chapter.blank? && !new_record?
         # We're dealing with a book.
         first_child_url_path
       else
         # We're dealing with content.
         path = case method
-        when :get    then new_record? ? 'new' : [book, chapter].join('/').chomp('/')
-        when :post   then new_record? ? 'new' : id
-        when :delete then id
-        end; "/#{locale}/#{path}"
+          when :get    then new_record? ? 'new' : [book, chapter].join('/').chomp('/')
+          when :post   then new_record? ? 'new' : id
+          when :delete then id
+        end
+        "/#{locale}/#{path}"
       end
     end
   end
