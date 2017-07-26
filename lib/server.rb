@@ -45,12 +45,11 @@ module SinatraApp
     # Configuration                                                           #
     ###########################################################################
     
-    use Rack::Session::Cookie, secret: "we'll leave it at this during development..."
+    use Rack::Session::Cookie, secret: Config.session_secret
                               #, :key => 'rack.session',
                               #  :domain => 'localhost',
                               #  :path => '/',
-                              #  :expire_after => 1.year.to_i,
-                              #  :secret => "TODO: use something sensible!"
+                              #  :expire_after => 1.year.to_i
 
     # Load extensions.
     register Sinatra::ActiveRecordExtension
@@ -59,14 +58,18 @@ module SinatraApp
 
     # Things only needed for development, not production.
     configure :development do
-      # It's simple. It works. Leave me alone.
-      $logger = Logger.new('development.log')
-      # Doesn't recognize all changes but should be good enough.
-      register Sinatra::Reloader
-      also_reload Config.lib+"*/*.rb"
-      # after_reload {$logger.debug('reloaded')}
-      set :reload_templates, true
-      enable :reloader # Should not be needed ... meh.
+      set :bind, Config.bind_address
+      set :port, Config.bind_port
+      enable :logging
+      # http://recipes.sinatrarb.com/p/middleware/rack_commonlogger
+      logfile = File.new(Config.root+"#{Config.environment}.log", 'w+')
+      logfile.sync = true
+      use Rack::CommonLogger, logfile
+    end
+    
+    before do
+      logger.datetime_format = "%H:%M:%S "
+      logger.level = Logger::WARN
     end
     
     # Configure the application using user settings from config.rb.

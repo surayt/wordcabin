@@ -5,7 +5,6 @@ require 'htmlcompressor'
 require 'pathname'
 require 'find'
 require 'set'
-require 'colorize'
 
 MAIN_CONFIG = Pathname('config')+'config.rb'
 require_relative MAIN_CONFIG
@@ -26,9 +25,15 @@ end
 
 task default: ["wordcabin:clean_public_files", "wordcabin:copy_assets", "server"]
 
-desc "Start application server on port 4567" # TODO: use port from configuration file!
+desc "Start application server on configured port"
 task :server do
-  `rackup` # Boot Webrick/Mongrel/Thin via Rack 
+  watchlist = %w{
+    config db
+    javascripts/application javascripts/tinymce_plugins
+    lib locales
+    stylesheets/article stylesheets/features stylesheets/modules
+    templates
+  }; system "rerun --dir #{watchlist.join ','} rackup" # Boot Puma via Rack
 end
 
 # https://gist.github.com/vast/381881
