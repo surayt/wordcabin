@@ -33,7 +33,11 @@ task :server do
     lib locales
     stylesheets/article stylesheets/features stylesheets/modules
     templates
-  }; system "rerun --dir #{watchlist.join ','} rackup" # Boot Puma via Rack
+  }
+  # Boot Puma via Rack, keep reloading via rerun.
+  # The latter won't work using backticks, only
+  # using system() which forks off.
+  system("rerun --dir #{watchlist.join ','} --clear rackup")
 end
 
 # https://gist.github.com/vast/381881

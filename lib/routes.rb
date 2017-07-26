@@ -1,5 +1,7 @@
 module SinatraApp
-  class Server < Sinatra::Base
+  class Server < Sinatra::Application
+    include SemanticLogger::Loggable
+    
     # Prepend all routes with locale info, but skip locale-independent ones
     
     before '/:locale/?*' do
@@ -84,12 +86,10 @@ module SinatraApp
           })
         else
           msg = file.errors.full_messages.first
-          $logger.warn(msg)
           json(error: {message: msg})
         end
       rescue => e
         msg = "Internal server error in /files/upload (#{e})"
-        $logger.warn(msg)
         json(error: {message: msg})
       end
     end
@@ -138,7 +138,6 @@ module SinatraApp
           flash[:notice] = 'The content fragment was saved successfully.' # TODO: i18n!
           redirect to("#{URI.escape(@fragment.url_path)}?view_mode=preview")
         else
-          $logger.warn "#{__FILE__}:#{__LINE__}:\n#{params['captures'].inspect}, #{params['content_fragment'].inspect}"
           flash[:error] = @fragment.errors.full_messages.join(' ') # Not pretty, but whatever.
           redirect back
         end

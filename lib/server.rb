@@ -5,7 +5,6 @@ require 'sinatra/json'
 require 'sinatra/strong-params'
 require 'sinatra/flash'
 require 'sinatra/activerecord'
-require 'sinatra/reloader'
 
 # Runtime dependencies
 require 'sprockets'
@@ -18,12 +17,15 @@ require_relative 'models/toc'
 require_relative 'models/file_attachment'
 require_relative 'routes'
 
-module SinatraApp 
+module SinatraApp
   # Adapted from http://joeyates.info/2010/01/31/regular-expressions-in-sqlite/
   # Implements SQLite's REGEXP function in Ruby (like the commandline client's 'pcre' extension)
   class ActiveRecord::ConnectionAdapters::SQLite3Adapter
+    include SemanticLogger::Loggable
+    
     def initialize(connection, logger, connection_options, config) # (db, logger, config)
-      # Verbatim from https://github.com/rails/rails/blob/e2e63770f59ce4585944447ee237ec722761e77d/activerecord/lib/active_record/connection_adapters/sqlite3_adapter.rb
+      # Verbatim from https://github.com/rails/rails/blob/e2e63770f59ce4585944447ee237ec
+      # 722761e77d/activerecord/lib/active_record/connection_adapters/sqlite3_adapter.rb
       super(connection, logger, config)
       @active     = nil
       @statements = StatementPool.new(self.class.type_cast_config_to_integer(config[:statement_limit]))
@@ -39,8 +41,10 @@ module SinatraApp
        end
     end
   end
-
-  class Server < Sinatra::Base
+  
+  class Server < Sinatra::Application
+    include SemanticLogger::Loggable
+    
     ###########################################################################
     # Configuration                                                           #
     ###########################################################################
@@ -60,16 +64,8 @@ module SinatraApp
     configure :development do
       set :bind, Config.bind_address
       set :port, Config.bind_port
-      enable :logging
-      # http://recipes.sinatrarb.com/p/middleware/rack_commonlogger
-      logfile = File.new(Config.root+"#{Config.environment}.log", 'w+')
-      logfile.sync = true
-      use Rack::CommonLogger, logfile
-    end
-    
-    before do
-      logger.datetime_format = "%H:%M:%S "
-      logger.level = Logger::WARN
+    end; before do
+      logger.debug "#{request.request_method} #{request.fullpath}" if Config.environment == :development
     end
     
     # Configure the application using user settings from config.rb.
