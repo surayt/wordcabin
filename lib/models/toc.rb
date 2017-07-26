@@ -37,6 +37,7 @@ module SinatraApp
             where("locale = ? AND book = ? AND length(chapter) > 0", f.locale, f.book)
         # Convert ActiveRecord results into Array of Hashes
         # https://stackoverflow.com/questions/15427936/how-to-convert-activerecord-results-into-a-array-of-hashes
+        toc << "<li>"
         toc << drill_deeper(chapter_level_fragments.map(&:attributes), nil, url_path, next_marker)
         toc << "</ul>"
       end
