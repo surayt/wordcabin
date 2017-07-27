@@ -6,6 +6,7 @@ require 'pathname'
 require 'find'
 require 'set'
 require 'securerandom'
+require 'colorize'
 
 MAIN_CONFIG = Pathname('config')+'config.rb'
 require_relative MAIN_CONFIG

@@ -3,7 +3,6 @@
 require 'pathname'
 require 'rack/cache'
 require 'sprockets'
-require 'colorize'
 require 'semantic_logger'
 
 require_relative Pathname('config')+'config.rb'
