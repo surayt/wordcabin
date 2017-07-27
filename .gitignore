@@ -1,6 +1,6 @@
 data/*
 cache/*
-config/config.sh
+config/config.rb
 config/database.yml
 public/stylesheets/*.css
 public/stylesheets/*.map
@@ -13,4 +13,4 @@ test
 backup
 .rake_tasks~
 *.log
-*.sqlite3
+*.sqlite3*

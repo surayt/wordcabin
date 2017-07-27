@@ -33,13 +33,22 @@ module SinatraApp
       configure_connection
       # Unchanged from source
       connection.create_function('regexp', 2) do |func, pattern, expression|
-         regexp = Regexp.new(pattern.to_s, Regexp::IGNORECASE)
-         if expression.to_s.match(regexp)
-           func.result = 1
-         else
-           func.result = 0
-         end
-       end
+        regexp = Regexp.new(pattern.to_s, Regexp::IGNORECASE)
+        if expression.to_s.match(regexp)
+          func.result = 1
+        else
+          func.result = 0
+        end
+      end
+      # https://gist.github.com/datenimperator/7602535
+      ['PRAGMA main.page_size=4096;',
+       'PRAGMA main.cache_size=10000;',
+       'PRAGMA main.locking_mode=EXCLUSIVE;',
+       'PRAGMA main.synchronous=NORMAL;',
+       'PRAGMA main.journal_mode=WAL;',
+       'PRAGMA main.temp_store = MEMORY;'].each do |tweak|
+        connection.execute tweak
+      end
     end
   end
   
@@ -57,7 +66,8 @@ module SinatraApp
                               #  :expire_after => 1.year.to_i
 
     # Load extensions.
-    register Sinatra::ActiveRecordExtension
+    register Sinatra::ActiveRecordExtension # TODO: add configuration for database-per-project.
+                                            # https://github.com/janko-m/sinatra-activerecord
     register Sinatra::StrongParams
     register Sinatra::Flash
 
@@ -86,12 +96,11 @@ module SinatraApp
       set :assets, Sprockets::Environment.new(root) # TODO: Also append project-specific paths below!
       assets.append_path Config.javascripts
       assets.append_path Config.stylesheets
+      # Autoprefixer
       AutoprefixerRails.install(assets)
-      # Internationalisation
-      # http://recipes.sinatrarb.com/p/development/i18n
-      # A locale is only considered 'available' if the
-      # corresponding file in locales/*.yml contains at
-      # least one string!
+      # Internationalisation (http://recipes.sinatrarb.com/p/development/i18n)
+      # Note that a locale is only considered 'available' if the corresponding
+      # file in locales/*.yml contains at least one string!
       I18n::Backend::Simple.send(:include, I18n::Backend::Fallbacks)
       I18n.load_path = Dir[Config.translations+'*.yml']
       I18n.backend.load_translations
