@@ -4,7 +4,7 @@
 // Pasted English translations at the bottom instead of keeping them in a separate file.
 
 (function() {
-  tinymce.PluginManager.requireLangPack('uploadfile');
+  tinymce.PluginManager.requireLangPack('uploadfile', 'en,de');
 
   tinymce.create('tinymce.plugins.UploadFile', {
     UploadFile: function(ed, url) {
@@ -21,7 +21,7 @@
           body: [
             {type: 'iframe',  url: 'javascript:void(0)'},
             {type: 'textbox', name: 'document[file]', label: ed.translate('Choose a file'), subtype: 'file'},
-            {type: 'textbox', name: 'document[title]', label: ed.translate('Title')},
+            {type: 'textbox', name: 'document[title]', label: ed.translate('Link text')},
             {type: 'container', classes: 'error', html: "<p style='color: #b94a48;'>&nbsp;</p>"}
           ],
           buttons: [
@@ -220,16 +220,3 @@
 
   tinymce.PluginManager.add('uploadfile', tinymce.plugins.UploadFile);
 })();
-
-tinyMCE.addI18n("en", {
-  "Insert a file from your computer": "Insert a file from your computer",
-  "Insert file": "Insert file",
-  "Choose a file": "Choose a file",
-  "Target": "Target",
-  "You must choose a file": "You must choose a file",
-  "Got a bad response from the server": "Got a bad response from the server",
-  "Did not get a response from the server": "Did not get a response from the server",
-  "Insert": "Insert",
-  "Cancel": "Cancel",
-  "Title": "Title/Link text",
-});
