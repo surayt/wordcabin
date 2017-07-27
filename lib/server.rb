@@ -43,7 +43,7 @@ module SinatraApp
       # https://gist.github.com/datenimperator/7602535
       ['PRAGMA main.page_size=4096;',
        'PRAGMA main.cache_size=10000;',
-       'PRAGMA main.locking_mode=EXCLUSIVE;',
+       # 'PRAGMA main.locking_mode=EXCLUSIVE;',
        'PRAGMA main.synchronous=NORMAL;',
        'PRAGMA main.journal_mode=WAL;',
        'PRAGMA main.temp_store = MEMORY;'].each do |tweak|
@@ -75,6 +75,7 @@ module SinatraApp
     configure :development do
       set :bind, Config.bind_address
       set :port, Config.bind_port
+      set :show_exceptions, :after_handler
     end; before do
       logger.debug "#{request.request_method} #{request.fullpath}" if Config.environment == :development
     end
