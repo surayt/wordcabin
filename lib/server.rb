@@ -76,6 +76,11 @@ module SinatraApp
       set :bind, Config.bind_address
       set :port, Config.bind_port
       set :show_exceptions, :after_handler
+      # http://www.sinatrarb.com/contrib/reloader
+      # Doesn't catch the .rb files, but is faster than rerun's
+      # out-of-process reloading for templates, Coffee and SASS.
+      require 'sinatra/reloader'
+      register Sinatra::Reloader
     end; before do
       logger.debug "#{request.request_method} #{request.fullpath}" if Config.environment == :development
     end

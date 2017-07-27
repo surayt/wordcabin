@@ -35,16 +35,9 @@ end
 
 desc "Start application server on configured port"
 task :server do
-  watchlist = %w{
-    config db
-    javascripts/application javascripts/tinymce_plugins
-    lib locales
-    stylesheets/article stylesheets/features stylesheets/modules
-    templates
-  }
-  # Boot Puma via Rack, keep reloading via rerun.
-  # The latter won't work using backticks, only
-  # using system() which forks off.
+  # Boot Puma via Rack, keep reloading via rerun. The latter
+  # won't work using backticks, only with system(), which forks.
+  watchlist = %w{config db lib locales}
   system("rerun --dir #{watchlist.join ','} --clear rackup")
 end
 
