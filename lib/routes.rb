@@ -17,7 +17,7 @@ module SinatraApp
     end
     
     # Serve assets through Sprockets
-    
+   
     get '/assets/*' do
       env["PATH_INFO"].sub!('/assets', '')
       settings.assets.call(env)
@@ -105,9 +105,14 @@ module SinatraApp
         params[:content_fragment][:locale] = locale
         @fragment = ContentFragment.new(params[:content_fragment])
       end
-      @toc = TOC.new(locale, @fragment.parent)
-      logger.debug "*** request.xhr?: #{request.xhr?}"
-      request.xhr? ? haml(:article, layout: false) : haml(:contents)
+      if @fragment
+        @toc = TOC.new(locale, @fragment.parent)
+        logger.debug "*** request.xhr?: #{request.xhr?}"
+        request.xhr? ? haml(:article, layout: false) : haml(:contents)
+      else
+        flash[:error] = "We're sorry, there's no such chapter in this book." # TODO: i18n!
+        redirect to('/')
+      end
     end
     
     get '/:book' do |book|
