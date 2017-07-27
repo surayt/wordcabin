@@ -13,7 +13,7 @@
           win,
           editor = ed;
 
-      function showDialog() {
+      function showDialog() {  
         win = editor.windowManager.open({
           title: ed.translate('Insert a file from your computer'),
           width:  500 + parseInt(editor.getLang('uploadfile.delta_width', 0), 10),
@@ -21,7 +21,7 @@
           body: [
             {type: 'iframe',  url: 'javascript:void(0)'},
             {type: 'textbox', name: 'document[file]', label: ed.translate('Choose a file'), subtype: 'file'},
-            {type: 'textbox', name: 'document[title]', label: ed.translate('Link text')},
+            {type: 'textbox', name: 'document[title]', label: ed.translate('Link text'), value: tinymce.activeEditor.selection.getContent()},
             {type: 'container', classes: 'error', html: "<p style='color: #b94a48;'>&nbsp;</p>"}
           ],
           buttons: [
@@ -142,7 +142,6 @@
             ed.windowManager.close();
           }
         } catch(e) {
-          console.log(e);
           handleError('Got a bad response from the server');
         }
       }
@@ -155,7 +154,6 @@
       }
 
       function handleError(error) {
-        console.log('Got response from server: '+error);
         var message = win.find(".error")[0].getEl();
 
         if(message)
