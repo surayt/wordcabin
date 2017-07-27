@@ -6,5 +6,4 @@
   - if (content_class.include? 'editor') && (view_mode == :edit)
     = haml :editing_area
   - else  
-    %main.articles
-      %article.current= @fragment.heading_and_text
+    %main#articles= haml :article

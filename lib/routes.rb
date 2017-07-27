@@ -106,7 +106,8 @@ module SinatraApp
         @fragment = ContentFragment.new(params[:content_fragment])
       end
       @toc = TOC.new(locale, @fragment.parent)
-      haml :contents, layout: !request.xhr?
+      logger.debug "*** request.xhr?: #{request.xhr?}"
+      request.xhr? ? haml(:article, layout: false) : haml(:contents)
     end
     
     get '/:book' do |book|
