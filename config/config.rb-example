@@ -13,8 +13,8 @@ Config=OpenStruct.new(c.merge({
 
 environment:    :development, # Either development or production
 bind_address:   'localhost',  # Use 0.0.0.0 to bind to all interfaces, IP or hostname can be specified
-bind_port:      4567,         # Ports below 1024 will require root access, default would be 4567
-session_secret: "we'll leave it at this during development...",
+bind_port:      3000,         # Ports below 1024 will require root access, default would be 4567
+session_secret: "my very secret secret",
 
 # Important paths follow
 
