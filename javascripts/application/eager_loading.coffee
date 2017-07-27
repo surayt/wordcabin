@@ -19,7 +19,7 @@ $(document).ready ->
       # $.get is asynchronous, so anything inside of the
       # function handed to it is not reachable on the outside!
       $.get url, (article) ->
-        if $(window).height() > $('#articles').height()
-          $(article).appendTo('#articles').hide().fadeIn(2500)
-          link.removeClass('next')
-          link.addClass('active')
+        # if $(window).height() > $('#articles').height() # FIXME: leads to a race condition!
+        $(article).appendTo('#articles').hide().fadeIn(2500)
+        link.removeClass('next')
+        link.addClass('active')
