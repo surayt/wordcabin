@@ -5,6 +5,7 @@ require 'htmlcompressor'
 require 'pathname'
 require 'find'
 require 'set'
+require 'securerandom'
 
 MAIN_CONFIG = Pathname('config')+'config.rb'
 require_relative MAIN_CONFIG
@@ -24,6 +25,12 @@ Rake::TestTask.new do |t|
 end
 
 task default: ["wordcabin:clean_public_files", "wordcabin:copy_assets", "server"]
+
+# Stolen from https://github.com/rails/rails/blob/master/railties/lib/rails/tasks/misc.rake
+desc "Generate a cryptographically secure secret key to use as a cookie session secret"
+task :secret do
+  puts SecureRandom.hex(64)
+end
 
 desc "Start application server on configured port"
 task :server do
