@@ -3,7 +3,7 @@ About Wordcabin
 
 Wordcabin is a Ruby/Sinatra web application for writing and maintaining HTML-based interactive textbooks. It was created for the Aramaic Online Project's Surayt online course. It features an editorial view where a book can be put together from so-called content fragments.
 
-Prerequesites
+Prerequisites
 =============
 
 On Solus OS
