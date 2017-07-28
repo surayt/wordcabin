@@ -1,12 +1,24 @@
+About Wordcabin
+===============
+
+Wordcabin is a Ruby/Sinatra web application for writing and maintaining interactive textbooks. It was created for the Aramaic Online Project's Surayt online course. It features an editorial view where a book can be put together from so-called content fragments.
+
 Prerequesites
 =============
 
-Solus OS
---------
+On Solus OS
+-----------
 
 ```
 sudo eopkg install -c system.devel
 sudo eopkg install ruby ruby-devel nodejs sqlite3
+```
+
+On Debian-based distributions
+-----------------------------
+
+```
+sudo apt install build-essential ruby ruby-dev rubygems nodejs sqlite3
 ```
 
 Contributing
