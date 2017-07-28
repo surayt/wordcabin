@@ -1,5 +1,6 @@
 #!/usr/bin/env ruby
 
+# Sinatra modules
 require 'sinatra/base'
 require 'sinatra/json'
 require 'sinatra/strong-params'
@@ -9,7 +10,6 @@ require 'sinatra/activerecord'
 # Runtime dependencies
 require 'sprockets'
 require 'hamlit' # Sinatra does know to require HAML, but not Hamlit!
-require 'autoprefixer-rails'
 
 # Internal dependencies
 require_relative 'models/user'
@@ -21,7 +21,7 @@ require_relative 'routes'
 module SinatraApp
   # Adapted from http://joeyates.info/2010/01/31/regular-expressions-in-sqlite/
   # Implements SQLite's REGEXP function in Ruby (like the commandline client's 'pcre' extension)
-  class ActiveRecord::ConnectionAdapters::SQLite3Adapter
+  class ActiveRecord::ConnectionAdapters::SQLite3Adapter < ActiveRecord::ConnectionAdapters::AbstractAdapter 
     include SemanticLogger::Loggable
     
     def initialize(connection, logger, connection_options, config) # (db, logger, config)
@@ -60,22 +60,18 @@ module SinatraApp
     ###########################################################################
     
     use Rack::Session::Cookie, secret: Config.session_secret
-                              #, :key => 'rack.session',
-                              #  :domain => 'localhost',
-                              #  :path => '/',
-                              #  :expire_after => 1.year.to_i
+                               #, :key => 'rack.session',
+                               #  :domain => 'localhost',
+                               #  :path => '/',
+                               #  :expire_after => 1.year.to_i
 
     # Load extensions.
-    register Sinatra::ActiveRecordExtension # TODO: add configuration for database-per-project.
-                                            # https://github.com/janko-m/sinatra-activerecord
     register Sinatra::StrongParams
     register Sinatra::Flash
+    register Sinatra::ActiveRecordExtension
 
     # Things only needed for development, not production.
     configure :development do
-      set :bind, Config.bind_address
-      set :port, Config.bind_port
-      set :show_exceptions, :after_handler
       # http://www.sinatrarb.com/contrib/reloader
       # Doesn't catch the .rb files, but is faster than rerun's
       # out-of-process reloading for templates, Coffee and SASS.
@@ -87,8 +83,10 @@ module SinatraApp
     
     # Configure the application using user settings from config.rb.
     configure do
-      # Stuff (I just wanted a comment here for good looks)
-      set server: :puma
+      # Stuff (I just wanted a comment here for good measure, and who reads these anyways?)
+      set :server, :puma
+      set :bind, Config.bind_address
+      set :port, Config.bind_port
       set :environment, Config.environment
       set :root, Config.root
       set :views, Config.templates
@@ -97,12 +95,26 @@ module SinatraApp
       set :port, Config.bind_port
       set :json_content_type, 'text/html' # Required by TinyMCE uploadfile plugin
       set :method_override, true # To be able to use RESTful methods
-      set :public_folder, Config.static_files
+      set :public_folder, Config.static_files # Note the following three lines as well
+      # https://stackoverflow.com/questions/18966318/sinatra-multiple-public-directories
+      require 'rack/contrib/try_static'
+      use Rack::TryStatic, root: Config.data+Config.project+'template', urls: %w[/images /fonts /favicon.ico] # TODO: This shouldn't be a static list!
+      # Database
+      # TODO: Figure out how to use different database for testing; right now testing is a no-go!
+      db_file = Config.data+Config.project+'database'+"#{Config.database}.sqlite3"
+      db_config = begin
+        YAML.load_file(Config.config+'db.yml')[Config.database]
+      rescue
+        {'adapter' => 'sqlite3'}
+      end
+      db_config.merge!('database' => db_file.to_s)
+      set :database, db_config
       # Sprockets
-      set :assets, Sprockets::Environment.new(root) # TODO: Also append project-specific paths below!
+      set :assets, Sprockets::Environment.new(root)
       assets.append_path Config.javascripts
       assets.append_path Config.stylesheets
       # Autoprefixer
+      require 'autoprefixer-rails'
       AutoprefixerRails.install(assets)
       # Internationalisation (http://recipes.sinatrarb.com/p/development/i18n)
       # Note that a locale is only considered 'available' if the corresponding
