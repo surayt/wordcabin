@@ -107,7 +107,6 @@ module SinatraApp
       end
       if @fragment
         @toc = TOC.new(locale, @fragment.parent)
-        logger.debug "*** request.xhr?: #{request.xhr?}"
         request.xhr? ? haml(:article, layout: false) : haml(:contents)
       else
         flash[:error] = "We're sorry, there's no such chapter in this book." # TODO: i18n!
