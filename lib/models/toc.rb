@@ -1,6 +1,6 @@
 require 'sanitize'
 
-module SinatraApp
+module Wordcabin
   class TOC
     def initialize(locale, book = nil)
       @locale = locale

@@ -1,7 +1,7 @@
 require 'sanitize'
 require 'semantic_logger'
 
-module SinatraApp
+module Wordcabin 
   # A chapter belongs to the top-level element by having the same 'book' field value. There are no formal relationships!
   class ContentFragment < ActiveRecord::Base
     include SemanticLogger::Loggable

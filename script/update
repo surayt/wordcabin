@@ -2,7 +2,7 @@
 
 git pull origin master
 for i in data/*; do (cd $i; git pull; git lfs pull); done
-gem install bundler || sudo gem install bundler
+gem update bundler || sudo gem update bundler
 git submodule foreach 'git fetch origin; \
                        git checkout $(git rev-parse --abbrev-ref HEAD); \
                        git reset --hard origin/$(git rev-parse --abbrev-ref HEAD); \

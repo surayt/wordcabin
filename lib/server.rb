@@ -1,5 +1,8 @@
 #!/usr/bin/env ruby
 
+# Configuration file
+require_relative '../config/config'
+
 # Sinatra modules
 require 'sinatra/base'
 require 'sinatra/json'
@@ -8,50 +11,23 @@ require 'sinatra/flash'
 require 'sinatra/activerecord'
 
 # Runtime dependencies
+require 'semantic_logger'
 require 'sprockets'
 require 'hamlit' # Sinatra does know to require HAML, but not Hamlit!
 
 # Internal dependencies
+require_relative 'core/string'
+require_relative 'core/object'
+require_relative 'active_record/connection_adapters/sqlite3_adapter'
 require_relative 'models/user'
 require_relative 'models/content_fragment'
 require_relative 'models/toc'
 require_relative 'models/file_attachment'
-require_relative 'routes'
 
-module SinatraApp
-  # Adapted from http://joeyates.info/2010/01/31/regular-expressions-in-sqlite/
-  # Implements SQLite's REGEXP function in Ruby (like the commandline client's 'pcre' extension)
-  class ActiveRecord::ConnectionAdapters::SQLite3Adapter < ActiveRecord::ConnectionAdapters::AbstractAdapter 
-    include SemanticLogger::Loggable
-    
-    def initialize(connection, logger, connection_options, config) # (db, logger, config)
-      # Verbatim from https://github.com/rails/rails/blob/e2e63770f59ce4585944447ee237ec
-      # 722761e77d/activerecord/lib/active_record/connection_adapters/sqlite3_adapter.rb
-      super(connection, logger, config)
-      @active     = nil
-      @statements = StatementPool.new(self.class.type_cast_config_to_integer(config[:statement_limit]))
-      configure_connection
-      # Unchanged from source
-      connection.create_function('regexp', 2) do |func, pattern, expression|
-        regexp = Regexp.new(pattern.to_s, Regexp::IGNORECASE)
-        if expression.to_s.match(regexp)
-          func.result = 1
-        else
-          func.result = 0
-        end
-      end
-      # https://gist.github.com/datenimperator/7602535
-      ['PRAGMA main.page_size=4096;',
-       'PRAGMA main.cache_size=10000;',
-       # 'PRAGMA main.locking_mode=EXCLUSIVE;',
-       'PRAGMA main.synchronous=NORMAL;',
-       'PRAGMA main.journal_mode=WAL;',
-       'PRAGMA main.temp_store = MEMORY;'].each do |tweak|
-        connection.execute tweak
-      end
-    end
-  end
-  
+SemanticLogger.default_level = :trace
+SemanticLogger.add_appender(file_name: "#{Config.environment}.log", formatter: :color)
+
+module Wordcabin 
   class Server < Sinatra::Application
     include SemanticLogger::Loggable
     
@@ -94,13 +70,25 @@ module SinatraApp
       set :port, Config.bind_port
       set :json_content_type, 'text/html' # Required by TinyMCE uploadfile plugin
       set :method_override, true # To be able to use RESTful methods
-      set :public_folder, Config.static_files # Note the following three lines as well
+      # Assets (Sprockets)
+      
+      set :public_folder, Config.static_files
+      set :assets, Sprockets::Environment.new(root)
+      assets.append_path Config.javascripts
+      assets.append_path Config.stylesheets
+      project_template_path = Config.data+Config.project+'template'
+      assets.append_path project_template_path+'fonts'
+      assets.append_path project_template_path
+
       # https://stackoverflow.com/questions/18966318/sinatra-multiple-public-directories
-      require 'rack/contrib/try_static'
-      use Rack::TryStatic, root: Config.data+Config.project+'template', urls: %w[/images /fonts /favicon.ico] # TODO: This shouldn't be a static list!
+      # require 'rack/contrib/try_static'
+      # use Rack::TryStatic, root: Config.data+Config.project+'template', urls: %w[/images /fonts /favicon.ico]
+      #
       # Database
-      if Config.database && Config.database.class == String && environment != :test
-        db_file = Config.data+Config.project+'database'+"#{Config.database}.sqlite3" 
+      
+      project_database_path = Config.data+Config.project+'database'
+      if Config.database && environment != :test
+        db_file = project_database_path+"#{Config.database}.sqlite3" 
       end
       db_file ||= Config.root+'db'+"#{environment}.sqlite3"
       puts "Configuring database #{db_file}"
@@ -111,10 +99,6 @@ module SinatraApp
       end
       db_config.merge!('database' => db_file.to_s)
       set :database, db_config
-      # Sprockets
-      set :assets, Sprockets::Environment.new(root)
-      assets.append_path Config.javascripts
-      assets.append_path Config.stylesheets
       # Autoprefixer
       require 'autoprefixer-rails'
       AutoprefixerRails.install(assets)
@@ -159,5 +143,8 @@ module SinatraApp
         c.join(' ')
       end
     end
+  
+    require_relative 'routes' # Yup, sometimes things are a little strange.
+    run! if app_file == $0
   end
 end

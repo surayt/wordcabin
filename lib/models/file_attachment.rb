@@ -1,6 +1,6 @@
 require 'rack/mime'
 
-module SinatraApp
+module Wordcabin
   class FileAttachment < ActiveRecord::Base
     validates :binary_data, :content_type, presence: {message: 'must be present.'} # TODO: i18n!
   

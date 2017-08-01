@@ -1,4 +1,4 @@
-module SinatraApp
+module Wordcabin 
   class Server < Sinatra::Application
     include SemanticLogger::Loggable
     
