@@ -1,5 +1,19 @@
 // User view, heading editor, content editor
 main article, #tinymce_heading_instance, #tinymce_section_instance
+  section p img
+    width: auto !important
+    height: auto !important
+  table, td, img
+    &.width_5_percent
+      width: 5% !important
+    &.width_20_percent
+      width: 20% !important
+    &.width_50_percent
+      width: 50% !important
+    &.width_80_percent
+      width: 80% !important
+    &.width_100_percent
+      width: 100% !important
   font-family: $font-stack-wordcabin-contents !important
   font-size: 11pt
   a *
@@ -22,14 +36,6 @@ main article, #tinymce_heading_instance, #tinymce_section_instance
   table
     margin: .25em 0 2.5em 0
     td
-      &.width_5_percent
-        width: 5%
-      &.width_20_percent
-        width: 20%
-      &.width_50_percent
-        width: 50%
-      &.width_80_percent
-        width: 80%
       // TODO: Find out why they look differently inside the editor?
       border: 1px solid $grey
       border-left: none
@@ -143,10 +149,6 @@ main article section, #tinymce_section_instance
         color: $black
   +grid-media($medium-grid)
     table
-      &.width_50_percent
-        width: 50%
-      &.width_80_percent
-        width: 80%
       margin-left: auto
       margin-right: auto
       position: relative
@@ -191,11 +193,8 @@ main article
       border: none
       margin: auto
       margin-bottom: 2.5em
-      z-index: 1 !important
+      z-index: 0 !important
       max-width: calc(100%)
-    p img
-      width: auto !important
-      height: auto !important
 
 #tinymce_section_instance table
   border: 1px dotted $black !important
