@@ -1,16 +1,15 @@
 require 'sinatra/activerecord/rake'
-
 require 'pathname'
 require_relative Pathname('config')+'config'
 
-require 'rake/testtask'
-Rake::TestTask.new do |t|
-  t.pattern = 'lib/tests/*.rb'
-  t.warning = false
-end
-
 # What gets run when no arguments are specified
 task default: ['wordcabin:server']
+
+# The simpler the better, right?
+desc "Run the couple of tests there are. Write more if you're a hero!"
+task :test do
+  sh "ruby #{Config.lib+'tests'+'tests.rb'}"
+end
 
 # Stolen from https://github.com/rails/rails/blob/master/railties/lib/rails/tasks/misc.rake
 desc "Generate a cryptographically secure secret key to use as a cookie session secret"

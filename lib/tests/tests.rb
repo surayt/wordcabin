@@ -1,10 +1,9 @@
 ENV['RACK_ENV'] = 'test'
 require 'minitest/autorun'
 require 'rack/test'
-require 'pathname'
 require 'simple-random'
-MAIN_CONFIG = Pathname('../../config')+'config.rb'
-require_relative MAIN_CONFIG
+require 'pathname'
+require_relative Pathname('../../config')+'config.rb'
 require_relative Config.lib+'server.rb'
 
 module Wordcabin 
