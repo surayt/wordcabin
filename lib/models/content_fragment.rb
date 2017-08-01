@@ -1,11 +1,8 @@
 require 'sanitize'
-require 'semantic_logger'
 
 module Wordcabin 
   # A chapter belongs to the top-level element by having the same 'book' field value. There are no formal relationships!
   class ContentFragment < ActiveRecord::Base
-    include SemanticLogger::Loggable
-    
     default_scope { order("locale ASC, book ASC, chapter_padded ASC") }
     before_save :fill_sorting_column
 

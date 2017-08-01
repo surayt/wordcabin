@@ -1,6 +1,5 @@
 module Wordcabin 
   class Server < Sinatra::Application
-    include SemanticLogger::Loggable
     
     # Prepend all routes with locale info, but skip locale-independent ones
     

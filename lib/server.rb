@@ -11,7 +11,6 @@ require 'sinatra/flash'
 require 'sinatra/activerecord'
 
 # Runtime dependencies
-require 'semantic_logger'
 require 'sprockets'
 require 'hamlit' # Sinatra does know to require HAML, but not Hamlit!
 
@@ -24,12 +23,8 @@ require_relative 'models/content_fragment'
 require_relative 'models/toc'
 require_relative 'models/file_attachment'
 
-SemanticLogger.default_level = :trace
-SemanticLogger.add_appender(file_name: "#{Config.environment}.log", formatter: :color)
-
 module Wordcabin 
   class Server < Sinatra::Application
-    include SemanticLogger::Loggable
     
     ###########################################################################
     # Configuration                                                           #
@@ -53,8 +48,6 @@ module Wordcabin
       # out-of-process reloading for templates, Coffee and SASS.
       require 'sinatra/reloader'
       register Sinatra::Reloader
-    end; before do
-      logger.debug "#{request.request_method} #{request.fullpath}" if Config.environment == :development
     end
     
     # Configure the application using user settings from config.rb.

@@ -2,8 +2,6 @@ module Wordcabin
   # Adapted from http://joeyates.info/2010/01/31/regular-expressions-in-sqlite/
   # Implements SQLite's REGEXP function in Ruby (like the commandline client's 'pcre' extension)
   class ActiveRecord::ConnectionAdapters::SQLite3Adapter < ActiveRecord::ConnectionAdapters::AbstractAdapter 
-    include SemanticLogger::Loggable
-    
     def initialize(connection, logger, connection_options, config) # (db, logger, config)
       # Verbatim from https://github.com/rails/rails/blob/e2e63770f59ce4585944447ee237ec
       # 722761e77d/activerecord/lib/active_record/connection_adapters/sqlite3_adapter.rb
