@@ -1,6 +1,6 @@
 %main
   %h1
-    %img{src: '/images/logo_kl.png'}
+    %img{src: '/assets/logo_kl.png'}
     %br/
     - # TODO: i18n!
     = "Choose your language of instruction to use the learning portal."
@@ -14,6 +14,6 @@
         %a.btn{href: "#{fragment.first_child_url_path}#{'?view_mode=preview' if current_user.is_admin?}", lang: fragment.locale}
           = I18n.t("read_in_#{fragment.locale}", book: fragment.book)
   %footer
-    %img{src: '/images/FU_Bergen3.jpg'}
-    %img{src: '/images/Cam_Lpz.jpg'}
-    %img{src: '/images/StE_EU2.jpg'}
+    %img{src: '/assets/FU_Bergen3.jpg'}
+    %img{src: '/assets/Cam_Lpz.jpg'}
+    %img{src: '/assets/StE_EU2.jpg'}
