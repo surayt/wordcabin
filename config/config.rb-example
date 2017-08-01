@@ -11,14 +11,17 @@ Config=OpenStruct.new(c.merge({
 # Edit below to fit your needs #
 ################################
 
+bind_port:      8080,        # Ports below 1024 will require root access, default would be 4567
+bind_address:   'localhost', # Use 0.0.0.0 to bind to all interfaces, IP or hostname can be specified
 project:        'my very projecty project',
 database:       'one of my databases',
-bind_address:   'localhost',  # Use 0.0.0.0 to bind to all interfaces, IP or hostname can be specified
-bind_port:      3000,         # Ports below 1024 will require root access, default would be 4567
 session_secret: "my very secrety secret",
 
-# Important paths follow
+#####################
+# Leave alone again #
+#####################
 
+config:       r+'config',
 data:         r+'data',
 lib:          r+'lib',
 translations: r+'locales',
@@ -26,9 +29,5 @@ templates:    r+'templates',
 stylesheets:  r+'stylesheets',
 javascripts:  r+'javascripts',
 static_files: r+'public'
-
-#####################
-# Leave alone again #
-#####################
 
 }))
