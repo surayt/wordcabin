@@ -7,13 +7,22 @@
   margin-bottom: 0 !important
   a
     color: $red !important
-  table td
-    border: 1px dotted $black
+  table
+    border: none !important
+    td
+      border: none !important
 
 #tinymce_section_instance
   a
     color: $blue !important
-    
+  table
+    border: 1px dotted $black !important
+    tr
+      border: none
+      td
+        border: 1px dotted $black !important
+
+// Needed for debugging only
 #content *[lang]
   position: relative
   span.lang_designator

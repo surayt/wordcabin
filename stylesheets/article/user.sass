@@ -1,5 +1,5 @@
-// User view, heading editor, content editor
-main article, #tinymce_heading_instance, #tinymce_section_instance
+#articles article
+  margin-bottom: 1em
   section p img
     width: auto !important
     height: auto !important
@@ -89,7 +89,6 @@ main article, #tinymce_heading_instance, #tinymce_section_instance
         background-color: transparent
         font-weight: normal
         padding: 0 .25em
-        
   ul
     list-style-type: square
     padding: 0 0 0 2em
@@ -98,95 +97,85 @@ main article, #tinymce_heading_instance, #tinymce_section_instance
     color: $red
   .greyed_out
     color: $grey
-    
-// User view and heading editor only
-main article header
-  // TODO: FIXME! The next line shouldn't ne necessary!
-  border: 2px solid $blue
-  margin-bottom: .75em
-  table td
-    font-size: 140%
-main article header, #tinymce_heading_instance
-  table
-    margin: 0
-    background-color: tint($blue, 35%)
-    tr:first-child td
-      background-color: transparent
-    td
-      border: none
-      color: black
-      padding: .35em .5em 
+  header
+    // TODO: FIXME! The next line shouldn't ne necessary!
+    border: 2px solid $blue
+    margin-bottom: .75em
+    table
       margin: 0
-      font-weight: bold
-      
-// User view and content editor only
-main article section, #tinymce_section_instance
-  table
-    td
-      padding-top: 0
-      padding-bottom: 0
-    &.header_table
-      margin-bottom: .75em
-      td
-        padding: .35em .5em .35em 0
-        font-weight: bold
-        border: none !important
-        &:first-child
-          padding: .35em .5em
+      background-color: tint($blue, 35%)
       tr:first-child td
         background-color: transparent
-      &.h2
-        background-color: tint($blue, 50%)
-        border: 2px solid tint($blue, 10%) !important
-        color: $black
-      &.h3
-        background-color: tint($blue, 70%)
-        border: 2px solid tint($blue, 30%) !important
-        color: $black
-      &.h4
-        background-color: tint($blue, 90%)
-        border: 2px solid tint($blue, 50%) !important
-        color: $black
-  +grid-media($medium-grid)
-    table
-      margin-left: auto
-      margin-right: auto
-      position: relative
-  table
-    &.infobox
-      margin-top: -.75em
-      tr:first-child > td
-        padding: 1em
-        td
-          padding: 0
       td
-        border-top: 1px solid tint($blue, 50%)
-        border-bottom: 1px solid tint($blue, 50%)
-      td
-        background-color: transparent !important 
         border: none
-        font-weight: normal !important
-      &.notice
-        // TODO: add "House" icon in top left corner
-        background-color: #FFDAA9
-      &.culture
-        background-color: #BEEEB2
-      &.grammar
-        background-color: tint($blue, 75%)
-        table
-          width: 90%
-          th
-            background-color: tint($blue, 65%)
-            padding: .125em .25em
-          td
-            border-top: 1px solid tint($grey, 75%) !important
-            border-bottom: 1px solid tint($grey, 75%) !important
-          &.no_header_row tr:nth-child(2) td
-            border-top: none
-
-main article
-  margin-bottom: 1em
+        color: black
+        padding: .35em .5em 
+        margin: 0
+        font-weight: bold
+        font-size: 140%
   section
+    table
+      td
+        padding-top: 0
+        padding-bottom: 0
+      &.header_table
+        margin-bottom: .75em
+        td
+          padding: .35em .5em .35em 0
+          font-weight: bold
+          border: none !important
+          &:first-child
+            padding: .35em .5em
+        tr:first-child td
+          background-color: transparent
+        &.h2
+          background-color: tint($blue, 50%)
+          border: 2px solid tint($blue, 10%) !important
+          color: $black
+        &.h3
+          background-color: tint($blue, 70%)
+          border: 2px solid tint($blue, 30%) !important
+          color: $black
+        &.h4
+          background-color: tint($blue, 90%)
+          border: 2px solid tint($blue, 50%) !important
+          color: $black
+    +grid-media($medium-grid)
+      table
+        margin-left: auto
+        margin-right: auto
+        position: relative
+    table
+      &.infobox
+        margin-top: -.75em
+        tr:first-child > td
+          padding: 1em
+          td
+            padding: 0
+        td
+          border-top: 1px solid tint($blue, 50%)
+          border-bottom: 1px solid tint($blue, 50%)
+        td
+          background-color: transparent !important 
+          border: none
+          font-weight: normal !important
+        &.notice
+          // TODO: add "House" icon in top left corner
+          background-color: #FFDAA9
+        &.culture
+          background-color: #BEEEB2
+        &.grammar
+          background-color: tint($blue, 75%)
+          table
+            width: 90%
+            th
+              background-color: tint($blue, 65%)
+              padding: .125em .25em
+            td
+              border-top: 1px solid tint($grey, 75%) !important
+              border-bottom: 1px solid tint($grey, 75%) !important
+            &.no_header_row tr:nth-child(2) td
+              border-top: none
     iframe, p img
       display: block
       position: relative
@@ -195,15 +184,3 @@ main article
       margin-bottom: 2.5em
       z-index: 0 !important
       max-width: calc(100%)
-
-#tinymce_section_instance table
-  border: 1px dotted $black !important
-  tr
-    border: none
-    td
-      border: 1px dotted $black !important
-      
-#tinymce_heading_instance table
-  border: none !important
-  td
-    border: none !important
