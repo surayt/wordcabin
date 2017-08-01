@@ -11,17 +11,16 @@ Config=OpenStruct.new(c.merge({
 # Edit below to fit your needs #
 ################################
 
-environment:    :development, # Either development or production
+project:        'my very projecty project',
+database:       'one of my databases',
 bind_address:   'localhost',  # Use 0.0.0.0 to bind to all interfaces, IP or hostname can be specified
 bind_port:      3000,         # Ports below 1024 will require root access, default would be 4567
-session_secret: "my very secret secret",
+session_secret: "my very secrety secret",
 
 # Important paths follow
 
-data:         r+'data'+'aop',
-media:        r+'data'+'aop'+'template',
+data:         r+'data',
 lib:          r+'lib',
-legacy_media: r+'public'+'media',
 translations: r+'locales',
 templates:    r+'templates',
 stylesheets:  r+'stylesheets',

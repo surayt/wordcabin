@@ -12,4 +12,4 @@ SemanticLogger.default_level = :trace
 SemanticLogger.add_appender(file_name: "#{Config.environment}.log", formatter: :color)
 
 Rack::Cache
-SinatraApp::Server.run!
+run SinatraApp::Server.run!

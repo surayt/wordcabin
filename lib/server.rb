@@ -87,7 +87,6 @@ module SinatraApp
       set :server, :puma
       set :bind, Config.bind_address
       set :port, Config.bind_port
-      set :environment, Config.environment
       set :root, Config.root
       set :views, Config.templates
       set :haml, {escape_html: false, format: :html5}
@@ -100,8 +99,11 @@ module SinatraApp
       require 'rack/contrib/try_static'
       use Rack::TryStatic, root: Config.data+Config.project+'template', urls: %w[/images /fonts /favicon.ico] # TODO: This shouldn't be a static list!
       # Database
-      # TODO: Figure out how to use different database for testing; right now testing is a no-go!
-      db_file = Config.data+Config.project+'database'+"#{Config.database}.sqlite3"
+      if Config.database && Config.database.class == String && environment != :test
+        db_file = Config.data+Config.project+'database'+"#{Config.database}.sqlite3" 
+      end
+      db_file ||= Config.root+'db'+"#{environment}.sqlite3"
+      puts "Configuring database #{db_file}"
       db_config = begin
         YAML.load_file(Config.config+'db.yml')[Config.database]
       rescue

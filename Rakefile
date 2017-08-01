@@ -28,14 +28,6 @@ end
 # What gets run when no arguments are specified
 task default: [:server]
 
-# TODO: Figure out how to use different database for testing
-# (lib/server.rb) because right now testing will meddle with
-# the production database.
-Rake::Task['test'].clear
-task :test do
-  puts 'Testing is disabled. Please see Rakefile comment for more information.'
-end
-
 # Stolen from https://github.com/rails/rails/blob/master/railties/lib/rails/tasks/misc.rake
 desc "Generate a cryptographically secure secret key to use as a cookie session secret"
 task :secret do
