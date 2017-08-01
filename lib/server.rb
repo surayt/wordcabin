@@ -70,25 +70,18 @@ module Wordcabin
       set :port, Config.bind_port
       set :json_content_type, 'text/html' # Required by TinyMCE uploadfile plugin
       set :method_override, true # To be able to use RESTful methods
-      # Assets (Sprockets)
-      
+      project_root = Config.data+Config.project
+      # Sprockets
       set :public_folder, Config.static_files
       set :assets, Sprockets::Environment.new(root)
       assets.append_path Config.javascripts
       assets.append_path Config.stylesheets
-      project_template_path = Config.data+Config.project+'template'
-      assets.append_path project_template_path+'fonts'
-      assets.append_path project_template_path
-
-      # https://stackoverflow.com/questions/18966318/sinatra-multiple-public-directories
-      # require 'rack/contrib/try_static'
-      # use Rack::TryStatic, root: Config.data+Config.project+'template', urls: %w[/images /fonts /favicon.ico]
-      #
+      assets.append_path project_root+'stylesheets'
+      assets.append_path project_root+'images'
+      assets.append_path project_root+'fonts'
       # Database
-      
-      project_database_path = Config.data+Config.project+'database'
       if Config.database && environment != :test
-        db_file = project_database_path+"#{Config.database}.sqlite3" 
+        db_file = project_root+'database'+"#{Config.database}.sqlite3" 
       end
       db_file ||= Config.root+'db'+"#{environment}.sqlite3"
       puts "Configuring database #{db_file}"
