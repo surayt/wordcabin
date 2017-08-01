@@ -34,4 +34,5 @@ After cloning the `wordcabin` repository, you need to add a project. At the mome
 - Now, `gem install bundler` (or `sudo gem install bundler`, depending on how your system is setup), followed by `bundle install` will install the libraries required by *wordcabin*. If any Gem fails to install, read the error message attentively as it will often contain instructions on what course of action might solve the problem.
 - Run `git submodule init` followed by `git submodule update` to download TinyMCE and other JavaScript/CSS components.
 - Run `rake db:schema:load` to initialize the database specified in `config/database.yml` and `rake db:seed` to add an admin user (edit `config/seed.rb` beforehand to change that user's email and password).
-- Now start the application server on the port specified in `config/config.rb` (the default being 4567) by running `rake` without any further arguments. If the server comes up without error, you should be able to access the configured project.
+- Now start the application server on the port specified in `config/config.rb` by running `rake` without any further arguments. If the server comes up without error, you should be able to access the configured project.
+- To get the newest versions of everything, run `rake wordcabin:update`, or if that fails, `./script/update`.

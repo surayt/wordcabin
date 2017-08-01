@@ -1,4 +1,4 @@
-module SinatraApp 
+module Wordcabin
   class User < ActiveRecord::Base
     # http://api.rubyonrails.org/classes/ActiveModel/SecurePassword/ClassMethods.html#method-i-has_secure_password
     has_secure_password # Model now knows how to populate the 'password_digest' field when a 'password' parameter is specified.

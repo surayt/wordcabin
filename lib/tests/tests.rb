@@ -7,8 +7,8 @@ MAIN_CONFIG = Pathname('../../config')+'config.rb'
 require_relative MAIN_CONFIG
 require_relative Config.lib+'server.rb'
 
-module SinatraApp
-  class SinatraAppTest < MiniTest::Test
+module Wordcabin 
+  class Test < MiniTest::Test
     include Rack::Test::Methods
     
     def app

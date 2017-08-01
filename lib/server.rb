@@ -1,5 +1,9 @@
 #!/usr/bin/env ruby
 
+# Configuration file
+require_relative '../config/config'
+
+# Sinatra modules
 require 'sinatra/base'
 require 'sinatra/json'
 require 'sinatra/strong-params'
@@ -7,51 +11,23 @@ require 'sinatra/flash'
 require 'sinatra/activerecord'
 
 # Runtime dependencies
+require 'semantic_logger'
 require 'sprockets'
 require 'hamlit' # Sinatra does know to require HAML, but not Hamlit!
-require 'autoprefixer-rails'
 
 # Internal dependencies
+require_relative 'core/string'
+require_relative 'core/object'
+require_relative 'active_record/connection_adapters/sqlite3_adapter'
 require_relative 'models/user'
 require_relative 'models/content_fragment'
 require_relative 'models/toc'
 require_relative 'models/file_attachment'
-require_relative 'routes'
 
-module SinatraApp
-  # Adapted from http://joeyates.info/2010/01/31/regular-expressions-in-sqlite/
-  # Implements SQLite's REGEXP function in Ruby (like the commandline client's 'pcre' extension)
-  class ActiveRecord::ConnectionAdapters::SQLite3Adapter
-    include SemanticLogger::Loggable
-    
-    def initialize(connection, logger, connection_options, config) # (db, logger, config)
-      # Verbatim from https://github.com/rails/rails/blob/e2e63770f59ce4585944447ee237ec
-      # 722761e77d/activerecord/lib/active_record/connection_adapters/sqlite3_adapter.rb
-      super(connection, logger, config)
-      @active     = nil
-      @statements = StatementPool.new(self.class.type_cast_config_to_integer(config[:statement_limit]))
-      configure_connection
-      # Unchanged from source
-      connection.create_function('regexp', 2) do |func, pattern, expression|
-        regexp = Regexp.new(pattern.to_s, Regexp::IGNORECASE)
-        if expression.to_s.match(regexp)
-          func.result = 1
-        else
-          func.result = 0
-        end
-      end
-      # https://gist.github.com/datenimperator/7602535
-      ['PRAGMA main.page_size=4096;',
-       'PRAGMA main.cache_size=10000;',
-       # 'PRAGMA main.locking_mode=EXCLUSIVE;',
-       'PRAGMA main.synchronous=NORMAL;',
-       'PRAGMA main.journal_mode=WAL;',
-       'PRAGMA main.temp_store = MEMORY;'].each do |tweak|
-        connection.execute tweak
-      end
-    end
-  end
-  
+SemanticLogger.default_level = :trace
+SemanticLogger.add_appender(file_name: "#{Config.environment}.log", formatter: :color)
+
+module Wordcabin 
   class Server < Sinatra::Application
     include SemanticLogger::Loggable
     
@@ -60,22 +36,18 @@ module SinatraApp
     ###########################################################################
     
     use Rack::Session::Cookie, secret: Config.session_secret
-                              #, :key => 'rack.session',
-                              #  :domain => 'localhost',
-                              #  :path => '/',
-                              #  :expire_after => 1.year.to_i
+                               #, :key => 'rack.session',
+                               #  :domain => 'localhost',
+                               #  :path => '/',
+                               #  :expire_after => 1.year.to_i
 
     # Load extensions.
-    register Sinatra::ActiveRecordExtension # TODO: add configuration for database-per-project.
-                                            # https://github.com/janko-m/sinatra-activerecord
     register Sinatra::StrongParams
     register Sinatra::Flash
+    register Sinatra::ActiveRecordExtension
 
     # Things only needed for development, not production.
     configure :development do
-      set :bind, Config.bind_address
-      set :port, Config.bind_port
-      set :show_exceptions, :after_handler
       # http://www.sinatrarb.com/contrib/reloader
       # Doesn't catch the .rb files, but is faster than rerun's
       # out-of-process reloading for templates, Coffee and SASS.
@@ -87,9 +59,10 @@ module SinatraApp
     
     # Configure the application using user settings from config.rb.
     configure do
-      # Stuff (I just wanted a comment here for good looks)
-      set server: :puma
-      set :environment, Config.environment
+      # Stuff (I just wanted a comment here for good measure, and who reads these anyways?)
+      set :server, :puma
+      set :bind, Config.bind_address
+      set :port, Config.bind_port
       set :root, Config.root
       set :views, Config.templates
       set :haml, {escape_html: false, format: :html5}
@@ -97,12 +70,37 @@ module SinatraApp
       set :port, Config.bind_port
       set :json_content_type, 'text/html' # Required by TinyMCE uploadfile plugin
       set :method_override, true # To be able to use RESTful methods
+      # Assets (Sprockets)
+      
       set :public_folder, Config.static_files
-      # Sprockets
-      set :assets, Sprockets::Environment.new(root) # TODO: Also append project-specific paths below!
+      set :assets, Sprockets::Environment.new(root)
       assets.append_path Config.javascripts
       assets.append_path Config.stylesheets
+      project_template_path = Config.data+Config.project+'template'
+      assets.append_path project_template_path+'fonts'
+      assets.append_path project_template_path
+
+      # https://stackoverflow.com/questions/18966318/sinatra-multiple-public-directories
+      # require 'rack/contrib/try_static'
+      # use Rack::TryStatic, root: Config.data+Config.project+'template', urls: %w[/images /fonts /favicon.ico]
+      #
+      # Database
+      
+      project_database_path = Config.data+Config.project+'database'
+      if Config.database && environment != :test
+        db_file = project_database_path+"#{Config.database}.sqlite3" 
+      end
+      db_file ||= Config.root+'db'+"#{environment}.sqlite3"
+      puts "Configuring database #{db_file}"
+      db_config = begin
+        YAML.load_file(Config.config+'db.yml')[Config.database]
+      rescue
+        {'adapter' => 'sqlite3'}
+      end
+      db_config.merge!('database' => db_file.to_s)
+      set :database, db_config
       # Autoprefixer
+      require 'autoprefixer-rails'
       AutoprefixerRails.install(assets)
       # Internationalisation (http://recipes.sinatrarb.com/p/development/i18n)
       # Note that a locale is only considered 'available' if the corresponding
@@ -145,5 +143,8 @@ module SinatraApp
         c.join(' ')
       end
     end
+  
+    require_relative 'routes' # Yup, sometimes things are a little strange.
+    run! if app_file == $0
   end
 end
