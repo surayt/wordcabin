@@ -18,7 +18,7 @@ common_settings =
       {selector: '*', attributes: ['style', 'class', 'lang', 'dir', 'colspan', 'rowspan'], split: false, expand: false, deep: true}
     ]
   style_formats: [
-    {title: 'Überschriften (für 1. Ordnung oberen Editor benutzen)', items: [
+    {title: 'Headlines (2nd order and below)', items: [
       {title: '2. Ordnung (ohne Tabelle)', format: 'h2'},
       {title: '3. Ordnung (ohne Tabelle)', format: 'h3'},
       {title: '4. Ordnung (ohne Tabelle)', format: 'h4'},
@@ -48,6 +48,13 @@ common_settings =
       {title: 'English (just the selected text)', inline: 'span', attributes: {dir: 'ltr', lang: 'en'}}
       {title: '(ܣܘܪܝܬ (ܐܘ ܡܩܛܥ ܟܐܡܝܠܐ', selector: '*', attributes: {lang: 'syr'}}
       {title: 'ܣܘܪܝܬ (ܑܐܘ ܟ݂ܒܪܐ ܡܢܩܝܐ ܒܣ)', inline: 'span', attributes: {dir: 'rtl', lang: 'syr'}}
+    ]}
+    {title: 'Images', items: [
+      {title: 'Width:   5%', selector: 'img', classes: 'width_5_percent'}
+      {title: 'Width:  20%', selector: 'img', classes: 'width_20_percent'}
+      {title: 'Width:  50%', selector: 'img', classes: 'width_50_percent'}
+      {title: 'Width:  80%', selector: 'img', classes: 'width_80_percent'}
+      {title: 'Width: 100%', selector: 'img', classes: 'width_100_percent'}
     ]}
     {title: 'Standard paragraph', format: 'p'}
     {title: 'Highlighted', inline: 'span', classes: 'highlight'}
