@@ -25,8 +25,8 @@ module Wordcabin
     # Landing page showing the list of available L1s.
     
     get '/' do
-      @fragments = ContentFragment.empty_chapters
-      if !@fragments.any? && current_user.is_admin?
+      @fragment_sets = ContentFragment.empty_chapters.group_by(&:book)
+      if !@fragment_sets.any? && current_user.is_admin?
         redirect to("/#{locale}/new?view_mode=edit")
       else
         haml :index
