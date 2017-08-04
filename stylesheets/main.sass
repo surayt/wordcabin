@@ -1,5 +1,6 @@
 // Libraries
-// No more Bitters as it was dirtying the whole namespace.
+// =========
+// (No more Bitters as it was dirtying the whole namespace.)
 
 @import 'normalize-scss/fork-versions/default/normalize'
 @import 'bourbon/core/bourbon'
@@ -7,6 +8,7 @@
 @import 'neat/core/neat'
 
 // Basic setup
+// ===========
 // Nothing in this section may affect any elements either,
 // i.e. only variables, mixins, etc, with the exception of
 // applying i18n-related styles such as text-direction.
@@ -15,9 +17,15 @@
 @import 'modules/colors'
 @import 'modules/fonts'
 @import 'modules/i18n'
+
+// Mixins
+// ======
+
 @import 'mixins/button'
 @import 'mixins/centering'
 
+// View-specific styles
+// ====================
 // Things from here on out are allowed to affect cascading.
 
 body
@@ -25,8 +33,12 @@ body
   #grid-container
     +grid-container
 
-@import 'modules/index'
-@import 'modules/session_links'
+@import 'views/index'
+@import 'views/session_links'
+
+// Anything affecting the book contents themselves,
+// and which may not affect any UI elements in any
+// way.
 
 //@import 'modules/resets'
 //@import 'modules/toc'
@@ -43,10 +55,6 @@ body
 //@import 'features/active_toc_link'
 //@import 'features/icons_for_file_links'
 //@import 'features/sidebar_delete_links'
-
-//// Anything affecting the book contents themselves,
-//// but which must not affect any UI elements in any
-//// way.
 
 //@import 'article/user'
 //@import 'article/editor'
