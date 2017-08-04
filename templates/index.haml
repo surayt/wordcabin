@@ -8,10 +8,10 @@
       - # TODO: i18n!
       = "All courses are in alpha version, please bear with us!"
   = haml :session_links
-  %ul
-    - @fragment_sets.each do |book, set|
+  - @fragment_sets.each do |book, set|
+    %ul
       %li
-        = "Read #{book} in:"
+        %h4= "Read #{book} in:"
         %ul
           - set.each do |fragment|
             %li
