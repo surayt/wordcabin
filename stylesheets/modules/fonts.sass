@@ -1,16 +1,31 @@
-@include font-face("ALW Piktograms", "/assets/ALWPiktos")
+@include font-face('ALW Piktograms', '/assets/ALWPiktos')
 
-@include font-face("Charis SIL", "/assets/CharisSIL-R")
-@include font-face("Charis SIL", "/assets/CharisSIL-B")
+@include font-face('Times New Roman', '/assets/times')
+@include font-face('Times New Roman', '/assets/timesbd')
   font-weight: bold
-@include font-face("Charis SIL", "/assets/CharisSIL-I")
+@include font-face('Times New Roman', '/assets/timesi')
   font-style: italic
-@include font-face("Charis SIL", "/assets/CharisSIL-BI")
+@include font-face('Times New Roman', '/assets/timesbi')
   font-weight: bold
   font-style: italic
 
-@include font-face("Serto Jerusalem", "/assets/SyrCOMJerusalem")
-@include font-face("Serto Jerusalem", "/assets/SyrCOMJerusalemBold")
+@include font-face('Charis SIL', '/assets/CharisSIL-R')
+@include font-face('Charis SIL', '/assets/CharisSIL-B')
   font-weight: bold
-@include font-face("Serto Jerusalem", "/assets/SyrCOMJerusalemItalic")
+@include font-face('Charis SIL', '/assets/CharisSIL-I')
   font-style: italic
+@include font-face('Charis SIL', '/assets/CharisSIL-BI')
+  font-weight: bold
+  font-style: italic
+
+@include font-face('Serto Jerusalem', '/assets/SyrCOMJerusalem')
+@include font-face('Serto Jerusalem', '/assets/SyrCOMJerusalemBold')
+  font-weight: bold
+@include font-face('Serto Jerusalem', '/assets/SyrCOMJerusalemItalic')
+  font-style: italic
+
+$font-stack-wordcabin-contents: 'Times New Roman', 'Charis SIL', 'Serto Jerusalem', 'Amiri', 'FontAwesome'
+$font-stack-wordcabin-ui: $font-stack-system, $font-stack-wordcabin-contents
+
+// Keeping these around in case $font-stack-system doesn't work out okay...
+// $font-stack-consolas, $font-stack-monaco
