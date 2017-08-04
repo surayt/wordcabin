@@ -11,14 +11,14 @@ On Solus OS
 
 ```
 sudo eopkg install -c system.devel
-sudo eopkg install ruby ruby-devel nodejs sqlite3
+sudo eopkg install ruby ruby-devel nodejs sqlite3 sqlite3-devel git git-lfs
 ```
 
 On Debian-based distributions
 -----------------------------
 
 ```
-sudo apt install build-essential ruby ruby-dev rubygems nodejs sqlite3
+sudo apt install build-essential ruby ruby-dev rubygems nodejs sqlite3 git git-lfs libsqlite3-dev
 ```
 
 Setup
