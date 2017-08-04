@@ -1,0 +1,36 @@
+$button-blue: shade($blue, 10%)
+$button-hover-blue: tint($button-blue, 5%)
+
+@mixin button
+  display: inline-block
+  text-decoration: none
+  cursor: pointer
+  background: $button-blue
+  color: contrast-switch($button-blue)
+  border: 1px solid shade($button-blue, 25%)
+  border-radius: 3px
+  outline: none
+  box-shadow: inset 0px 1px 2px 0px rgba(255,255,255, 0.5)
+  transition: all, 0.1s
+  
+  // Everything and the kitchen sink
+  padding: 2px 6px 4px 6px
+  // Firefox
+  @-moz-document url-prefix()
+    padding: 1px 6px 4px 6px
+  // Firefox on Linux
+  @supports (-moz-appearance:none) and (background-attachment:local) and (not (-moz-osx-font-smoothing:auto))
+    @media not screen and (-moz-os-version)
+      padding: 3px 6px 3px 6px 
+  // Internet Explorer 11
+  @media screen and (-ms-high-contrast: none)
+    padding: 2px 6px 5px 6px
+  // Microsoft Edge
+  @supports (-ms-ime-align: auto)
+    padding: 2px 6px 5px 6px
+
+  &:hover
+    background-color: $button-hover-blue
+    color: contrast-switch($button-hover-blue)
+  &:active, &:focus
+    border: 1px solid $white

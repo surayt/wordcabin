@@ -1,19 +1,33 @@
 // Libraries
+// No more Bitters as it was dirtying the whole namespace.
 
 @import 'normalize-scss/fork-versions/default/normalize'
 @import 'bourbon/core/bourbon'
+@import 'modules/bourbon-defaults'
 @import 'neat/core/neat'
 
 // Basic setup
+// Nothing in this section may affect any elements either,
+// i.e. only variables, mixins, etc, with the exception of
+// applying i18n-related styles such as text-direction.
 
 @import 'modules/breakpoints'
 @import 'modules/colors'
 @import 'modules/fonts'
 @import 'modules/i18n'
+@import 'mixins/button'
+@import 'mixins/centering'
 
-// Now it gets real
+// Things from here on out are allowed to affect cascading.
 
-//@import 'modules/mixins'
+body
+  font-family: $font-stack-wordcabin-ui
+  #grid-container
+    +grid-container
+
+@import 'modules/index'
+@import 'modules/session_links'
+
 //@import 'modules/resets'
 //@import 'modules/toc'
 
@@ -21,9 +35,7 @@
 //// which must not affect book contents in any way.
 
 //@import 'modules/login_form'
-//@import 'modules/session_links'
 //@import 'modules/error_screen'
-//@import 'modules/index'
 //@import 'modules/layout_user'
 //@import 'modules/layout_editor'
 //@import 'modules/flash_messages'
@@ -38,7 +50,3 @@
 
 //@import 'article/user'
 //@import 'article/editor'
-
-//body
-//  #grid-container
-//    +grid-container
