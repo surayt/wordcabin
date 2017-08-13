@@ -74,7 +74,7 @@ module Wordcabin
       assets.append_path project_root+'fonts'
       # Database
       if Config.database && environment != :test
-        db_file = project_root+'database'+"#{Config.database}.sqlite3" 
+        db_file = project_root+'databases'+"#{Config.database}.sqlite3" 
       end
       db_file ||= Config.root+'db'+"#{environment}.sqlite3"
       puts "Configuring database #{db_file}"
@@ -125,7 +125,15 @@ module Wordcabin
         else
           c << :user
         end
-        c << :index if request.path_info.split('/').length < 2
+        if request.path_info.split('/').length < 2
+          c << :index 
+        else
+          if request.path_info.split('/')[1] == 'login'
+            c << :login
+          else
+            c << :contents
+          end
+        end
         c.join(' ')
       end
     end
