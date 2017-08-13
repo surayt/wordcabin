@@ -1,6 +1,3 @@
-$button-blue: shade($blue, 10%)
-$button-hover-blue: tint($button-blue, 5%)
-
 @mixin button
   display: inline-block
   text-decoration: none
@@ -8,20 +5,25 @@ $button-hover-blue: tint($button-blue, 5%)
   background: $button-blue
   color: contrast-switch($button-blue)
   border: 1px solid shade($button-blue, 25%)
-  border-radius: 3px
+  border-radius: 1px
   outline: none
-  box-shadow: inset 0px 1px 2px 0px rgba(255,255,255, 0.5)
+  box-shadow: inset 0px 1px 2px 0px rgba(255,255,255, 0.35)
   transition: all, 0.1s
   
   // Everything and the kitchen sink
-  padding: 2px 6px 4px 6px
+  // Tailored to Safari a tiny bit as we can't properly select for that because of SASS compilation
+  // (see https://stackoverflow.com/questions/16348489/is-there-a-css-hack-for-safari-only-not-chrome
+  //  and also https://browserstrangeness.github.io/css_hacks.html for loads of other browser hacks.)
+  padding: 2px 6px 3px 6px
+  font-size: 10pt
+  
   // Firefox
   @-moz-document url-prefix()
     padding: 1px 6px 4px 6px
   // Firefox on Linux
   @supports (-moz-appearance:none) and (background-attachment:local) and (not (-moz-osx-font-smoothing:auto))
     @media not screen and (-moz-os-version)
-      padding: 3px 6px 3px 6px 
+      padding: 4px 6px 3px 6px 
   // Internet Explorer 11
   @media screen and (-ms-high-contrast: none)
     padding: 3px 6px 4px 6px
@@ -31,6 +33,6 @@ $button-hover-blue: tint($button-blue, 5%)
 
   &:hover
     background-color: $button-hover-blue
-    color: contrast-switch($button-hover-blue)
+    color: contrast-switch($button-blue)
   &:active, &:focus
-    border: 1px solid $white
+    border: 1px solid $button-hover-blue

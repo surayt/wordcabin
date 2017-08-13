@@ -1,0 +1,26 @@
+#flash
+  +hcenter
+  min-width: 60%
+  max-width: 90%
+  z-index: 2 // To get above TinyMCE
+  div
+    line-height: 1.8
+    padding: 0 .5em .125em .5em
+    border-radius: 0 0 8px 8px
+    font-size: 10pt
+    &.notice
+      background-color: tint($green, 25%)
+      color: contrast-switch(tint($green, 25%))
+      border: 1px solid $green
+    &.error
+      background-color: tint($red, 25%)
+      color: contast-switch(tint($red, 25%))
+      border: 1px solid $red
+  +grid-media($medium-grid)
+    min-width: auto
+    max-width: auto
+
++grid-media($medium-grid)
+  body.contents
+    #flash
+      margin-left: calc(12.5%)

@@ -1,6 +1,7 @@
 body.index
 
   // Mobile devices
+  // ==============
   h3
     font-weight: bold
     background: linear-gradient(tint($blue, 75%), tint($grey, 75%))
@@ -13,13 +14,6 @@ body.index
       padding: .5em 0 .5em 0
     span
       font-weight: normal
-  footer
-    margin-top: 2em
-    img
-      width: 75%
-      margin: 0 auto
-      margin-top: -28px
-      display: block
   main ul
     border-radius: 3px
     list-style-type: none
@@ -37,18 +31,26 @@ body.index
     ul
       padding: .25em 0 .4em .5em
       background: linear-gradient(tint($blue, 50%), tint($blue, 0%))
-      columns: 4
+      columns: 3
       li
         display: inline-block
         padding: 0 0 .1em 0
-        min-width: 3.5em
+        min-width: 3em
         a
           text-decoration: none
           color: $white
           &:hover
             color: $orange
+  footer
+    margin-top: 2em
+    img
+      width: 75%
+      margin: 0 auto
+      margin-top: -28px
+      display: block
 
   // Larger devices
+  // ==============
   +grid-media($medium-grid)
     #grid-container, main
       height: 100%
@@ -70,7 +72,7 @@ body.index
       ul, ul ul
         background: none
       > ul
-        width: 30em
+        width: 40em
         margin: 1.5em 0 0 1.5em
         ul
           columns: auto

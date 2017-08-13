@@ -1,21 +1,44 @@
-#login_form
-  width: 22em
-  +hvcenter
-  background-color: $orange
-  border: 1px solid shade($orange, 25%)
-  padding: 1em
-  input
-    &:invalid,
-    &:not(focus):invalid
-      outline: 1px solid $red
-    &:focus:invalid
-      color: red
-      outline: 1px solid $blue
-    &[type=submit]
+body.login
+
+  // Mobile devices
+  // ==============
+  background-color: $toc-orange
+  #login-form
+    padding: .5em
+    p
+      margin: 0
+      width: 100%
+    label
+      display: inline-block
+      color: $white
+      float: left
+      line-height: 35px
+    input
       float: right
-      +button
-      padding: 7px 14px 
-  label
-    display: inline-block
-    width: 4.5em
-    color: $white
+      height: 1.5em
+      margin-bottom: .5em
+      width: 70%
+      &[type=submit]
+        clear: both
+        width: 100%
+        height: 2em
+        
+  // Larger devices
+  // ==============
+  +grid-media($medium-grid)
+    background-color: transparent
+    #login-form
+      +hvcenter
+      background-color: $orange
+      width: 320px
+      label, input
+        float: none
+      label
+        min-width: 4.75em
+      input
+        margin-bottom: .25em
+        width: 200px
+        &[type=submit]
+          width: 100%
+          margin-top: .25em
+          margin-bottom: 0

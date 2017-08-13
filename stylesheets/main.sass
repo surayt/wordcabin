@@ -18,6 +18,16 @@
 @import 'modules/fonts'
 @import 'modules/i18n'
 
+body
+  font-family: $font-stack-wordcabin-ui
+  a
+    color: $blue
+    text-decoration: none
+    &:hover
+      color: $link-blue
+  #grid-container
+    +grid-container
+
 // Mixins
 // ======
 
@@ -28,33 +38,24 @@
 // ====================
 // Things from here on out are allowed to affect cascading.
 
-body
-  font-family: $font-stack-wordcabin-ui
-  #grid-container
-    +grid-container
+// Anything that's UI in one way or another, and
+// which must not affect book contents in any way.
+
+@import 'modules/session_links'
+@import 'modules/flash_messages'
+@import 'modules/toc'
 
 @import 'views/index'
-@import 'views/session_links'
+@import 'views/layout_user'
+@import 'views/login_form'
+@import 'views/error_screen'
+// @import 'views/layout_editor'
+// @import 'features/sidebar_delete_links'
 
 // Anything affecting the book contents themselves,
 // and which may not affect any UI elements in any
 // way.
 
-//@import 'modules/resets'
-//@import 'modules/toc'
-
-//// Anything that's UI in one way or another, and
-//// which must not affect book contents in any way.
-
-//@import 'modules/login_form'
-//@import 'modules/error_screen'
-//@import 'modules/layout_user'
-//@import 'modules/layout_editor'
-//@import 'modules/flash_messages'
-
-//@import 'features/active_toc_link'
-//@import 'features/icons_for_file_links'
-//@import 'features/sidebar_delete_links'
-
-//@import 'article/user'
-//@import 'article/editor'
+@import 'views/contents_user'
+// @import 'views/contents_editor'
+// @import 'features/icons_for_file_links'
