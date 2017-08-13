@@ -1,7 +1,5 @@
 #session-links
   - if current_user && !current_user.new_record?
-    -# TODO: i18n!
-    %a{href: "/#{locale}/logout"}= 'Logout'
     - if current_user.is_admin? && !content_class.include?('index')
       - if view_mode == :edit
         -# TODO: i18n!
@@ -9,6 +7,8 @@
       - else
         -# TODO: i18n!
         %a{href: "?view_mode=edit"}= 'Edit'
+    -# TODO: i18n!
+    %a{href: "/#{locale}/logout"}= 'Logout'
   - else
     -# TODO: i18n!
     %a.btn{href: "/#{locale}/login?referer=/#{locale}#{request.path_info}"}
