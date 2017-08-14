@@ -1,101 +1,85 @@
-// Attention: base styles are defined in layout_user.sass, despite the name.
-// These styles here inherit from there and overwrite those.
-//
-// Responsiveness target:
-//
-// Any device no matter its size, but WITH an admin logged in.
+.mce-tinymce:first-child
+  border-top: none !important
+
 body.editor
+
+  // Mobile devices
+  // ==============
+  #admin-size-info
+    display: block
+    padding: .5em
+    margin: 0
   #grid-container
-    display: none // TODO: re-enable when there's a need for a mobile admin screen!
-  #sidebar heading
     display: none
+    
+  // Larger devices
+  // ==============
   +grid-media($editor-grid)
-    #grid-container 
-      display: block // TODO: remove when there's a need for a mobile admin screen!
-      background-color: shade($tinymce-grey, 15%)
-    #grid-container, #sidebar, #sidebar section, #content, #content form
+    #admin-size-info, #toc-heading, #sidebar-handle, #mobile-menu-button
+      display: none
+    #sidebar, #toc, #toc ul.level_1,
+    #grid-container, #content, #content form
       height: 100%
+    #grid-container
+      display: block
+      background-color: shade($tinymce-grey, 15%)
     #logo, #sidebar
-      border-right: 1px solid shade($tinymce-grey, 75%) !important
+      border-right: 1px solid $black !important
     #logo
-      +grid-column(3, $editor-grid)
-      background: none
       background-color: shade($tinymce-grey, 75%)
-      position: absolute
-      left: -1px
-      text-align: center
-      height: 3.5em
       img
-        float: none !important
+        height: 30px
+        padding: 2px .25em
     #sidebar
       +grid-column(3, $editor-grid)
-      overflow-y: auto
-      background-color: shade($tinymce-grey, 35%) !important
-      box-shadow: none
+      background-color: shade($tinymce-grey, 35%)
       position: fixed
-      top: 3.5em
-      border-right: none
-      margin-left: 0
-      margin-right: none
-      a
-        color: contrast-switch(shade($tinymce-grey, 35%))
-        &.btn.menu
-          display: none
-      input.btn
+      overflow-y: auto
+      border: none
+      box-shadow: none
+      margin: 0
+      #toc
+        background-color: transparent
+        display: block
+        a:hover
+          color: black
+        ul.level_1
+          padding: 0
+          background-color: shade($tinymce-grey, 50%)
+          li.level_1
+            padding: .25em .25em .25em .35em
+            span
+              color: contrast-switch($orange)
+          ul.level_2
+            padding-top: .25em
+          li
+            padding-left: 1em
+      #new-fragment-button
+        +button
+        padding: 1px 6px 4px 6px !important
         display: block
         position: fixed
         bottom: .5em
         left: .5em
-        +button
         z-index: 2
-      section
-        background-color: transparent
-        display: block
-        padding: 0
-        a:hover
-          color: black
-      ul.level_1
-        padding-bottom: 7em
-        li.level_1
-          background-color: shade($tinymce-grey, 50%)
-          padding: .25em .25em .25em .35em
-          span
-            color: contrast-switch($orange)
-        ul.level_2
-          padding-top: .5em
-        li
-          padding-left: 1em
-    #sidebar-handle
-      display: none
     #content
       +grid-column(9, $editor-grid)
       margin: 0 0 0 calc(25%)
-      padding: 0
+      position: fixed
+      top: 0
       form
         min-width: 918px
         fieldset
+          font-size: 10.5pt
+          border: none
           border-top: 1px solid shade($tinymce-grey, 50%)
-          height: 49px
-          +grid-column(9, $editor-grid)
-          position: fixed
-          bottom: 0
-          padding: 10px 1em 0 .5em
-          input
-            max-width: 25%
-          input, label
-            display: inline-block
-            margin-bottom: .6em
-          label
-            color: contrast-switch($tinymce-grey)
+          margin: 0
+          padding: 6px 4px 0 .5em
           input[type=text]
-            padding: 4px 4px
-            margin-top: 1px
-            margin-right: .5em
-            border: 1px solid shade($tinymce-grey, 25%)
             font-size: 95%
           input[type=submit]
             +button
+            padding: 3px 5px 5px 5px !important
             font-weight: normal
             float: right
-            margin-top: 2px
-            background-color: red !important
+            background-color: red

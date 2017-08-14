@@ -18,6 +18,8 @@
 @import 'modules/fonts'
 @import 'modules/i18n'
 
+html, body
+  height: 100%
 body
   font-family: $font-stack-wordcabin-ui
   a
@@ -27,6 +29,8 @@ body
       color: $link-blue
   #grid-container
     +grid-container
+  #admin-size-info
+    display: none
 
 // Mixins
 // ======
@@ -49,7 +53,7 @@ body
 @import 'views/layout_user'
 @import 'views/login_form'
 @import 'views/error_screen'
-// @import 'views/layout_editor'
+@import 'views/layout_editor'
 // @import 'features/sidebar_delete_links'
 
 // Anything affecting the book contents themselves,

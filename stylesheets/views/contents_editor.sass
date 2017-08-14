@@ -1,42 +1,44 @@
-#tinymce_heading_instance, #tinymce_section_instance
+body
+  font-family: $font-stack-wordcabin-contents !important
+  color: $black
+  .grey_background
+    background-color: tint($grey, 35%)
+  .highlight
+    color: $red
+  .greyed_out
+    color: $grey
+  table, td, img
+    &.width_5_percent
+      width: 5% !important
+    &.width_20_percent
+      width: 20% !important
+    &.width_50_percent
+      width: 50% !important
+    &.width_80_percent
+      width: 80% !important
+    &.width_100_percent
+      width: 100% !important
   table
-    border: 1px dotted $black !important
     width: 100%
-#tinymce_heading_instance
-  margin-bottom: 0 !important
-  a
-    color: $red !important
-  table
-    border: none !important
-    td
-      border: none !important
-#tinymce_section_instance
-  a
-    color: $blue !important
-  table
-    border: 1px dotted $black !important
-    tr
-      border: none
-      td
-        border: 1px dotted $black !important
-// Needed for debugging only
-#content *[lang]
-  position: relative
-  span.lang_designator
-    display: none
-    position: absolute
-    left: -1em
-    font-size: 8pt
-    background-color: tint($grey, 25%)
-    color: $black
-    border: 2px solid $black
-    padding: 3px 2px
-    margin: 10px
-    text-transform: uppercase
-    z-index: 2
-    opacity: .75
-    font-style: normal
-    font-weight: normal
-    text-direction: ltr
-  &:hover span.lang_designator
-    display: block
+    &.header_table
+      &.h2
+        background-color: tint($blue, 50%)
+        border: 1px solid tint($blue, 10%) !important
+        color: $black
+      &.h3
+        background-color: tint($blue, 70%)
+        border: 1px solid tint($blue, 30%) !important
+        color: $black
+      &.h4
+        background-color: tint($blue, 90%)
+        border: 1px solid tint($blue, 50%) !important
+        color: $black
+    &.infobox
+      &.notice
+        background-color: #FFDAA9
+        border: 1px solid $blue
+        border-top: none
+      &.culture
+        background-color: #BEEEB2
+      &.grammar
+        background-color: tint($blue, 75%)

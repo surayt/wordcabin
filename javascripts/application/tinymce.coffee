@@ -77,7 +77,7 @@ heading = merge(common_settings,
 
 text = merge(common_settings,
   menubar: false
-  plugins:  'table directionality lists autoheight uploadfile media link paste code image'
+  plugins:  'table directionality lists media link paste code image autoheight uploadfile'
   selector: 'textarea.text'
   toolbar:  'undo redo code paste removeformat      |
              styleselect bold italic underline      |
