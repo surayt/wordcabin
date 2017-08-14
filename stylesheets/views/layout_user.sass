@@ -1,0 +1,108 @@
+body.contents.user
+
+  // Mobile devices
+  // ==============
+  #logo
+    padding: 0
+    width: 100%
+    height: 2.625em
+    background: linear-gradient(tint($blue, 75%), tint($grey, 75%))
+    img
+      position: absolute
+      top: .35em
+      right: .45em
+      height: 1.9em
+  #toc-heading, #toc, #sidebar-handle, #new-fragment-button
+    display: none
+  #sidebar
+    #mobile-menu-button
+      position: absolute
+      top: .25em
+      left: .25em
+      font-size: 1.65em
+      cursor: pointer
+      &.fixed
+        position: fixed
+        i
+          color: shade($blue, 15%)
+      i
+        font-weight: bold
+        transition: color .5s
+      &:hover i
+        color: contrast-switch($orange)
+        transition: color .5s
+      z-index: 3
+  #content main
+    padding: .35em .35em 0 .35em
+    font-size: 10.5pt
+    iframe, p img
+      max-width: calc(100%)
+      z-index: 0
+
+  // Larger devices
+  // ==============
+  +grid-media($medium-grid)
+    #logo
+      width: auto
+      background: linear-gradient(tint($blue, 75%), tint($grey, 75%))
+      text-align: center
+      position: fixed
+      top: 0
+      left: 0
+      z-index: 1
+      height: 70px
+      img
+        position: relative
+        height: auto
+        height: 80%
+    #logo, #heading, #sidebar
+      +grid-column(1.5)
+      &.hidden
+        +grid-column(0)
+        display: none
+    #logo, #heading, #toc
+      border-right: 1px solid shade($grey, 25%)
+      box-shadow: 3px 0px 6px 0 rgba(85,85,85,0.5)
+    #toc-heading, #toc, #sidebar-handle
+      display: block
+    #sidebar
+      position: fixed
+      top: 70px
+      font-size: 10pt
+      height: 100%
+      #mobile-menu-button
+        display: none
+      #toc-heading
+        z-index: 3
+        position: relative
+        background-color: $toc-heading-blue
+        color: contrast-switch(shade($toc-heading-blue, 25%))
+        padding: 4px .75em 5px .35em
+    #sidebar-handle
+      display: block
+      width: 16px
+      background-color: $orange
+      position: fixed
+      margin: 8.5em 0 0 0
+      padding: 5px 0 6px 2px
+      border-radius: 0 5px 5px 0
+      border: 1px solid shade($grey, 25%)
+      border-left: 1px solid $orange
+      cursor: pointer
+      i
+        color: $white
+    #content
+      +grid-column(4.5)
+      margin-left: calc(25%)
+      &.fullscreen
+        +grid-column(6)
+        margin-left: none
+      main
+        padding: 1.5em 1.3em .5em 2em
+        
+  // Arabic-language version of the course; larger devices only
+  // ==========================================================
+  &:lang(ar)
+    +grid-media($medium-grid)
+      #sidebar-handle
+        padding: 8px 3px 4px 0

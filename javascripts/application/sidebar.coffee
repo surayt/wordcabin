@@ -1,26 +1,26 @@
 collapse_toc = ->
-  $('nav#sidebar ul.level_2 ul').hide()
+  $('#sidebar ul.level_2 ul').hide()
 
 make_toc_expandable = ->
-  $('nav#sidebar li a').click (e) ->
+  $('#sidebar li a').click (e) ->
     collapse_toc()
     Cookies.set('wordcabin_toc_scrollbar_expansion_state', $(this).closest('li.level_2').index())
     $(this).closest('li').find('ul').toggle()
   # Cause links to save the TOC scrollbar position
   # to a cookie so it may be restored upon the page being loaded again.
-  $('nav#sidebar li a').click (e) ->
-    Cookies.set 'wordcabin_toc_scrollbar_position', $('nav#sidebar').scrollTop()
+  $('#sidebar li a').click (e) ->
+    Cookies.set 'wordcabin_toc_scrollbar_position', $('#sidebar').scrollTop()
 
 restore_toc_state = ->
   # Scrollbar position
   pos = Cookies.get('wordcabin_toc_scrollbar_position')
-  $('nav#sidebar').scrollTop pos or 0
+  $('#sidebar').scrollTop pos or 0
   # Expansion state
   if state = Cookies.get('wordcabin_toc_scrollbar_expansion_state')
     child = parseInt(state) + 1
   else
     child = 1
-  $('nav#sidebar li.level_2:nth-child(' + child + ') ul').show()
+  $('#sidebar li.level_2:nth-child(' + child + ') ul').show()
     
 add_content_fragment_delete_links = ->
   $('body.editor #sidebar ul a').each ->
@@ -57,9 +57,10 @@ add_view_mode_to_chapter_links = ->
 
 $(document).ready ->
   console.log "sidebar"
-  make_sidebar_hideable()
-  restore_sidebar_state()
-  make_toc_expandable()
-  restore_toc_state()
-  # add_content_fragment_delete_links()
-  add_view_mode_to_chapter_links()
+  if $('#sidebar').length
+    make_sidebar_hideable()
+    restore_sidebar_state()
+    make_toc_expandable()
+    restore_toc_state()
+    # add_content_fragment_delete_links()
+    add_view_mode_to_chapter_links()

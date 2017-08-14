@@ -1,5 +1,5 @@
 %main
-  %h1
+  %h3
     %img{src: '/assets/logo_kl.png'}
     %br/
     - # TODO: i18n!
@@ -8,11 +8,15 @@
       - # TODO: i18n!
       = "All courses are in alpha version, please bear with us!"
   = haml :session_links
-  %ul
-    - @fragments.each do |fragment|
+  - @fragment_sets.each do |book, set|
+    %ul.book
       %li
-        %a.btn{href: "#{fragment.first_child_url_path}#{'?view_mode=preview' if current_user.is_admin?}", lang: fragment.locale}
-          = I18n.t("read_in_#{fragment.locale}", book: fragment.book)
+        %h4= "Read #{book} in:"
+        %ul.language_version
+          - set.each do |fragment|
+            %li
+              %a.btn{href: "#{fragment.first_child_url_path}#{'?view_mode=preview' if current_user.is_admin?}"}
+                = I18n.t(fragment.locale)
   %footer
     %img{src: '/assets/FU_Bergen3.jpg'}
     %img{src: '/assets/Cam_Lpz.jpg'}

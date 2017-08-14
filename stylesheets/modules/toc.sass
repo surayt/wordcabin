@@ -1,52 +1,65 @@
-// TODO: Make it possible to hide automatically generated chapter numbers for the user! (Not the editor)
+#toc
 
-@mixin toc
-  // reset mobile device view settings
-  nav#sidebar li
-    padding-left: 0
-    &.level_1
-      padding: .5em 0
-    span
-      padding-left: .55em
-  // start out by hiding everything but the top two levels
-  nav#sidebar ul.level_2 ul
-    display: none
-  // actual styling now
-  nav#sidebar
-    position: fixed
-    height: 100%
-    overflow: hidden
-    &:hover
-      overflow-y: auto
-    h3
-      display: none
-    // all nesting levels
-    ul
-      margin: 0
-      padding: 0
-      list-style-type: none
+  // Mobile devices
+  // ==============
+  position: absolute
+  width: 100%
+  min-height: 100%
+  top: 0
+  left: 0
+  background: $toc-orange
+  padding: 0
+  z-index: 2 // Getting above videos embedded in iframes
+  ul
+    list-style-type: none
+    padding: 0
+    font-size: 12pt
+    li.level_1 > span
+      font-weight: bold
+      padding-bottom: .5em
       display: inline-block
-      width: 100%
-      a
-        text-decoration: none
-      // levels 2 and 3
-      ul, ul ul
-        margin-top: 0
-      // layout
-      ul ul li
-        max-width: 275px
-    // second and third level
-    ul ul
-      line-height: 1.5
-    // just the second level
-    ul ul > li
-      padding-left: .5em
-    li.level_2 > a
-      line-height: 1.25
-      color: shade($blue, 25%)
-    // just the third level (doesn't have its own class)
-    li.level_2 ul
-      padding-left: 1em
+    ul
       li
-        text-indent: -1em
-        padding-left: 1.5em      
+        padding-left: 1em
+        line-height: 1.5
+        a, span
+          color: $white
+          span.chapter
+            // display: none
+        a:hover,
+        a:hover span,
+        a.active,
+        a.active span
+          color: contrast-switch($toc-orange)
+          transition: color .5s
+        span
+          font-weight: bold
+        &.level_2
+          padding-left: 0
+        &.level_3
+          padding-left: 2.75em
+          text-indent: -1.75em
+  > ul
+    margin: 0
+    padding: .55em .5em .5em 2.25em
+
+  // Larger devices
+  // ==============
+  +grid-media($medium-grid)
+    background-color: $orange
+    // start out by hiding everything but the top two levels
+    ul
+      font-size: 10pt
+      &.level_2 ul
+        display: none
+    > ul
+      padding: 2.5em .5em .5em .35em
+        
+// Arabic-language version of the course; larger devices only
+// ==========================================================
+body:lang(ar)
+  +grid-media($medium-grid)
+    #toc
+      padding-top: .5em
+      > ul
+        padding-right: 1em

@@ -1,0 +1,19 @@
+@mixin hcenter
+  position: absolute
+  left: 50%
+  transform: translate(-50%, 0%)
+
+// 60 percent translation instead of 50 to
+// account for the visual effect of the box
+// appearing to be lower than center.
+
+@mixin vcenter
+  position: absolute
+  top: 50%
+  transform: translate(0, -60%)
+
+@mixin hvcenter
+  position: absolute
+  top: 50%
+  left: 50%
+  transform: translate(-50%, -60%)

@@ -4,13 +4,13 @@ module Wordcabin
     # Prepend all routes with locale info, but skip locale-independent ones
     
     before '/:locale/?*' do
+      # flash[:notice] = "I'm not a real flash message, I'm just here to annoy you."
       pass if request.path_info.match(/^\/(assets|files)/)
       begin
         I18n.locale = params[:locale]
         request.path_info = "/#{params[:splat].first}"
       rescue I18n::InvalidLocale
-        # TODO: i18n!
-        flash[:error] = "The address you tried to access is not accessible without providing a locale."
+        logger.warn "attempted access to non-existing locale #{params[:locale].inspect}"
         redirect to('/')
       end
     end
@@ -25,8 +25,8 @@ module Wordcabin
     # Landing page showing the list of available L1s.
     
     get '/' do
-      @fragments = ContentFragment.empty_chapters
-      if !@fragments.any? && current_user.is_admin?
+      @fragment_sets = ContentFragment.empty_chapters.group_by(&:book)
+      if !@fragment_sets.any? && current_user.is_admin?
         redirect to("/#{locale}/new?view_mode=edit")
       else
         haml :index
@@ -115,7 +115,7 @@ module Wordcabin
     
     get '/:book' do |book|
       book = ContentFragment.book(locale, book)
-      if book.first_child
+      if book && book.first_child
         location = book.first_child.url_path
       else
         if current_user.is_admin?

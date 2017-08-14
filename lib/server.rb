@@ -125,7 +125,15 @@ module Wordcabin
         else
           c << :user
         end
-        c << :language_list if request.path_info.split('/').length < 2
+        if request.path_info.split('/').length < 2
+          c << :index 
+        else
+          if request.path_info.split('/')[1] == 'login'
+            c << :login
+          else
+            c << :contents
+          end
+        end
         c.join(' ')
       end
     end

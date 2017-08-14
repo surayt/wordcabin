@@ -1,43 +1,26 @@
-body #session_links
-  position: absolute
-  top: 0
-  right: 0
-  padding: .5em .5em 0 0
-  z-index: 10
-  display: none
+body
 
-+grid-media($medium-grid)
-
-  body #session_links
-    z-index: 1
+  // Mobile devices
+  #session-links
     position: fixed
-    display: block
-   
-  body.user, body.editor
-    #session_links
-      width: 8.5em
-      height: 5em
-      a, span
-        text-decoration: none
-        color: #333
-        float: right
-        padding: 0 .125em
-      a
-        &:hover
-          color: $orange
-    
-  body.user #session_links
-    a,
-    span
-      display: none
-    &:hover a,
-    &:hover span
-      display: table-cell
-      background-color: white
-      
-  body.language_list #session_links
-    position: absolute
+    top: 7px
+    right: 1em
+    z-index: 3
+    font-size: 10pt
+    display: none // Will be displayed when menu button is clicked
     a
-      +button
-    &:hover a
-      background-color: tint($blue, 5%)
+      color: shade($blue, 25%)
+      &:hover
+        color: contrast-switch($orange)
+  &.index #session-links
+    display: block
+
+  // Larger devices  
+  +grid-media($medium-grid)
+    #session-links
+      display: block
+      z-index: 1
+      right: 6px
+      a, span
+        color: $blue
+        +button

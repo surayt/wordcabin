@@ -1,25 +1,26 @@
 #flash
   +hcenter
-  z-index: 1000 // To get above TinyMCE...
-  line-height: 2
+  min-width: 60%
+  max-width: 90%
+  z-index: 2 // To get above TinyMCE
   div
-    border-top: none
-    &:before,
-    &:after
-      content: "\00a0\00a0" // Padding isn't working for some reason...
-  .notice
-    background-color: tint($green, 25%)
-    color: contrast-switch(tint($green, 25%))
-    border: 1px solid $green
-  .error
-    background-color: tint($red, 25%)
-    color: contast-switch(tint($red, 25%))
-    border: 1px solid $red
+    line-height: 1.8
+    padding: 0 .5em .125em .5em
+    border-radius: 0 0 8px 8px
+    font-size: 10pt
+    &.notice
+      background-color: tint($green, 25%)
+      color: contrast-switch(tint($green, 25%))
+      border: 1px solid $green
+    &.error
+      background-color: tint($red, 25%)
+      color: contast-switch(tint($red, 25%))
+      border: 1px solid $red
+  +grid-media($medium-grid)
+    min-width: auto
+    max-width: auto
 
-body.user,
-body.editor
-  #flash
-    margin-left: calc(12.5%)
-body.language_list
-  #flash
-    margin-left: calc(-0.5%)
++grid-media($medium-grid)
+  body.contents
+    #flash
+      margin-left: calc(12.5%)

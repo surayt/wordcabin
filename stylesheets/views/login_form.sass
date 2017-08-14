@@ -1,0 +1,44 @@
+body.login
+
+  // Mobile devices
+  // ==============
+  background-color: $toc-orange
+  #login-form
+    padding: .5em
+    p
+      margin: 0
+      width: 100%
+    label
+      display: inline-block
+      color: $white
+      float: left
+      line-height: 35px
+    input
+      float: right
+      height: 1.5em
+      margin-bottom: .5em
+      width: 70%
+      &[type=submit]
+        clear: both
+        width: 100%
+        height: 2em
+        
+  // Larger devices
+  // ==============
+  +grid-media($medium-grid)
+    background-color: transparent
+    #login-form
+      +hvcenter
+      background-color: $orange
+      width: 320px
+      label, input
+        float: none
+      label
+        min-width: 4.75em
+      input
+        margin-bottom: .25em
+        width: 200px
+        &[type=submit]
+          width: 100%
+          margin-top: .25em
+          margin-bottom: 0

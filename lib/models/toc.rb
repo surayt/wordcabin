@@ -29,7 +29,7 @@ module Wordcabin
         link_class = link_class(link_path, url_path, next_marker)
         next_marker = true if link_class != '' # The current element is active, so we need to mark the next element soon!
         toc << "<ul class='level_1'>\n"
-        toc << "  <li class='level_1'><span#{link_class}>#{f.heading_without_html}</span></li>\n"
+        toc << "  <li class='level_1'><span#{link_class}>#{f.heading_without_html}</span>\n"
         # Get them *all* to save on SQL queries - the only other query will be the one for the specific fragment selected from the TOC
         # Also, we're only selecting the info we need to save on execution and network time
         chapter_level_fragments = ContentFragment.
@@ -37,9 +37,8 @@ module Wordcabin
             where("locale = ? AND book = ? AND length(chapter) > 0", f.locale, f.book)
         # Convert ActiveRecord results into Array of Hashes
         # https://stackoverflow.com/questions/15427936/how-to-convert-activerecord-results-into-a-array-of-hashes
-        toc << "<li>"
         toc << drill_deeper(chapter_level_fragments.map(&:attributes), nil, url_path, next_marker)
-        toc << "</ul>"
+        toc << "</li></ul>"
       end
       toc
     end
@@ -55,8 +54,10 @@ module Wordcabin
         children_fragments.each do |f|
           display_depth = f['chapter'].split('.').length + 1 # TODO: this too!
           li_spaces = ''; (display_depth).times {li_spaces << '  '}
-          f['path'] = URI.encode("/#{[f['locale'], f['book'], f['chapter']].join('/')}")
-          f['name'] = Sanitize.clean([f['chapter'], f['heading']].join(' ')).gsub(/\n+/, ' ').strip # Completely remove all markup.
+          f['path'] = URI.encode("/#{[f['locale'], f['book'], f['chapter']].join('/')}")  
+          f['name'] = "<span class='chapter'>%s</span> %s" % [
+            f['chapter'], Sanitize.clean(f['heading']).gsub(/\n+/, ' ').strip
+          ]
           f['class'] = link_class(f['path'], url_path, next_marker)
           next_marker = true if f['class'] != ''
           toc << "#{li_spaces}<li class='level_#{display_depth}'>"

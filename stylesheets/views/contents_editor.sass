@@ -1,0 +1,44 @@
+body
+  font-family: $font-stack-wordcabin-contents !important
+  color: $black
+  .grey_background
+    background-color: tint($grey, 35%)
+  .highlight
+    color: $red
+  .greyed_out
+    color: $grey
+  table, td, img
+    &.width_5_percent
+      width: 5% !important
+    &.width_20_percent
+      width: 20% !important
+    &.width_50_percent
+      width: 50% !important
+    &.width_80_percent
+      width: 80% !important
+    &.width_100_percent
+      width: 100% !important
+  table
+    width: 100%
+    &.header_table
+      &.h2
+        background-color: tint($blue, 50%)
+        border: 1px solid tint($blue, 10%) !important
+        color: $black
+      &.h3
+        background-color: tint($blue, 70%)
+        border: 1px solid tint($blue, 30%) !important
+        color: $black
+      &.h4
+        background-color: tint($blue, 90%)
+        border: 1px solid tint($blue, 50%) !important
+        color: $black
+    &.infobox
+      &.notice
+        background-color: #FFDAA9
+        border: 1px solid $blue
+        border-top: none
+      &.culture
+        background-color: #BEEEB2
+      &.grammar
+        background-color: tint($blue, 75%)

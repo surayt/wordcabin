@@ -25,7 +25,7 @@ config:       r+'config',
 data:         r+'data',
 lib:          r+'lib',
 translations: r+'locales',
-templates:    r+'templates',
+templates:    r+'views',
 stylesheets:  r+'stylesheets',
 javascripts:  r+'javascripts',
 static_files: r+'public'

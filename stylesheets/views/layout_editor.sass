@@ -1,0 +1,85 @@
+.mce-tinymce:first-child
+  border-top: none !important
+
+body.contents.editor
+
+  // Mobile devices
+  // ==============
+  #admin-size-info
+    display: block
+    padding: .5em
+    margin: 0
+  #grid-container
+    display: none
+    
+  // Larger devices
+  // ==============
+  +grid-media($editor-grid)
+    #admin-size-info, #toc-heading, #sidebar-handle, #mobile-menu-button
+      display: none
+    #sidebar, #toc, #toc ul.level_1,
+    #grid-container, #content, #content form
+      height: 100%
+    #grid-container
+      display: block
+      background-color: shade($tinymce-grey, 15%)
+    #logo, #sidebar
+      border-right: 1px solid $black !important
+    #logo
+      background-color: shade($tinymce-grey, 75%)
+      img
+        height: 30px
+        padding: 2px .25em
+    #sidebar
+      +grid-column(3, $editor-grid)
+      background-color: shade($tinymce-grey, 35%)
+      position: fixed
+      overflow-y: auto
+      border: none
+      box-shadow: none
+      margin: 0
+      #toc
+        background-color: transparent
+        display: block
+        a:hover
+          color: black
+        ul.level_1
+          padding: 0
+          background-color: shade($tinymce-grey, 50%)
+          li.level_1
+            padding: .25em .25em .25em .35em
+            span
+              color: contrast-switch($orange)
+          ul.level_2
+            padding-top: .25em
+          li
+            padding-left: 1em
+      #new-fragment-button
+        +button
+        padding: 1px 6px 4px 6px !important
+        display: block
+        position: fixed
+        bottom: .5em
+        left: .5em
+        z-index: 2
+    #content
+      +grid-column(9, $editor-grid)
+      margin: 0 0 0 calc(25%)
+      position: fixed
+      top: 0
+      form
+        min-width: 918px
+        fieldset
+          font-size: 10.5pt
+          border: none
+          border-top: 1px solid shade($tinymce-grey, 50%)
+          margin: 0
+          padding: 6px 4px 0 .5em
+          input[type=text]
+            font-size: 95%
+          input[type=submit]
+            +button
+            padding: 3px 5px 5px 5px !important
+            font-weight: normal
+            float: right
+            background-color: red

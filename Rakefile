@@ -1,9 +1,12 @@
+require "sinatra/activerecord"
 require 'sinatra/activerecord/rake'
 require 'pathname'
 require_relative Pathname('config')+'config'
 
 # What gets run when no arguments are specified
 task default: ['wordcabin:server']
+task s: ['wordcabin:server']
+task c: ['console']
 
 # The simpler the better, right?
 desc "Run the couple of tests there are. Write more if you're a hero!"

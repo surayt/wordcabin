@@ -1,42 +1,65 @@
 // Libraries
+// =========
+// (No more Bitters as it was dirtying the whole namespace.)
 
-@import 'normalize-scss/sass/normalize'
+@import 'normalize-scss/fork-versions/default/normalize'
 @import 'bourbon/core/bourbon'
+@import 'modules/bourbon-defaults'
 @import 'neat/core/neat'
-@import 'bitters/core/base'
 
 // Basic setup
+// ===========
+// Nothing in this section may affect any elements either,
+// i.e. only variables, mixins, etc, with the exception of
+// applying i18n-related styles such as text-direction.
 
 @import 'modules/breakpoints'
 @import 'modules/colors'
 @import 'modules/fonts'
 @import 'modules/i18n'
-@import 'modules/mixins'
-@import 'modules/resets'
-@import 'modules/toc'
+
+html, body
+  height: 100%
+body
+  font-family: $font-stack-wordcabin-ui
+  a
+    color: $blue
+    text-decoration: none
+    &:hover
+      color: $link-blue
+  #grid-container
+    +grid-container
+  #admin-size-info
+    display: none
+
+// Mixins
+// ======
+
+@import 'mixins/button'
+@import 'mixins/centering'
+
+// View-specific styles
+// ====================
+// Things from here on out are allowed to affect cascading.
 
 // Anything that's UI in one way or another, and
 // which must not affect book contents in any way.
 
-@import 'modules/login_form'
 @import 'modules/session_links'
-@import 'modules/error_screen'
-@import 'modules/index'
-@import 'modules/layout_user'
-@import 'modules/layout_editor'
 @import 'modules/flash_messages'
+@import 'modules/toc'
 
-@import 'features/active_toc_link'
-@import 'features/icons_for_file_links'
-@import 'features/sidebar_delete_links'
+@import 'views/index'
+@import 'views/layout_user'
+@import 'views/login_form'
+@import 'views/error_screen'
+@import 'views/layout_editor'
+// @import 'features/sidebar_delete_links'
 
 // Anything affecting the book contents themselves,
-// but which must not affect any UI elements in any
+// and which may not affect any UI elements in any
 // way.
 
-@import 'article/user'
-@import 'article/editor'
-
-body
-  #grid-container
-    +grid-container
+@import 'views/contents_user'
+// @import 'views/contents_editor'
+// @import 'features/icons_for_file_links'

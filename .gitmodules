@@ -30,10 +30,6 @@
 	path = javascripts/jquery-dist
 	url = https://github.com/surayt/jquery-dist.git
 	branch = master
-[submodule "stylesheets/bitters"]
-	path = stylesheets/bitters
-	url = https://github.com/surayt/bitters.git
-	branch = surayt
 [submodule "public/tinymce_langs"]
 	path = public/tinymce_langs
 	url = https://github.com/surayt/tinymce_langs.git
