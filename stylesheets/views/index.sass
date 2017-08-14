@@ -94,3 +94,13 @@ body.index
         margin: 0 25px 0 0
         &:last-child
           margin-right: 0
+        
+  // Arabic-language version of the course; larger devices only
+  // ==========================================================
+  &:lang(ar)
+    +grid-media($medium-grid)
+      main 
+        h3
+          text-align: left
+        > ul
+          width: 25em

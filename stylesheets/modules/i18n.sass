@@ -2,12 +2,24 @@
   direction: rtl
   font-size: 16pt
   text-align: right
+  
+body:lang(ar) *:lang(ar)
+  font-size: 14pt
 
 *:lang(syr)
-  font-family: 'Serto Jerusalem', 'Times New Roman', 'serif'
+  font-family: 'Serto Jerusalem', $font-stack-system, 'Charis SIL', 'Amiri', 'FontAwesome'
 
 *:lang(ar)
-  font-family: 'Amiri', 'Times New Roman', 'serif'
+  font-family: 'Amiri', $font-stack-system, 'Charis SIL', 'Serto Jerusalem', 'FontAwesome'
+
+// It would be nice if the whole user interface
+// was left-to-right, but at the moment, there's
+// simply no time for that, so resetting all
+// elements used for UI and not for contents to
+// be ltr for now.
+html, body, div, section, article, #admin-size-info, ul.book, body.index *
+  &:lang(ar)
+    direction: ltr !important
   
 // No special styling required for these at the moment, but I typed them down and want to keep them around...
 // *:lang(de), *:lang(en), *:lang(fr), *:lang(sv), *:lang(nl), *:lang(tr)

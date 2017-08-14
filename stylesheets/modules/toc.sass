@@ -54,3 +54,12 @@
         display: none
     > ul
       padding: 2.5em .5em .5em .35em
+        
+// Arabic-language version of the course; larger devices only
+// ==========================================================
+body:lang(ar)
+  +grid-media($medium-grid)
+    #toc
+      padding-top: .5em
+      > ul
+        padding-right: 1em
