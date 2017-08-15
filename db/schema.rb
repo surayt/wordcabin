@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170712001339) do
+ActiveRecord::Schema.define(version: 20170814222849) do
 
   create_table "content_fragments", force: :cascade do |t|
     t.string "book"
@@ -19,6 +19,7 @@ ActiveRecord::Schema.define(version: 20170712001339) do
     t.string "heading", default: "<table><tr><td></td></tr></table>"
     t.string "locale"
     t.string "chapter_padded"
+    t.boolean "is_published", default: false
     t.index ["chapter_padded"], name: "index_content_fragments_on_chapter_padded"
   end
 
