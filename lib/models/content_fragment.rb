@@ -113,6 +113,7 @@ module Wordcabin
     #
     def self.book(locale, book); where(locale: locale, book: book).empty_chapters.first; end
     def self.chapter(locale, book, chapter); where(locale: locale, book: book, chapter: chapter).first; end
+    scope :published, -> { where(is_published: true) }
     #
     # (For the plural methods, care must be taken to chain them with #where at
     #  the end of the chain, so that they always return a set, never an item.)
