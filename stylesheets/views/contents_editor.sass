@@ -1,17 +1,66 @@
-body
+// As the editors have to be able to judge at least approximately
+// what their actions are going to cause in terms of what the readers
+// are going to see, the content styles need to be visible inside of
+// TinyMCE as well. Unfortunately, TinyMCE has its own pre-set styles
+// which are part sensible, part necessary, part pain-in-the-behind.
+// To cope with the problem, those styles not conflicting with TinyMCE
+// in any way are kept in this file whereas any tweaking and fine-
+// tuning of the reader-facing result will be found in a second file
+// named contents_user.sass.
+
+// Only the upper, narrower TinyMCE instance,
+// and "h1" as seen by the reader
+body#tinymce_heading_instance,
+body.user #articles article header
+  table
+    +grid-media($editor-grid)
+      width: 100%
+    +grid-media($medium-grid)
+      width: 100%
+    td
+      font-weight: bold
+      font-size: 16pt
+      line-height: 1
+  background-color: tint($blue, 35%)
+
+// Both TinyMCE instances, and
+// "h1" and all content as seen by the reader
+body#tinymce_heading_instance table td,
+body#tinymce_section_instance,
+body.user #articles article
   font-family: $font-stack-wordcabin-contents !important
   color: $black
+body#tinymce_heading_instance table td,
+body#tinymce_section_instance,
+body.user #articles article section
   .grey_background
     background-color: tint($grey, 35%)
-  .highlight
-    color: $red
   .greyed_out
     color: $grey
+  .highlight
+    color: $red
+  p img
+    width: auto !important
+    height: auto !important
+  h2, h3, h4
+    font-weight: bold
+  h2
+    font-size: 14pt
+  h3
+    font-size: 13pt
+  h4
+    font-size: 12pt
   table, td, img
+    a *
+      color: $blue
+    a:hover, a:hover *
+      color: $red !important
     &.width_5_percent
       width: 5% !important
     &.width_20_percent
       width: 20% !important
+    &.width_30_percent
+      width: 30% !important
     &.width_50_percent
       width: 50% !important
     &.width_80_percent
@@ -20,25 +69,87 @@ body
       width: 100% !important
   table
     width: 100%
+    tr:first-child td
+      background-color: tint($grey, 50%)
+      font-weight: bold
+    &.two_columns td
+      width: 50.00%
+    &.three_columns td
+      width: 33.33%
+    &.four_columns td
+      width: 25.00%
+    &.five_colums td
+      width: 20.00%
+    &.six_columns td
+      width: 16.66%
+    &.seven_columns td
+      width: 14.28%
+    &.no_header_row
+      tr:first-child td
+        background-color: transparent
+        font-weight: normal
+    &.full_border
+      tr:first-child td
+        background-color: transparent
+        font-weight: normal
+    &.first_cell_no_border
+      tr:first-child td
+        background-color: transparent
+        font-weight: normal
+    &.no_borders
+      background-color: none
+      td
+        background-color: transparent
+        font-weight: normal
     &.header_table
+      color: $black
+      td
+        font-weight: bold
+      tr:first-child td
+        background-color: transparent
       &.h2
         background-color: tint($blue, 50%)
-        border: 1px solid tint($blue, 10%) !important
-        color: $black
       &.h3
         background-color: tint($blue, 70%)
-        border: 1px solid tint($blue, 30%) !important
-        color: $black
       &.h4
         background-color: tint($blue, 90%)
-        border: 1px solid tint($blue, 50%) !important
-        color: $black
     &.infobox
+      td
+        background-color: transparent !important
+        font-weight: normal !important
       &.notice
+        // TODO: add "House" icon in top left corner
         background-color: #FFDAA9
-        border: 1px solid $blue
-        border-top: none
       &.culture
         background-color: #BEEEB2
       &.grammar
         background-color: tint($blue, 75%)
+        table
+          th
+            background-color: tint($blue, 65%)
+  ul
+    list-style-type: square
+      
+// Styles that are okay for TinyMCE, but outside of TinyMCE
+// are intended only for larger devices. As they must be
+// applied both outside and inside of a media query, they're
+// in a mixin which is then included twice.
+
+@mixin large_device_rules
+  font-size: 11.5pt
+  section
+    h2
+      font-size: 130%
+    h3
+      font-size: 120%
+    h4
+      font-size: 110%
+
+// Only the lower, taller TinyMCE instance,
+// and all content as seen by the reader
+
+body#tinymce_section_instance
+  +large_device_rules
+body.user #articles article
+  +grid-media($medium-grid)
+    +large_device_rules
