@@ -10,6 +10,9 @@
 
 // Only the upper, narrower TinyMCE instance,
 // and "h1" as seen by the reader
+body#tinymce_heading_instance
+  // Keep IE from showing a scrollbar, which we don't need here
+  overflow-y: hidden !important
 body#tinymce_heading_instance,
 body.user #articles article header
   table
