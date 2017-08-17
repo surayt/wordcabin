@@ -2,20 +2,29 @@
   %h3
     %img{src: '/assets/logo_kl.png'}
     %br/
-    - # TODO: i18n!
-    = "Choose your language of instruction to use the learning portal."
-    %span
+    - if current_user.is_admin?
       - # TODO: i18n!
-      = "All courses are in alpha version, please bear with us!"
+      = 'Choose the book you wish to preview or edit below.'
+      %span
+        - # TODO: i18n!
+        = 'Books in green colour have already been published to readers!'
+    - else
+      - # TODO: i18n!
+      = 'Choose your language of instruction to use the learning portal.'
+      %span
+        - # TODO: i18n!
+        = 'All courses are in alpha version, please bear with us!'
   = haml :session_links
   - @fragment_sets.each do |book, set|
     %ul.book
       %li
-        %h4= "Read #{book} in:"
+        - # TODO: i18n!
+        %h4= "#{current_user.is_admin? ? 'Preview' : 'Read'} #{book} in:"
         %ul.language_version
           - set.each do |fragment|
             %li
-              %a.btn{href: "#{fragment.first_child_url_path}#{'?view_mode=preview' if current_user.is_admin?}"}
+              %a{href: "#{fragment.first_child_url_path}#{'?view_mode=preview' if current_user.is_admin?}",
+                 class: fragment.is_published ? 'published' : 'unpublished'}
                 = I18n.t(fragment.locale)
   %footer
     %img{src: '/assets/FU_Bergen3.jpg'}
