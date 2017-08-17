@@ -74,12 +74,18 @@ body.contents.editor
           border: none
           border-top: 1px solid shade($tinymce-grey, 50%)
           margin: 0
-          padding: 6px 4px 0 .5em
+          padding: 8px 4px 0 .5em
           input[type=text]
             font-size: 95%
           input[type=submit]
             +button
-            padding: 3px 5px 5px 5px !important
+            padding: 3px 5px 3px 5px !important
             font-weight: normal
             float: right
             background-color: red
+          input, label
+            position: relative
+            display: inline-block
+            vertical-align: middle
+          label
+            vertical-align: baseline

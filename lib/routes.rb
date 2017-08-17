@@ -131,6 +131,7 @@ module Wordcabin
     end
     
     post /\/(new|(.*))/ do
+      puts "*** #{params.inspect}"
       __new__, id = params['captures']
       if __new__ && __new__ == 'new'
         params[:content_fragment].merge!(locale: locale)
@@ -140,6 +141,9 @@ module Wordcabin
         @fragment.update_attributes(params[:content_fragment])
       end
       if @fragment
+        if published = params[:parent_is_published]
+          @fragment.parent.update_attribute(:is_published, published == 'true' ? true : false)
+        end
         if @fragment.save
           flash[:notice] = 'The content fragment was saved successfully.' # TODO: i18n!
           redirect to("#{URI.escape(@fragment.url_path)}?view_mode=preview")
