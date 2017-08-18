@@ -28,3 +28,24 @@ $(document).ready ->
               $(link).addClass('active')
             
       ), Math.floor(i + 1) * article_load_delay
+  
+    setTimeout(nav_links_logic, 1000) # Wait for async ops to finish. FIXME: deal with possible race condition!
+    
+nav_links_logic = ->
+
+    i = 0
+    $('#toc a').each (a) ->
+      if $(this).attr('class') == 'active'
+        i = a
+        return false
+      
+    if href = $('#toc a').eq(i-1).attr('href')
+      $('article:first-child').css('margin-top', '35pt')
+      $('#prev').attr('href', href)
+      $('#prev').show()
+      
+    n = $('#toc a.active').length
+    
+    if href = $('#toc a').eq(i+n).attr('href')
+      $('#next').attr('href', href)
+      $('#next').show()
