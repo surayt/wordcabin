@@ -12,7 +12,7 @@ body.contents.user
       top: .35em
       right: .45em
       height: 1.9em
-  #toc-heading, #toc, #sidebar-handle, #new-fragment-button
+  #toc-heading, #toc, #sidebar-handle, #new-fragment-button, a.nav-links
     display: none
   #sidebar
     #mobile-menu-button
@@ -32,12 +32,17 @@ body.contents.user
         color: contrast-switch($orange)
         transition: color .5s
       z-index: 3
-  #content main
-    padding: .35em .35em 0 .35em
-    font-size: 10.5pt
-    iframe, p img
-      max-width: calc(100%)
-      z-index: 0
+  #content
+    main
+      padding: .35em .35em 0 .35em
+      font-size: 10.5pt
+      iframe, p img
+        max-width: calc(100%)
+        z-index: 0
+    a.nav-links
+      +hcenter
+      font-size: 20pt
+      opacity: .5
 
   // Larger devices
   // ==============
@@ -100,6 +105,9 @@ body.contents.user
         margin-left: none
       main
         padding: 1.5em 1.3em .5em 2em
+      a.nav-links
+        margin-left: calc(25%/2)
+        font-size: 35pt
         
   // Arabic-language version of the course; larger devices only
   // ==========================================================

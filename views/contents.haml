@@ -8,9 +8,12 @@
   -# Semantically, the handle would belong outside #content
   -# and inside #sidebar, which would make the CSS and JS
   -# unnecessarily more complicated, though.
+  
   %a#sidebar-handle= '<i class="fa fa-chevron-left"></i>'
   
   - if (content_class.include? 'editor') && (view_mode == :edit)
     = haml :editing_area
-  - else  
+  - else
+    %a.nav-links#prev{href: '#'}= '<i class="fa fa-angle-double-up"></i>'
     %main#articles= haml :article
+    %a.nav-links#next{href: '#'}= '<i class="fa fa-angle-double-down"></i>'
