@@ -38,8 +38,15 @@ common_settings =
       {title: 'Without any borders', selector: 'table', classes: 'no_borders'}
       {title: 'Table width: 50%', selector: 'table', classes: 'width_50_percent'}
       {title: 'Table width: 80%', selector: 'table', classes: 'width_80_percent'}
+      {title: '2-column table (default column width: 50%)', selector: 'table', classes: 'two_columns'}
+      {title: '3-column table (default column width: 33%)', selector: 'table', classes: 'three_columns'}
+      {title: '4-column table (default column width: 25%)', selector: 'table', classes: 'four_columns'}
+      {title: '5-column table (default column width: 20%)', selector: 'table', classes: 'five_columns'}
+      {title: '6-column table (default column width: 16%)', selector: 'table', classes: 'six_columns'}
+      {title: '7-column table (default column width: 14%)', selector: 'table', classes: 'seven_columns'}
       {title: 'Column width: 5%', selector: 'td', classes: 'width_5_percent'}
       {title: 'Column width: 20%', selector: 'td', classes: 'width_20_percent'}
+      {title: 'Column width: 30%', selector: 'td', classes: 'width_30_percent'}
       {title: 'Column width: 50%', selector: 'td', classes: 'width_50_percent'}
       {title: 'Column width: 80%', selector: 'td', classes: 'width_80_percent'}
     ]}

@@ -1,10 +1,23 @@
-@import 'normalize-scss/sass/normalize'
+// ==================================================
+// Take heed, young padawan! Order matters in here!!!
+// ==================================================
+
+// The following two blocks are the exact same as in main.sass and
+// it must be decided if changes made to them there need to be reflected
+// here, as well.
+
+@import 'normalize-scss/fork-versions/default/normalize'
 @import 'bourbon/core/bourbon'
+@import 'modules/bourbon-defaults'
 @import 'neat/core/neat'
 
+@import 'modules/breakpoints'
 @import 'modules/colors'
 @import 'modules/fonts'
 @import 'modules/i18n'
-@import 'modules/breakpoints'
+
+// Now this is what it's all about for the TinyMCE content <body>.
+// Note that contents_user.sass is NOT referenced here as it contains
+// styles that need not or should not be applied to the TinyMCE <body>.
 
 @import 'views/contents_editor'

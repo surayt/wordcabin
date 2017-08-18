@@ -4,6 +4,7 @@
   %fieldset
     %label{for: 'content_fragment[book]'} Book:
     %input{type: :text, name: 'content_fragment[book]', value: @fragment.book || @fragment.next_unused.book}
+    = haml :publication_state
     %label{for: 'content_fragment[chapter]'} Chapter:
     %input{type: :text, name: 'content_fragment[chapter]', value: @fragment.chapter || @fragment.next_unused.chapter}
     %input{type: :submit, value: 'Save'}
