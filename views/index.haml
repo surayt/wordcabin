@@ -24,7 +24,7 @@
           - set.each do |fragment|
             %li
               %a{href: "#{fragment.first_child_url_path}#{'?view_mode=preview' if current_user.is_admin?}",
-                 class: fragment.is_published ? 'published' : 'unpublished'}
+                 class: "book#{' '+(fragment.is_published ? 'published' : 'unpublished') if current_user.is_admin?}"}
                 = I18n.t(fragment.locale)
   %footer
     %img{src: '/assets/FU_Bergen3.jpg'}
