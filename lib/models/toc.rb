@@ -33,7 +33,7 @@ module Wordcabin
         # Get them *all* to save on SQL queries - the only other query will be the one for the specific fragment selected from the TOC
         # Also, we're only selecting the info we need to save on execution and network time
         chapter_level_fragments = ContentFragment.
-          select('id, locale, book, chapter, heading').
+          select('id, locale, book, chapter, chapter_padded, heading').
             where("locale = ? AND book = ? AND length(chapter) > 0", f.locale, f.book)
         # Convert ActiveRecord results into Array of Hashes
         # https://stackoverflow.com/questions/15427936/how-to-convert-activerecord-results-into-a-array-of-hashes
@@ -71,12 +71,12 @@ module Wordcabin
 
     def reduce_fragments(fragments, depth, parent)
       if parent
-        p_ch_len = parent['chapter'].length
-        fragments = fragments.select {|f| f['chapter'][0...p_ch_len] == parent['chapter'] && f['chapter'].length > p_ch_len}
+        p_ch_len = parent['chapter_padded'].length
+        fragments = fragments.select {|f| f['chapter_padded'][0...p_ch_len] == parent['chapter_padded'] && f['chapter_padded'].length > p_ch_len}
       else
         depth = depth - 1
       end
-      fragments.select {|f| f['chapter'][/^\d+(?:\.\d+){#{depth-1}}$/]} # TODO: Entweder -1 oder -2, aber beides stimmt nicht???
+      fragments.select {|f| f['chapter_padded'][/^\d+(?:\.\d+){#{depth-1}}$/]} # TODO: Entweder -1 oder -2, aber beides stimmt nicht???
     end
   end
 end
