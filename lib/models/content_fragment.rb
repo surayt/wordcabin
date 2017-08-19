@@ -48,14 +48,14 @@ module Wordcabin
       #   - nothing can have our book name
       #     AND locale
       #     AND a chapter with at least one more segment than we do where the segments leading up to the extra segment(s) is/are the same as our chapter's segments
-      if chapter.blank?
+      if chapter_padded.blank?
         # It's a book!
         has_no_children = !ContentFragment.chapters(locale, book).any?
       else
         # It's not a book!
         has_no_children = true
-        ContentFragment.where("chapter LIKE ?", "#{chapter}%").chapters(locale, book).each do |possible_child|
-          if chapter.split('.').count < possible_child.chapter.split('.').count
+        ContentFragment.where("chapter_padded LIKE ?", "#{chapter_padded}%").chapters(locale, book).each do |possible_child|
+          if chapter_padded.split('.').count < possible_child.chapter_padded.split('.').count
             has_no_children = false 
             break
           end
