@@ -13,7 +13,11 @@ a.file[href$='mp3']
   color: $blue
   &:hover
     color: shade($orange, 25%)
-    
+
+// For debugging only! 
+body.admin a.file[href*='NO%20SUCH%20FILE']
+  background-color: red !important
+
 a.file[href$='pdf']
   +file-icon
   padding-left: 1em
