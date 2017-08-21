@@ -120,7 +120,10 @@ module Wordcabin
       
       def content_class
         c = []
-        if current_user && current_user.is_admin? && view_mode != :preview
+        if current_user.is_admin?
+          c << :admin
+        end
+        if current_user.is_admin? && view_mode != :preview
           c << :editor
         else
           c << :user
