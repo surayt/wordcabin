@@ -4,13 +4,14 @@ module Wordcabin
     # Prepend all routes with locale info, but skip locale-independent ones
     
     before '/:locale/?*' do
-      # flash[:notice] = "I'm not a real flash message, I'm just here to annoy you."
       pass if request.path_info.match(/^\/(assets|files)/)
       begin
-        I18n.locale = params[:locale]
+        session[:content_locale] = params[:locale]
+        session[:ui_locale] = I18n.locale = current_user.preferred_locale || session[:content_locale]
+        puts "content_locale: #{session[:content_locale]}\nui_locale: #{session[:ui_locale]}".red # logger.debug
         request.path_info = "/#{params[:splat].first}"
       rescue I18n::InvalidLocale
-        logger.warn "attempted access to non-existing locale #{params[:locale].inspect}"
+        logger.warn "attempted access to non-existing content locale #{params[:locale].inspect}"
         redirect to('/')
       end
     end

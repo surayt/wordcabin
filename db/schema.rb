@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170814222849) do
+ActiveRecord::Schema.define(version: 20170821123048) do
 
   create_table "content_fragments", force: :cascade do |t|
     t.string "book"
@@ -33,6 +33,7 @@ ActiveRecord::Schema.define(version: 20170814222849) do
     t.string "email"
     t.string "password_digest"
     t.boolean "is_admin", default: false
+    t.string "preferred_locale"
     t.index ["email"], name: "index_users_on_email", unique: true
   end
 

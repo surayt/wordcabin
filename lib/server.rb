@@ -115,7 +115,7 @@ module Wordcabin
       end
 
       def locale
-        I18n.locale
+        session[:content_locale] # Different from session[:ui_locale] which == I18n.locale! (See server.rb)
       end
       
       def content_class
