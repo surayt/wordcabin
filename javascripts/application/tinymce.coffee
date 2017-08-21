@@ -4,8 +4,10 @@ merge = (xs...) ->
     tap {}, (m) -> m[k] = v for k, v of x for x in xs
 tap = (o, fn) -> fn(o); o
 
+ui_locale = $('html').data('ui-locale') || url('1')
+
 common_settings =
-  language_url: '/tinymce_langs/'+url('1')+'.js?' + (new Date).getTime()
+  language_url: "/tinymce_langs/#{ui_locale}.js?#{(new Date).getTime()}"
   statusbar: false
   branding: false
   object_resizing: false
