@@ -1,19 +1,34 @@
+require 'colorize' # for debugging only
+
 module Wordcabin 
   class Server < Sinatra::Application
+
+    # Set locale info on each request
     
-    # Prepend all routes with locale info, but skip locale-independent ones
-    
-    before '/:locale/?*' do
-      pass if request.path_info.match(/^\/(assets|files)/)
+    before do
+      locale_from_url_path = request.path_info.split('/')
+      locale_from_url_path = locale_from_url_path[1] ? locale_from_url_path[1].to_sym : nil
       begin
-        session[:content_locale] = params[:locale]
-        session[:ui_locale] = I18n.locale = current_user.preferred_locale || session[:content_locale]
-        puts "content_locale: #{session[:content_locale]}\nui_locale: #{session[:ui_locale]}".red # logger.debug
-        request.path_info = "/#{params[:splat].first}"
+        if I18n.available_locales.include? locale_from_url_path
+          session[:ui_locale] = I18n.locale = \
+            current_user.preferred_locale || locale_from_url_path
+          session[:content_locale] = locale_from_url_path || current_user.preferred_locale || I18n.default_locale
+        else
+          session[:ui_locale] = session[:content_locale] = I18n.locale = \
+            current_user.preferred_locale || extract_locale_from_accept_language_header || I18n.default_locale
+        end
       rescue I18n::InvalidLocale
-        logger.warn "attempted access to non-existing content locale #{params[:locale].inspect}"
+        puts "attempted access to non-existing content locale #{params[:locale].inspect}".orange # logger.debug
         redirect to('/')
       end
+    end
+    
+    # Prepend all routes with locale info, but skip locale-independent ones
+    # Static routes (i.e., any file inside of public/) never arrive here anyways
+    
+    before '/:locale/?*' do
+      pass if %w{assets files favicon.ico __sinatra__}.include? params[:locale]
+      request.path_info = "/#{params[:splat].first}"
     end
     
     # Serve assets through Sprockets
@@ -122,7 +137,7 @@ module Wordcabin
         location = book.first_child.url_path
       else
         if current_user.is_admin?
-          location = "/#{locale}/new?content_fragment[book]=#{book.book}&view_mode=edit"
+          location = "/#{locale}/new?content_fragment[book]=#{book.book}&content_fragment[locale]=#{book.locale}&view_mode=edit"
         else
           flash[:warn] = 'The selected book is empty, please check back later.' # TODO: i18n!
           location = '/'
@@ -132,10 +147,9 @@ module Wordcabin
     end
     
     post /\/(new|(.*))/ do
-      puts "*** #{params.inspect}"
       __new__, id = params['captures']
       if __new__ && __new__ == 'new'
-        params[:content_fragment].merge!(locale: locale)
+        params[:content_fragment].merge!(locale: locale) if params[:content_fragment][:locale].blank?
         @fragment = ContentFragment.new(params[:content_fragment])
       else
         @fragment = ContentFragment.find(id)
@@ -170,5 +184,11 @@ module Wordcabin
       end
       redirect back
     end
-  end
+    
+    private
+    
+    def extract_locale_from_accept_language_header
+      request.env['HTTP_ACCEPT_LANGUAGE'].scan(/^[a-z]{2}/).first
+    end
+  end  
 end
