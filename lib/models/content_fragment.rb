@@ -111,8 +111,8 @@ module Wordcabin
     # (The singular methods are not scopes because AR is still sh** sometimes,
     #  also cf. https://stackoverflow.com/a/21653695 for the solution used.)
     #
-    def self.book(locale, book); where(locale: locale, book: book).empty_chapters.first; end
-    def self.chapter(locale, book, chapter); where(locale: locale, book: book, chapter: chapter).first; end
+    def self.book(locale, book); where(locale: locale, book: book.force_utf8).empty_chapters.first; end
+    def self.chapter(locale, book, chapter); where(locale: locale, book: book.force_utf8, chapter: chapter.force_utf8).first; end
     scope :published, -> { where(is_published: true) }
     #
     # (For the plural methods, care must be taken to chain them with #where at

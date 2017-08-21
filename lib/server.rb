@@ -15,6 +15,7 @@ require 'sprockets'
 require 'hamlit' # Sinatra does know to require HAML, but not Hamlit!
 
 # Internal dependencies
+require_relative 'core/nil_class'
 require_relative 'core/string'
 require_relative 'core/object'
 require_relative 'active_record/connection_adapters/sqlite3_adapter'
