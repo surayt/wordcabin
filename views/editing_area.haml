@@ -7,4 +7,6 @@
     = haml :publication_state
     %label{for: 'content_fragment[chapter]'} Chapter:
     %input{type: :text, name: 'content_fragment[chapter]', value: @fragment.chapter || @fragment.next_unused.chapter}
+    %label{for: 'content_fragment[locale]'} Locale:
+    %input{type: :text, name: 'content_fragment[locale]', value: @fragment.locale || session[:content_locale]}
     %input{type: :submit, value: 'Save'}

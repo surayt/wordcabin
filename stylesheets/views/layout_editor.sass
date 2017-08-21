@@ -30,6 +30,10 @@ body.contents.editor
       img
         height: 30px
         padding: 2px .25em
+        // Firefox on Linux
+        @supports (-moz-appearance:none) and (background-attachment:local) and (not (-moz-osx-font-smoothing:auto))
+          @media not screen and (-moz-os-version)
+            padding: 4px .25em 0px .25em
     #sidebar
       +grid-column(3, $editor-grid)
       background-color: shade($tinymce-grey, 35%)
@@ -75,14 +79,21 @@ body.contents.editor
           border-top: 1px solid shade($tinymce-grey, 50%)
           margin: 0
           padding: 8px 4px 0 .5em
+          // Firefox on Linux
+          @supports (-moz-appearance:none) and (background-attachment:local) and (not (-moz-osx-font-smoothing:auto))
+            @media not screen and (-moz-os-version)
+              padding: 5px 4px 0 .5em
           input[type=text]
             font-size: 95%
           input[type=submit]
             +button
-            padding: 3px 5px 3px 5px !important
             font-weight: normal
             float: right
             background-color: red
+            // Firefox on Linux
+            @supports (-moz-appearance:none) and (background-attachment:local) and (not (-moz-osx-font-smoothing:auto))
+              @media not screen and (-moz-os-version)
+              padding: 4px 6px 6px 6px
           input, label
             position: relative
             display: inline-block
