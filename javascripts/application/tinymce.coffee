@@ -92,7 +92,7 @@ text = merge(common_settings,
              styleselect bold italic underline      |
              table alignleft aligncenter alignright |
              bullist numlist outdent indent         |
-             link unlink uploadfile insertexercise image media'
+             link unlink image media insertexercise uploadfile'
   body_id:  'tinymce_section_instance')
 
 console.log "tinymce heading editor"
