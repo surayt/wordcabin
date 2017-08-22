@@ -80,7 +80,7 @@ module Wordcabin
       redirect back
     end
 
-    # FileAttachment
+    # FileAttachment routes. Must come before ContentFragment routes.
     
     get '/files/:id.?:extension?' do |id,ext| # second one is unused
       begin
@@ -110,8 +110,23 @@ module Wordcabin
         json(error: {message: msg})
       end
     end
+    
+    # Exercise routes. Must come before ContentFragment routes.
+    
+    get '/exercises' do
+      if current_user.is_admin?
+        @exercises = Exercise.all
+        if request.xhr?
+          @exercises.to_json
+        else
+          haml :exercises
+        end
+      else
+        redirect to('/')
+      end
+    end
 
-    # ContentFragment routes. Careful with these as their order is important!
+    # ContentFragment routes. Must come last. And careful with these as their order is important!
     
     get /\/(new|(.*)\/(.*))/ do
       __new__, book, chapter = params['captures']
