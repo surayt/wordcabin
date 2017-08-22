@@ -1,0 +1,11 @@
+= haml :session_links
+= haml :logo
+
+%ul
+  - @exercises.each do |e|
+    %li= "#{e.name} (#{e.description})"
+    - e.text_fragments.each do |t|
+      - if t.text
+        = t.text
+      - if t.key
+        %input{type: :text, value: t.key}
