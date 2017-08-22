@@ -130,14 +130,14 @@
       // Add a button that opens a window
       editor.addButton('insertexercise', {
         tooltip: ed.translate('Insert a prepared exercise'),
-        icon : 'newdocument', // TODO: put something nice here!
+        icon : 'fa-check-square-o',
         onclick: showDialog
       });
 
       // Adds a menu item to the tools menu
       editor.addMenuItem('insertexercise', {
         text: ed.translate('Insert a prepared exercise'),
-        icon : 'newdocument', // TODO: put something nice here!
+        icon : 'fa-check-square-o',
         context: 'insert',
         onclick: showDialog
       });

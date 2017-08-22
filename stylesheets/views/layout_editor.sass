@@ -1,6 +1,28 @@
 .mce-tinymce:first-child
   border-top: none !important
 
+// TODO: move these to inside their respective 
+// plugin folders (uploadfile and insertexercise)
+i.mce-i-fa-check-square-o,
+i.mce-i-fa-upload
+  &:before
+    font-family: 'FontAwesome'
+    font-style: normal
+    font-weight: lighter
+    text-decoration: none
+    color: $tinymce-icon-grey
+    font-size: .8em
+    border: 1px solid $tinymce-icon-grey
+    padding: 1px 4px
+    margin-left: .5em
+    position: absolute
+    top: 10%
+    left: 0
+i.mce-i-fa-check-square-o:before
+  content: "\f046"
+i.mce-i-fa-upload:before
+  content: "\f093"
+
 body.contents.editor
 
   // Mobile devices
