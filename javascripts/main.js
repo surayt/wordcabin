@@ -3,7 +3,7 @@
 //= require ./js-cookie/src/js.cookie
 //= require ./tinymce_plugins/autoheight/autoheight.js
 //= require ./tinymce_plugins/uploadfile/uploadfile.js
+//= require ./tinymce_plugins/insertexercise/insertexercise.js
 //= require ./jquery-ujs/src/rails
-//=# require ./infinite-scroll/dist/infinite-scroll.pkgd
 //= require ./js-url/url
 //= require_directory ./application
