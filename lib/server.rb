@@ -23,6 +23,8 @@ require_relative 'models/user'
 require_relative 'models/content_fragment'
 require_relative 'models/toc'
 require_relative 'models/file_attachment'
+require_relative 'models/exercise'
+require_relative 'models/text_fragment'
 
 module Wordcabin 
   class Server < Sinatra::Application
@@ -108,10 +110,12 @@ module Wordcabin
       end
       
       def view_mode
-        if params[:view_mode]
-          params[:view_mode].to_sym
-        else
-          :preview
+        unless request.path_info =~ /exercises/
+          if params[:view_mode]
+            params[:view_mode].to_sym
+          else
+            :preview
+          end
         end
       end
 
@@ -121,23 +125,30 @@ module Wordcabin
       
       def content_class
         c = []
+        path_info = request.path_info.split('/')
+        
         if current_user.is_admin?
           c << :admin
         end
-        if current_user.is_admin? && view_mode != :preview
-          c << :editor
-        else
-          c << :user
-        end
-        if request.path_info.split('/').length < 2
-          c << :index 
-        else
-          if request.path_info.split('/')[1] == 'login'
-            c << :login
+        
+        if path_info[1] != 'exercises'
+          if current_user.is_admin? && view_mode != :preview
+            c << :editor
           else
-            c << :contents
+            c << :user
           end
         end
+        
+        if path_info.length < 2
+          c << :index 
+        else
+          c << case path_info[1]
+            when 'login'     then :login
+            when 'exercises' then :exercises
+                             else :contents
+          end
+        end
+        
         c.join(' ')
       end
     end

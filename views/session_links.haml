@@ -1,15 +1,22 @@
+- # TODO: i18n!
+
+- # FIXME: this file has grown into an ugly, smelly, 500 pound ruby-coloured gorilla
+- # and includes more backend code than Wile E. Coyote and The Roadrunner together
+- # could ever wish for. It needs to go back to being a slim and logic-sparse
+- # template again!
+
 #session-links
   - if current_user && !current_user.new_record?
-    - if current_user.is_admin? && !content_class.include?('index')
-      - if view_mode == :edit
-        -# TODO: i18n!
-        %a{href: "?view_mode=preview"}= 'Preview'
+    - if current_user.is_admin?
+      - unless content_class.include?('index')
+        %a{href: '/'}= 'Book List'
+      - if content_class.include?('exercises')
+        - if view_mode == :edit
+          %a{href: '?view_mode=preview'}= 'Preview Fragment'
+        - if view_mode == :preview
+          %a{href: '?view_mode=edit'}= 'Edit Fragment'
       - else
-        -# TODO: i18n!
-        %a{href: "?view_mode=edit"}= 'Edit'
-    -# TODO: i18n!
+        %a{href: "/#{locale}/exercises"}= 'Manage Exercises'
     %a{href: "/#{locale}/logout"}= 'Logout'
   - else
-    -# TODO: i18n!
-    %a.btn{href: "/#{locale}/login?referer=/#{locale}#{request.path_info}"}
-      = 'Login'
+    %a{href: "/#{locale}/login?referer=/#{locale}#{request.path_info}"}= 'Login'
