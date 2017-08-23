@@ -10,13 +10,13 @@
     - if current_user.is_admin?
       - unless content_class.include?('index')
         %a{href: '/'}= 'Book List'
-      - if content_class.include?('exercises')
+      - unless content_class.include?('exercises')
+        %a{href: "/#{locale}/exercises"}= 'Manage Exercises'
+      - unless %w{index exercises}.any? {|word| content_class.include? word}
         - if view_mode == :edit
           %a{href: '?view_mode=preview'}= 'Preview Fragment'
         - if view_mode == :preview
           %a{href: '?view_mode=edit'}= 'Edit Fragment'
-      - else
-        %a{href: "/#{locale}/exercises"}= 'Manage Exercises'
     %a{href: "/#{locale}/logout"}= 'Logout'
   - else
     %a{href: "/#{locale}/login?referer=/#{locale}#{request.path_info}"}= 'Login'
