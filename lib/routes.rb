@@ -131,6 +131,12 @@ module Wordcabin
         Exercise.all.map {|e| {text: e.name, value: e.id}}.to_json
       end
     end
+    
+    get '/exercises/:id' do |id|
+      @exercises = Exercise.all
+      @exercise = Exercise.find(id)
+      haml @exercise.template_name.to_sym, layout: false
+    end
 
     # ContentFragment routes. Must come last. And careful with these as their order is important!
     

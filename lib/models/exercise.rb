@@ -6,6 +6,10 @@ module Wordcabin
     # only one of the following will be true, depending on "type"...
     has_many :text_fragments
     has_many :questions
+    
+    def template_name
+      'exercises/'+self.class.name.to_s.split(':').last.split('_').first.underscore
+    end
   end
   
   # DuroshoSheklArbco
