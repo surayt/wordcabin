@@ -116,13 +116,19 @@ module Wordcabin
     get '/exercises' do
       if current_user.is_admin?
         @exercises = Exercise.all
-        if request.xhr?
-          @exercises.to_json
-        else
-          haml :exercises
-        end
+        haml :exercises
       else
         redirect to('/')
+      end
+    end
+    
+    # TODO: find out why Sinatra can't recognize XHR requests
+    # and re-integrate this tidbit with the regular one above.
+    # First hints: HTTP_X_REQUESTED_WITH is lacking from both
+    # headers{} and env{}.
+    get '/exercises.json' do
+      if current_user.is_admin?
+        Exercise.all.map {|e| {text: e.name, value: e.id}}.to_json
       end
     end
 
@@ -139,6 +145,10 @@ module Wordcabin
       end
       if @fragment
         @toc = TOC.new(locale, @fragment.parent)
+        # TODO: the below condition always returns `false'. Find out why
+        # Sinatra is unable to recognize XHR requests and then fix up the
+        # JavaScript that is _supposed_ to parse JSON, but is no parsing
+        # HTML instead...
         request.xhr? ? haml(:article, layout: false) : haml(:contents)
       else
         flash[:error] = "We're sorry, there's no such chapter in this book." # TODO: i18n!
