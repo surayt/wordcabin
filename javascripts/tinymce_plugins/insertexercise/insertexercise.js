@@ -94,8 +94,7 @@
         } else {
           var id = listbox.value();
           ed.execCommand('mceInsertContent', false,
-            '<div class="exercise" id="'+id+'">Placeholder for exercise '+id+'. \
-             Exercise will be visible in Preview and to readers.</div>');
+            '<div class="exercise" id="exercise_'+id+'">Exercise #'+id+'</div>');
           ed.windowManager.close();
         }
       }
