@@ -41,3 +41,6 @@
 [submodule "javascripts/underscore"]
 	path = javascripts/underscore
 	url = https://github.com/jashkenas/underscore.git
+[submodule "javascripts/jqueryui"]
+	path = javascripts/jqueryui
+	url = https://github.com/surayt/jqueryui.git
