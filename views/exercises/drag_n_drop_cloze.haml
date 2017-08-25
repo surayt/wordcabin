@@ -1,6 +1,7 @@
-.cloze
+.drag-n-drop-cloze
   %h5= @exercise.name
   %p= @exercise.description
+  %p= @text_fragments.map {|t| ["<span>#{t.key}</span>"] if t.key}.shuffle.join(' ')
   %a.reveal
     %i.fa.fa-lightbulb-o
   - @text_fragments.each do |cloze_item|

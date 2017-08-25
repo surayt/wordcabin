@@ -16,16 +16,15 @@ module Wordcabin
   
   # DuroshoSheklArbco
   class Cloze_Exercise < Exercise
-    # has_many text_fragments (all of which have a sort_order
+    # has_many text_fragments (all of which have a sort_order)
     #   and some of which are empty, with "key" holding their intended text)
   end
   
   # DuroshoSheklTlotho
   class DragNDropCloze_Exercise < Exercise
-    # has_many text_fragments (all of which have a sort_order
+    # has_many text_fragments (all of which have a sort_order)
     #   and some of which are empty, with "key" holding their intended text)
-    # uses text_fragment_order (which is the only correct one)
-    # (really needed? or does this just differ by UI?)
+    # Only differs UI/view-wise
   end
   
   # DuroshoSheklHamsho

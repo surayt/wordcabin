@@ -92,6 +92,7 @@ module Wordcabin
       end
     end
     
+    # TODO: Uploads sind kaputt - incompatible encoding regexp match (UTF-8 regexp with ASCII-8BIT string)
     post '/files' do
       begin
         params[:document][:file][:content_type] = params[:document][:file][:type]
@@ -134,7 +135,8 @@ module Wordcabin
     
     get '/exercises/:id' do |id|
       @exercises = Exercise.all
-      @exercise = Exercise.find(id)
+      @exercise = @exercises.find(id)
+      @text_fragments = @exercise.text_fragments
       haml @exercise.template_name.to_sym, layout: false
     end
 

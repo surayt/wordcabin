@@ -54,20 +54,28 @@ load_and_prepare_exercise = (exercise) ->
   id = $(exercise).attr('id').split('_')[1]
   
   $(exercise).load "/#{locale}/exercises/#{id}", ->
-  
+    
+    $(this).find('p span').each ->
+      $(this).draggable
+        stop: (event, ui) ->
+          $(this).css({top: 0, left: 0})
+
     $(this).find('input').each ->
       chars = $(this).data('size')
-      $(this).css('width', "#{chars}ch")
-      
+      $(this).css('width', "#{1.5 * chars}ch")
+      $(this).droppable
+        drop: (event, ui) ->
+          $(this).val(ui.draggable.text())
+
     $(this).find('a.reveal').click ->
       $(this).parent().children('input').each ->
         if $(this).val() == $(this).data('key-value')
           $(this).attr('class', 'correct')
         else if $(this).val() == ''
           $(this).attr('class', 'empty')
+          $(this).val($(this).data('key-value'))
         else
           $(this).attr('class', 'incorrect')
-        $(this).val($(this).data('key-value'))
       
     $(this).show()
     

@@ -1,5 +1,6 @@
 //= require ./underscore/underscore
 //= require ./jquery-dist/dist/jquery
+//= require ./jqueryui/jquery-ui
 //= require ./js-cookie/src/js.cookie
 //= require ./tinymce_plugins/autoheight/autoheight.js
 //= require ./tinymce_plugins/uploadfile/uploadfile.js
