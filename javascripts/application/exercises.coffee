@@ -6,4 +6,7 @@ $(document).ready ->
     locale = location.pathname.split('/')[1]
     id = $(this).attr('id').split('_')[1]
     $(this).load "/#{locale}/exercises/#{id}", ->
+      $(this).find('input').each ->
+        chars = $(this).data('size')
+        $(this).css('width', "#{chars}ch")
       $(this).show()

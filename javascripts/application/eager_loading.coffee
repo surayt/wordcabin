@@ -11,7 +11,10 @@ $(document).ready ->
     current_first_segment = current_chapter.split('.')[0]
     
     $.each $('#sidebar li a.next'), (i, link) ->
-      window.setTimeout (->
+      # TODO: Figure out what the problem with this is (there's an
+      # error message on the console, but not always) and then re-
+      # enable.
+      # window.setTimeout (->
       
       url = $(link).attr('href')
       this_chapter = url.split('/').pop()
@@ -35,14 +38,18 @@ $(document).ready ->
               locale = location.pathname.split('/')[1]
               id = $(this).attr('id').split('_')[1]
               $(this).load "/#{locale}/exercises/#{id}", ->
+                $(this).find('input').each ->
+                  chars = $(this).data('size')
+                  $(this).css('width', "#{chars}ch")
                 $(this).show()
                 
-          $(article).appendTo('#articles').hide().fadeIn(2500)
+          $(article).appendTo('#articles').hide().show() # .fadeIn(2500)
           
           $(link).removeClass('next')
           $(link).addClass('active')
-          
-    ), Math.floor(i + 1) * article_load_delay
+    
+    # See above...      
+    # ), Math.floor(i + 1) * article_load_delay
 
   setTimeout(nav_links_logic, 1000) # Wait for async ops to finish. FIXME: deal with possible race condition!
     
