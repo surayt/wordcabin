@@ -71,7 +71,7 @@ module Wordcabin
     
     def heading_without_html
       h = Sanitize.clean(heading)
-      h.blank? ? book : h
+      h.strip.gsub(/ /, '').blank? ? book : h # TODO: Why is .blank? not enough?
     end
     
     def heading_and_text
