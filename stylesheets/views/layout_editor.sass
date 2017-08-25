@@ -80,14 +80,6 @@ body.contents.editor
             padding-top: .25em
           li
             padding-left: 1em
-      #new-fragment-button
-        +button
-        padding: 1px 6px 4px 6px !important
-        display: block
-        position: fixed
-        bottom: .5em
-        left: .5em
-        z-index: 2
     #content
       +grid-column(9, $editor-grid)
       margin: 0 0 0 calc(25%)
@@ -122,3 +114,15 @@ body.contents.editor
             vertical-align: middle
           label
             vertical-align: baseline
+            
+body.contents
+  +grid-media($medium-grid)
+    #sidebar
+      #new-fragment-button
+        +button
+        padding: 1px 6px 4px 6px !important
+        display: block
+        position: fixed
+        bottom: .5em
+        left: .5em
+        z-index: 2
