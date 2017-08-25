@@ -1,8 +1,9 @@
+# TODO: Get rid of this as it's basically a copy of
+# the same code inside eager_loading.coffee (also see
+# comment there...) 
 $(document).ready ->
   $('div.exercise').each (index) ->
     locale = location.pathname.split('/')[1]
     id = $(this).attr('id').split('_')[1]
-    $(this).load("/#{locale}/exercises/#{id}")
-    $(this).show()
-    console.log $(this)
-    console.log "Hello, I'm the good guy. I work just fine."
+    $(this).load "/#{locale}/exercises/#{id}", ->
+      $(this).show()
