@@ -6,6 +6,11 @@ $(document).ready ->
   $('div.exercise').each ->
     load_and_prepare_exercise(this)
 
+  # FIXME: Only to make legacy audio links look pretty.
+  # Remove when exercises are done completely.
+  $("a.file[href$='mp3']:contains('C')").each ->
+    fix_broken_exercise_link(this)
+
   if $('#articles').length
     article_load_delay = 800 # In milliseconds.
     articles_loaded = 0
@@ -37,14 +42,16 @@ $(document).ready ->
             
             # Exercises in dynamically loaded <article>s
             $(article).ready ->
+
               exercises = $(this).find('div.exercise')
               exercises.each ->
                 load_and_prepare_exercise(this)
+
               # FIXME: Only to make legacy audio links look pretty.
               # Remove when exercises are done completely.
-              broken_exercise_links = $(this).find("a.file[href$='mp3'][title='C']")
+              broken_exercise_links = $(this).find("a.file[href$='mp3']:contains('C')")
               broken_exercise_links.each ->
-                $(this).html("<i class='fa fa-volume-up'></i>")
+                fix_broken_exercise_link(this)
                   
             $(article).appendTo('#articles').hide().show() # .fadeIn(2500)
             
@@ -56,25 +63,25 @@ $(document).ready ->
 
   setTimeout(nav_links_logic, 1000) # Wait for async ops to finish. FIXME: deal with possible race condition!
 
-load_and_prepare_exercise = (exercise) ->
+# FIXME: Only to make legacy audio links look pretty.
+# Remove when exercises are done completely.
+fix_broken_exercise_link = (link) ->
+  $(link).html("<i class='fa fa-volume-up'></i>")
 
+load_and_prepare_exercise = (exercise) ->
   locale = location.pathname.split('/')[1]
   id = $(exercise).attr('id').split('_')[1]
-  
   $(exercise).load "/#{locale}/exercises/#{id}", ->
-    
     $(this).find('p span').each ->
       $(this).draggable
         stop: (event, ui) ->
           $(this).css({top: 0, left: 0})
-
     $(this).find('input').each ->
       chars = $(this).data('size')
       $(this).css('width', "#{1.5 * chars}ch")
       $(this).droppable
         drop: (event, ui) ->
           $(this).val(ui.draggable.text())
-
     $(this).find('a.reveal').click ->
       $(this).parent().children('input').each ->
         if $(this).val() == $(this).data('key-value')
@@ -84,24 +91,19 @@ load_and_prepare_exercise = (exercise) ->
           $(this).val($(this).data('key-value'))
         else
           $(this).attr('class', 'incorrect')
-      
     $(this).show()
     
 nav_links_logic = ->
-
     i = 0
     $('#toc a').each (a) ->
       if $(this).attr('class') == 'active'
         i = a
         return false
-      
     if href = $('#toc a').eq(i-1).attr('href')
       $('article:first-child').css('margin-top', '35pt')
       $('#prev').attr('href', href)
       $('#prev').show()
-      
     n = $('#toc a.active').length
-    
     if href = $('#toc a').eq(i+n).attr('href')
       $('#next').attr('href', href)
       $('#next').show()
