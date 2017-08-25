@@ -24,6 +24,14 @@ $(document).ready ->
           $.get url, (article) -> 
             if $(window).height() > $('#articles').height() # FIXME: leads to a race condition!
               $(article).appendTo('#articles').hide().fadeIn(2500)
+              $(article).ready ->
+                $(article).find('div.exercise').each (index) ->
+                  locale = location.pathname.split('/')[1]
+                  id = $(this).attr('id').split('_')[1]
+                  $(this).load("/#{locale}/exercises/#{id}")
+                  $(this).show()
+                  console.log($(this))
+                  console.log "I'm the bad boy who doesn't work."
               $(link).removeClass('next')
               $(link).addClass('active')
             
