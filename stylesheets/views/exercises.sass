@@ -1,2 +1,25 @@
 div.exercise
   display: none
+  h5
+    font-size: 110%
+    margin: 0
+  a.reveal
+    margin-right: .5em
+    i
+      font-size: 150%
+    &:hover
+      color: shade($yellow, 5%)
+    &:active
+      color: tint($yellow, 10%)
+    &:visited
+      color: shade($blue, 10%)
+  input
+    &.empty
+      background-color: tint($yellow, 50%)
+      color: shade($yellow, 25%)
+    &.correct
+      background-color: tint($green, 50%)
+      color: shade($green, 25%)
+    &.incorrect
+      background-color: tint($blue, 50%)
+      color: shade($blue, 25%)

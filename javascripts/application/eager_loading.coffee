@@ -59,6 +59,16 @@ load_and_prepare_exercise = (exercise) ->
       chars = $(this).data('size')
       $(this).css('width', "#{chars}ch")
       
+    $(this).find('a.reveal').click ->
+      $(this).parent().children('input').each ->
+        if $(this).val() == $(this).data('key-value')
+          $(this).attr('class', 'correct')
+        else if $(this).val() == ''
+          $(this).attr('class', 'empty')
+        else
+          $(this).attr('class', 'incorrect')
+        $(this).val($(this).data('key-value'))
+      
     $(this).show()
     
 nav_links_logic = ->

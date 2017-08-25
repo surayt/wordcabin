@@ -1,6 +1,10 @@
 .cloze
+  %h5= @exercise.name
+  %p= @exercise.description
+  %a.reveal
+    %i.fa.fa-lightbulb-o
   - @exercise.text_fragments.each do |cloze_item|
     - if cloze_item.key.blank?
       = cloze_item.text
     - else
-      %input{type: :text, value: cloze_item.key, 'data-size': cloze_item.key.length}
+      %input{type: :text, 'data-key-value': cloze_item.key, 'data-size': cloze_item.key.length}
