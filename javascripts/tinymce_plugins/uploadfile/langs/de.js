@@ -1,5 +1,5 @@
 tinyMCE.addI18n("de", {
-  "Insert a file from your computer": "Bild- oder Tondatei in den Editor hochladen",
+  "Upload a file from your computer": "Bild- oder Tondatei in den Editor hochladen",
   "Insert file": "Datei einfügen",
   "Choose a file": "Datei auswählen",
   "Target": "Ziel",

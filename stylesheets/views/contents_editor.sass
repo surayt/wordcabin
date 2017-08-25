@@ -122,9 +122,9 @@ body.user #articles article section
         font-weight: normal !important
       &.notice
         // TODO: add "House" icon in top left corner
-        background-color: #FFDAA9
+        background-color: $notice-yellow
       &.culture
-        background-color: #BEEEB2
+        background-color: $culture-green
       &.grammar
         background-color: tint($blue, 75%)
         table
@@ -156,3 +156,10 @@ body#tinymce_section_instance
 body.user #articles article
   +grid-media($medium-grid)
     +large_device_rules
+body#tinymce_section_instance,
+body.user #articles article
+  div.exercise
+    background-color: $exercise-pink
+    border: 1px solid shade($exercise-pink, 25%)
+    padding: .5em
+    margin: .7em 0

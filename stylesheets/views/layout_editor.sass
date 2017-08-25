@@ -1,6 +1,28 @@
 .mce-tinymce:first-child
   border-top: none !important
 
+// TODO: move these to inside their respective 
+// plugin folders (uploadfile and insertexercise)
+i.mce-i-fa-check-square-o,
+i.mce-i-fa-upload
+  &:before
+    font-family: 'FontAwesome'
+    font-style: normal
+    font-weight: lighter
+    text-decoration: none
+    color: $tinymce-icon-grey
+    font-size: .8em
+    border: 1px solid $tinymce-icon-grey
+    padding: 1px 4px
+    margin-left: .5em
+    position: absolute
+    top: 10%
+    left: 0
+i.mce-i-fa-check-square-o:before
+  content: "\f046"
+i.mce-i-fa-upload:before
+  content: "\f093"
+
 body.contents.editor
 
   // Mobile devices
@@ -58,14 +80,6 @@ body.contents.editor
             padding-top: .25em
           li
             padding-left: 1em
-      #new-fragment-button
-        +button
-        padding: 1px 6px 4px 6px !important
-        display: block
-        position: fixed
-        bottom: .5em
-        left: .5em
-        z-index: 2
     #content
       +grid-column(9, $editor-grid)
       margin: 0 0 0 calc(25%)
@@ -100,3 +114,15 @@ body.contents.editor
             vertical-align: middle
           label
             vertical-align: baseline
+            
+body.contents
+  +grid-media($medium-grid)
+    #sidebar
+      #new-fragment-button
+        +button
+        padding: 1px 6px 4px 6px !important
+        display: block
+        position: fixed
+        bottom: .5em
+        left: .5em
+        z-index: 2

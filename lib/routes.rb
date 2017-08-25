@@ -80,7 +80,7 @@ module Wordcabin
       redirect back
     end
 
-    # FileAttachment
+    # FileAttachment routes. Must come before ContentFragment routes.
     
     get '/files/:id.?:extension?' do |id,ext| # second one is unused
       begin
@@ -92,6 +92,7 @@ module Wordcabin
       end
     end
     
+    # TODO: Uploads sind kaputt - incompatible encoding regexp match (UTF-8 regexp with ASCII-8BIT string)
     post '/files' do
       begin
         params[:document][:file][:content_type] = params[:document][:file][:type]
@@ -110,8 +111,36 @@ module Wordcabin
         json(error: {message: msg})
       end
     end
+    
+    # Exercise routes. Must come before ContentFragment routes.
+    
+    get '/exercises' do
+      if current_user.is_admin?
+        @exercises = Exercise.all
+        haml :exercises
+      else
+        redirect to('/')
+      end
+    end
+    
+    # TODO: find out why Sinatra can't recognize XHR requests
+    # and re-integrate this tidbit with the regular one above.
+    # First hints: HTTP_X_REQUESTED_WITH is lacking from both
+    # headers{} and env{}.
+    get '/exercises.json' do
+      if current_user.is_admin?
+        Exercise.all.map {|e| {text: e.name, value: e.id}}.to_json
+      end
+    end
+    
+    get '/exercises/:id' do |id|
+      @exercises = Exercise.all
+      @exercise = @exercises.find(id)
+      @text_fragments = @exercise.text_fragments
+      haml @exercise.template_name.to_sym, layout: false
+    end
 
-    # ContentFragment routes. Careful with these as their order is important!
+    # ContentFragment routes. Must come last. And careful with these as their order is important!
     
     get /\/(new|(.*)\/(.*))/ do
       __new__, book, chapter = params['captures']
@@ -124,6 +153,10 @@ module Wordcabin
       end
       if @fragment
         @toc = TOC.new(locale, @fragment.parent)
+        # TODO: the below condition always returns `false'. Find out why
+        # Sinatra is unable to recognize XHR requests and then fix up the
+        # JavaScript that is _supposed_ to parse JSON, but is no parsing
+        # HTML instead...
         request.xhr? ? haml(:article, layout: false) : haml(:contents)
       else
         flash[:error] = "We're sorry, there's no such chapter in this book." # TODO: i18n!

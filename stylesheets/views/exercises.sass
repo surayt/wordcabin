@@ -1,0 +1,49 @@
+div.exercise
+  display: none
+  h5
+    font-size: 110%
+    margin: 0
+  p
+    span
+      display: inline-block
+      background-color: $white
+      border: 2px solid shade($exercise-pink, 25%)
+      padding: .125em .25em
+      box-shadow: 2px 2px shade($grey, 50%)
+      border-radius: 3px
+      cursor: grabbing
+      &.ui-draggable-dragging
+        background-color: transparent
+        border: none
+        box-shadow: none
+  a.reveal
+    margin: 0 .25em 0 0
+    vertical-align: bottom
+    i
+      font-size: 150%
+    &:hover
+      color: shade($yellow, 5%)
+    &:active
+      color: tint($yellow, 10%)
+    &:visited
+      color: shade($blue, 10%)
+
+  div
+    input
+      background-color: $white
+      padding-top: .125em
+      border: none
+      outline: none
+      border-bottom: 2px solid black
+      font-family: $font-stack-wordcabin-contents
+      color: $black
+      &.empty
+        color: shade($blue, 25%)
+      &.correct
+        color: shade($green, 25%)
+      &.incorrect
+        color: shade($red, 25%)
+
+    &.drag-n-drop-cloze
+      input
+        background-color: transparent

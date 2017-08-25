@@ -75,7 +75,7 @@ common_settings =
     '/assets/tinymce.css?' + (new Date).getTime()]
 
 heading = merge(common_settings,
-  menubar: false
+  menubar:  false
   plugins:  'table directionality code paste'
   selector: 'textarea.heading'
   toolbar:  'undo redo code paste removeformat      |
@@ -85,14 +85,14 @@ heading = merge(common_settings,
   body_id:  'tinymce_heading_instance')
 
 text = merge(common_settings,
-  menubar: false
-  plugins:  'table directionality lists media link paste code image autoheight uploadfile'
+  menubar:  false
+  plugins:  'table directionality lists media link paste code image autoheight uploadfile insertexercise'
   selector: 'textarea.text'
   toolbar:  'undo redo code paste removeformat      |
              styleselect bold italic underline      |
              table alignleft aligncenter alignright |
              bullist numlist outdent indent         |
-             link unlink uploadfile image media'
+             link unlink image media insertexercise uploadfile'
   body_id:  'tinymce_section_instance')
 
 console.log "tinymce heading editor"

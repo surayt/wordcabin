@@ -15,7 +15,7 @@
 
       function showDialog() {  
         win = editor.windowManager.open({
-          title: ed.translate('Insert a file from your computer'),
+          title: ed.translate('Upload a file from your computer'),
           width:  500 + parseInt(editor.getLang('uploadfile.delta_width', 0), 10),
           height: 180 + parseInt(editor.getLang('uploadfile.delta_height', 0), 10),
           body: [
@@ -201,15 +201,15 @@
 
       // Add a button that opens a window
       editor.addButton('uploadfile', {
-        tooltip: ed.translate('Insert a file from your computer'),
-        icon : 'newdocument',
+        tooltip: ed.translate('Upload a file from your computer'),
+        icon : 'fa-upload',
         onclick: showDialog
       });
 
       // Adds a menu item to the tools menu
       editor.addMenuItem('uploadfile', {
-        text: ed.translate('Insert a file from your computer'),
-        icon : 'newdocument',
+        text: ed.translate('Upload a file from your computer'),
+        icon : 'fa-upload',
         context: 'insert',
         onclick: showDialog
       });
