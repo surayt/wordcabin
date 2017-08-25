@@ -1,12 +1,20 @@
-class String
-  # Taken from http://stackoverflow.com/questions/16328389.
-  # I realize this is the slowest method. It is, however, of
-  # the methods proposed at the two above URLs, also the only
-  # method that worked with Ruby 2.3.
-  def blank?
-    strip.gsub(/ /, '').length == 0
+module Wordcabin
+  class String
+    # Taken from http://stackoverflow.com/questions/16328389.
+    # I realize this is the slowest method. It is, however, of
+    # the methods proposed at the two above URLs, also the only
+    # method that worked with Ruby 2.3.
+    #
+    # If not inside of a module, will disturb TinyMCE uploadfile
+    # plugin's interaction with the app and there'll code conversion
+    # errors.
+    def blank?
+      strip.gsub(/ /, '').length == 0
+    end
   end
-  
+end
+
+class String
   # Feels quite dirty. I've got no better idea at the moment.
   def force_utf8
     begin
