@@ -2,6 +2,10 @@ $(document).ready ->
 
   console.log 'eager_loading'
 
+  # Exercises in statically loaded <article>
+  $('div.exercise').each ->
+    load_and_prepare_exercise(this)
+
   if $('#articles').length
     article_load_delay = 300 # In milliseconds.
     articles_loaded = 0
@@ -28,20 +32,11 @@ $(document).ready ->
         # function handed to it is not reachable on the outside!      
         $.get url, (article) -> 
           
-          # TODO: There is, basically, a copy of this code in exercises.coffee,
-          # even though this part here affects exercises in the statically loaded
-          # first article as well already. Somehow there needs to be a way to DRY
-          # that situation up.
+          # Exercises in dynamically loaded <article>s
           $(article).ready ->
             exercises = $(this).find('div.exercise')
-            exercises.each (index) ->
-              locale = location.pathname.split('/')[1]
-              id = $(this).attr('id').split('_')[1]
-              $(this).load "/#{locale}/exercises/#{id}", ->
-                $(this).find('input').each ->
-                  chars = $(this).data('size')
-                  $(this).css('width', "#{chars}ch")
-                $(this).show()
+            exercises.each ->
+              load_and_prepare_exercise(this)
                 
           $(article).appendTo('#articles').hide().show() # .fadeIn(2500)
           
@@ -52,6 +47,19 @@ $(document).ready ->
     # ), Math.floor(i + 1) * article_load_delay
 
   setTimeout(nav_links_logic, 1000) # Wait for async ops to finish. FIXME: deal with possible race condition!
+
+load_and_prepare_exercise = (exercise) ->
+
+  locale = location.pathname.split('/')[1]
+  id = $(exercise).attr('id').split('_')[1]
+  
+  $(exercise).load "/#{locale}/exercises/#{id}", ->
+  
+    $(this).find('input').each ->
+      chars = $(this).data('size')
+      $(this).css('width', "#{chars}ch")
+      
+    $(this).show()
     
 nav_links_logic = ->
 
