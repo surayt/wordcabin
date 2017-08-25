@@ -1,1 +1,6 @@
-= "Hallo, hier bin ich, exercise ##{@exercise.id}!"
+.cloze
+  - @exercise.text_fragments.each do |cloze_item|
+    - if cloze_item.key.blank?
+      = cloze_item.text
+    - else
+      %input{type: :text, value: cloze_item.key, 'data-size': cloze_item.key.length}
