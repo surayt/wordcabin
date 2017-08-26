@@ -55,9 +55,13 @@ module Wordcabin
           display_depth = f['chapter'].split('.').length + 1 # TODO: this too!
           li_spaces = ''; (display_depth).times {li_spaces << '  '}
           f['path'] = URI.encode("/#{[f['locale'], f['book'], f['chapter']].join('/')}")  
-          f['name'] = "<span class='chapter'>%s</span> %s" % [
-            f['chapter'], Sanitize.clean(f['heading']).gsub(/\n+/, ' ').strip
-          ]
+          chapter = f['chapter'].match(/0.*/) ? f['chapter'].gsub(/0\./, '').to_i.to_roman : f['chapter']
+          heading = Sanitize.clean(f['heading']).gsub(/\n+/, ' ').strip
+          f['name'] = if chapter.blank?
+            heading
+          else 
+            ("<span class='chapter'>%s</span>&nbsp;%s" % [chapter, heading]).gsub(/\n/, '').strip
+          end
           f['class'] = link_class(f['path'], url_path, next_marker)
           next_marker = true if f['class'] != ''
           toc << "#{li_spaces}<li class='level_#{display_depth}'>"
