@@ -10,11 +10,13 @@ body.user #articles article
   // Mobile devices
   // ==============
   font-size: 12pt
+  header, table.header_table, .culture, .notice, .grammar, .exercise
+    box-shadow: 1px 1px $black
   header, header table, header table td
     padding: 0
     margin: 0
   header table td
-    padding: 0 .5em .25em 0
+    padding: .25em .5em .25em 0
   section
     iframe, p img
       margin-bottom: 1.5em
@@ -38,6 +40,7 @@ body.user #articles article
         border-right: none
         vertical-align: middle
         padding: 0 .25em
+      tr:not(:first-child) td
         &:empty
           border: none !important
           height: 1.5em
