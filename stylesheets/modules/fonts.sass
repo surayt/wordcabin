@@ -24,6 +24,10 @@
 @include font-face('Serto Jerusalem', '/assets/SertoJerusalemItalic')
   font-style: italic
 
+@include font-face('Serto Urhoy', '/assets/SertoUrhoy')
+@include font-face('Serto Urhoy', '/assets/SertoUrhoyBold')
+  font-weight: bold
+
 @include font-face('Amiri', '/assets/amiri-regular')
 @include font-face('Amiri', '/assets/amiri-bold')
   font-weight: bold
@@ -33,7 +37,7 @@
   font-weight: bold
   font-style: italic
 
-$font-stack-wordcabin-contents: 'Times New Roman', 'Charis SIL', 'Serto Jerusalem', 'Amiri', 'FontAwesome'
+$font-stack-wordcabin-contents: 'Times New Roman', 'Charis SIL', 'Serto Urhoy', 'Amiri', 'FontAwesome'
 $font-stack-wordcabin-ui: $font-stack-system, $font-stack-wordcabin-contents
 
 // Keeping these around in case $font-stack-system doesn't work out okay...

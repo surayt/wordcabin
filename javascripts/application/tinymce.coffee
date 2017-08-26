@@ -38,6 +38,7 @@ common_settings =
       {title: 'With full borders', selector: 'table', classes: 'full_border'}
       {title: 'Where the first cell has no border', selector: 'table', classes: 'first_cell_no_border'}
       {title: 'Without any borders', selector: 'table', classes: 'no_borders'}
+      {title: 'With full vertical borders', selector: 'table', classes: 'vertical_borders'}
       {title: 'Table width: 50%', selector: 'table', classes: 'width_50_percent'}
       {title: 'Table width: 80%', selector: 'table', classes: 'width_80_percent'}
       {title: '2-column table (default column width: 50%)', selector: 'table', classes: 'two_columns'}

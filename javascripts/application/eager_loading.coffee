@@ -102,9 +102,11 @@ nav_links_logic = ->
         return false
     if href = $('#toc a').eq(i-1).attr('href')
       $('article:first-child').css('margin-top', '35pt')
-      $('#prev').attr('href', href)
-      $('#prev').show()
+      $('#prev.nav-links').attr('href', href)
+    else
+      $('#prev.nav-links').hide()
     n = $('#toc a.active').length
     if href = $('#toc a').eq(i+n).attr('href')
-      $('#next').attr('href', href)
-      $('#next').show()
+      $('#next.nav-links').attr('href', href)
+    else
+      $('#next.nav-links').hide()
