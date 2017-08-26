@@ -66,7 +66,8 @@ $(document).ready ->
 # FIXME: Only to make legacy audio links look pretty.
 # Remove when exercises are done completely.
 fix_broken_exercise_link = (link) ->
-  $(link).html("<i class='fa fa-volume-up'></i>")
+  if $(link).html() == 'C'
+    $(link).html("<i class='fa fa-volume-up'></i>")
 
 load_and_prepare_exercise = (exercise) ->
   locale = location.pathname.split('/')[1]
