@@ -55,7 +55,7 @@ module Wordcabin
           display_depth = f['chapter'].split('.').length + 1 # TODO: this too!
           li_spaces = ''; (display_depth).times {li_spaces << '  '}
           f['path'] = URI.encode("/#{[f['locale'], f['book'], f['chapter']].join('/')}")  
-          chapter = f['chapter'].match(/0.*/) ? f['chapter'].gsub(/0\./, '').to_i.to_roman : f['chapter']
+          chapter = f['chapter'].match(/^0.*/) ? f['chapter'].gsub(/^0\./, '').to_i.to_roman : f['chapter']
           heading = Sanitize.clean(f['heading']).gsub(/\n+/, ' ').strip
           f['name'] = if chapter.blank?
             heading
