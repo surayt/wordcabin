@@ -3,10 +3,10 @@
 # into her big pot.
 # TODO: apply on(load) as well...
 $ ->
-  $('td').filter(->
-    $(this).text() == '\xa0'
+  $('tr td').filter(->
+    $(this).text() == '\xa0' || $(this).text() == '&nbsp;'
   ).html('')
-  
+ 
 # Make it obvious where the 'lang' attribute has been set.
 # $ ->
 #   $('#content [lang]').each ->
