@@ -62,18 +62,19 @@ body.user #articles article section
       color: $blue
     a:hover, a:hover *
       color: $red !important
-    &.width_5_percent
-      width: 5% !important
-    &.width_20_percent
-      width: 20% !important
-    &.width_30_percent
-      width: 30% !important
-    &.width_50_percent
-      width: 50% !important
-    &.width_80_percent
-      width: 80% !important
-    &.width_100_percent
-      width: 100% !important
+    +grid-media($medium-grid)
+      &.width_5_percent
+        width: 5% !important
+      &.width_20_percent
+        width: 20% !important
+      &.width_30_percent
+        width: 30% !important
+      &.width_50_percent
+        width: 50% !important
+      &.width_80_percent
+        width: 80% !important
+      &.width_100_percent
+        width: 100% !important
   table
     width: 100%
     tr:first-child td
@@ -162,7 +163,7 @@ body.user #articles article
     +large_device_rules
 body#tinymce_section_instance,
 body.user #articles article
-  div.exercise
+  .exercise
     background-color: $exercise-pink
     border: 1px solid shade($exercise-pink, 25%)
     padding: .5em
