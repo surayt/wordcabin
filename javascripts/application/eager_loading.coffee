@@ -8,6 +8,7 @@ $(document).ready ->
 
   # FIXME: Only to make legacy audio links look pretty.
   # Remove when exercises are done completely.
+  # Should be in hacks.coffee, but needs to be here because of the eager loading...
   $("a.file[href$='mp3']:contains('C')").each ->
     fix_broken_exercise_link(this)
 
@@ -30,6 +31,7 @@ $(document).ready ->
         this_chapter = url.split('/').pop()
         this_first_segment = this_chapter.split('.')[0]
         
+        # TODO: FIXME: Lädt ohne Ende wenn es kein Subchapter gibt!!!
         console.log("Loading #{url}")
 
         if articles_loaded < article_limit             &&
@@ -49,11 +51,12 @@ $(document).ready ->
 
               # FIXME: Only to make legacy audio links look pretty.
               # Remove when exercises are done completely.
+              # Should be in hacks.coffee, but needs to be here because of the eager loading...
               broken_exercise_links = $(this).find("a.file[href$='mp3']:contains('C')")
               broken_exercise_links.each ->
                 fix_broken_exercise_link(this)
                   
-            $(article).appendTo('#articles').hide().show() # .fadeIn(2500)
+            $(article).appendTo('#articles').hide().show() # .fadeIn(2500) # (needs to much GPU power)
             
             $(link).removeClass('next')
             $(link).addClass('active')
@@ -65,6 +68,7 @@ $(document).ready ->
 
 # FIXME: Only to make legacy audio links look pretty.
 # Remove when exercises are done completely.
+# Another candidate that would belong in hacks.coffee.
 fix_broken_exercise_link = (link) ->
   if $(link).html() == 'C'
     $(link).html("<i class='fa fa-volume-up'></i>")
@@ -104,9 +108,11 @@ nav_links_logic = ->
       $('article:first-child').css('margin-top', '35pt')
       $('#prev.nav-links').attr('href', href)
     else
+      console.log "href before #{href}"
       $('#prev.nav-links').hide()
     n = $('#toc a.active').length
     if href = $('#toc a').eq(i+n).attr('href')
       $('#next.nav-links').attr('href', href)
     else
+      console.log "href after #{href}"
       $('#next.nav-links').hide()
