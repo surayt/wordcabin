@@ -10,6 +10,12 @@ make_toc_expandable = ->
   # to a cookie so it may be restored upon the page being loaded again.
   $('#sidebar li a').click (e) ->
     Cookies.set 'wordcabin_toc_scrollbar_position', $('#sidebar').scrollTop()
+  # The expansion state cookie also needs to be set when navigating another way.
+  # TODO: what about accessing a URL directly?
+  $('.nav-links').click (e) ->
+    href = $(this).attr('href')
+    toc_link = $("#sidebar li a[href='#{href}']")
+    Cookies.set('wordcabin_toc_scrollbar_expansion_state', $(toc_link).closest('li.level_2').index())
 
 restore_toc_state = ->
   # Scrollbar position

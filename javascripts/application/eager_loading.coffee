@@ -38,28 +38,27 @@ $(document).ready ->
               broken_exercise_links.each ->
                 fix_broken_exercise_link(this)
             # After changes inside of <article> are done, show it.
-            $(article).appendTo('#articles').hide().show() # .fadeIn(2500) # (needs to much GPU power)
+            $(article).appendTo('#articles').hide().show() # No fade-in because it uses too much GPU
             # Make it clear what articles are being currently displayed
             $(link).removeClass('next')
             $(link).addClass('active')
-#        unless nav_links_set
-#          nav_links_logic() # Will occur at the beginning or in the middle of a book
-#          nav_links_set = true 
         else
           # Try to apply nav_links_logic as early as possible,
           # but this code won't be reached for all chapters.
           nav_links_logic()
     ), Math.floor(i + 1) * article_load_delay
 
-  # Ensure that nav_links_logic is applied eventually.
-  window.setTimeout (-> nav_links_logic()), 2000
-
-#    if $('#sidebar li a.next').length == 0
-#      nav_links_logic() # Will occur at the end of a book
-
-# FIXME: Only to make legacy audio links look pretty.
-# Remove when exercises are done completely.
-# Another candidate that would belong in hacks.coffee.
+  # Ensure that nav_links_logic is applied eventually, even
+  # at the end of a book. The long timeout should be fine in
+  # that case.
+  window.setTimeout (-> nav_links_logic()), 3000
+  
+  # Hack!
+  # Only to make legacy audio links look pretty.
+  # Remove when interactive exercises are finished.
+  # Should be in hacks.coffee, but needs to be here because of the eager loading...
+  $("a.file[href$='mp3']:contains('C')").each ->
+    fix_broken_exercise_link(this)
 fix_broken_exercise_link = (link) ->
   if $(link).html() == 'C'
     $(link).html("<i class='fa fa-volume-up'></i>")
@@ -132,7 +131,10 @@ nav_links_logic = ->
     next_href = $('#toc a').eq(i+n).attr('href')
     current_link = $('#toc a').eq(i+n-1)[0]
     last_link = $('#toc a:last-child')
-    last_link = last_link[last_link.length-1]    
+    last_link = last_link[last_link.length-1]
+    # Note for debugging: it might have to do with the timing (nav_links_logic might already be called upon _before_
+    # the last article has finished loading. TODO: Solve the problem by working with promises instead.
+    # console.log "current_link: #{current_link}\nlast_link: #{last_link}\nnext_href: #{next_href}\ni: #{i}\nn: #{n}"
     if next_href && current_link != last_link
       $('.nav-links#next').attr('href', next_href)
     else

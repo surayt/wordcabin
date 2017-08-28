@@ -62,6 +62,7 @@ module Wordcabin
           else 
             ("<span class='chapter'>%s</span>&nbsp;%s" % [chapter, heading]).gsub(/\n/, '').strip
           end
+          f['name'] = f['name'].gsub(/ /, '').strip
           f['class'] = link_class(f['path'], url_path, next_marker)
           next_marker = true if f['class'] != ''
           toc << "#{li_spaces}<li class='level_#{display_depth}'>"

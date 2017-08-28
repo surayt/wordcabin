@@ -9,7 +9,7 @@ module Wordcabin
     # plugin's interaction with the app and there'll code conversion
     # errors.
     def blank?
-      strip.gsub(/ /, '').length == 0
+      strip.gsub(/ /, '').length == 0 # The gsub is a non-breakable space.
     end
   end
 end
