@@ -22,11 +22,15 @@ restore_toc_state = ->
     child = 1
   $('#sidebar li.level_2:nth-child(' + child + ') ul').show()
     
-add_content_fragment_delete_links = ->
-  $('body.editor #sidebar ul a').each ->
-    href = $(this).attr('href')
-    $(this).append('&nbsp;<a href="'+href+'" class="btn delete" data-method="delete"><i class="fa fa-trash"></i></a>')
-# TODO: make this shit work!
+# TODO: re-enable once we've figured out what
+# level of precautions we want to take so people
+# can't delete ContentFragments accidentally.
+# Ace would be to have an Undo feature...
+#add_content_fragment_delete_links = ->
+#  $('body.editor #sidebar ul a').each ->
+#    href = $(this).attr('href')
+#    $(this).append('&nbsp;<a href="'+href+'" class="btn delete" data-method="delete"><i class="fa fa-trash"></i></a>')
+# (At the very least, make this work, first...)
 #$(document).on 'click', '.delete', (e) ->
 #  alert()
 #  e.preventDefault()
