@@ -34,7 +34,7 @@ body.contents.user
       z-index: 3
   #content
     main
-      padding: .35em .35em 0 .35em
+      padding: .35em .35em 0 .35em // Important for Mobile, no effect on Desktop!
       font-size: 10.5pt
       iframe, p img
         max-width: calc(100%)
@@ -104,7 +104,7 @@ body.contents.user
         +grid-column(6)
         margin-left: none
       main
-        padding: 1.5em 1.3em .5em 2em
+        padding: 1em .5em 0 2.5em
       a.nav-links
         margin-left: calc(25%/2)
         font-size: 35pt

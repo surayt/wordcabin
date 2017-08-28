@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170822164840) do
+ActiveRecord::Schema.define(version: 20170828005538) do
 
   create_table "content_fragments", force: :cascade do |t|
     t.string "book"
@@ -28,6 +28,7 @@ ActiveRecord::Schema.define(version: 20170822164840) do
     t.string "name"
     t.string "description"
     t.string "text_fragment_order"
+    t.string "locale"
   end
 
   create_table "file_attachments", force: :cascade do |t|
@@ -38,11 +39,13 @@ ActiveRecord::Schema.define(version: 20170822164840) do
 
   create_table "text_fragments", force: :cascade do |t|
     t.string "type"
-    t.string "text"
-    t.string "key"
+    t.string "text_ltr"
+    t.string "key_ltr"
     t.integer "sort_order"
     t.integer "exercise_id"
     t.integer "question_id"
+    t.string "text_rtl"
+    t.string "key_rtl"
     t.index ["exercise_id"], name: "index_text_fragments_on_exercise_id"
     t.index ["question_id"], name: "index_text_fragments_on_question_id"
   end
