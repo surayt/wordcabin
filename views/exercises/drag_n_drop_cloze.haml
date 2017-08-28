@@ -1,11 +1,29 @@
+= haml 'exercises/header_table'.to_sym
 .drag-n-drop-cloze
-  %h5= @exercise.name
-  %p= @exercise.description
-  %p= @text_fragments.map {|t| ["<span>#{t.key}</span>"] if t.key}.shuffle.join(' ')
-  %a.reveal
-    %i.fa.fa-lightbulb-o
-  - @text_fragments.each do |cloze_item|
-    - if cloze_item.key.blank?
-      = cloze_item.text
-    - else
-      %input{type: :text, 'data-key-value': cloze_item.key, 'data-size': cloze_item.key.length}
+  %p.legend
+    = @exercise.description
+    = "Click the light bulb to check your answers or reveal the answer keys."
+    %a.reveal
+      %i.fa.fa-lightbulb-o
+  %p.words
+    = @text_fragments.map {|t| ["<span class='ltr'>#{t.key_ltr}</span><span class='rtl'>#{t.key_rtl}</span>"] if t.key_ltr && t.key_rtl}.shuffle.join(' ')
+  %table.texts
+    %tr
+      %td.ltr
+        - @text_fragments.each do |cloze_item|
+          - if cloze_item.key.blank?
+            - if cloze_item.text
+              = cloze_item.text_ltr
+              = '<br/>' if cloze_item.text_ltr[-1] == '.'
+          - else
+            - if cloze_item.key
+              %input{type: :text, 'data-key-value': cloze_item.key_ltr, 'data-size': cloze_item.key_ltr.length}
+      %td.rtl
+        - @text_fragments.each do |cloze_item|
+          - if cloze_item.key.blank?
+            - if cloze_item.text
+              = cloze_item.text_rtl
+              = '<br/>' if cloze_item.text_rtl[-1] == '.'
+          - else
+            - if cloze_item.key
+              %input{type: :text, 'data-key-value': cloze_item.key_rtl, 'data-size': cloze_item.key_rtl.length}
