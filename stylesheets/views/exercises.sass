@@ -3,48 +3,52 @@
   border: none !important
   padding: 0 !important
   display: none
-  p.words span
-    display: inline-block
-    background-color: $white
-    border: 2px solid shade($exercise-pink, 25%)
-    padding: .125em .25em
-    box-shadow: 2px 2px shade($grey, 50%)
-    border-radius: 3px
-    cursor: grabbing
-    &.ui-draggable-dragging
-      background-color: transparent
-      border: none
-      box-shadow: none
-    &.ltr
-      float: left
-    &.rtl
-      float: right
+  p.legend
+    margin: 0
+    padding-right: 1.5em
+    a.reveal
+      position: absolute
+      top: .5em
+      right: .5em
+      i
+        font-size: 25pt
+      &:hover
+        color: shade($yellow, 5%)
+      &:active
+        color: tint($yellow, 10%)
+      &:visited
+        color: shade($blue, 10%)
+  p.words 
+    padding: .5em 0 1.5em 0
+    span
+      display: inline-block
+      background-color: $white
+      border: 2px solid shade($exercise-pink, 25%)
+      padding: .125em .25em
+      box-shadow: 2px 2px shade($grey, 50%)
+      border-radius: 3px
+      cursor: grabbing
+      &.ui-draggable-dragging
+        background-color: transparent
+        border: none
+        box-shadow: none
+      &.ltr
+        float: left
+      &.rtl
+        float: right
   table.texts
-    margin: 3.5em 0 0 0 !important
+    margin: 0 !important
     padding: 0 !important
+    tr:first-child td
+      padding-top: .5em !important
     td
       background-color: transparent !important
       border: none !important
       padding: 0 !important
       font-weight: normal !important
-      &.ltr
-        padding-right: 1em !important
       &.rtl
-        padding-left: 1em !important
         direction: rtl
         text-align: right
-  a.reveal
-    position: absolute
-    top: .5em
-    right: .5em
-    i
-      font-size: 25pt
-    &:hover
-      color: shade($yellow, 5%)
-    &:active
-      color: tint($yellow, 10%)
-    &:visited
-      color: shade($blue, 10%)
 
   div
     position: relative

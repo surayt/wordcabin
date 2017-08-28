@@ -74,21 +74,28 @@ fix_broken_exercise_link = (link) ->
     $(link).html("<i class='fa fa-volume-up'></i>")
 
 load_and_prepare_exercise = (exercise) ->
+  # Load the exercise into the chapter text...
   locale = location.pathname.split('/')[1]
   id = $(exercise).attr('id').split('_')[1]
   $(exercise).load "/#{locale}/exercises/#{id}", ->
-    $(this).find('p span').each ->
+    # ... and once it is loaded,
+    # make draggable things draggable,
+    $(this).find('.words span').each ->
       $(this).draggable
         stop: (event, ui) ->
           $(this).css({top: 0, left: 0})
-    $(this).find('input').each ->
+    # ... droppable things droppable,
+    $(this).find('.texts input').each ->
       chars = $(this).data('size')
       $(this).css('width', "#{1.5 * chars}ch")
       $(this).droppable
         drop: (event, ui) ->
           $(this).val(ui.draggable.text())
-    $(this).find('a.reveal').click ->
-      $(this).parent().children('input').each ->
+    # ... and make the reveal button
+    # reveal things, so it shall have
+    # purpose and meaning.
+    $(this).find('.legend .reveal').click ->
+      $(this).parents('div').find('.texts input').each ->
         if $(this).val() == $(this).data('key-value')
           $(this).attr('class', 'correct')
         else if $(this).val() == ''
@@ -96,6 +103,7 @@ load_and_prepare_exercise = (exercise) ->
           $(this).val($(this).data('key-value'))
         else
           $(this).attr('class', 'incorrect')
+    # When all is done, finally appear!
     $(this).show()
     
 nav_links_logic = ->
