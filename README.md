@@ -36,8 +36,3 @@ After cloning the `wordcabin` repository, you need to add a project. At the mome
 - Run `rake db:schema:load` to initialize the database specified in `config/database.yml` and `rake db:seed` to add an admin user (edit `config/seed.rb` beforehand to change that user's email and password).
 - Now start the application server on the port specified in `config/config.rb` by running `rake` without any further arguments. If the server comes up without error, you should be able to access the configured project.
 - To get the newest versions of everything, run `rake wordcabin:update`, or if that fails, `./script/update`.
-
-Copyright Notice
-================
-
-No license has been decided on for this project. The work is under copyright of the Aramaic Online Project contributors.
