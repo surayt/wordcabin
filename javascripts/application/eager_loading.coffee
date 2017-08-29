@@ -73,33 +73,55 @@ load_and_prepare_exercise = (exercise) ->
   url = "/#{locale}/exercises/#{id}"
   console.log "loading #{url}"
   $(exercise).load url, ->
-    # ... and once it is loaded,
-    # make draggable things draggable,
-    $(this).find('.words span').each ->
-      $(this).draggable
-        stop: (event, ui) ->
-          $(this).css({top: 0, left: 0})
-    # ... droppable things droppable,
-    $(this).find('.texts input').each ->
-      chars = $(this).data('size')
-      $(this).css('width', "#{1.5 * chars}ch")
-      $(this).droppable
-        drop: (event, ui) ->
-          $(this).val(ui.draggable.text())
-    # ... and make the reveal button
-    # reveal things, so it shall have
-    # purpose and meaning.
-    $(this).find('.legend .reveal').click ->
-      $(this).parents('div').find('.texts input').each ->
-        if $(this).val() == $(this).data('key-value')
-          $(this).attr('class', 'correct')
-        else if $(this).val() == ''
-          $(this).attr('class', 'empty')
-          $(this).val($(this).data('key-value'))
-        else
-          $(this).attr('class', 'incorrect')
+    # ----------------------------------------
+    # Wordcabin::ExerciseTypes::DragNDropCloze
+    # ----------------------------------------
+    $(this).find('.drag-n-drop-cloze').each ->
+      # make draggable things draggable,
+      $(this).find('.words span').each ->
+        $(this).draggable
+          stop: (event, ui) ->
+            $(this).css({top: 0, left: 0})
+      # ... droppable things droppable,
+      $(this).find('.texts input').each ->
+        chars = $(this).data('size')
+        $(this).css('width', "#{1.5 * chars}ch")
+        $(this).droppable
+          drop: (event, ui) ->
+            $(this).val(ui.draggable.text())
+      # ... and make the reveal button reveal things
+      $(this).find('.legend .reveal').click ->
+        $(this).parents('div').find('.texts input').each ->
+          if $(this).val() == $(this).data('key-value')
+            $(this).attr('class', 'correct')
+          else if $(this).val() == ''
+            $(this).attr('class', 'empty')
+            $(this).val($(this).data('key-value'))
+          else
+            $(this).attr('class', 'incorrect')
+    # -----------------------------------------
+    # Wordcabin::ExerciseTypes::SortedFragments
+    # -----------------------------------------
+    $(this).find('.sorted-fragments').each ->
+      $(this).find('.texts span').each ->
+        $(this).draggable()
+      $(this).find('.texts table td').each ->
+        $(this).droppable
+          drop: (event, ui) ->
+            $(this).val(ui.draggable.text())
+      # TODO: Finish implementing!
+      # $(this).find('.legend .reveal').click ->
+      #   $(this).parents('div').find('.texts td.ltr tr').each ->
+      #     console.log $(this).text()
     # When all is done, finally appear!
     $(this).show()
+    # ---------------------------------------------
+    # Wordcabin::ExerciseTypes::QuestionsAndAnswers
+    # ---------------------------------------------
+    $(this).find('.questions-and-answers').each ->
+      $(this).find('table td.ltr, table td.rtl').each ->
+        $(this).click ->
+          $(this).siblings('td.answer').find('input').val($(this).text())
 
 # These are the big "previous" and "next" buttons
 # above the first and below the last visible <article>.

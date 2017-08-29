@@ -1,0 +1,14 @@
+= haml 'exercises/header_table'.to_sym
+.questions-and-answers
+  %p.legend
+    -# TODO: i18n!
+    = 'Read the questions in either Latin or Syriac letters and try to think of an appropriate answer.'
+    = 'Click or tap on a question to show an example answer.'
+    = @exercise.description
+  %table.texts
+    - @text_fragments.each do |question|
+      %tr
+        %td.ltr= question.text_ltr
+        %td.answer
+          %input{type: :text}
+        %td.rtl= question.text_rtl

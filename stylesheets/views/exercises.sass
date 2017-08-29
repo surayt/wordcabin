@@ -5,7 +5,7 @@
   display: none
   p.legend
     margin: 0
-    padding-right: 1.5em
+    padding: 0 1.5em .5em 0
     a.reveal
       position: absolute
       top: .5em
@@ -19,7 +19,7 @@
       &:visited
         color: shade($blue, 10%)
   p.words 
-    padding: .5em 0 1.5em 0
+    padding: 0 0 1.5em 0
     span
       display: inline-block
       background-color: $white
@@ -74,3 +74,47 @@
     &.drag-n-drop-cloze
       input
         background-color: transparent
+
+    // TODO: redo from scratch once the JS works
+    &.sorted-fragments
+      table
+        margin: .5em 0 0 0 !important
+        padding: 0 !important
+        td
+          width: 50%
+          height: 100% !important
+          &.ltr
+            float: left
+          &.rtl
+            float: right
+        table
+          border-collapse: separate !important
+          height: 100% !important
+          tr
+            background-color: tint($blue, 65%)
+            td
+              padding-bottom: .5em !important
+              width: 1%
+              text-align: center
+              vertical-align: middle
+              span
+                background-color: $white !important
+                border: 2px solid shade($exercise-pink, 25%)
+                padding: .125em .5em !important
+                display: inline-block
+                margin: 0 .5em
+                box-shadow: 2px 2px shade($grey, 50%)
+                border-radius: 3px
+                cursor: grabbing
+                &.ui-draggable-dragging
+                  background-color: transparent
+                  border: none
+                  box-shadow: none
+    
+    &.questions-and-answers
+      table
+        td
+          padding-top: .5em !important
+          cursor: pointer
+          &.answer input
+            min-width: 20em
