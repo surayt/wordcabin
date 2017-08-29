@@ -137,6 +137,7 @@ module Wordcabin
       @exercises = Exercise.all
       @exercise = @exercises.find(id)
       @text_fragments = @exercise.text_fragments
+      @questions = @exercise.questions
       haml @exercise.template_name.to_sym, layout: false
     end
 

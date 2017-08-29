@@ -1,0 +1,27 @@
+-# TODO: Finish implementing!
+= haml 'exercises/header_table'.to_sym
+.sorted-fragments
+  %p.legend
+    -# TODO: i18n!
+    = 'Drag and drop the words into order until you are satisfied to have a sensible sentence in each row.'
+    = 'You may either sort the Latin or the Syriac script side of the table.'
+    = 'Tap the light bulb to check your order or reveal the correct one.'
+    = @exercise.description
+    %a.reveal
+      %i.fa.fa-lightbulb-o
+  %table.texts
+    %tr
+      %td.ltr
+        %table
+          - @questions.shuffle.each do |question|
+            %tr
+              - question.answers.shuffle.each do |answer|
+                %td
+                  %span= answer.text_ltr
+      %td.rtl
+        %table
+          - @questions.each do |question|
+            %tr
+              - question.answers.shuffle.each do |answer|
+                %td
+                  %span= answer.text_rtl

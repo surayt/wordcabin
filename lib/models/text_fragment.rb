@@ -8,7 +8,7 @@ module Wordcabin
     # for answer, foreign_key specified so belongs_to isn't fooled by _this_ STI model
     belongs_to :question, foreign_key: :question_id
     # for question
-    has_many :answers
+    has_many :answers, foreign_key: :question_id
     
     def text
       unless text_ltr.nil? || text_ltr.strip.blank? || text_rtl.nil? || text_rtl.strip.blank?
