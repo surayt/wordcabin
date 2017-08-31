@@ -18,7 +18,7 @@ module Wordcabin
             current_user.preferred_locale || extract_locale_from_accept_language_header || I18n.default_locale
         end
       rescue I18n::InvalidLocale
-        puts "attempted access to non-existing content locale #{params[:locale].inspect}".orange # logger.debug
+        puts "attempted access to non-existing content locale #{params[:locale].inspect}".red # logger.debug
         redirect to('/')
       end
     end
