@@ -15,7 +15,7 @@ module Wordcabin
           session[:content_locale] = locale_from_url_path || current_user.preferred_locale || I18n.default_locale
         else
           session[:ui_locale] = session[:content_locale] = I18n.locale = \
-            current_user.preferred_locale || extract_locale_from_accept_language_header || I18n.default_locale
+            current_user.preferred_locale || extract_locale_from_accept_language_header
         end
       rescue I18n::InvalidLocale
         puts "attempted access to non-existing content locale #{params[:locale].inspect}".red # logger.debug
@@ -222,7 +222,11 @@ module Wordcabin
     private
     
     def extract_locale_from_accept_language_header
-      request.env['HTTP_ACCEPT_LANGUAGE'].scan(/^[a-z]{2}/).first
+      if accept_lang = request.env['HTTP_ACCEPT_LANGUAGE']
+        accept_lang.scan(/^[a-z]{2}/).first
+      else
+        I18n.default_locale
+      end  
     end
   end  
 end

@@ -15,6 +15,7 @@ bind_port:      8080,        # Ports below 1024 will require root access, defaul
 bind_address:   'localhost', # Use 0.0.0.0 to bind to all interfaces, IP or hostname can be specified
 project:        'my very projecty project',
 database:       'one of my databases',
+default_locale: 'en',
 session_secret: "my very secrety secret",
 
 #####################
