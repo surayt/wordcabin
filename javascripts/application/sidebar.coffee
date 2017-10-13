@@ -22,10 +22,18 @@ restore_toc_state = ->
   pos = Cookies.get('wordcabin_toc_scrollbar_position')
   $('#sidebar').scrollTop pos or 0
   # Expansion state
-  if state = Cookies.get('wordcabin_toc_scrollbar_expansion_state')
-    child = parseInt(state) + 1
-  else
-    child = 1
+  # Try to get info from URL first...
+  url_parts = window.location.href.split('/')
+  if last_url_path_segment = url_parts.pop() || url_parts.pop() # https://stackoverflow.com/questions/4758103/last-segment-of-url, 2nd answer!
+    if top_level_chapter = last_url_path_segment.split('.')[0]
+      child = parseInt(top_level_chapter) + 1
+  # ... failing that try to get it from a cookie ...
+  unless child  
+    if state = Cookies.get('wordcabin_toc_scrollbar_expansion_state')
+      child = parseInt(state) + 1
+    # ... or finally, fall back to only expanding the top level elements' parent
+    else
+      child = 1  
   $('#sidebar li.level_2:nth-child(' + child + ') ul').show()
     
 # TODO: re-enable once we've figured out what
