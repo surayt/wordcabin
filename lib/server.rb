@@ -147,6 +147,7 @@ module Wordcabin
           c << case path_info[1]
             when 'login'     then :login
             when 'exercises' then :exercises
+            when 'keyboard'  then :keyboard
                              else :contents
           end
         end

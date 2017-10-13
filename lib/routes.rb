@@ -112,6 +112,12 @@ module Wordcabin
       end
     end
     
+    # The keyboard demo slash note taking mini-app, whatever.
+    
+    get '/keyboard' do
+      haml :keyboard
+    end
+    
     # Exercise routes. Must come before ContentFragment routes.
     
     get '/exercises' do
@@ -218,7 +224,7 @@ module Wordcabin
       end
       redirect back
     end
-    
+
     private
     
     def extract_locale_from_accept_language_header
