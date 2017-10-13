@@ -44,3 +44,9 @@
 [submodule "javascripts/jqueryui"]
 	path = javascripts/jqueryui
 	url = https://github.com/surayt/jqueryui.git
+[submodule "javascripts/jquerymobile-swipeupdown"]
+	path = javascripts/jquerymobile-swipeupdown
+	url = https://github.com/blackdynamo/jquerymobile-swipeupdown.git
+[submodule "javascripts/jquery-mobile-dist"]
+	path = javascripts/jquery-mobile-dist
+	url = https://github.com/surayt/jquery-mobile-dist.git
