@@ -26,6 +26,8 @@
               %a{href: "#{fragment.first_child_url_path}#{'?view_mode=preview' if current_user.is_admin?}",
                  class: "book#{' '+(fragment.is_published ? 'published' : 'unpublished') if current_user.is_admin?}"}
                 = I18n.t(fragment.locale)
+    - # TODO: i18n!
+    %p.keyboard= "Need to type some Surayt letters or even a longer text but you don't own a Surayt keyboard or don't know how to change your computer's settings? Try out our new <a href='/#{locale}/keyboard' title='Suray on-screen keyboard'>Surayt on-screen keyboard page</a>!"
   %footer
     %img{src: '/assets/FU_Bergen3.jpg'}
     %img{src: '/assets/Cam_Lpz.jpg'}
