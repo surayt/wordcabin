@@ -1,8 +1,8 @@
 $(document).ready ->
   $('#keyboard').keyboard
-    language: null
-    rtl: false
-    layout: 'qwerty'
+    layout: 'syriac' # 'german-qwertz-1'
+    language: null # Set by layout (above line) if null
+    rtl: true
     alwaysOpen: true
     initialFocus: true
     noFocus: false
