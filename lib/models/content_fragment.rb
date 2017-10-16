@@ -6,34 +6,31 @@ module Wordcabin
     default_scope { order("locale ASC, book ASC, chapter_padded ASC") }
     before_save :fill_sorting_column
 
-    # TODO: i18n!
     # CHECK: tests written!
-    validates :book, presence: {message: 'must be present, even when chapter is empty.'}
-    validates :locale, presence: {message: 'must and should be present'}, length: {is: 2, message: 'must be in ISO 3166-1 Alpha 2 encoding.'}    
-    validates :chapter, format: {with: /^[\d+.]*\d+$/, multiline: true, message: 'must be in a format like 2.10.4.5, etc.'}, allow_blank: true
+    validates :book, presence: {message: I18n.t('models.chapter_format.book_must_be_present')}
+    validates :locale, presence: {message: I18n.t('models.chapter_format.locale_must_be_present')}, length: {is: 2, message: I18n.t('models.chapter_format.locale_format')}
+    validates :chapter, format: {with: /^[\d+.]*\d+$/, multiline: true, message: I18n.t('models.chapter_format.chapter_format')}, allow_blank: true
 
-    # TODO: i18n!
     # CHECK: tests written!
     validate :ensure_chapter_is_unique
     def ensure_chapter_is_unique
       recordset = ContentFragment.chapters(locale, book)
       recordset = recordset.where('id != ?', id) if id
       unique = !(recordset.map {|existing_fragment| existing_fragment.chapter}.include? chapter)
-      errors.add(:chapter, 'already exists in this book for the selected language version.') unless unique
+      errors.add(:chapter, I18n.t('models.chapter_format.chapter_already_exists')) unless unique
     end
     
-    # TODO: i18n!
     # CHECK: tests written!
     validate :ensure_chapter_is_book_or_has_parent
     def ensure_chapter_is_book_or_has_parent
       if chapter.blank?
         # It's a book!
         unique = !(ContentFragment.books(locale).map {|existing_fragment| existing_fragment.book}.include? book)
-        errors.add(:book, 'already exists for the selected language version.') unless unique
+        errors.add(:book, I18n.t('models.chapter_format.book_already_exists')) unless unique
       else
         # It's not a book!
         has_parent = ContentFragment.book(locale, book)
-        errors.add(:book, 'must already exist or otherwise the new content fragment will not be visible.') unless has_parent
+        errors.add(:book, I18n.t('models.chapter_format.book_is_not_a_book')) unless has_parent
       end
     end
     
@@ -64,7 +61,7 @@ module Wordcabin
       # Not an ordinary validation callback, thus need to throw(:abort).
       # https://stackoverflow.com/questions/123078/how-do-i-validate-on-destroy-in-rails
       unless has_no_children
-        errors.add(:base, "Can't delete book that still has any children!")
+        errors.add(:base, I18n.t('models.chapter_format.cant_destroy'))
         throw(:abort)
       end
     end

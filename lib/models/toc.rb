@@ -29,9 +29,15 @@ module Wordcabin
         link_class = link_class(link_path, url_path, next_marker)
         next_marker = true if link_class != '' # The current element is active, so we need to mark the next element soon!
         toc << "<ul class='level_1'>\n"
-        toc << "  <li class='level_1'><span#{link_class}>#{f.heading_without_html}</span>\n" # TODO: i18n the book name!
-        # Get them *all* to save on SQL queries - the only other query will be the one for the specific fragment selected from the TOC
-        # Also, we're only selecting the info we need to save on execution and network time
+        # TODO: i18n the book name! (This one we can probably wait
+        # with until someone complains. It's "Level" for now, which
+        # hopefully is pretty universal to anyone who has ever played
+        # on a Gameboy for half an hour.
+        toc << "  <li class='level_1'><span#{link_class}>#{f.heading_without_html}</span>\n"
+        # Get them *all* to save on SQL queries - the only other query
+        # will be the one for the specific fragment selected from the TOC
+        # Also, we're only selecting the info we need to save on execution 
+        # and network time
         chapter_level_fragments = ContentFragment.
           select('id, locale, book, chapter, chapter_padded, heading').
             where("locale = ? AND book = ? AND length(chapter) > 0", f.locale, f.book)

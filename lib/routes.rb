@@ -18,7 +18,7 @@ module Wordcabin
             current_user.preferred_locale || extract_locale_from_accept_language_header
         end
       rescue I18n::InvalidLocale
-        puts "attempted access to non-existing content locale #{params[:locale].inspect}".red # logger.debug
+        puts "attempted access to non-existing content locale #{params[:locale].inspect}".red # TODO: logger.debug
         redirect to('/')
       end
     end
@@ -63,20 +63,18 @@ module Wordcabin
       if @user = User.find_by_email(params[:user_email])
         if @user.authenticate(params[:user_password])
           session[:user_id] = @user.id
-          # TODO: i18n!
-          flash[:notice] = "Welcome, #{current_user.email.split('@').first}!"
+          flash[:notice] = I18n.t('routes.welcome', user: current_user.email.split('@').first)
+          
           redirect to(URI.escape(params[:referer]) || '/') # The referer may and *will* contain special characters!
         end
       end
-      # TODO: i18n!
-      flash[:error] = 'Sorry, email address or password must have been incorrect.'
+      flash[:error] = I18n.t('routes.login_error')
       redirect back
     end
     
     get '/logout' do
       current_user && session[:user_id] = nil
-      # TODO: i18n!
-      flash[:notice] = "Your session has been closed."
+      flash[:notice] = I18n.t('routes.session_closed')
       redirect back
     end
 
@@ -88,7 +86,7 @@ module Wordcabin
         headers['Content-Type'] = file.content_type
         file.binary_data
       rescue ActiveRecord::RecordNotFound
-        flash[:warning] = "One of the attached files could not be found."
+        flash[:warning] = I18n.t('routes.attached_file_not_found')
       end
     end
     
@@ -107,7 +105,7 @@ module Wordcabin
           json(error: {message: msg})
         end
       rescue => e
-        msg = "Internal server error in /files/upload (#{e})"
+        msg = I18n.t('routes.file_upload_500', error: e)
         json(error: {message: msg})
       end
     end
@@ -166,7 +164,7 @@ module Wordcabin
         # HTML instead...
         request.xhr? ? haml(:article, layout: false) : haml(:contents)
       else
-        flash[:error] = "We're sorry, there's no such chapter in this book." # TODO: i18n!
+        flash[:error] = I18n.t('routes.no_such_chapter')
         redirect to('/')
       end
     end
@@ -179,7 +177,7 @@ module Wordcabin
         if current_user.is_admin?
           location = "/#{locale}/new?content_fragment[book]=#{book.book}&content_fragment[locale]=#{book.locale}&view_mode=edit"
         else
-          flash[:warn] = 'The selected book is empty, please check back later.' # TODO: i18n!
+          flash[:warn] = I18n.t('routes.book_is_empty')
           location = '/'
         end
       end
@@ -200,14 +198,15 @@ module Wordcabin
           @fragment.parent.update_attribute(:is_published, published == 'true' ? true : false)
         end
         if @fragment.save
-          flash[:notice] = 'The content fragment was saved successfully.' # TODO: i18n!
+          flash[:notice] = I18n.t('routes.fragment_saved')
           redirect to("#{URI.escape(@fragment.url_path)}?view_mode=preview")
         else
-          flash[:error] = @fragment.errors.full_messages.join(' ') # Not pretty, but whatever.
+          # TODO: Not (visually) pretty, but whatever.
+          flash[:error] = @fragment.errors.full_messages.join(' ')
           redirect back
         end
       else
-        flash[:error] = 'No such content fragment could be found.' # TODO: i18n!
+        flash[:error] = I18n.t('routes.fragment_not_found')
         redirect back
       end
     end
@@ -215,12 +214,12 @@ module Wordcabin
     delete '/:id' do |id|
       if @fragment = ContentFragment.find(id)
         if @fragment.destroy
-          flash[:notice] = 'The content fragment was destroyed successfully.' # TODO: i18n!
+          flash[:notice] = I18n.t('routes.fragment_destroyed')
         else
-          flash[:error] = 'Unable to delete content fragment!' # TODO: i18n!
+          flash[:error] = I18n.t('routes.fragment_cant_be_destroyed')
         end
       else
-        flash[:error] = 'No such content fragment could be found.' # TODO: i18n!
+        flash[:error] = I18n.t('routes.fragment_not_found')
       end
       redirect back
     end
