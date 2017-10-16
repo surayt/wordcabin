@@ -1,17 +1,28 @@
 body.keyboard
-  background-color: black
+  background-color: #eaeaea
   #grid-container
     display: none
   textarea
-    margin: .75em 0 0 0
-    padding: .75em .5em
+    margin: 0
+    padding: 0
     border: 0
-    width: 98%
+    width: 100%
     height: 15em
   #keyboard_keyboard
     min-width: 48em
     text-align: center
+    span
+      font-size: 1.6em
+    .ui-keyboard-button
+      height: 2.8em
+      min-width: 2.8em
+      margin: 0 .2em .4em .2em
+      cursor: pointer
+    .ui-keyboard-accept,
+    .ui-keyboard-cancel
+      display: none
+    .ui-keyboard-space
+      min-width: 15em
     .ui-keyboard-keyset
-      width: 98%
-      background-color: #eaeaea
-      padding: .5em
+      width: 100%
+      padding: 1em 0 .5em 0
