@@ -1,22 +1,20 @@
-- # TODO: i18n!
-
-- # FIXME: this file has grown into an ugly, smelly, 500 pound ruby-coloured gorilla
-- # and includes more backend code than Wile E. Coyote and The Roadrunner together
-- # could ever wish for. It needs to go back to being a slim and logic-sparse
-- # template again!
+- # TODO: FIXME: this file has grown into an ugly, smelly, 500 pound 
+- # ruby-coloured gorilla and includes more backend code than Wile E.
+- # Coyote and The Roadrunner together could ever wish for. It needs
+- # to go back to being a slim and logic-sparse template again!
 
 #session-links
   - if current_user && !current_user.new_record?
     - if current_user.is_admin?
       - unless content_class.include?('index')
-        %a{href: '/'}= 'Book List'
+        %a{href: '/'}= I18n.t('views.session_links.book_list')
       - unless content_class.include?('exercises')
-        %a{href: "/#{locale}/exercises"}= 'Manage Exercises'
+        %a{href: "/#{locale}/exercises"}= I18n.t('views.session_links.manage_exercises')
       - unless %w{index exercises}.any? {|word| content_class.include? word}
         - if view_mode == :edit
-          %a{href: '?view_mode=preview'}= 'Preview Fragment'
+          %a{href: '?view_mode=preview'}= I18n.t('views.session_links.preview')
         - if view_mode == :preview
-          %a{href: '?view_mode=edit'}= 'Edit Fragment'
-    %a{href: "/#{locale}/logout"}= 'Logout'
+          %a{href: '?view_mode=edit'}= I18n.t('views.session_links.edit')
+    %a{href: "/#{locale}/logout"}= I18n.t('views.session_links.logout')
   - else
-    %a{href: "/#{locale}/login?referer=/#{locale}#{request.path_info}"}= 'Login'
+    %a{href: "/#{locale}/login?referer=/#{locale}#{request.path_info}"}= I18n.t('views.session_links.login')

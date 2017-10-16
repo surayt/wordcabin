@@ -1,9 +1,7 @@
 = haml 'exercises/header_table'.to_sym
 .drag-n-drop-cloze
   %p.legend
-    -# TODO: i18n!
-    = 'Use the mouse to drag and drop the words into the correct positions in the text.'
-    = 'Tap the light bulb to check your answers or reveal the answer keys.'
+    = I18n.t('views.drag_n_drop_cloze.instructions')
     = @exercise.description
     %a.reveal
       %i.fa.fa-lightbulb-o

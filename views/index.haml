@@ -3,31 +3,29 @@
     %img{src: '/assets/logo_kl.png'}
     %br/
     - if current_user.is_admin?
-      - # TODO: i18n!
-      = 'Choose the book you wish to preview or edit below.'
+      = I18n.t('views.index.choose_book')
       %span
-        - # TODO: i18n!
-        = 'Books in green colour have already been published to readers!'
+        = I18n.t('views.index.green_books')
     - else
-      - # TODO: i18n!
-      = 'Choose your language of instruction to use the learning portal.'
+      = I18n.t('views.index.choose_locale')
       %span
-        - # TODO: i18n!
-        = 'All courses are in alpha version, please bear with us!'
+        = I18n.t('views.index.alpha_version')
   = haml :session_links
   - @fragment_sets.each do |book, set|
     %ul.book
       %li
-        - # TODO: i18n!
-        %h4= "#{current_user.is_admin? ? 'Preview' : 'Read'} #{book} in:"
+        %h4
+          - current_user.is_admin?
+            = I18n.t('views.index.preview_book', book: book)
+          - else
+            = I18n.t('views.index.read_book', book: book)
         %ul.language_version
           - set.each do |fragment|
             %li
               %a{href: "#{fragment.first_child_url_path}#{'?view_mode=preview' if current_user.is_admin?}",
                  class: "book#{' '+(fragment.is_published ? 'published' : 'unpublished') if current_user.is_admin?}"}
-                = I18n.t(fragment.locale)
-    - # TODO: i18n!
-    %p.keyboard= "Need to type some Surayt letters or even a longer text but you don't own a Surayt keyboard or don't know how to change your computer's settings? Try out our new <a href='/#{locale}/keyboard' title='Suray on-screen keyboard'>Surayt on-screen keyboard page</a>!"
+                = I18n.t(fragment.locale)    
+    %p.keyboard= I18n.t('views.index.keyboard_ad', url: "/#{locale}/keyboard")
   %footer
     %img{src: '/assets/FU_Bergen3.jpg'}
     %img{src: '/assets/Cam_Lpz.jpg'}

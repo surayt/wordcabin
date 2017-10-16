@@ -18,8 +18,5 @@
     
   %body{dir: :auto, class: content_class}
     = styled_flash
-    -# TODO: i18n!
-    %p#admin-size-info
-      The editing screen requires at least 450 pixels of horizontal space.
-      Please rotate your device or use one with a bigger screen.
+    %p#admin-size-info= I18n.t('views.layout.admin_size_info')
     #grid-container= yield
