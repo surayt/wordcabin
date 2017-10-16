@@ -1,5 +1,3 @@
-// TODO: i18n! (See uploadfile.js for how to do so)
-
 (function() {
   tinymce.create('tinymce.plugins.InsertExercise', {
     InsertExercise: function(ed, url) {
@@ -21,7 +19,7 @@
       function showDialog() {       
         var exercises_url = '/'+location.pathname.split('/')[1]+'/exercises.json';
         var exercises = loadJSON(exercises_url);
-        exercises.unshift({text: 'Select exercise', value: null});
+        exercises.unshift({text: ed.translate('Select exercise'), value: null});
         
         win = editor.windowManager.open({
           title: ed.translate('Insert an exercise'),
@@ -90,7 +88,7 @@
         console.log(listbox.value());
         
         if (listbox.value() == null) {
-          return handleError('You must choose an exercise to be inserted into the document.');
+          return handleError(ed.translate('You must choose an exercise to be inserted into the document.'));
         } else {
           var id = listbox.value();
           ed.execCommand('mceInsertContent', false,
