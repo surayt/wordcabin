@@ -2,7 +2,7 @@ require 'rack/mime'
 
 module Wordcabin
   class FileAttachment < ActiveRecord::Base
-    validates :binary_data, :content_type, presence: {message: 'must be present.'} # TODO: i18n!
+    validates :binary_data, :content_type, presence: {message: I18n.t('models.file_attachment.must_be_present')}
   
     attr_accessor :type, :tempfile, :name, :head    
     before_validation :read_tempfile_data, on: :create

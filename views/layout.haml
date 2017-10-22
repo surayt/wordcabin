@@ -5,15 +5,18 @@
     %meta{charset: 'utf-8'}/
     %meta{name: 'viewport', content: 'width=device-width, initial-scale=1'}
     %link{rel: 'icon', href: '/assets/favicon.ico?v=1.0'}/
-    %link{href: "/font-awesome/css/font-awesome.css", rel: :stylesheet, type: 'text/css'}/
-    %link{href: "/assets/main.css", rel: :stylesheet, type: 'text/css'}/
-    %script{src: "/tinymce-dist/tinymce.min.js", type: 'text/javascript'}
-    %script{src: "/assets/main.js", type: 'text/javascript'}
+    %link{href: '/font-awesome/css/font-awesome.css', rel: :stylesheet, type: 'text/css'}/
+    %link{href: '/assets/main.css', rel: :stylesheet, type: 'text/css'}/
+    %link{href: '/keyboard/css/keyboard.css'}
+    %script{src: '/tinymce-dist/tinymce.min.js', type: 'text/javascript'}
+    %script{src: '/assets/main.js', type: 'text/javascript'}
+    %script{src: '/keyboard/js/jquery.keyboard.js', type: 'text/javascript'}
+    %script{src: '/keyboard/languages/syr.js', type: 'text/javascript'}
+    %script{src: '/keyboard/layouts/syriac.js', type: 'text/javascript'}
+    -# TODO: weed out!
+    %script{src: '/keyboard/js/jquery.keyboard.extension-all.js', type: 'text/javascript'}
     
   %body{dir: :auto, class: content_class}
     = styled_flash
-    -# TODO: i18n!
-    %p#admin-size-info
-      The editing screen requires at least 450 pixels of horizontal space.
-      Please rotate your device or use one with a bigger screen.
+    %p#admin-size-info= I18n.t('views.layout.admin_size_info')
     #grid-container= yield

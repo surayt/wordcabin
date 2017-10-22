@@ -1,9 +1,7 @@
 = haml 'exercises/header_table'.to_sym
 .questions-and-answers
   %p.legend
-    -# TODO: i18n!
-    = 'Read the questions in either Latin or Syriac letters and try to think of an appropriate answer.'
-    = 'Click or tap on a question to show an example answer.'
+    = I18n.t('views.questions_and_answers.instructions')
     = @exercise.description
   %table.texts
     - @text_fragments.each do |question|

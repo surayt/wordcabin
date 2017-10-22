@@ -7,7 +7,7 @@ module Wordcabin
     has_many :text_fragments
     has_many :questions
     
-    validates :name, presence: {message: 'must be present.'} # TODO: i18n!
+    validates :name, presence: {message: I18n.t('models.exercise.must_be_present')}
     
     def template_name
       'exercises/'+self.class.name.to_s.split(':').last.underscore

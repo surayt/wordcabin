@@ -50,3 +50,6 @@
 [submodule "javascripts/jquery-mobile-dist"]
 	path = javascripts/jquery-mobile-dist
 	url = https://github.com/surayt/jquery-mobile-dist.git
+[submodule "public/keyboard"]
+	path = public/keyboard
+	url = https://github.com/surayt/Keyboard.git
