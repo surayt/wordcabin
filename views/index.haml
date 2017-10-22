@@ -15,7 +15,7 @@
     %ul.book
       %li
         %h4
-          - current_user.is_admin?
+          - if current_user.is_admin?
             = I18n.t('views.index.preview_book', book: book)
           - else
             = I18n.t('views.index.read_book', book: book)
@@ -25,7 +25,7 @@
               %a{href: "#{fragment.first_child_url_path}#{'?view_mode=preview' if current_user.is_admin?}",
                  class: "book#{' '+(fragment.is_published ? 'published' : 'unpublished') if current_user.is_admin?}"}
                 = I18n.t(fragment.locale)    
-    %p.keyboard= I18n.t('views.index.keyboard_ad', url: "/#{locale}/keyboard")
+  %p.keyboard= I18n.t('views.index.keyboard_ad', url: "/#{locale}/keyboard")
   %footer
     %img{src: '/assets/FU_Bergen3.jpg'}
     %img{src: '/assets/Cam_Lpz.jpg'}
