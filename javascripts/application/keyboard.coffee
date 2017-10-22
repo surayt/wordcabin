@@ -1,6 +1,6 @@
 $(document).ready ->
   $('#keyboard').keyboard
-    layout: 'syriac' # 'german-qwertz-1'
+    layout: 'syriac' # syriac, syriac-phonetic, german-qwertz-1, etc.
     language: null # Set by layout (above line) if null
     rtl: true
     alwaysOpen: true
