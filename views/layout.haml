@@ -8,11 +8,6 @@
     %link{href: '/font-awesome/css/font-awesome.css', rel: :stylesheet, type: 'text/css'}/
     %link{href: '/assets/main.css', rel: :stylesheet, type: 'text/css'}/
     %link{href: '/keyboard/css/keyboard.css'}
-    %script{src: '/tinymce-dist/tinymce.min.js', type: 'text/javascript'}
-    %script{src: '/assets/main.js', type: 'text/javascript'}
-    %script{src: '/keyboard/js/jquery.keyboard.js', type: 'text/javascript'}
-    %script{src: '/keyboard/languages/syr.js', type: 'text/javascript'}
-    %script{src: '/keyboard/layouts/syriac.js', type: 'text/javascript'}
     -# TODO: weed out!
     %script{src: '/keyboard/js/jquery.keyboard.extension-all.js', type: 'text/javascript'}
     
@@ -20,3 +15,9 @@
     = styled_flash
     %p#admin-size-info= I18n.t('views.layout.admin_size_info')
     #grid-container= yield
+    
+    %script{src: '/tinymce-dist/tinymce.min.js', type: 'text/javascript'}
+    %script{src: '/assets/main.js', type: 'text/javascript'}
+    %script{src: '/keyboard/js/jquery.keyboard.js', type: 'text/javascript'}
+    %script{src: '/keyboard/languages/syr.js', type: 'text/javascript'}
+    %script{src: '/keyboard/layouts/syriac.js', type: 'text/javascript'}
