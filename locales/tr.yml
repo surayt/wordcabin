@@ -1,11 +1,11 @@
 tr:
-  ar: Arapça
-  de: Almanca
-  en: İngilizce
-  fr: Fransızca
-  nl: Hollandaca
-  sv: İsveççe
-  tr: Türkçe
+  ar: "Arapça"
+  de: "Almanca"
+  en: "İngilizce"
+  fr: "Fransızca"
+  nl: "Hollandaca"
+  sv: "İsveççe"
+  tr: "Türkçe"
   
   toc: "Table of contents"
   level: "Level"
