@@ -1,11 +1,11 @@
 fr:
-  ar: Arabe
-  de: Allemand
-  en: Anglais
-  fr: Français
-  nl: Néerlandais
-  sv: Suédois
-  tr: Turc
+  ar: "Arabe"
+  de: "Allemand"
+  en: "Anglais"
+  fr: "Français"
+  nl: "Néerlandais"
+  sv: "Suédois"
+  tr: "Turc"
   
   toc: "Table of contents"
   level: "Level"
