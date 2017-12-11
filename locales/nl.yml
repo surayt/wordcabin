@@ -1,11 +1,11 @@
 nl:
-  ar: Arabisch
-  de: Duits
-  en: Engels
-  fr: Frans
-  nl: Nederlands
-  sv: Zweedse
-  tr: Turks
+  ar: "Arabisch"
+  de: "Duits"
+  en: "Engels"
+  fr: "Frans"
+  nl: "Nederlands"
+  sv: "Zweedse"
+  tr: "Turks"
   
   toc: "Table of contents"
   level: "Level"

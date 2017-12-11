@@ -1,72 +1,73 @@
 de:
-  ar: Arabisch
-  de: Deutsch
-  en: Englisch
-  fr: Französisch
-  nl: Niederländisch
-  sv: Schwedisch
-  tr: Türkisch
+  ar: "Arabisch"
+  de: "Deutsch"
+  en: "Englisch"
+  fr: "Französisch"
+  nl: "Niederländisch"
+  sv: "Schwedisch"
+  tr: "Türkisch"
   
-  toc: "Table of contents"
-  level: "Level"
+  toc: "Inhaltsverzeichnis"
+  level: "Niveau"
   
   routes:
-    welcome: "Welcome, %{user}!"
-    login_error: "Sorry, email address or password must have been incorrect."
-    session_closed: "Your session has been closed."
-    attached_file_not_found: "One of the attached files could not be found."
-    file_upload_500: "Internal server error in /files/upload (%{error})"
-    no_such_chapter: "We're sorry, there's no such chapter in this book."
-    book_is_empty: "The selected book is empty, please check back later."
-    fragment_saved: "The content fragment was saved successfully."
-    fragment_not_found: "No such content fragment could be found."
-    fragment_destroyed: "The content fragment was destroyed successfully."
-    fragment_cant_be_destroyed: "Unable to delete content fragment!"
+    welcome: "Herzlich willkommen, %{user}!"
+    login_error: "E-Mail-Adresse oder Passwort falsch."
+    session_closed: "Ihre Sitzung wurde beendet."
+    attached_file_not_found: "Eine der angehängten Dateien konnte nicht gefunden werden."
+    file_upload_500: "Interner Server-Fehler in /files/upload (%{error}). Bitte nehmen Sie Kontakt mit uns auf."
+    no_such_chapter: "Unbekanntes Kapitel."
+    book_is_empty: "Noch keine Inhalte in diesem Buch."
+    fragment_saved: "Das Inhaltsfragment wurde gespeichert."
+    fragment_not_found: "Inhaltsfragment konnte nicht gefunden werden."
+    fragment_destroyed: "Inhaltsfragment wurde gelöscht."
+    fragment_cant_be_destroyed: "Inhaltsfragment konnte nicht gelöscht werden."
     
   models:
     content_fragment:
-      book_must_be_present: "must be present, even when chapter is empty."
-      locale_must_be_present: "must and should be present"
-      locale_format: "must be in ISO 3166-1 Alpha 2 encoding."
-      chapter_format: "must be in a format like 2.10.4.5, etc."
-      chapter_already_exists: "already exists in this book for the selected language version."
-      book_already_exists: "already exists for the selected language version."
-      book_is_not_a_book: "must already exist or otherwise the new content fragment will not be visible."
-      cant_destroy: "Can't delete book that still has any children!"
+      book_must_be_present: "muss angegeben werden, auch für leere Kapitel."
+      locale_must_be_present: "muss angegeben werden."
+      locale_format: "muss ISO 3166-1-Alpha-2-Kodierung entsprechen."
+      chapter_format: "muss in einem Format wie z.B. 2.10.4.5 sein."
+      chapter_already_exists: "ist in diesem Buch für die gewählte Sprachversion bereits vorhanden."
+      book_already_exists: "ist in der gewählten Sprachversion bereits vorhanden."
+      book_is_not_a_book: "muss bereits vorhanden sein, andernfalls ist das neue Inhaltsfragment nicht sichtbar."
+      cant_destroy: "Ein Buch welches noch Inhaltsfragmente enthält, kann nicht gelöscht werden."
     exercise:
-      must_be_present: "must be present."
+      must_be_present: "muss angegeben werden."
     file_attachment:
-      must_be_present: 'must be present.'
+      must_be_present: 'muss angegeben werden.'
 
   views:
     index:
-      choose_book: "Choose the book you wish to preview or edit below."
-      green_books: "Books in green colour have already been published to readers!"
-      choose_locale: "Choose your language of instruction to use the learning portal."
-      alpha_version: "All courses are in alpha version, please bear with us!"
-      preview_book: "Preview %{book} in:"
-      read_book: "Read %{book} in:"
-      keyboard_ad: "Need to type some Surayt letters or even a longer text but you don't own a Surayt keyboard or don't know how to change your computer's settings? Try out our new <a href='%{url}' title='Surayt on-screen keyboard'>Surayt on-screen keyboard</a>!"
+      choose_book: "Bitte wählen Sie unten das Buch aus, welches Sie anschauen oder bearbeiten möchten."
+      green_books: "In Grün markierte Bücher wurden bereits publiziert und sind öffentlich sichtbar."
+      choose_locale: "Bitte wählen Sie ihre gewünschte Unterrichtssprache aus."
+      alpha_version: "Bitte haben Sie noch ein wenig Gedult, derzeit befinden sich alle Kurse in einer Beta-Version."
+      preview_book: "%{book} in folgender Sprache anschauen:"
+      read_book: "%{book} in folgender Sprache lesen:"
+      keyboard_ad: "Wenn Sie einige Surayt-Buchstaben oder auch einen längeren Text eingeben müssen, aber keine Surayt-Tastatur besitzen oder nicht wissen, wie sich die entsprechenden Einstellungen auf Ihrem Computer anpassen lassen, können Sie unsere neue <a href='%{url}' title='On-Screen-Tastatur für Surayt'>On-Screen-Tastatur für Surayt</a> benutzen."
     keyboard:
-      placeholder: "Enter as much text as you would like, but don't forget to save it by selecting all text and hitting Ctrl-C"
+      placeholder: "Geben Sie so viel Text ein wie Sie möchten, vergessen Sie aber nicht, diesen abzuspeichern, indem Sie ihn markieren und mit Strg-C kopieren"
     layout:
-      admin_size_info: "The editing screen requires at least 450 pixels of horizontal space. Please rotate your device or use one with a bigger screen."
+      admin_size_info: "Die Bearbeitungsansicht erfordert mindestens 450 Pixel Breite. Bitte drehen Sie Ihr Gerät um 90° oder benutzen ein Gerät mit größerem Bildschirm."
     login_form:
-      email: "Email:"
-      password: "Password:"
-      login: "Login"
+      email: "E-Mail:"
+      password: "Passwort:"
+      login: "Anmelden"
     session_links:
-      book_list: "Book List"
-      manage_exercises: "Manage Exercises"
-      preview: "Preview Fragment"
-      edit: "Edit Fragment"
-      logout: "Logout"
-      login: "Login"
+      book_list: "Bücherliste"
+      manage_exercises: "Übungen bearbeiten"
+      preview: "Inhaltsfragment betrachten"
+      edit: "Inhaltsfragment bearbeiten"
+      logout: "Abmelden"
+      login: "Anmelden"
     exercise:
-      info: "Exercise ##{@exercise.id} will appear here once it has been cleared by the editors."
+      info: "Übung ##{@exercise.id} wird hier sichtbar sein, sobald sie von einem Redakteur als publiziert gekennzeichnet wurde."
     drag_n_drop_cloze:
-      instructions: "Use the mouse to drag and drop the words into the correct positions in the text. Tap the light bulb to check your answers or reveal the answer keys."
+      instructions: "Benutzen Sie die Maus oder Ihren Finger um die Wörter an die richtige Stelle im Text zu ziehen. Klicken oder tippen Sie auf die Glühbirne, um den Antwortschlüssel zu sehen."
     questions_and_answers:
-      instructions: "Read the questions in either Latin or Syriac letters and try to think of an appropriate answer. Click or tap on a question to show an example answer."
+      instructions: "Lesen Sie die Fragen in lateinischen oder syrischen Buchstaben und versuchen Sie, eine passende Antwort zu finden. Klicken oder tippen Sie auf eine Frage, um eine korrekte Beispielantwort zu sehen."
     sorted_fragments:
-      instructions: "Drag and drop the words into order until you are satisfied to have a sensible sentence in each row. You may either sort the Latin or the Syriac script side of the table. Tap the light bulb to check your order or reveal the correct one."
+      instructions: "Ziehen Sie die Wörter mit der Maus oder Ihrem Finger über den Bildschirm, bis ihre Reihenfolge in jeder Zeile eine sinnvolle Antwort ergibt. Sie können nach Belieben entweder die Seite mit lateinischen oder mit syrischen Buchstaben sortieren. Klicken oder tippen Sie auf die Glühbirne, um die korrekte Reihenfolge herzustellen."
+      
