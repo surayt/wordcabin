@@ -1,0 +1,73 @@
+#!/usr/bin/env ruby
+
+require 'nokogiri'
+require 'colorize'
+require 'pathname'
+
+require_relative Pathname('../config')+'config'
+require_relative Pathname('../lib')+'server'
+
+include Wordcabin
+
+User.connection
+ContentFragment.connection
+FileAttachment.connection
+
+def absolute_from_relative_path(href)
+  href.gsub(/^(\.\.\/)*/, '/') # Returns string
+end
+
+def download_file_and_get_new_path(href)
+  matches = href.match(/^.*audios\/(?<dir>.*)\/(?<file>.*)$/)
+  file = {content_type: 'audio/mpeg', filename: matches[:file], tempfile: "tmp/#{matches[:file]}"}
+  `wget -qc #{href} -O #{file[:tempfile]}`
+  file = FileAttachment.new(file)
+  if file.save
+    return file.url_path
+  else
+    puts "Error downloading #{href}!".red
+    return false
+  end
+end
+
+def download_file_and_get_new_path_from_commentary(href)
+  matches = href.match(/^.*chapters\/(?<dir>.*)\/audios\/(?<file>.*\.mp3)\)/) # Returns match group
+  old_url = "https://aramaic.geschkult.fu-berlin.de/audios/#{matches[:dir]}/#{matches[:file]}"
+  return download_file_and_get_new_path(old_url)
+end
+
+def process_html(html)
+  # File.write("tmp/cf##{cf.id}.html", cf.html) # Just a backup, not using it for now...
+  html_doc = Nokogiri::HTML.fragment(html)
+  anchors = html_doc.css('a[href*="mp3"]')
+  anchors.each do |a|
+    href = a['href']
+    case href
+      when /\.\.\//
+        href = absolute_from_relative_path(href)
+      when /\(was:/
+        href = download_file_and_get_new_path_from_commentary(href)
+      when /aramaic\.geschkult\.fu-berlin\.de/
+        href = download_file_and_get_new_path(href)
+      else
+        puts "Unhandled href: #{href}".red unless href.match(/^\/files\/\d+\.mp3$/)
+    end
+    if false != href
+      a['href'] = href
+    else
+      a['class'] = "#{a['class']} broken-link"
+    end
+  end
+  html_doc.to_html
+end
+
+ContentFragment.where.not(html: [nil, '']).each do |cf| 
+  puts "*** Processing ContentFragment##{cf.id}".yellow
+  modified_html = process_html(cf.html)
+  if cf.html != modified_html
+    puts "HTML modified, saving ContentFragment##{cf.id}".green
+    cf.save
+  else
+    puts "Nothing changed, not saving ContentFragment##{cf.id}".light_red
+  end
+end
