@@ -7,66 +7,66 @@ ar:
   sv: سويدي
   tr: تركي
   
-  toc: "Table of contents"
-  level: "Level"
+  toc: "جدول المحتويات"
+  level: "المستوى"
   
   routes:
-    welcome: "Welcome, %{user}!"
-    login_error: "Sorry, email address or password must have been incorrect."
-    session_closed: "Your session has been closed."
-    attached_file_not_found: "One of the attached files could not be found."
-    file_upload_500: "Internal server error in /files/upload (%{error})"
-    no_such_chapter: "We're sorry, there's no such chapter in this book."
-    book_is_empty: "The selected book is empty, please check back later."
-    fragment_saved: "The content fragment was saved successfully."
-    fragment_not_found: "No such content fragment could be found."
-    fragment_destroyed: "The content fragment was destroyed successfully."
-    fragment_cant_be_destroyed: "Unable to delete content fragment!"
+    welcome: "أهلًا وسهلًا, %{user}!"
+    login_error: "المعذرة، البريد الإلكتروني أو كلمة السر غير صحيحة."
+    session_closed: "انتهت الجلسة."
+    attached_file_not_found: "أحد المرفقات لم يتم العثور عليه."
+    file_upload_500: "خطأ داخلي في المخدم في /ملفات/التحميل، الرجاء الاتصال بنا. (%{error})"
+    no_such_chapter: "فصل غير موجود في هذا الكتاب."
+    book_is_empty: "الكتاب المختار فارغ. الرجاء المحاولة في وقت آخر."
+    fragment_saved: "تم حفظ الجزء من المحتويات بنجاح."
+    fragment_not_found: "لم يتم العثور على الجزء المطلوب."
+    fragment_destroyed: "تم حذف الجزء المطلوب بنجاح."
+    fragment_cant_be_destroyed: "الجزء المطلوب لا يمكن حذفه"
     
   models:
     content_fragment:
-      book_must_be_present: "must be present, even when chapter is empty."
-      locale_must_be_present: "must and should be present"
-      locale_format: "must be in ISO 3166-1 Alpha 2 encoding."
-      chapter_format: "must be in a format like 2.10.4.5, etc."
-      chapter_already_exists: "already exists in this book for the selected language version."
-      book_already_exists: "already exists for the selected language version."
-      book_is_not_a_book: "must already exist or otherwise the new content fragment will not be visible."
-      cant_destroy: "Can't delete book that still has any children!"
+      book_must_be_present: "بقاؤه إجباري، حتى وإن كان الفصل فارغًا."
+      locale_must_be_present: "بقاؤه إجباري"
+      locale_format: "ISO 3166-1 Alpha 2 يجب أن يكون موافقًا للترميز."
+      chapter_format: "يجب أن تكون بصيغة مثل 2.10.4.5."
+      chapter_already_exists: "موجود مسبقًا في هذا الكتاب لإصدار اللغة المختارة."
+      book_already_exists: "موجود مسبقًا لإصدار اللغة المختارة."
+      book_is_not_a_book: "يجب أن يكون موجودًا مسبقًا، وإلا لن يكون جزء المحتوى الجديد مرئيًا."
+      cant_destroy: "لا يمكن حذف كتاب لا تزال فيه أجزاء محتويات!"
     exercise:
-      must_be_present: "must be present."
+      must_be_present: "بقاؤه إجباري."
     file_attachment:
-      must_be_present: 'must be present.'
+      must_be_present: 'بقاؤه إجباري.'
 
   views:
     index:
-      choose_book: "Choose the book you wish to preview or edit below."
-      green_books: "Books in green colour have already been published to readers!"
-      choose_locale: "Choose your language of instruction to use the learning portal."
-      alpha_version: "All courses are in alpha version, please bear with us!"
-      preview_book: "Preview %{book} in:"
-      read_book: "Read %{book} in:"
-      keyboard_ad: "Need to type some Surayt letters or even a longer text but you don't own a Surayt keyboard or don't know how to change your computer's settings? Try out our new <a href='%{url}' title='Surayt on-screen keyboard'>Surayt on-screen keyboard</a>!"
+      choose_book: "اختر الكتاب الذي تريد معاينته أو تعديله أدناه."
+      green_books: "الكتب باللون الأخضر تم نشرها للقراء!"
+      choose_locale: "اختر لغة التعليمات من أجل استخدام موقع التعلم."
+      alpha_version: "كافة الدورات هي بإصدار ألفا، نشكركم على تفهمكم!"
+      preview_b "انظر في اللغة التالية %{book}:"
+      read_book: "اقرأ في اللغة التالية %{book}:"
+      keyboard_ad: " إن كنتم تريدون كتابة حروف سوريت، أو حتى نصًا أطول بالسوريت، وليس لديكم لوحة مفاتيح للسوريت أو أنكم لا تعرفون كيف تغيرون إعدادات حواسيبكم، بإمكانكم أن تستخدموا لوحة المفاتيح الجديدة <a href='%{url}' title='On-Screen-Tastatur für Surayt'>On-Screen-Tastatur für Surayt</a> المدمجة في صفحتنا.!"
     keyboard:
-      placeholder: "Enter as much text as you would like, but don't forget to save it by selecting all text and hitting Ctrl-C"
+      placeholder: "أدخل النص الذي تريده، ولكن لا تنسى أن تحفظه من خلال الضغط على  Ctrl-C"
     layout:
-      admin_size_info: "The editing screen requires at least 450 pixels of horizontal space. Please rotate your device or use one with a bigger screen."
+      admin_size_info: "تتطلب شاشة التحرير 450 بكسل على الأقل من المساحة الأفقية. يرجى تدوير جهازك أو استخدام جهاز بشاشة أكبر."
     login_form:
-      email: "Email:"
-      password: "Password:"
-      login: "Login"
+      email: "البريد الإلكتروني:"
+      password: "كلمة السر:"
+      login: "تسجيل الدخول"
     session_links:
-      book_list: "Book List"
-      manage_exercises: "Manage Exercises"
-      preview: "Preview Fragment"
-      edit: "Edit Fragment"
-      logout: "Logout"
-      login: "Login"
+      book_list: "قائمة الكتب"
+      manage_exercises: "تحرير التمارين"
+      preview: "مشاهدة الجزء المطلوب"
+      edit: "تحرير الجزء المطلوب"
+      logout: "تسجيل الخروج"
+      login: "تسجيل الدخول"
     exercise:
-      info: "Exercise ##{@exercise.id} will appear here once it has been cleared by the editors."
-    drag_n_drop_cloze:
-      instructions: "Use the mouse to drag and drop the words into the correct positions in the text. Tap the light bulb to check your answers or reveal the answer keys."
+      info: "سيظهر التمرين ##{@exercise.id} هنا فور موافقة أحد المحررين على نشره" 
+      drag_n_drop_cloze:
+      instructions: "استخدم الفأرة أو اصبعك لسحب الكلمة المناسبة في مكانها المناسب في النص. اضغط أو انقر على المصباح لمشاهدة الجواب الصحيح."
     questions_and_answers:
-      instructions: "Read the questions in either Latin or Syriac letters and try to think of an appropriate answer. Click or tap on a question to show an example answer."
+      instructions: "اقرأ الأسئلة إما بالكتابة اللاتينية أو السريانية وحاول إيجاد الأجوبة الصحيحة لها. اضغط أو انقر أحد الأسئلة لمشاهدة مثال عن الإجابة."
     sorted_fragments:
-      instructions: "Drag and drop the words into order until you are satisfied to have a sensible sentence in each row. You may either sort the Latin or the Syriac script side of the table. Tap the light bulb to check your order or reveal the correct one."
+      instructions: "اسحب الكلمات باستخدام الفأرة أو الاصبع إلى مكانها الصحيح حتى تكوّن جملة مفيدة. بإمكانك اختيار إحدى الكتابتين، السريانية أو اللاتينية. اضغط أو انقر على المصباح لمشاهدة التسلسل الصحيح للكلمات في الجملة."
