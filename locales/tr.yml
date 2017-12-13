@@ -11,62 +11,62 @@ tr:
   level: "Level"
   
   routes:
-    welcome: "Welcome, %{user}!"
-    login_error: "Sorry, email address or password must have been incorrect."
-    session_closed: "Your session has been closed."
-    attached_file_not_found: "One of the attached files could not be found."
-    file_upload_500: "Internal server error in /files/upload (%{error})"
-    no_such_chapter: "We're sorry, there's no such chapter in this book."
-    book_is_empty: "The selected book is empty, please check back later."
-    fragment_saved: "The content fragment was saved successfully."
-    fragment_not_found: "No such content fragment could be found."
-    fragment_destroyed: "The content fragment was destroyed successfully."
-    fragment_cant_be_destroyed: "Unable to delete content fragment!"
+    welcome: "Merhaba, %{user}!"
+    login_error: "E-posta adresinizi ya da şifrenizi yanlış girdiniz."
+    session_closed: "Oturumunuz sona ermiştir."
+    attached_file_not_found: "Ekteki dosyalardan biri bulunamamıştır."
+    file_upload_500: "İç Sunucu Hatası /dosyalarda/yüklemede (%{error})"
+    no_such_chapter: "Üzgünüz, böyle bir konu başlığı kitapta bulunmuyor."
+    book_is_empty: "Seçilen kitap halen mevcut değil. Lütfen sonradan kontrol edin."
+    fragment_saved: "Içerik fragmanı başarılı bir şekilde kaydedildi."
+    fragment_not_found: "Böylesi bir içerik fragmanı bulunamadı."
+    fragment_destroyed: "Içerik fragmanı başarılı bir şekilde silindi."
+    fragment_cant_be_destroyed: "Içerik fragmanı silinemiyor!"
     
   models:
     content_fragment:
-      book_must_be_present: "must be present, even when chapter is empty."
-      locale_must_be_present: "must and should be present"
-      locale_format: "must be in ISO 3166-1 Alpha 2 encoding."
-      chapter_format: "must be in a format like 2.10.4.5, etc."
-      chapter_already_exists: "already exists in this book for the selected language version."
-      book_already_exists: "already exists for the selected language version."
-      book_is_not_a_book: "must already exist or otherwise the new content fragment will not be visible."
-      cant_destroy: "Can't delete book that still has any children!"
+      book_must_be_present: "Bölüm içeriği boş olsa da, kitap mevcut olmalı."
+      locale_must_be_present: "zorunlu mevcut olmalı"
+      locale_format: "ISO 3166-1 Alpha 2 encoding formatında olmalı."
+      chapter_format: "2.10.4.5 gibi bir formatta olmalı"
+      chapter_already_exists: "seçilen dil versiyonu bu kitapta zaten mevcut."
+      book_already_exists: "seçilen dil versiyonu zaten mevcut."
+      book_is_not_a_book: "zaten mevcut olmalı ya da  or aksi halde yeni içerik fragmanı görünür olmayacaktır."
+      cant_destroy: "Hâlâ alt öge sahibi olan kitabı silemezsiniz!"
     exercise:
-      must_be_present: "must be present."
+      must_be_present: "mevcut olmalı."
     file_attachment:
-      must_be_present: 'must be present.'
+      must_be_present: 'mevcut olmalı.'
 
   views:
     index:
-      choose_book: "Choose the book you wish to preview or edit below."
-      green_books: "Books in green colour have already been published to readers!"
-      choose_locale: "Choose your language of instruction to use the learning portal."
-      alpha_version: "All courses are in alpha version, please bear with us!"
-      preview_book: "Preview %{book} in:"
-      read_book: "Read %{book} in:"
-      keyboard_ad: "Need to type some Surayt letters or even a longer text but you don't own a Surayt keyboard or don't know how to change your computer's settings? Try out our new <a href='%{url}' title='Surayt on-screen keyboard'>Surayt on-screen keyboard</a>!"
+      choose_book: "Aşağıda görüntülemek veya düzenlemek istediğiniz kitabı seçin."
+      green_books: "Yeşil renkte kitaplar okuyucularla halihazırda paylaşıldı!"
+      choose_locale: "Öğrenme portalını kullanmak için eğitim dilinizi seçiniz."
+      alpha_version: "Tüm dersler alfa sürümündedir, lütfen bizimle birlikte kalın!"
+      preview_book: "Göster %{book} :"
+      read_book: "Oku %{book} :"
+      keyboard_ad: " Bazı Surayt harfleri veya daha uzun bir metin yazmanız gerekiyor ancak Surayt klavye sahibi değilsiniz veya bilgisayarınızın ayarlarını nasıl değiştireceğinizi bilmiyor musunuz? Bu durumlarda, yeni <a href='%{url}' title='Surayt on-screen keyboard'>Surayt digital klavyemizi</a> deneyin!"
     keyboard:
-      placeholder: "Enter as much text as you would like, but don't forget to save it by selecting all text and hitting Ctrl-C"
+      placeholder: "İstediğiniz kadar çok metin girin, ancak tüm metni seçip, Ctrl-C'yi tıklayarak kaydetmeyi unutmayın."
     layout:
-      admin_size_info: "The editing screen requires at least 450 pixels of horizontal space. Please rotate your device or use one with a bigger screen."
+      admin_size_info: "Düzenleme ekranı, en az 450 piksel yatay alan gerektirir. Lütfen cihazınızı döndürün veya daha geniş ekranlı bir cihaz kullanın."
     login_form:
-      email: "Email:"
-      password: "Password:"
-      login: "Login"
+      email: "E-posta:"
+      password: "şifre:"
+      login: "oturum aç"
     session_links:
-      book_list: "Book List"
-      manage_exercises: "Manage Exercises"
-      preview: "Preview Fragment"
-      edit: "Edit Fragment"
-      logout: "Logout"
-      login: "Login"
+      book_list: "Kitap listesi"
+      manage_exercises: "Egzersizleri düzenle"
+      preview: "Fragmanı göster"
+      edit: "Fragmanı düzenle"
+      logout: "Oturumu kapat"
+      login: "Oturum aç"
     exercise:
-      info: "Exercise ##{@exercise.id} will appear here once it has been cleared by the editors."
+      info: "Egzersiz, ##{@exercise.id}  editörlerce düzenlemesi yapıldıktan sonra burada görünecektir."
     drag_n_drop_cloze:
-      instructions: "Use the mouse to drag and drop the words into the correct positions in the text. Tap the light bulb to check your answers or reveal the answer keys."
+      instructions: "Kelimeleri metin içindeki doğru konumlara sürüklemek ve bırakmak için fareyi kullanın. Yanıtlarınızı kontrol etmek veya cevap anahtarlarını göstermek için ampulün üzerine dokunun."
     questions_and_answers:
-      instructions: "Read the questions in either Latin or Syriac letters and try to think of an appropriate answer. Click or tap on a question to show an example answer."
+      instructions: "Soruları Latin ya da Süryani harflerle okuyun ve uygun bir cevap düşünmeye çalışın. Örnek bir cevabı göstermek için bir soruyu tıklayın veya üzerine dokunun."
     sorted_fragments:
-      instructions: "Drag and drop the words into order until you are satisfied to have a sensible sentence in each row. You may either sort the Latin or the Syriac script side of the table. Tap the light bulb to check your order or reveal the correct one."
+      instructions: "Her satırda mantıklı bir cümle bulana kadar kelimeleri düzenleyin. Tablonun Latince veya Süryanice komut dosyası tarafını kullanıp kelimeleri sıralayabilirsiniz. Sıralamanızı kontrol etmek veya doğru cevapları görmek için ampülün üzerine tıklayınız."
