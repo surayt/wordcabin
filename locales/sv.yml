@@ -7,66 +7,66 @@ sv:
   sv: Svenska
   tr: Turkiska
   
-  toc: "Table of contents"
-  level: "Level"
+  toc: "Innehållsförteckning"
+  level: "Nivå"
   
   routes:
-    welcome: "Welcome, %{user}!"
-    login_error: "Sorry, email address or password must have been incorrect."
-    session_closed: "Your session has been closed."
-    attached_file_not_found: "One of the attached files could not be found."
-    file_upload_500: "Internal server error in /files/upload (%{error})"
-    no_such_chapter: "We're sorry, there's no such chapter in this book."
-    book_is_empty: "The selected book is empty, please check back later."
-    fragment_saved: "The content fragment was saved successfully."
-    fragment_not_found: "No such content fragment could be found."
-    fragment_destroyed: "The content fragment was destroyed successfully."
-    fragment_cant_be_destroyed: "Unable to delete content fragment!"
+    welcome: "Välkommen, %{user}!"
+    login_error: "E-postadress eller lösenord ¨är felaktigt."
+    session_closed: "Din session har stängts."
+    attached_file_not_found: "En av de bifogade filerna kunde inte hittas."
+    file_upload_500: "Internt serverfel i / filer / uppladdning (%{error})"
+    no_such_chapter: "Vi är ledsna, men det finns inget sådant kapitel i den här boken."
+    book_is_empty: "Den valda boken är tom. Var och vänlig och kolla tillbaka senare."
+    fragment_saved: "Innehållsfragmentet är sparat."
+    fragment_not_found: "Inget sådant innehållsfragment kunde hittas."
+    fragment_destroyed: "Innehållsfragmentet förstördes."
+    fragment_cant_be_destroyed: "Det gick inte att radera innehållsfragmentet!"
     
   models:
     content_fragment:
-      book_must_be_present: "must be present, even when chapter is empty."
-      locale_must_be_present: "must and should be present"
-      locale_format: "must be in ISO 3166-1 Alpha 2 encoding."
-      chapter_format: "must be in a format like 2.10.4.5, etc."
-      chapter_already_exists: "already exists in this book for the selected language version."
-      book_already_exists: "already exists for the selected language version."
-      book_is_not_a_book: "must already exist or otherwise the new content fragment will not be visible."
-      cant_destroy: "Can't delete book that still has any children!"
+      book_must_be_present: "måste vara närvarande, även om kapitlet är tomt."
+      locale_must_be_present: "måste och borde vara närvarande"
+      locale_format: "måste vara i ISO 3166-1 Alpha 2-kodning."
+      chapter_format: "måste vara i ett format som 2.10.4.5, osv."
+      chapter_already_exists: "finns redan i den här boken för den valda språkversionen."
+      book_already_exists: "existerar redan för den valda språkversionen."
+      book_is_not_a_book: "måste redan existera eller annars kommer det nya innehållsfragmentet inte att synas."
+      cant_destroy: "Kan inte radera bok som fortfarande har några relaterade kapitel!"
     exercise:
-      must_be_present: "must be present."
+      must_be_present: "måste vara närvarande."
     file_attachment:
-      must_be_present: 'must be present.'
+      must_be_present: 'måste vara närvarande.'
 
   views:
     index:
-      choose_book: "Choose the book you wish to preview or edit below."
-      green_books: "Books in green colour have already been published to readers!"
-      choose_locale: "Choose your language of instruction to use the learning portal."
-      alpha_version: "All courses are in alpha version, please bear with us!"
-      preview_book: "Preview %{book} in:"
-      read_book: "Read %{book} in:"
-      keyboard_ad: "Need to type some Surayt letters or even a longer text but you don't own a Surayt keyboard or don't know how to change your computer's settings? Try out our new <a href='%{url}' title='Surayt on-screen keyboard'>Surayt on-screen keyboard</a>!"
+      choose_book: "Välj den bok du vill förhandsgranska eller redigera nedan."
+      green_books: "Böcker i grön färg har redan publicerats till läsare!"
+      choose_locale: "Välj ditt undervisningsspråk för att använda lärandeportalen."
+      alpha_version: "Alla kurser är i alfaversion, var god ha tålamod med oss!"
+      preview_book: "Förhandsgranska %{book} i:"
+      read_book: "Läs %{book} i:"
+      keyboard_ad: "Behöver du skriva några Surayt-bokstäver eller en längre text men du har inget Surayt-tangentbord eller vet inte hur du ändrar datorns inställningar? Prova vår nya <a href='%{url}' title='Surayt on-screen keyboard'>Surayt tangentbord på skärmen</a>!"
     keyboard:
-      placeholder: "Enter as much text as you would like, but don't forget to save it by selecting all text and hitting Ctrl-C"
+      placeholder: "Ange så mycket text som du vill, men glöm inte att spara det genom att markera all text och slå Ctrl-C"
     layout:
-      admin_size_info: "The editing screen requires at least 450 pixels of horizontal space. Please rotate your device or use one with a bigger screen."
+      admin_size_info: "Redigeringsskärmen kräver minst 450 pixlar av horisontellt utrymme. Vänligen rotera enheten eller använd en större skärm."
     login_form:
-      email: "Email:"
-      password: "Password:"
-      login: "Login"
+      email: "E-post:"
+      password: "Lösenord:"
+      login: "Logga in"
     session_links:
-      book_list: "Book List"
-      manage_exercises: "Manage Exercises"
-      preview: "Preview Fragment"
-      edit: "Edit Fragment"
-      logout: "Logout"
-      login: "Login"
+      book_list: "Bok lista"
+      manage_exercises: "Hantera övningar"
+      preview: "Förhandsgranska fragmentet"
+      edit: "Redigera fragmentet"
+      logout: "Logga ut"
+      login: "Logga in"
     exercise:
-      info: "Exercise ##{@exercise.id} will appear here once it has been cleared by the editors."
+      info: "Övningen ##{@exercise.id} kommer att visas här när det har rensats av redaktörerna."
     drag_n_drop_cloze:
-      instructions: "Use the mouse to drag and drop the words into the correct positions in the text. Tap the light bulb to check your answers or reveal the answer keys."
+      instructions: "Dra och släppa orden i rätt positioner i texten. Tryck på glödlampan för att kontrollera dina svar eller avslöja svarsknapparna."
     questions_and_answers:
-      instructions: "Read the questions in either Latin or Syriac letters and try to think of an appropriate answer. Click or tap on a question to show an example answer."
+      instructions: "Läs frågorna i antingen latinska eller syriska bokstäver och försök att tänka på ett lämpligt svar. Klicka eller tryck på en fråga för att visa ett exempelsvar."
     sorted_fragments:
-      instructions: "Drag and drop the words into order until you are satisfied to have a sensible sentence in each row. You may either sort the Latin or the Syriac script side of the table. Tap the light bulb to check your order or reveal the correct one."
+      instructions: "Dra och släpp orden i ordning tills du är nöjd med din mening i varje rad. Du kan antingen använda latin- eller syriac-skriven sidan av  tabellen.Tryck på glödlampan för att kontrollera dina svar eller avslöja den rätta."
