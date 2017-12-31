@@ -43,7 +43,7 @@ de:
       choose_book: "Bitte wählen Sie unten das Buch aus, welches Sie anschauen oder bearbeiten möchten."
       green_books: "In Grün markierte Bücher wurden bereits publiziert und sind öffentlich sichtbar."
       choose_locale: "Bitte wählen Sie ihre gewünschte Unterrichtssprache aus."
-      alpha_version: "Bitte haben Sie noch ein wenig Gedult, derzeit befinden sich alle Kurse in einer Beta-Version."
+      alpha_version: "Bitte haben Sie noch ein wenig Geduld, derzeit befinden sich alle Kurse in einer Beta-Version."
       preview_book: "%{book} in folgender Sprache anschauen:"
       read_book: "%{book} in folgender Sprache lesen:"
       keyboard_ad: "Wenn Sie einige Surayt-Buchstaben oder auch einen längeren Text eingeben müssen, aber keine Surayt-Tastatur besitzen oder nicht wissen, wie sich die entsprechenden Einstellungen auf Ihrem Computer anpassen lassen, können Sie unsere neue <a href='%{url}' title='On-Screen-Tastatur für Surayt'>On-Screen-Tastatur für Surayt</a> benutzen."
