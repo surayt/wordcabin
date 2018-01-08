@@ -54,7 +54,7 @@ fr:
     login_form:
       email: "Email:"
       password: "Mot de passe:"
-      login: "Pseudo"
+      login: "Se connecter"
     session_links:
       book_list: "Liste de livres"
       manage_exercises: "Gérer les exercices"
