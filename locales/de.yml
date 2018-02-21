@@ -8,6 +8,7 @@ de:
   tr: "Türkisch"
   
   toc: "Inhaltsverzeichnis"
+  loe: "Übungsverzeichnis"
   level: "Niveau"
   
   routes:
@@ -33,6 +34,7 @@ de:
       book_already_exists: "ist in der gewählten Sprachversion bereits vorhanden."
       book_is_not_a_book: "muss bereits vorhanden sein, andernfalls ist das neue Inhaltsfragment nicht sichtbar."
       cant_destroy: "Ein Buch welches noch Inhaltsfragmente enthält, kann nicht gelöscht werden."
+      new_book_title: "Buchtitel"
     exercise:
       must_be_present: "muss angegeben werden."
     file_attachment:

@@ -9,6 +9,7 @@ en:
   tr: "Turkish"
   
   toc: "Table of contents"
+  loe: "List of exercises"
   level: "Level"
   
   routes:
@@ -34,6 +35,7 @@ en:
       book_already_exists: "already exists for the selected language version."
       book_is_not_a_book: "must already exist or otherwise the new content fragment will not be visible."
       cant_destroy: "Can't delete book that still has any children!"
+      new_book_title: "Book's title"
     exercise:
       must_be_present: "must be present."
     file_attachment:

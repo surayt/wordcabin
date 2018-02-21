@@ -8,6 +8,7 @@ nl:
   tr: "Turks"
   
   toc: "Table of contents"
+  loe: "Lijst met oefeningen"
   level: "Level"
   
   routes:
@@ -33,6 +34,7 @@ nl:
       book_already_exists: "already exists for the selected language version."
       book_is_not_a_book: "must already exist or otherwise the new content fragment will not be visible."
       cant_destroy: "Can't delete book that still has any children!"
+      new_book_title: "Boektitel"
     exercise:
       must_be_present: "must be present."
     file_attachment:
