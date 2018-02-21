@@ -139,10 +139,11 @@ module Wordcabin
     
     get '/exercises/:id' do |id|
       @exercises = Exercise.all
-      @exercise = @exercises.find(id)
-      @text_fragments = @exercise.text_fragments
-      @questions = @exercise.questions
-      haml @exercise.template_name.to_sym, layout: false
+      if @exercise = @exercises.find(id)
+        @text_fragments = @exercise.text_fragments
+        @questions = @exercise.questions
+        haml @exercise.template_name.to_sym, layout: false
+      end
     end
 
     # ContentFragment routes. Must come last. And careful with these as their order is important!
