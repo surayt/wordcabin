@@ -72,7 +72,7 @@ module Wordcabin
           f['class'] = link_class(f['path'], url_path, next_marker)
           next_marker = true if f['class'] != ''
           toc << "#{li_spaces}<li class='level_#{display_depth}'>"
-          toc << "<a#{f['class']} href='#{f['path']}' data-content-fragment-id='#{f['id']}'>#{f['name']}</a>\n"
+          toc << "<a#{f['class']} href='#{f['path']}?content-fragment-id=#{f['id']}' data-content-fragment-id='#{f['id']}'>#{f['name']}</a>\n"
           toc << drill_deeper(fragments, f, url_path, next_marker)
         end
         toc << "#{ul_spaces}</ul>\n#{ul_spaces}</li>\n"

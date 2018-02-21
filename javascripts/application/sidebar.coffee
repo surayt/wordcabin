@@ -28,12 +28,12 @@ restore_toc_state = ->
     if top_level_chapter = last_url_path_segment.split('.')[0]
       child = parseInt(top_level_chapter) + 1
   # ... failing that try to get it from a cookie ...
-  unless child  
+  unless child
     if state = Cookies.get('wordcabin_toc_scrollbar_expansion_state')
       child = parseInt(state) + 1
     # ... or finally, fall back to only expanding the top level elements' parent
     else
-      child = 1  
+      child = 1
   $('#sidebar li.level_2:nth-child(' + child + ') ul').show()
     
 # TODO: re-enable once we've figured out what
@@ -71,7 +71,7 @@ add_view_mode_to_chapter_links = ->
   view_mode = url('?view_mode')
   if !!view_mode
     $('#sidebar ul a').each ->
-      $(this).attr('href', $(this).attr('href')+'?view_mode='+url('?view_mode'))
+      $(this).attr('href', $(this).attr('href')+'&view_mode='+url('?view_mode'))
 
 $(document).ready ->
   console.log "sidebar"
