@@ -70,4 +70,47 @@ namespace :wordcabin do
     rackupcmd = "rackup -s puma -o #{Config.bind_address} -p #{Config.bind_port}"
     system "rerun --dir #{watchlist} --clear '#{rackupcmd}'"
   end
+
+	desc "Add new exercises in batch mode"
+	task :add_exercises do
+    require Config.lib+'server'
+    include Wordcabin
+    Exercise.connection
+    old_id = 0
+    sort_order = 0
+		loop do
+      if old_id == 0
+        print "parent ID ('DONE' to end input): "
+      else
+        print "parent ID (ENTER to keep #{old_id}, 'DONE' to end input): "
+      end
+      id = STDIN.gets.chomp
+      id = old_id if id == ''
+      if id == old_id
+        sort_order += 1
+      else
+        sort_order = 0
+      end
+      break if id.include? "DONE"
+
+			print "name ('DONE' to end input): "
+      name = STDIN.gets.chomp
+			break if name.include? "DONE"
+			
+			print "html ('NEXT' for next item, precede with 'DONE' to end input): "
+      html = STDIN.gets("NEXT\n").chomp
+			break if html.include? "DONE"
+			
+			x = Exercise.new(
+				type: Wordcabin::ExerciseTypes::Fake.to_s,
+        content_fragment_id: id,
+        sort_order: sort_order,
+				name: name,
+        html: html.gsub(/NEXT/, '')
+			)
+			
+			x.save; puts "Saved #{x.id}"
+      old_id = id
+		end
+	end
 end
