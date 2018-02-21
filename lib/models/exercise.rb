@@ -45,5 +45,13 @@ module Wordcabin
       # has_many questions
       # each question has_many answers (one of which is correct)
     end
+
+    class HTML < Exercise
+      # uses 'html' field
+    end
+
+    class Fake < Exercise
+      # like HTML, just adds an info icon
+    end
   end
 end
