@@ -60,6 +60,7 @@ module Wordcabin
       set :server, :puma
       set :bind, Config.bind_address
       set :port, Config.bind_port
+      set :environment, Config.environment
       set :root, Config.root
       set :views, Config.templates
       set :haml, {escape_html: false, format: :html5}
