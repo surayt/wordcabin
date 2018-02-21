@@ -139,10 +139,13 @@ module Wordcabin
     
     get '/exercises/:id' do |id|
       @exercises = Exercise.all
-      if @exercise = @exercises.find(id)
+      begin
+        @exercise = @exercises.find(id)
         @text_fragments = @exercise.text_fragments
         @questions = @exercise.questions
         haml @exercise.template_name.to_sym, layout: false
+      rescue ActiveRecord::RecordNotFound
+        "No such exercise!" # TODO: proper error message required, but not sure yet where it will appear...
       end
     end
 
