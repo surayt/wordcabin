@@ -228,10 +228,13 @@ module Wordcabin
     
     def extract_locale_from_accept_language_header
       if accept_lang = request.env['HTTP_ACCEPT_LANGUAGE']
-        accept_lang.scan(/^[a-z]{2}/).first
+        l = accept_lang.scan(/^[a-z]{2}/).first
+        puts "as per HTTP_ACCEPT_LANGUAGE, selecting #{l} as locale"
       else
-        I18n.default_locale
-      end  
+        l = I18n.default_locale
+        puts "selecting default locale #{l}"
+      end
+      return l
     end
   end  
 end
