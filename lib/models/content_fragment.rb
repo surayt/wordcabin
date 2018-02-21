@@ -3,6 +3,8 @@ require 'sanitize'
 module Wordcabin 
   # A chapter belongs to the top-level element by having the same 'book' field value. There are no formal relationships!
   class ContentFragment < ActiveRecord::Base
+    has_many :exercises, -> { where(type: 'Wordcabin::ExerciseTypes::Fake') }
+
     default_scope { order("locale ASC, book ASC, chapter_padded ASC") }
     before_save :fill_sorting_column
 
@@ -74,6 +76,14 @@ module Wordcabin
     def heading_and_text
       h = ""
       h += "\n<header>#{heading}</header>" unless heading.blank?
+      if exercises.any?
+        h += "\n<section>\n"
+        exercises.each do |e|
+          h += "<table class='header_table h3'><tbody><tr><td>#{e.name}</td><td class='exercise_note upcoming'></td></tr></tbody></table>\n"
+          h += e.html
+        end
+        h += "</section>\n"
+      end
       h += "\n<section>\n#{html}</section>\n"  unless html.blank?
       h
     end

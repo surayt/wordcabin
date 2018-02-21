@@ -15,6 +15,15 @@ module Wordcabin
   end
 
   module ExerciseTypes
+    class Fake < Exercise
+      belongs_to :content_fragment
+      #   and uses sort_order to determine its position relative to peers
+      #   and html
+      # Is a placeholder which contains the HTML previously part of a
+      # ContentFragment's HTML and is linked to that ContentFragment's
+      # parent ContentFragment (the one with "Exercise..." in its name)
+    end
+
     class Cloze < Exercise
       # has_many text_fragments (all of which have a sort_order)
       #   and some of which are empty, with "key" holding their intended text)
