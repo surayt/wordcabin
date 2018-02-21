@@ -175,6 +175,7 @@ module Wordcabin
       if book && book.first_child
         location = book.first_child.url_path
       else
+        book = ContentFragment.new(book: I18n.t('models.content_fragment.new_book_title'), locale: I18n.locale)
         if current_user.is_admin?
           location = "/#{locale}/new?content_fragment[book]=#{book.book}&content_fragment[locale]=#{book.locale}&view_mode=edit"
         else
