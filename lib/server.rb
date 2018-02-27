@@ -172,7 +172,7 @@ module Wordcabin
     
     public
     
-    Dir[Config.lib + 'routes' + "*.rb"].sort.each {|routes_file| puts routes_file ; require routes_file}
+    Dir[Config.lib + 'routes' + "*.rb"].sort.each {|routes_file| require routes_file}
     run! if app_file == $0
   end
 end
