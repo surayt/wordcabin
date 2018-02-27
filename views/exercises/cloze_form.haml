@@ -1,0 +1,7 @@
+%p Cloze form not yet implemented!
+
+- @exercise.text_fragments.each do |t|
+  - if t.text
+    = t.text
+  - if t.key
+    %input{type: :text, value: t.key}
