@@ -6,11 +6,17 @@ module Wordcabin
     # only one of the following will be true, depending on "type"...
     has_many :text_fragments
     has_many :questions
-    
+
+    default_scope { order("sort_order ASC, text_fragment_order ASC, name ASC") }
+        
     validates :name, presence: {message: I18n.t('models.exercise.must_be_present')}
     
     def template_name
       'exercises/'+self.class.name.to_s.split(':').last.underscore
+    end
+    
+    def self.types
+      Exercise.descendants.map {|t| t.to_s.split('::').last}.sort
     end
   end
 
