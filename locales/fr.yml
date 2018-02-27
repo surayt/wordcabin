@@ -23,6 +23,8 @@ fr:
     fragment_not_found: "Aucun fragment de contenu de ce type n'existe."
     fragment_destroyed: "Le fragment de contenu a été supprimé avec succès."
     fragment_cant_be_destroyed: "Impossible de supprimer le fragment de contenu!"
+    # TODO: translate!
+    could_not_publish: "Failed to declare book as published."
     
   models:
     content_fragment:

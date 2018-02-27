@@ -1,16 +1,28 @@
 %nav#sidebar
-  -# The mobile version's nav menu
-  %a#mobile-menu-button= '<i class="fa fa-bars"></i>'
+  - if locals[:model] == :content_fragment
+    -# The mobile version's nav menu
+    %a#mobile-menu-button= '<i class="fa fa-bars"></i>'
   
-  -# Phrase "Table of contents"
-  %heading#toc-heading= I18n.t('toc')
-  
-  -# Table of contents depending on context 
-  %section#toc= @toc.html(request.path_info) if @toc
+  -# Phrase "Table of contents" or "List of exercises",
+  -# then the list of items itself.  
+  - case locals[:model]
+  - when :content_fragment
+    %heading#toc-heading= I18n.t('toc')
+    %section#toc= @toc.html(request.path_info) if @toc
+  - when :exercise
+    %heading#loe-heading= I18n.t('loe')
+    %section#loe= haml :exercises
   
   -# A button for creating a new content fragment
   - if current_user && current_user.is_admin?
-    %form{method: :get, action: "/#{locale}/new"}
+    - # TODO: Properly pluralize model name!
+    %form{method: :get, action: "/#{locale}/#{locals[:model]}s/new"}
       %input{type: :hidden, name: :view_mode, value: :edit}
-      %input{type: :hidden, name: 'content_fragment[book]', value: @fragment.book}
-      %input{type: :submit, value: '+', class: 'btn fa-input', id: 'new-fragment-button'}
+      - case locals[:model]
+      - when :content_fragment
+        %input{type: :hidden, name: 'content_fragment[book]', value: @fragment.book}
+      - when :exercise
+        %select{name: 'exercise[type]'}
+          - @exercise_types.each do |type|
+            %option{value: type.downcase}= type
+      %input{type: :submit, value: '+', class: 'btn fa-input', id: 'new-item-button'}

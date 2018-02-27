@@ -23,6 +23,8 @@ de:
     fragment_not_found: "Inhaltsfragment konnte nicht gefunden werden."
     fragment_destroyed: "Inhaltsfragment wurde gelöscht."
     fragment_cant_be_destroyed: "Inhaltsfragment konnte nicht gelöscht werden."
+    # TODO: translate!
+    could_not_publish: "Failed to declare book as published."
     
   models:
     content_fragment:

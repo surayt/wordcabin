@@ -23,6 +23,8 @@ ar:
     fragment_not_found: "لم يتم العثور على الجزء المطلوب."
     fragment_destroyed: "تم حذف الجزء المطلوب بنجاح."
     fragment_cant_be_destroyed: "الجزء المطلوب لا يمكن حذفه"
+    # TODO: translate!
+    could_not_publish: "Failed to declare book as published."
     
   models:
     content_fragment:

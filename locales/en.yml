@@ -24,6 +24,7 @@ en:
     fragment_not_found: "No such content fragment could be found."
     fragment_destroyed: "The content fragment was destroyed successfully."
     fragment_cant_be_destroyed: "Unable to delete content fragment!"
+    could_not_publish: "Failed to declare book as published."
     
   models:
     content_fragment:

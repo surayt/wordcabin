@@ -11,7 +11,7 @@
       %span
         = I18n.t('views.index.alpha_version')
   = haml :session_links
-  - @fragment_sets.each do |book, set|
+  - @book_sets.each do |book, language_versions|
     %ul.book
       %li
         %h4
@@ -20,11 +20,11 @@
           - else
             = I18n.t('views.index.read_book', book: book)
         %ul.language_version
-          - set.each do |fragment|
+          - language_versions.each do |language_version|
             %li
-              %a{href: "#{fragment.first_child_url_path}#{'?view_mode=preview' if current_user.is_admin?}",
-                 class: "book#{' '+(fragment.is_published ? 'published' : 'unpublished') if current_user.is_admin?}"}
-                = I18n.t(fragment.locale)    
+              %a{href: "#{language_version.book_url_path}#{'?view_mode=preview' if current_user.is_admin?}",
+                 class: "book#{' '+(language_version.is_published ? 'published' : 'unpublished') if current_user.is_admin?}"}
+                = I18n.t(language_version.locale)    
   %p.keyboard= I18n.t('views.index.keyboard_ad', url: "/#{locale}/keyboard")
   %footer
     %img{src: '/assets/FU_Bergen3.jpg'}

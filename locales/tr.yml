@@ -23,6 +23,8 @@ tr:
     fragment_not_found: "Böylesi bir içerik fragmanı bulunamadı."
     fragment_destroyed: "Içerik fragmanı başarılı bir şekilde silindi."
     fragment_cant_be_destroyed: "Içerik fragmanı silinemiyor!"
+    # TODO: translate!
+    could_not_publish: "Failed to declare book as published."
     
   models:
     content_fragment:

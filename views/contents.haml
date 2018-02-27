@@ -1,7 +1,7 @@
 = haml :session_links
 
 = haml :logo
-= haml :navigation
+= haml :navigation, locals: locals
 
 #content
 
@@ -11,8 +11,8 @@
   
   %a#sidebar-handle= '<i class="fa fa-chevron-left"></i>'
   
-  - if (content_class.include? 'editor') && (view_mode == :edit)
-    = haml :editing_area
+  - if ((content_class.include? 'editor') && (view_mode == :edit)) || locals[:model] == :exercise
+    = haml :editing_area, locals: locals
   - else
     %a.nav-links#prev{href: '#'}= '<i class="fa fa-angle-double-up"></i>'
     %main#articles= haml :article

@@ -142,10 +142,6 @@ module Wordcabin
     def first_child
       ContentFragment.chapters(locale, book).first
     end
-    
-    def first_child_url_path
-      "/#{[locale, book, first_child ? first_child.chapter : chapter].join '/'}".chomp '/'
-    end
   
     def url_path(method = :get)
       if ContentFragment.count > 1 && chapter.blank? && !new_record?
@@ -154,12 +150,20 @@ module Wordcabin
       else
         # We're dealing with content.
         path = case method
-          when :get    then new_record? ? 'new' : [book, chapter].join('/').chomp('/')
-          when :post   then new_record? ? 'new' : id
-          when :delete then id
+          when :get    then new_record? ? 'content_fragments/new' : [book, chapter].join('/').chomp('/')
+          when :post   then new_record? ? 'content_fragments/new' : "content_fragments/#{id}"
+          when :delete then "content_fragments/#{id}"
         end
         "/#{locale}/#{path}"
       end
+    end
+  
+    def book_url_path
+      "/#{[locale, book].join '/'}".chomp '/'
+    end
+    
+    def first_child_url_path
+      "/#{[locale, book, first_child ? first_child.chapter : chapter].join '/'}".chomp '/'
     end
   end
 end
