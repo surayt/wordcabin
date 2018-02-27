@@ -29,9 +29,9 @@ ActiveRecord::Schema.define(version: 20180206163318) do
     t.string "description"
     t.string "text_fragment_order"
     t.string "locale"
+    t.text "html"
     t.integer "content_fragment_id"
     t.integer "sort_order"
-    t.text "html"
   end
 
   create_table "file_attachments", force: :cascade do |t|
