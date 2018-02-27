@@ -156,8 +156,23 @@ module Wordcabin
         c.join(' ')
       end
     end
-  
-    require_relative 'routes' # Yup, sometimes things are a little strange.
+    
+    private
+    
+    def extract_locale_from_accept_language_header
+      if accept_lang = request.env['HTTP_ACCEPT_LANGUAGE']
+        l = accept_lang.scan(/^[a-z]{2}/).first
+        # puts "as per HTTP_ACCEPT_LANGUAGE, selecting #{l} as locale"
+      else
+        l = I18n.default_locale
+        # puts "selecting default locale #{l}"
+      end
+      return l
+    end
+    
+    public
+    
+    Dir[Config.lib + 'routes' + "*.rb"].sort.each {|routes_file| puts routes_file ; require routes_file}
     run! if app_file == $0
   end
 end
