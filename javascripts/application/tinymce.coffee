@@ -7,18 +7,26 @@ tap = (o, fn) -> fn(o); o
 ui_locale = $('html').data('ui-locale') || url('1')
 
 common_settings =
+
+  # Having to specify a language_url unfortunately means that plugin
+  # lang files can't be used and so their contents must be appended to
+  # the global lang files instead.
   language_url: "/tinymce_langs/#{ui_locale}.js?#{(new Date).getTime()}"
+  language: ui_locale
+  
   statusbar: false
   branding: false
   object_resizing: false
   invalid_styles: 'height' 
   forced_root_block : ''
   force_p_newlines : true
+  
   formats:
     removeformat: [
       {selector: 'h1,h2,h3,h4,b,strong,em,i,font,u,strike,span', remove: 'all', split: true, expand: false, block_expand: true, deep: true}
       {selector: '*', attributes: ['style', 'class', 'lang', 'dir', 'colspan', 'rowspan'], split: false, expand: false, deep: true}
     ]
+    
   style_formats: [
     {title: 'Headlines (2nd order and below)', items: [
       {title: '2. Ordnung (ohne Tabelle)', format: 'h2'},
@@ -71,6 +79,7 @@ common_settings =
     {title: 'Greyed out', inline: 'span', classes: 'greyed_out'}
     {title: 'Light-grey background', selector: '*', classes: 'grey_background'}
   ]
+  
   content_css: [
     '/font-awesome/css/font-awesome.css?' + (new Date).getTime(),
     '/assets/tinymce.css?' + (new Date).getTime()]
