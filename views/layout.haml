@@ -9,8 +9,10 @@
     %link{href: '/assets/main.css', rel: :stylesheet, type: 'text/css'}/
     %link{href: '/keyboard/css/keyboard.css'}
     %title Šlomo Surayt
+    
     -# TODO: weed out!
-    %script{src: '/keyboard/js/jquery.keyboard.extension-all.js', type: 'text/javascript'}
+    - if request.path_info.include? 'keyboard'
+      %script{src: '/keyboard/js/jquery.keyboard.extension-all.js', type: 'text/javascript'}
     
   %body{dir: :auto, class: content_class}
     = styled_flash
