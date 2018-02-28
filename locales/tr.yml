@@ -70,6 +70,9 @@ tr:
       login: "Oturum aç"
     exercise:
       info: "Egzersiz, ##{@exercise.id}  editörlerce düzenlemesi yapıldıktan sonra burada görünecektir."
+    fake:
+      # TODO: translate!
+      will_be_interactive: "Upcoming feature: we're working on making this an interactive exercise - stay tuned!"
     drag_n_drop_cloze:
       instructions: "Kelimeleri metin içindeki doğru konumlara sürüklemek ve bırakmak için fareyi kullanın. Yanıtlarınızı kontrol etmek veya cevap anahtarlarını göstermek için ampulün üzerine dokunun."
     questions_and_answers:

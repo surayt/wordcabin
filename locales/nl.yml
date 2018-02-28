@@ -70,6 +70,9 @@ nl:
       login: "Login"
     exercise:
       info: "Exercise ##{@exercise.id} will appear here once it has been cleared by the editors."
+    fake:
+      # TODO: translate!
+      will_be_interactive: "Upcoming feature: we're working on making this an interactive exercise - stay tuned!"
     drag_n_drop_cloze:
       instructions: "Use the mouse to drag and drop the words into the correct positions in the text. Tap the light bulb to check your answers or reveal the answer keys."
     questions_and_answers:

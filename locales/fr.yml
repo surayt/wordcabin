@@ -70,6 +70,9 @@ fr:
       login: "Se connecter"
     exercise:
       info: "L'exercice ##{@exercise.id} apparaîtra ici quand il aura été corrigé par les éditeurs."
+    fake:
+      # TODO: translate!
+      will_be_interactive: "Upcoming feature: we're working on making this an interactive exercise - stay tuned!"
     drag_n_drop_cloze:
       instructions: "Utilisez la souris pour glisser-déposer les mots à leur place dans le texte. Cliquez sur l'ampoule pour vérifier vos réponses et dévoiler le correctif."
     questions_and_answers:

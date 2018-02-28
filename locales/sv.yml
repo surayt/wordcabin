@@ -70,6 +70,9 @@ sv:
       login: "Logga in"
     exercise:
       info: "Övningen ##{@exercise.id} kommer att visas här när det har rensats av redaktörerna."
+    fake:
+      # TODO: translate!
+      will_be_interactive: "Upcoming feature: we're working on making this an interactive exercise - stay tuned!"
     drag_n_drop_cloze:
       instructions: "Dra och släppa orden i rätt positioner i texten. Tryck på glödlampan för att kontrollera dina svar eller avslöja svarsknapparna."
     questions_and_answers:

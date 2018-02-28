@@ -69,8 +69,11 @@ ar:
       logout: "تسجيل الخروج"
       login: "تسجيل الدخول"
     exercise:
-      info: "سيظهر التمرين ##{@exercise.id} هنا فور موافقة أحد المحررين على نشره" 
-      drag_n_drop_cloze:
+      info: "سيظهر التمرين ##{@exercise.id} هنا فور موافقة أحد المحررين على نشره"
+    fake:
+      # TODO: translate!
+      will_be_interactive: "Upcoming feature: we're working on making this an interactive exercise - stay tuned!"
+    drag_n_drop_cloze:
       instructions: "استخدم الفأرة أو اصبعك لسحب الكلمة المناسبة في مكانها المناسب في النص. اضغط أو انقر على المصباح لمشاهدة الجواب الصحيح."
     questions_and_answers:
       instructions: "اقرأ الأسئلة إما بالكتابة اللاتينية أو السريانية وحاول إيجاد الأجوبة الصحيحة لها. اضغط أو انقر أحد الأسئلة لمشاهدة مثال عن الإجابة."

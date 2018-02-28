@@ -70,6 +70,9 @@ de:
       login: "Anmelden"
     exercise:
       info: "Übung ##{@exercise.id} wird hier sichtbar sein, sobald sie von einem Redakteur als publiziert gekennzeichnet wurde."
+    fake:
+      # TODO: translate!
+      will_be_interactive: "Upcoming feature: we're working on making this an interactive exercise - stay tuned!"
     drag_n_drop_cloze:
       instructions: "Benutzen Sie die Maus oder Ihren Finger um die Wörter an die richtige Stelle im Text zu ziehen. Klicken oder tippen Sie auf die Glühbirne, um den Antwortschlüssel zu sehen."
     questions_and_answers:

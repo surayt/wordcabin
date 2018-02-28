@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20180206163318) do
+ActiveRecord::Schema.define(version: 20180228190132) do
 
   create_table "content_fragments", force: :cascade do |t|
     t.string "book"
@@ -29,9 +29,10 @@ ActiveRecord::Schema.define(version: 20180206163318) do
     t.string "description"
     t.string "text_fragment_order"
     t.string "locale"
-    t.text "html"
     t.integer "content_fragment_id"
     t.integer "sort_order"
+    t.text "html"
+    t.boolean "will_be_interactive", default: true
   end
 
   create_table "file_attachments", force: :cascade do |t|

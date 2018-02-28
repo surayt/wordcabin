@@ -1,1 +1,12 @@
-%article{class: "fragment_#{@fragment.id}"}= @fragment.heading_and_text
+%article{class: "fragment_#{@fragment.id}"}
+
+  - unless @fragment.heading.blank?
+    %header= @fragment.heading
+    
+  - if @fragment.exercises.any?
+    %section
+      - @fragment.exercises.each do |exercise|
+        = haml :"exercises/view/#{exercise.template_name}", locals: {exercise: exercise}
+
+  - unless @fragment.html.blank?
+    %section= @fragment.html

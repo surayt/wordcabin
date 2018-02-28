@@ -1,4 +1,8 @@
-.fake
-  %h5= @exercise.name
-  %p= @exercise.description
-  =@exercise.html
+%table.header_table.h3
+  %tbody
+    %tr
+      %td.exercise_name= exercise.name
+      - if exercise.will_be_interactive?
+        %td.exercise_note= "<i class=\"fa fa-star\" title=\"#{I18n.t('views.fake.will_be_interactive')}\"></i>"
+%p= exercise.description
+= exercise.html
