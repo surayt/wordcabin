@@ -66,7 +66,7 @@ namespace :wordcabin do
   task :server do
     # Boot Puma via Rack, keep reloading via rerun.
     # The latter won't work using backticks, only using system(), because it forks off.
-    watchlist = %w{config lib locales}.join(',')
+    watchlist = %w{config lib locales views}.join(',')
     rackupcmd = "rackup -s puma -o #{Config.bind_address} -p #{Config.bind_port}"
     system "rerun --dir #{watchlist} --clear '#{rackupcmd}'"
   end
