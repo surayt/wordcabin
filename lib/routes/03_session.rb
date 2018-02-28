@@ -27,7 +27,7 @@ module Wordcabin
     get '/logout' do
       current_user && session[:user_id] = nil
       flash[:notice] = I18n.t('routes.session_closed')
-      redirect back
+      redirect '/'
     end
   end
 end

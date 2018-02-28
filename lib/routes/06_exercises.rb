@@ -57,7 +57,7 @@ module Wordcabin
         if params[:view_mode] == 'edit' && current_user.is_admin?
           haml :'contents', locals: {model: :exercise}
         else
-          haml :"exercises/form/#{@exercise.template_name}", layout: false
+          haml :"exercises/edit/#{@exercise.template_name}", layout: false
         end
       rescue ActiveRecord::RecordNotFound
         "No such exercise!" # TODO: proper error message required, but not sure yet where it will appear...
