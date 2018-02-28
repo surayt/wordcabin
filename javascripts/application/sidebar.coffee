@@ -17,14 +17,22 @@ make_toc_expandable = ->
     toc_link = $("#sidebar li a[href='#{href}']")
     Cookies.set('wordcabin_toc_scrollbar_expansion_state', $(toc_link).closest('li.level_2').index())
 
+# TODO: figure out how to count children differently.
+# At the moment, level 2 elements fail to be opened if
+# there's a gap in chapter numbers.
 restore_toc_state = ->
+  # ------------------
   # Scrollbar position
+  # ------------------
   pos = Cookies.get('wordcabin_toc_scrollbar_position')
   $('#sidebar').scrollTop pos or 0
+  # ------------------
   # Expansion state
+  # ------------------
   # Try to get info from URL first...
-  url_parts = window.location.href.split('/')
-  if last_url_path_segment = url_parts.pop() || url_parts.pop() # https://stackoverflow.com/questions/4758103/last-segment-of-url, 2nd answer!
+  url_parts = window.location.href.split('?')[0].split('/')
+  # https://stackoverflow.com/questions/4758103/last-segment-of-url, 2nd answer!
+  if last_url_path_segment = url_parts.pop() || url_parts.pop()
     if top_level_chapter = last_url_path_segment.split('.')[0]
       child = parseInt(top_level_chapter) + 1
   # ... failing that try to get it from a cookie ...
