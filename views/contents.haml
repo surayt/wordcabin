@@ -40,7 +40,7 @@
       - when :exercise
         %select{name: 'exercise[type]'}
           - @exercise_types.each do |type|
-            %option{value: type}= type
+            %option{value: type, selected: (params[:exercise][:type].include?(type) ? 'selected' : nil)}= type
       %input{type: :submit, value: '+', class: 'btn fa-input', id: 'new-item-button'}
 
 #content
