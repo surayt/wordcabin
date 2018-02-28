@@ -26,7 +26,6 @@
     %section#toc= @toc.html(request.path_info) if @toc
     
   - when :exercise
-    %heading#loe-heading= I18n.t('loe')
     %section#loe= haml :'exercises/list'
   
   -# A button for creating a new content fragment
@@ -40,7 +39,8 @@
       - when :exercise
         %select{name: 'exercise[type]'}
           - @exercise_types.each do |type|
-            %option{value: type, selected: (params[:exercise][:type].include?(type) ? 'selected' : nil)}= type
+            - selected = (params[:exercise][:type].include?(type) ? 'selected' : nil) if params[:exercise]
+            %option{value: type, selected: selected}= type
       %input{type: :submit, value: '+', class: 'btn fa-input', id: 'new-item-button'}
 
 #content

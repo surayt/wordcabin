@@ -18,6 +18,15 @@ module Wordcabin
     def self.types
       Exercise.descendants.map {|t| t.to_s.split('::').last}.sort
     end
+  
+    def url_path(method = :get)
+      path = case method
+        when :get    then new_record? ? 'exercises/new' : "exercises/#{id}"
+        when :post   then new_record? ? 'exercises/new' : "exercises/#{id}"
+        when :delete then "exercises/#{id}"
+      end
+      "/#{locale}/#{path}"
+    end
   end
 
   module ExerciseTypes

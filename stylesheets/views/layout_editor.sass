@@ -23,7 +23,8 @@ i.mce-i-fa-check-square-o:before
 i.mce-i-fa-upload:before
   content: "\f093"
 
-body.contents.editor
+body.contents.editor,
+body.admin.exercises
 
   // Mobile devices
   // ==============
@@ -64,7 +65,8 @@ body.contents.editor
       border: none
       box-shadow: none
       margin: 0
-      #toc
+      #toc,
+      #loe
         background-color: transparent
         display: block
         a:hover
@@ -115,7 +117,8 @@ body.contents.editor
           label
             vertical-align: baseline
             
-body.contents
+body.contents,
+body.admin.exercises
   +grid-media($medium-grid)
     #sidebar
       #new-item-button
@@ -125,4 +128,10 @@ body.contents
         position: fixed
         bottom: .5em
         left: .5em
+        z-index: 2
+      select
+        position: fixed
+        bottom: .525em
+        left: 3.5em
+        font-size: 8pt
         z-index: 2

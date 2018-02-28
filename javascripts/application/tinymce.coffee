@@ -87,7 +87,7 @@ common_settings =
 heading = merge(common_settings,
   menubar:  false
   plugins:  'table directionality code paste'
-  selector: 'textarea.heading'
+  selector: 'textarea.heading, textarea.name'
   toolbar:  'undo redo code paste removeformat      |
              styleselect                            |
              table alignleft aligncenter alignright'
@@ -97,7 +97,7 @@ heading = merge(common_settings,
 text = merge(common_settings,
   menubar:  false
   plugins:  'table directionality lists media link paste code image autoheight uploadfile insertexercise'
-  selector: 'textarea.text'
+  selector: 'textarea.text, textarea.html'
   toolbar:  'undo redo code paste removeformat      |
              styleselect bold italic underline      |
              table alignleft aligncenter alignright |
@@ -117,4 +117,4 @@ $(window).bind 'keydown', (event) ->
     switch String.fromCharCode(event.which).toLowerCase()
       when 's'
         event.preventDefault()
-        $('form.content_fragment').submit()
+        $('form.content_fragment, form.exercise_type').submit()
