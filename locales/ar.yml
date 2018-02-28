@@ -25,6 +25,8 @@ ar:
     fragment_cant_be_destroyed: "الجزء المطلوب لا يمكن حذفه"
     # TODO: translate!
     could_not_publish: "Failed to declare book as published."
+    no_such_exercise: "No such exercise."
+    exercise_type_not_yet_fully_implemented: "Exercise type not yet fully implemented."
     
   models:
     content_fragment:

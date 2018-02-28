@@ -24,7 +24,9 @@ fr:
     fragment_destroyed: "Le fragment de contenu a été supprimé avec succès."
     fragment_cant_be_destroyed: "Impossible de supprimer le fragment de contenu!"
     # TODO: translate!
+    no_such_exercise: "No such exercise."
     could_not_publish: "Failed to declare book as published."
+    exercise_type_not_yet_fully_implemented: "Exercise type not yet fully implemented."
     
   models:
     content_fragment:

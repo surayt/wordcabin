@@ -7,7 +7,7 @@ module Wordcabin
     
     get '/login' do
       @user = User.new
-      haml :login_form
+      haml :'login'
     end
     
     post '/login' do

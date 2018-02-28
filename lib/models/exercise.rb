@@ -12,7 +12,7 @@ module Wordcabin
     validates :name, presence: {message: I18n.t('models.exercise.must_be_present')}
     
     def template_name
-      'exercises/'+self.class.name.to_s.split(':').last.underscore
+      self.class.name.to_s.split(':').last.underscore
     end
     
     def self.types

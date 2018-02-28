@@ -10,7 +10,7 @@ module Wordcabin
       params[:content_fragment][:locale] ||= locale
       if @fragment = ContentFragment.new(params[:content_fragment])
         @toc = TOC.new(locale, @fragment.parent)
-        haml(:contents, locals: {model: :content_fragment})
+        haml :'contents', locals: {model: :content_fragment}
       else
         flash[:error] = I18n.t('routes.no_such_chapter') # TODO: come up with more fitting error message.
         redirect to('/')
@@ -88,10 +88,10 @@ module Wordcabin
         @toc = TOC.new(locale, @fragment.parent)
         if request.xhr?
           puts "content_fragments: Processing request as XHR, returning HTML without layout".green
-          haml(:article, layout: false)
+          haml :'modules/article_view', layout: false
         else
           puts "content_fragments: Processing request normally, returning HTML with layout".green
-          haml(:contents, locals: {model: :content_fragment})
+          haml :'contents', locals: {model: :content_fragment}
         end
       else
         flash[:error] = I18n.t('routes.no_such_chapter')

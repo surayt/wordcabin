@@ -1,7 +1,0 @@
-- unless @fragment.new_record?
-  - published = @fragment.parent.is_published
-  %label{for: 'parent_is_published'}
-    (
-    %input{type: :hidden, name: 'parent_is_published', value: 'false'}
-    %input{type: :checkbox, name: 'parent_is_published', value: 'true', checked: published}
-    is published?)&nbsp;

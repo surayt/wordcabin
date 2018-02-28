@@ -10,7 +10,7 @@
       = I18n.t('views.index.choose_locale')
       %span
         = I18n.t('views.index.alpha_version')
-  = haml :session_links
+  = haml :'modules/session_links'
   - @book_sets.each do |book, language_versions|
     %ul.book
       %li

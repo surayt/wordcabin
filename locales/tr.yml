@@ -24,7 +24,9 @@ tr:
     fragment_destroyed: "Içerik fragmanı başarılı bir şekilde silindi."
     fragment_cant_be_destroyed: "Içerik fragmanı silinemiyor!"
     # TODO: translate!
+    no_such_exercise: "No such exercise."
     could_not_publish: "Failed to declare book as published."
+    exercise_type_not_yet_fully_implemented: "Exercise type not yet fully implemented."
     
   models:
     content_fragment:

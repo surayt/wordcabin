@@ -1,7 +1,47 @@
-= haml :session_links
+-# The below three things, the session_links, the logo,
+-# and the sidebar, are only meant to be displayed in the
+-# book viewer and book editor views. Hence they're not
+-# in layout.haml but here.
+-#
+-# The first one, the session_links, are needed on the
+-# front page as well, though, hence they're a template.
 
-= haml :logo
-= haml :navigation, locals: locals
+= haml :'modules/session_links'
+
+%div#logo
+  %a{href: '/'}
+    %img{src: '/assets/logo_kl.png'}
+    
+%nav#sidebar
+  - if locals[:model] == :content_fragment
+    -# The mobile version's nav menu
+    %a#mobile-menu-button= '<i class="fa fa-bars"></i>'
+  
+  -# Phrase "Table of contents" or "List of exercises",
+  -# then the list of items itself.  
+  - case locals[:model]
+  
+  - when :content_fragment
+    %heading#toc-heading= I18n.t('toc')
+    %section#toc= @toc.html(request.path_info) if @toc
+    
+  - when :exercise
+    %heading#loe-heading= I18n.t('loe')
+    %section#loe= haml :'exercises/list'
+  
+  -# A button for creating a new content fragment
+  - if current_user && current_user.is_admin?
+    - # TODO: Properly pluralize model name!
+    %form{method: :get, action: "/#{locale}/#{locals[:model]}s/new"}
+      %input{type: :hidden, name: :view_mode, value: :edit}
+      - case locals[:model]
+      - when :content_fragment
+        %input{type: :hidden, name: 'content_fragment[book]', value: @fragment.book}
+      - when :exercise
+        %select{name: 'exercise[type]'}
+          - @exercise_types.each do |type|
+            %option{value: type}= type
+      %input{type: :submit, value: '+', class: 'btn fa-input', id: 'new-item-button'}
 
 #content
 
@@ -12,8 +52,26 @@
   %a#sidebar-handle= '<i class="fa fa-chevron-left"></i>'
   
   - if ((content_class.include? 'editor') && (view_mode == :edit)) || locals[:model] == :exercise
-    = haml :editing_area, locals: locals
+    
+    -# Editing areas for both content_fragments and exercises each
+    -# have their own templates. 
+    - case locals[:model]
+    
+    - when :content_fragment
+      = haml :'content_fragments/edit'
+      
+    - when :exercise
+      = haml :"exercises/edit/#{@exercise.template_name}" if @exercise
+    
   - else
     %a.nav-links#prev{href: '#'}= '<i class="fa fa-angle-double-up"></i>'
-    %main#articles= haml :article
+    %main#articles
+    
+      -# The single line of code inside of article.haml is
+      -# in a separate file so that more articles may continue 
+      -# to be loaded via XMLHttpRequest (see eager_loading.coffee
+      -# for where that occurs).
+      
+      = haml :'content_fragments/view'
+      
     %a.nav-links#next{href: '#'}= '<i class="fa fa-angle-double-down"></i>'

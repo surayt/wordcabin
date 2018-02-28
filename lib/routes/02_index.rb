@@ -12,7 +12,7 @@ module Wordcabin
       if !@book_sets.any? && current_user.is_admin?
         redirect to("/#{locale}/content_fragments/new?view_mode=edit")
       else
-        haml :index
+        haml :'index'
       end
     end
   end

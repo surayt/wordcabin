@@ -6,7 +6,7 @@ module Wordcabin
     # The keyboard demo slash note taking mini-app, whatever.
     
     get '/keyboard' do
-      haml :keyboard
+      haml :'keyboard'
     end
   end
 end
