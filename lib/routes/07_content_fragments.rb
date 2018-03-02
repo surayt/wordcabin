@@ -7,6 +7,7 @@ module Wordcabin
     # Otherwise basic CRUD here.    
 
     get '/content_fragments/new' do
+      params[:content_fragment] ||= {}
       params[:content_fragment][:locale] ||= locale
       if @fragment = ContentFragment.new(params[:content_fragment])
         @toc = TOC.new(locale, @fragment.parent)

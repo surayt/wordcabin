@@ -30,6 +30,6 @@ translations: r+'locales',
 templates:    r+'views',
 stylesheets:  r+'stylesheets',
 javascripts:  r+'javascripts',
-static_files: r+'public'
+static_files: r+'static'
 
 }))

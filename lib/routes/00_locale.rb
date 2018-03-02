@@ -24,7 +24,7 @@ module Wordcabin
     end
     
     # Prepend all routes with locale info, but skip locale-independent ones
-    # Static routes (i.e., any file inside of public/) never arrive here anyways
+    # Static routes (i.e., any file inside of static/) never arrive here anyways
     
     before '/:locale/?*' do
       pass if %w{assets files favicon.ico __sinatra__}.include? params[:locale]
