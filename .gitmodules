@@ -18,8 +18,8 @@
 	path = javascripts/js-url
 	url = https://github.com/surayt/js-url.git
 	branch = master
-[submodule "public/tinymce-dist"]
-	path = public/tinymce-dist
+[submodule "static/tinymce-dist"]
+	path = static/tinymce-dist
 	url = https://github.com/surayt/tinymce-dist.git
 	branch = master
 [submodule "javascripts/js-cookie"]
@@ -30,12 +30,12 @@
 	path = javascripts/jquery-dist
 	url = https://github.com/surayt/jquery-dist.git
 	branch = master
-[submodule "public/tinymce_langs"]
-	path = public/tinymce_langs
+[submodule "static/tinymce_langs"]
+	path = static/tinymce_langs
 	url = https://github.com/surayt/tinymce_langs.git
 	branch = master
-[submodule "public/font-awesome"]
-	path = public/font-awesome
+[submodule "static/font-awesome"]
+	path = static/font-awesome
 	url = https://github.com/surayt/Font-Awesome.git
 	branch = master
 [submodule "javascripts/underscore"]
@@ -50,6 +50,6 @@
 [submodule "javascripts/jquery-mobile-dist"]
 	path = javascripts/jquery-mobile-dist
 	url = https://github.com/surayt/jquery-mobile-dist.git
-[submodule "public/keyboard"]
-	path = public/keyboard
+[submodule "static/keyboard"]
+	path = static/keyboard
 	url = https://github.com/surayt/Keyboard.git
