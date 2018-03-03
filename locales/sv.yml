@@ -68,6 +68,8 @@ sv:
       edit: "Redigera fragmentet"
       logout: "Logga ut"
       login: "Logga in"
+      # TODO: translate!
+      preferences: "Preferences"
     exercise:
       info: "Övningen ##{@exercise.id} kommer att visas här när det har rensats av redaktörerna."
     fake:
@@ -79,3 +81,6 @@ sv:
       instructions: "Läs frågorna i antingen latinska eller syriska bokstäver och försök att tänka på ett lämpligt svar. Klicka eller tryck på en fråga för att visa ett exempelsvar."
     sorted_fragments:
       instructions: "Dra och släpp orden i ordning tills du är nöjd med din mening i varje rad. Du kan antingen använda latin- eller syriac-skriven sidan av  tabellen.Tryck på glödlampan för att kontrollera dina svar eller avslöja den rätta."
+    # TODO: translate!
+    content_fragments:
+      save_and_preview: "Save and Preview"

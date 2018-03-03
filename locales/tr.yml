@@ -68,6 +68,8 @@ tr:
       edit: "Fragmanı düzenle"
       logout: "Oturumu kapat"
       login: "Oturum aç"
+      # TODO: translate!
+      preferences: "Preferences"
     exercise:
       info: "Egzersiz, ##{@exercise.id}  editörlerce düzenlemesi yapıldıktan sonra burada görünecektir."
     fake:
@@ -79,3 +81,6 @@ tr:
       instructions: "Soruları Latin ya da Süryani harflerle okuyun ve uygun bir cevap düşünmeye çalışın. Örnek bir cevabı göstermek için bir soruyu tıklayın veya üzerine dokunun."
     sorted_fragments:
       instructions: "Her satırda mantıklı bir cümle bulana kadar kelimeleri düzenleyin. Tablonun Latince veya Süryanice komut dosyası tarafını kullanıp kelimeleri sıralayabilirsiniz. Sıralamanızı kontrol etmek veya doğru cevapları görmek için ampülün üzerine tıklayınız."
+    # TODO: translate!
+    content_fragments:
+      save_and_preview: "Save and Preview"

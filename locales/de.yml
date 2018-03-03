@@ -68,6 +68,8 @@ de:
       edit: "Inhaltsfragment bearbeiten"
       logout: "Abmelden"
       login: "Anmelden"
+      # TODO: translate!
+      preferences: "Einstellungen"
     exercise:
       info: "Übung ##{@exercise.id} wird hier sichtbar sein, sobald sie von einem Redakteur als publiziert gekennzeichnet wurde."
     fake:
@@ -79,4 +81,5 @@ de:
       instructions: "Lesen Sie die Fragen in lateinischen oder syrischen Buchstaben und versuchen Sie, eine passende Antwort zu finden. Klicken oder tippen Sie auf eine Frage, um eine korrekte Beispielantwort zu sehen."
     sorted_fragments:
       instructions: "Ziehen Sie die Wörter mit der Maus oder Ihrem Finger über den Bildschirm, bis ihre Reihenfolge in jeder Zeile eine sinnvolle Antwort ergibt. Sie können nach Belieben entweder die Seite mit lateinischen oder mit syrischen Buchstaben sortieren. Klicken oder tippen Sie auf die Glühbirne, um die korrekte Reihenfolge herzustellen."
-      
+    content_fragments:
+      save_and_preview: "Speichern und zu Vorschau wechseln"

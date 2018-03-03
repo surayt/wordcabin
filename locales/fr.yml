@@ -68,6 +68,8 @@ fr:
       edit: "Editer fragment"
       logout: "Se déconnecter"
       login: "Se connecter"
+      # TODO: translate!
+      preferences: "Preferences"
     exercise:
       info: "L'exercice ##{@exercise.id} apparaîtra ici quand il aura été corrigé par les éditeurs."
     fake:
@@ -79,3 +81,6 @@ fr:
       instructions: "Lisez les questions en lettres latines ou syriaques et essayez de trouver la réponse correcte. Cliquez sur la question pour faire apparaître une réponse-type."
     sorted_fragments:
       instructions: "Glissez-déposez les mots jusqu'à ce que vous soyez convaincus d'avoir une phrase sensée dans chaque ligne. Vous pouvez ranger l'écriture latine ou syriaque à côté du tableau. Cliquez sur l'ampoule allumée pour vérifier l'ordre ou dévoiler l'ordre correct."
+    # TODO: translate!
+    content_fragments:
+      save_and_preview: "Save and Preview"

@@ -68,6 +68,8 @@ nl:
       edit: "Edit Fragment"
       logout: "Logout"
       login: "Login"
+      # TODO: translate!
+      preferences: "Preferences"
     exercise:
       info: "Exercise ##{@exercise.id} will appear here once it has been cleared by the editors."
     fake:
@@ -79,3 +81,6 @@ nl:
       instructions: "Read the questions in either Latin or Syriac letters and try to think of an appropriate answer. Click or tap on a question to show an example answer."
     sorted_fragments:
       instructions: "Drag and drop the words into order until you are satisfied to have a sensible sentence in each row. You may either sort the Latin or the Syriac script side of the table. Tap the light bulb to check your order or reveal the correct one."
+    # TODO: translate!
+    content_fragments:
+      save_and_preview: "Save and Preview"
