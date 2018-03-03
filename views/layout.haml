@@ -14,7 +14,7 @@
     - if request.path_info.include? 'keyboard'
       %script{src: '/keyboard/js/jquery.keyboard.extension-all.js', type: 'text/javascript'}
     
-  %body{dir: :auto, class: content_class}
+  %body{dir: :auto, class: content_class, 'data-content-locale': locale}
     = styled_flash
     %p#admin-size-info= I18n.t('views.layout.admin_size_info')
     

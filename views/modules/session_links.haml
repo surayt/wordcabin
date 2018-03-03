@@ -1,16 +1,28 @@
 #session-links
   - if current_user && !current_user.new_record?
     - if current_user.is_admin?
+    
       - unless content_class.include?('index')
         %a{href: '/'}= I18n.t('views.session_links.book_list')
+        
       - unless content_class.include?('exercises')
         %a{href: "/#{locale}/exercises"}= I18n.t('views.session_links.manage_exercises')
+        
       - unless %w{index exercises}.any? {|word| content_class.include? word}
         - if view_mode == :preview
           %a{href: '?view_mode=edit'}= I18n.t('views.session_links.edit')
+          
+      %form{method: :get}
+        %select#locale_select{name: 'new_locale'}
+          - I18n.available_locales.each do |l|
+            - selected = (session[:content_locale] == l ? 'selected' : nil)
+            %option{value: l, selected: selected}= I18n.t(l)
+
     - unless content_class.include?('preferences')
       %a{href: "/#{locale}/preferences"}
         %i.fa.fa-cog{title: I18n.t('views.session_links.preferences')}
+        
     %a{href: "/#{locale}/logout"}= I18n.t('views.session_links.logout')
+    
   - else
     %a{href: "/#{locale}/login?referer=/#{locale}#{request.path_info}"}= I18n.t('views.session_links.login')
