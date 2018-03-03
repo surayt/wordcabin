@@ -1,4 +1,4 @@
 %ul
   - @exercises.each do |e|
     %li
-      %a{href: "/#{I18n.locale}/exercises/#{e.id}"}= e.name
+      %a{href: "/#{e.locale}/exercises/#{e.id}"}= e.name

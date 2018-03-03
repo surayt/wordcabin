@@ -1,7 +1,9 @@
-%p HeaderTable form not yet implemented!
+.exercise_type.cloze
 
-- @exercise.text_fragments.each do |t|
-  - if t.text
-    = t.text
-  - if t.key
-    %input{type: :text, value: t.key}
+  %p HeaderTable form not yet implemented!
+
+  - @exercise.text_fragments.each do |t|
+    - if t.text
+      = t.text
+    - if t.key
+      %input{type: :text, value: t.key}
