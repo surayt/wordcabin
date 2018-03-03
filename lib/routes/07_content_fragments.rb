@@ -89,7 +89,7 @@ module Wordcabin
         @toc = TOC.new(locale, @fragment.parent)
         if request.xhr?
           puts "content_fragments: Processing request as XHR, returning HTML without layout".green
-          haml :'modules/article_view', layout: false
+          haml :'content_fragments/view', layout: false
         else
           puts "content_fragments: Processing request normally, returning HTML with layout".green
           haml :'contents', locals: {model: :content_fragment}
