@@ -3,14 +3,19 @@
     - if current_user.is_admin?
     
       - unless content_class.include?('index')
-        %a{href: '/'}= I18n.t('views.session_links.book_list')
+        %a{href: '/'}
+          %i.fa.fa-home
+          = I18n.t('views.session_links.book_list')
         
       - unless content_class.include?('exercises')
-        %a{href: "/#{locale}/exercises"}= I18n.t('views.session_links.manage_exercises')
+        %a{href: "/#{locale}/exercises"}
+          %i.fa.fa-graduation-cap
+          = I18n.t('views.session_links.manage_exercises')
         
-      - unless %w{index exercises}.any? {|word| content_class.include? word}
-        - if view_mode == :preview
-          %a{href: '?view_mode=edit'}= I18n.t('views.session_links.edit')
+      - if !%w{index exercises}.any? {|word| content_class.include? word} && view_mode == :preview
+        %a{href: '?view_mode=edit'}
+          %i.fa.fa-book
+          = I18n.t('views.session_links.edit')
           
       %form{method: :get}
         %select#locale_select{name: 'new_locale'}
@@ -22,7 +27,12 @@
       %a{href: "/#{locale}/preferences"}
         %i.fa.fa-cog{title: I18n.t('views.session_links.preferences')}
         
-    %a{href: "/#{locale}/logout"}= I18n.t('views.session_links.logout')
+    %a{href: "/#{locale}/logout"}
+      %i.fa.fa-sign-out
+      = I18n.t('views.session_links.logout')
     
   - else
-    %a{href: "/#{locale}/login?referer=/#{locale}#{request.path_info}"}= I18n.t('views.session_links.login')
+  
+    %a{href: "/#{locale}/login?referer=/#{locale}#{request.path_info}"}
+      %i.fa.fa-sign-in
+      = I18n.t('views.session_links.login')
