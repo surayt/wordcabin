@@ -45,14 +45,10 @@
       %input{type: :submit, value: '+', class: 'btn fa-input', id: 'new-item-button'}
 
 #content
-
-  -# Semantically, the handle would belong outside #content
-  -# and inside #sidebar, which would make the CSS and JS
-  -# unnecessarily more complicated, though.
   
-  %a#sidebar-handle= '<i class="fa fa-chevron-left"></i>'
+  -# TODO: The following condition has become really ugly. Refactor!
   
-  - if ((content_class.include? 'editor') && (view_mode == :edit)) || locals[:model] == :exercise
+  - if ((content_class.include? 'editor') && (view_mode == :edit)) || locals[:model] == :exercise || locals[:model] == :user
     
     -# Editing areas for both content_fragments and exercises each
     -# have their own templates.
@@ -60,6 +56,13 @@
     = haml :"#{locals[:model].to_s.en.plural}/edit"
     
   - else
+
+    -# Semantically, the handle would belong outside #content
+    -# and inside #sidebar, which would make the CSS and JS
+    -# unnecessarily more complicated, though.
+    
+    %a#sidebar-handle= '<i class="fa fa-chevron-left"></i>'
+    
     %a.nav-links#prev{href: '#'}= '<i class="fa fa-angle-double-up"></i>'
     %main#articles
     

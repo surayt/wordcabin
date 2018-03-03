@@ -126,6 +126,9 @@ module Wordcabin
         session[:content_locale] # Different from session[:ui_locale] which == I18n.locale! (see routes.rb)
       end
       
+      # TODO: Refactor this pile of uglyness together with
+      # that weird condition in views/contents.haml...
+      
       def content_class
         c = []
         path_info = request.path_info.split('/')
@@ -151,6 +154,10 @@ module Wordcabin
             when 'keyboard'  then :keyboard
                              else :contents
           end
+        end
+        
+        if path_info[1] == 'preferences'
+          c << :preferences
         end
         
         c.join(' ')

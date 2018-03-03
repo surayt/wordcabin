@@ -1,0 +1,17 @@
+%form.user{method: :post}
+  %label{for: 'user[preferred_locale]'}
+    Preferred language:
+    %select{name: 'user[preferred_locale]'}
+      - @locales.each do |l|
+        - selected = (@user.preferred_locale == l.to_s ? 'selected' : nil)
+        %option{value: l, selected: selected}= I18n.t(l)
+  %label{for: 'user[email]'}
+    E-Mail:
+    %input{type: :text, name: 'user[email]', value: @user.email}
+  %label{for: 'user[password]'}
+    Password (leave empty to keep):
+    %input{type: :password, name: 'user[password]', value: ''}
+  %label{for: 'user[password_confirmation]'}
+    Confirm password:
+    %input{type: :password, name: 'user[password_confirmation]', value: ''}
+  %input{type: :submit, value: 'Update'}
