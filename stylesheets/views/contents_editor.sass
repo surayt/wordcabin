@@ -8,9 +8,10 @@
 // tuning of the reader-facing result can be found in a second file
 // named contents_user.sass.
 
-// Only the upper, narrower TinyMCE instance,
+// Only the upper, narrower TinyMCE instances,
 // and "h1" as seen by the reader
-body#tinymce_heading_instance
+body#tinymce_heading_instance,
+body#tinymce_name_instance
   // Keep IE from showing a scrollbar, which we don't need here
   overflow-y: hidden !important
 body#tinymce_heading_instance,
@@ -26,15 +27,17 @@ body.user #articles article header
       line-height: 1
   background-color: tint($blue, 35%)
 
-// Both TinyMCE instances, and
+// All TinyMCE instances, and
 // "h1" and all content as seen by the reader
 body#tinymce_heading_instance table td,
 body#tinymce_section_instance,
+body#tinymce_html_instance,
 body.user #articles article
   font-family: $font-stack-wordcabin-contents !important
   color: $black
 body#tinymce_heading_instance table td,
 body#tinymce_section_instance,
+body#tinymce_html_instance,
 body.user #articles article section
   .grey_background
     background-color: tint($grey, 35%)
@@ -155,15 +158,17 @@ body.user #articles article section
     h4
       font-size: 110%
 
-// Only the lower, taller TinyMCE instance,
+// Only the lower, taller TinyMCE instances,
 // and all content as seen by the reader
 
-body#tinymce_section_instance
+body#tinymce_section_instance,
+body#tinymce_html_instance
   +large_device_rules
 body.user #articles article
   +grid-media($medium-grid)
     +large_device_rules
 body#tinymce_section_instance,
+body#tinymce_html_instance,
 body.user #articles article
   .exercise
     margin-bottom: 2.5em

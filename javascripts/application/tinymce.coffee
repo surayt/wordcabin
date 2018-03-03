@@ -87,7 +87,7 @@ common_settings =
 heading = merge(common_settings,
   menubar:  false
   plugins:  'table directionality code paste'
-  selector: 'textarea.heading, textarea.name'
+  selector: 'textarea.heading'
   toolbar:  'undo redo code paste removeformat      |
              styleselect                            |
              table alignleft aligncenter alignright'
@@ -97,18 +97,45 @@ heading = merge(common_settings,
 text = merge(common_settings,
   menubar:  false
   plugins:  'table directionality lists media link paste code image autoheight uploadfile insertexercise'
-  selector: 'textarea.text, textarea.html'
+  selector: 'textarea.text'
   toolbar:  'undo redo code paste removeformat      |
              styleselect bold italic underline      |
              table alignleft aligncenter alignright |
              bullist numlist outdent indent         |
              link unlink image media insertexercise uploadfile'
   body_id:  'tinymce_section_instance')
-
+  
+name = merge(common_settings,
+  menubar:  false
+  plugins:  'directionality code paste'
+  selector: 'textarea.name'
+  toolbar:  'undo redo code paste removeformat      |
+             styleselect                            |
+             table alignleft aligncenter alignright'
+  height:   '5.25em'
+  body_id:  'tinymce_name_instance')
+  
+html = merge(common_settings,
+  menubar:  false
+  plugins:  'table directionality lists media link paste code image uploadfile insertexercise'
+  selector: 'textarea.html'
+  toolbar:  'undo redo code paste removeformat      |
+             styleselect bold italic underline      |
+             table alignleft aligncenter alignright |
+             bullist numlist outdent indent         |
+             link unlink image media insertexercise uploadfile'
+  height:   '12.25em'
+  body_id:  'tinymce_html_instance')
+  
 console.log "tinymce heading editor"
 tinymce.init heading
 console.log "tinymce text editor"
 tinymce.init text
+
+console.log "tinymce name editor"
+tinymce.init name
+console.log "tinymce html editor"
+tinymce.init html
 
 # TODO: find a way around TinyMCE grabbing the event before we do...
 # There may be a solution at https://wordpress.stackexchange.com/questions/167402/how-to-disable-tinymce-4-keyboard-shortcuts

@@ -7,7 +7,6 @@ module Wordcabin
     # Otherwise basic CRUD here.
     
     get '/exercises' do
-      @exercise = Exercise.where(locale: session[:content_locale]).first
       if current_user.is_admin?
         find_exercises
         if request.xhr?

@@ -1,8 +1,8 @@
 - if @exercise && @exercise.type
-  %form.exercise_type.fake{method: :post, action: @exercise.url_path(:post)}
+  %form.exercise_type{method: :post, action: @exercise.url_path(:post)}
     %input{type: :hidden, name: 'exercise[locale]', value: @exercise.locale}
     %input{type: :hidden, name: 'exercise[type]', value: @exercise.type}
-
+    
     = haml :"exercises/edit/#{@exercise.template_name}"
     
     %fieldset
@@ -25,4 +25,9 @@
       
       %input{type: :submit, value: 'Save'}
 - else
-  Please choose what kind of exercise you'd like to create (select box in the lower left corner).
+  %p
+    <strong>Jean, Achtung:</strong> Es werden nur Übungen angezeigt, die zur ausgewählten Sprache (oben rechts...) gehören!
+  %p
+    Diese ganze Seite hier ist weder Beta noch Alpha, die ist eher Pre-Alpha, auch Baustelle genannt. Bitte nicht zu viel erwarten und bitte nicht wundern wenn beim irgendwo draufklicken was kaputt geht. Der Zurück-Knopf ist dein Freund.
+  %p
+    Neue Übung anlegen: unten links erstmal "Fake" auswählen (alles andere funktioniert im Moment noch nicht) und dann das "+" anklicken.
