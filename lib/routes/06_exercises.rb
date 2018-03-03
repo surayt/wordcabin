@@ -60,7 +60,7 @@ module Wordcabin
     end
     
     get '/exercises/:id' do |id|
-      @exercise = Exercise.where(locale: session[:content_locale]).find(id)
+      @exercise = Exercise.find(id)
       @questions = @exercise.questions
       @text_fragments = @exercise.text_fragments
       if current_user.is_admin? && !request.xhr?
@@ -75,6 +75,10 @@ module Wordcabin
     end
     
     delete '/exercises/:id' do |id|
+      @exercise = Exercise.find(id)
+      if @exercise.destroy
+        flash[:notice] = "Exercise has been destroyed." # TODO: I18n!
+      end
     end
     
     private
