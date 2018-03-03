@@ -7,9 +7,9 @@ module Wordcabin
     # Otherwise basic CRUD here.
     
     get '/exercises' do
+      @exercise = Exercise.where(locale: session[:content_locale]).first
       if current_user.is_admin?
-        @exercises = Exercise.all
-        @exercise_types = Exercise.types
+        find_exercises
         if request.xhr?
           content_type :json
           puts "exercises: Processing request as XHR, returning JSON".green
@@ -25,42 +25,50 @@ module Wordcabin
     end
     
     get '/exercises/new' do
+      puts "GET /exercises/new".red
+      puts params[:exercise].inspect.red
       if current_user.is_admin?
-        @exercises = Exercise.all
-        @exercise_types = Exercise.types
-        params[:exercise][:locale] ||= locale
-        params[:exercise][:type] = params[:exercise][:type].prepend("Wordcabin::ExerciseTypes::")
+        find_exercises
         if @exercise = Exercise.new(params[:exercise])
-          #begin
-            haml :'contents', locals: {model: :exercise}
-          #rescue
-          #  flash[:error] = I18n.t('routes.exercise_type_not_yet_fully_implemented')
-          #  redirect back
-          #end
+          haml :'contents', locals: {model: :exercise}
         else
-          flash[:error] = I18n.t('routes.no_such_exercise') # TODO: come up with more fitting error message.
+          # TODO: come up with more fitting error message.
+          flash[:error] = I18n.t('routes.no_such_exercise')
           redirect to('/')
         end
       end
     end
     
     post '/exercises/new' do
+      puts "POST /exercises/new".red
+      puts params[:exercise].inspect.red
+      @exercise = Exercise.new(params[:exercise])
+      if @exercise.save
+        flash[:notice] = I18n.t('routes.exercise_saved')
+        redirect_opts = {
+          locale: @exercise.locale,
+          type: @exercise.type, 
+          content_fragment_id: @exercise.content_fragment_id,
+          sort_order: @exercise.sort_order ? @exercise.sort_order+1 : 0
+        }
+        redirect_opts = redirect_opts.map {|k,v| "exercise[#{k}]=#{v}"}.join('&')
+        redirect_string = "/#{@exercise.locale}/exercises/new?#{redirect_opts}"
+        redirect to(redirect_string)
+      else
+        flash[:error] = @exercise.errors.full_messages.join(', ')
+        redirect back
+      end
     end
     
     get '/exercises/:id' do |id|
-      @exercises = Exercise.all
-      @exercise_types = Exercise.types
-      begin
-        @exercise = @exercises.find(id)
-        @text_fragments = @exercise.text_fragments
-        @questions = @exercise.questions
-        if params[:view_mode] == 'edit' && current_user.is_admin?
-          haml :'contents', locals: {model: :exercise}
-        else
-          haml :"exercises/edit/#{@exercise.template_name}", layout: false
-        end
-      rescue ActiveRecord::RecordNotFound
-        "No such exercise!" # TODO: proper error message required, but not sure yet where it will appear...
+      @exercise = Exercise.where(locale: session[:content_locale]).find(id)
+      @questions = @exercise.questions
+      @text_fragments = @exercise.text_fragments
+      if current_user.is_admin? && !request.xhr?
+        find_exercises
+        haml :'contents', locals: {model: :exercise}
+      else
+        haml :"exercises/view", locals: {exercise: @exercise}, layout: false
       end
     end
     
@@ -68,6 +76,14 @@ module Wordcabin
     end
     
     delete '/exercises/:id' do |id|
+    end
+    
+    private
+    
+    def find_exercises
+      @exercises = Exercise.where(locale: session[:content_locale])
+      @exercise_types = Exercise.types
+      @content_fragments = ContentFragment.where(locale: session[:content_locale])
     end
   end
 end

@@ -1,0 +1,28 @@
+- if @exercise.type
+  %form.exercise_type.fake{method: :post, action: @exercise.url_path(:post)}
+    %input{type: :hidden, name: 'exercise[locale]', value: @exercise.locale}
+    %input{type: :hidden, name: 'exercise[type]', value: @exercise.type}
+
+    = haml :"exercises/edit/#{@exercise.template_name}"
+    
+    %fieldset
+    
+      %label{for: 'exercise[will_be_interactive]'}
+        %input{type: :hidden, name: 'exercise[will_be_interactive]', value: 'false'}
+        %input{type: :checkbox, name: 'exercise[will_be_interactive]', value: 'true', checked: @exercise.will_be_interactive}
+        Eventually interactive?
+      
+      %label{for: 'exercise[content_fragment_id]'}
+        %select{name: 'exercise[content_fragment_id]'}
+          - @content_fragments.each do |cf|
+            - selected = (params[:exercise][:content_fragment_id] == cf.id.to_s)
+            %option{value: cf.id, selected: selected}= "#{cf.chapter} - #{cf.heading}"
+        Assign to chapter, if any?
+        
+      %label{for: 'exercise[sort_order]'}
+        %input{type: :text, name: 'exercise[sort_order]', value: @exercise.sort_order}
+        Sort order, if any?
+      
+      %input{type: :submit, value: 'Save'}
+- else
+  Please choose what kind of exercise you'd like to create (select box in the lower left corner).

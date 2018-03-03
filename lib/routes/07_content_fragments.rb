@@ -13,7 +13,8 @@ module Wordcabin
         @toc = TOC.new(locale, @fragment.parent)
         haml :'contents', locals: {model: :content_fragment}
       else
-        flash[:error] = I18n.t('routes.no_such_chapter') # TODO: come up with more fitting error message.
+        # TODO: come up with more fitting error message.
+        flash[:error] = I18n.t('routes.no_such_chapter')
         redirect to('/')
       end
     end
@@ -25,8 +26,7 @@ module Wordcabin
           flash[:notice] = I18n.t('routes.fragment_saved')
           redirect to("#{URI.escape(@fragment.url_path)}?view_mode=preview")
         else
-          # TODO: Not (visually) pretty, but whatever.
-          flash[:error] = @fragment.errors.full_messages.join(' ')
+          flash[:error] = @fragment.errors.full_messages.join(', ')
           redirect back
         end
       else

@@ -1,15 +1,2 @@
-%form.exercise_type.fake{method: :post, action: @exercise.url_path(:post)}
-
-  %textarea{class: 'name', name: 'exercise[name]'}= @exercise.name
-  %textarea{class: 'html', name: 'exercise[html]'}= @exercise.html
-  
-  %fieldset
-  
-    %label{for: 'will_be_interactive'}
-      %input{type: :hidden, name: 'will_be_interactive', value: 'false'}
-      %input{type: :checkbox, name: 'will_be_interactive', value: 'true', checked: @exercise.will_be_interactive}
-      Will this be an interactive exercise?
-
-    %input{type: :hidden, name: 'exercise[locale]', value: session[:content_locale]}
-    
-    %input{type: :submit, value: 'Save'}
+%textarea{class: 'name', name: 'exercise[name]'}= @exercise.name
+%textarea{class: 'html', name: 'exercise[html]'}= @exercise.html

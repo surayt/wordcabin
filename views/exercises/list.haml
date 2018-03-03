@@ -1,7 +1,9 @@
 %p
-  Jupp, diese ganze Seite hier ist weder Beta noch Alpha, die ist eher Pre-Alpha, auch Baustelle genannt. Bitte nicht zu viel erwarten und bitte nicht wundern wenn beim irgendwo draufklicken was kaputt geht. Der Zurück-Knopf ist dein Freund.
+  <strong>Jean, Achtung:</strong> Es werden nur Übungen in der aktuell in der URL-Zeile zu sehenden Sprache angezeigt!
+%p
+  (Diese ganze Seite hier ist weder Beta noch Alpha, die ist eher Pre-Alpha, auch Baustelle genannt. Bitte nicht zu viel erwarten und bitte nicht wundern wenn beim irgendwo draufklicken was kaputt geht. Der Zurück-Knopf ist dein Freund.)
 
 %ul
   - @exercises.each do |e|
     %li
-      %a{href: "/#{I18n.locale}/exercises/#{e.id}?view_mode=edit"}= e.name
+      %a{href: "/#{I18n.locale}/exercises/#{e.id}"}= e.name

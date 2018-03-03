@@ -16,7 +16,7 @@ module Wordcabin
     end
     
     def self.types
-      Exercise.descendants.map {|t| t.to_s.split('::').last}.sort
+      Exercise.descendants.map {|t| t.to_s}.sort
     end
   
     def url_path(method = :get)

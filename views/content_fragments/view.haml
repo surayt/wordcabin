@@ -6,7 +6,7 @@
   - if @fragment.exercises.any?
     %section
       - @fragment.exercises.each do |exercise|
-        = haml :"exercises/view/#{exercise.template_name}", locals: {exercise: exercise}
+        = haml :'exercises/view', locals: {exercise: exercise}
 
   - unless @fragment.html.blank?
     %section= @fragment.html

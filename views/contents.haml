@@ -28,19 +28,20 @@
   - when :exercise
     %section#loe= haml :'exercises/list'
   
-  -# A button for creating a new content fragment
+  -# A button for creating a new content fragment or exercise
   - if current_user && current_user.is_admin?
-    - # TODO: Properly pluralize model name!
-    %form{method: :get, action: "/#{locale}/#{locals[:model]}s/new"}
+    %form{method: :get, action: "/#{locale}/#{locals[:model].to_s.en.plural}/new"}
       %input{type: :hidden, name: :view_mode, value: :edit}
       - case locals[:model]
       - when :content_fragment
         %input{type: :hidden, name: 'content_fragment[book]', value: @fragment.book}
       - when :exercise
+        %input{type: :hidden, name: 'exercise[locale]', value: locale}
+        %input{type: :hidden, name: 'exercise[sort_order]', value: 0}
         %select{name: 'exercise[type]'}
-          - @exercise_types.each do |type|
-            - selected = (params[:exercise][:type].include?(type) ? 'selected' : nil) if params[:exercise]
-            %option{value: type, selected: selected}= type
+          - @exercise_types.each do |t|
+            - selected = (params[:exercise][:type].include?(t) ? 'selected' : nil) if params[:exercise]
+            %option{value: t, selected: selected}= t.split('::').last
       %input{type: :submit, value: '+', class: 'btn fa-input', id: 'new-item-button'}
 
 #content
@@ -54,14 +55,9 @@
   - if ((content_class.include? 'editor') && (view_mode == :edit)) || locals[:model] == :exercise
     
     -# Editing areas for both content_fragments and exercises each
-    -# have their own templates. 
-    - case locals[:model]
+    -# have their own templates.
     
-    - when :content_fragment
-      = haml :'content_fragments/edit'
-      
-    - when :exercise
-      = haml :"exercises/edit/#{@exercise.template_name}" if @exercise
+    = haml :"#{locals[:model].to_s.en.plural}/edit"
     
   - else
     %a.nav-links#prev{href: '#'}= '<i class="fa fa-angle-double-up"></i>'
