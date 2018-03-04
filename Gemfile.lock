@@ -76,7 +76,7 @@ GEM
     rack-test (0.8.3)
       rack (>= 1.0, < 3)
     rake (12.3.0)
-    rb-fsevent (0.10.2)
+    rb-fsevent (0.10.3)
     rb-inotify (0.9.10)
       ffi (>= 0.5.0, < 2)
     rerun (0.13.0)
