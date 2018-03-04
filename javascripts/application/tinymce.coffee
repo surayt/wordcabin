@@ -117,6 +117,11 @@ html = merge(common_settings,
   menubar:  false
   plugins:  'table directionality lists media link paste code image uploadfile insertexercise'
   selector: 'textarea.html'
+  style_formats: merge(common_settings['style_formats'], [
+    {title: 'Hidden', inline: 'span', classes: 'hidden'}
+    {title: 'Correct Answer', inline: 'span', classes: 'correct_answer'}
+    {title: 'Incorrect Answer', inline: 'span', classes: 'incorrect_answer'}
+  ])
   toolbar:  'undo redo code paste removeformat      |
              styleselect bold italic underline      |
              table alignleft aligncenter alignright |

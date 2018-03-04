@@ -45,6 +45,34 @@ body.user #articles article section
     color: $grey
   .highlight
     color: $red
+  .hidden, .correct_answer, .incorrect_answer
+    cursor: help
+  .hidden
+    color: tint($red, 80%)
+    background-color: tint($red, 80%)
+    padding: 1px 3px
+    &:hover
+      color: $red
+  .correct_answer, .incorrect_answer
+    &:before
+      font-size: 14pt
+      color: tint($red, 80%)
+      background-color: tint($red, 80%)
+      display: inline-block
+      width: 10pt
+      margin: 0 .5em
+      padding: 0 .25em
+      text-align: center
+  .correct_answer
+    &:before
+      content: '\f00c'
+    &:hover:before
+      color: $green
+  .incorrect_answer
+    &:before
+      content: '\f00d'
+    &:hover:before
+      color: $red
   hr
     width: 80%
     margin-top: 2.125em
