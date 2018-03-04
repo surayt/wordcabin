@@ -37,7 +37,7 @@
         %input{type: :hidden, name: 'content_fragment[book]', value: @fragment.book}
       - when :exercise
         %input{type: :hidden, name: 'exercise[locale]', value: locale}
-        %input{type: :hidden, name: 'exercise[sort_order]', value: 0}
+        %input{type: :hidden, name: 'exercise[sort_order]', value: 1}
         %select{name: 'exercise[type]'}
           - @exercise_types.each do |t|
             - exercise_type = (@exercise ? @exercise.type : (params[:exercise] ? params[:exercise][:type] : nil))

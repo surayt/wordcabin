@@ -5,7 +5,11 @@ module Wordcabin
   class ContentFragment < ActiveRecord::Base
     has_many :exercises
 
-    default_scope { order("locale ASC, book ASC, chapter_padded ASC") }
+    scope :ordered, -> do
+      order(locale: :asc, book: :asc, chapter_padded: :asc)
+    end
+    default_scope { ordered }
+
     before_save :fill_sorting_column
 
     # CHECK: tests written!

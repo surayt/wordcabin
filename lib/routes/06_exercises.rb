@@ -42,7 +42,7 @@ module Wordcabin
           locale: @exercise.locale,
           type: @exercise.type, 
           content_fragment_id: @exercise.content_fragment_id,
-          sort_order: @exercise.sort_order ? @exercise.sort_order+1 : 0
+          sort_order: @exercise.sort_order ? @exercise.sort_order+1 : 1
         }
         redirect_opts = redirect_opts.map {|k,v| "exercise[#{k}]=#{v}"}.join('&')
         redirect_string = "/#{@exercise.locale}/exercises/new?#{redirect_opts}"
@@ -61,7 +61,7 @@ module Wordcabin
         find_exercises
         haml :'contents', locals: {model: :exercise}
       else
-        haml :"exercises/view", locals: {exercise: @exercise}, layout: false
+        haml :"exercises/view", layout: false
       end
     end
     

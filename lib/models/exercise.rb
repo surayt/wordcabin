@@ -7,8 +7,13 @@ module Wordcabin
     has_many :text_fragments
     has_many :questions
 
-    default_scope { order("sort_order ASC, text_fragment_order ASC, name ASC") }
-        
+    belongs_to :content_fragment # optional...
+    
+    scope :ordered, -> do
+      joins(:content_fragment).merge(ContentFragment.ordered)
+    end
+    default_scope { ordered }
+
     validates :name, presence: {message: I18n.t('models.exercise.must_be_present')}
     
     def template_name
@@ -31,7 +36,7 @@ module Wordcabin
 
   module ExerciseTypes
     class Fake < Exercise
-      belongs_to :content_fragment
+      # belongs_to :content_fragment
       #   and uses sort_order to determine its position relative to peers
       #   and html
       # Is a placeholder which contains the HTML previously part of a

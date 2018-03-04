@@ -109,9 +109,7 @@ name = merge(common_settings,
   menubar:  false
   plugins:  'directionality code paste'
   selector: 'textarea.name'
-  toolbar:  'undo redo code paste removeformat      |
-             styleselect                            |
-             table alignleft aligncenter alignright'
+  toolbar:  'undo redo code paste removeformat'
   height:   '5.25em'
   body_id:  'tinymce_name_instance')
   
@@ -123,8 +121,8 @@ html = merge(common_settings,
              styleselect bold italic underline      |
              table alignleft aligncenter alignright |
              bullist numlist outdent indent         |
-             link unlink image media insertexercise uploadfile'
-  height:   '12.25em'
+             link unlink image media uploadfile'
+  height:   '450px'
   body_id:  'tinymce_html_instance')
   
 console.log "tinymce heading editor"
