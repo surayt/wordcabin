@@ -1,4 +1,7 @@
 %ul
   - @exercises.each do |e|
     %li
-      %a{href: "/#{e.locale}/exercises/#{e.id}"}= e.name
+      %a{href: "/#{e.locale}/exercises/#{e.id}", class: ('active' if params[:id] == e.id.to_s)}
+        %span= "#{e.content_fragment.chapter} - " if e.content_fragment_id
+        = "#{e.sort_order}. " if e.sort_order
+        = e.name

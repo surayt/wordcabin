@@ -15,7 +15,8 @@
       %label{for: 'exercise[content_fragment_id]'}
         %select{name: 'exercise[content_fragment_id]'}
           - @content_fragments.each do |cf|
-            - selected = (params[:exercise][:content_fragment_id] == cf.id.to_s) if params[:exercise]
+            - cf_id = (params[:exercise][:content_fragment_id] if params[:exercise]) || @exercise.content_fragment_id || nil
+            - selected = (cf_id.to_s == cf.id.to_s)
             %option{value: cf.id, selected: selected}= "#{cf.chapter} - #{cf.heading}"
         Assign to chapter, if any?
         

@@ -11,11 +11,9 @@ module Wordcabin
         find_exercises
         if request.xhr?
           content_type :json
-          puts "exercises: Processing request as XHR, returning JSON".green
           Exercise.all.map {|e| {text: e.name, value: e.id}}.to_json
         else
           content_type :html
-          puts "exercises: Processing request normally, returning HTML".green
           haml :'contents', locals: {model: :exercise}
         end
       else
@@ -24,8 +22,6 @@ module Wordcabin
     end
     
     get '/exercises/new' do
-      puts "GET /exercises/new".red
-      puts params[:exercise].inspect.red
       if current_user.is_admin?
         find_exercises
         if @exercise = Exercise.new(params[:exercise])
@@ -39,11 +35,9 @@ module Wordcabin
     end
     
     post '/exercises/new' do
-      puts "POST /exercises/new".red
-      puts params[:exercise].inspect.red
       @exercise = Exercise.new(params[:exercise])
       if @exercise.save
-        flash[:notice] = I18n.t('routes.exercise_saved')
+        flash[:notice] = 'Exercise created.' # TODO: I18n!
         redirect_opts = {
           locale: @exercise.locale,
           type: @exercise.type, 
@@ -72,6 +66,14 @@ module Wordcabin
     end
     
     post '/exercises/:id' do |id|
+      @exercise = Exercise.find(id)
+      if @exercise.update_attributes(params[:exercise])
+        flash[:notice] = 'Exercise was updated.' # TODO: I18n!
+        redirect to(@exercise.url_path)
+      else
+        flash[:error] = @exercise.errors.full_messages.join(', ')
+        redirect back
+      end
     end
     
     delete '/exercises/:id' do |id|

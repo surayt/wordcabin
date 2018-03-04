@@ -40,7 +40,8 @@
         %input{type: :hidden, name: 'exercise[sort_order]', value: 0}
         %select{name: 'exercise[type]'}
           - @exercise_types.each do |t|
-            - selected = (params[:exercise][:type].include?(t) ? 'selected' : nil) if params[:exercise]
+            - exercise_type = (@exercise ? @exercise.type : (params[:exercise] ? params[:exercise][:type] : nil))
+            - selected = (exercise_type.to_s == t ? 'selected' : nil)
             %option{value: t, selected: selected}= t.split('::').last
       %input{type: :submit, value: '+', class: 'btn fa-input', id: 'new-item-button'}
 
