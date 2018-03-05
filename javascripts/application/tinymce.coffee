@@ -119,8 +119,10 @@ html = merge(common_settings,
   selector: 'textarea.html'
   style_formats: merge(common_settings['style_formats'], [
     {title: 'Hidden', inline: 'span', classes: 'hidden'}
-    {title: 'Correct Answer', inline: 'span', classes: 'correct_answer'}
-    {title: 'Incorrect Answer', inline: 'span', classes: 'incorrect_answer'}
+    {title: 'Correct answer', inline: 'span', classes: 'correct_answer'}
+    {title: 'Incorrect answer', inline: 'span', classes: 'incorrect_answer'}
+    {title: 'Left column selected', inline: 'span', classes: 'selected_left'}
+    {title: 'Right column selected', inline: 'span', classes: 'selected_right'}
   ])
   toolbar:  'undo redo code paste removeformat      |
              styleselect bold italic underline      |

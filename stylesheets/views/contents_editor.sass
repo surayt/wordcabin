@@ -48,12 +48,11 @@ body.user #articles article section
   .hidden, .correct_answer, .incorrect_answer
     cursor: help
   .hidden
-    color: tint($red, 80%)
     background-color: tint($red, 80%)
     padding: 1px 3px
     &:hover
       color: $blue
-  .correct_answer, .incorrect_answer
+  .correct_answer, .incorrect_answer, .selected_left, .selected_right
     &:before
       font-size: 14pt
       color: tint($red, 80%)
@@ -73,6 +72,15 @@ body.user #articles article section
       content: '\f00d'
     &:hover:before
       color: $red
+  .selected_left
+    &:before
+      content: '\f111 \f10c'
+  .select_right
+    &:before
+      content: '\f10c \f111'
+  .selected_left, .selected_right
+    &:hover:before
+      color: $blue
   hr
     width: 80%
     margin-top: 2.125em
