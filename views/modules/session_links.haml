@@ -6,6 +6,12 @@
         %a{href: '/'}
           %i.fa.fa-home
           = I18n.t('views.session_links.book_list')
+      
+        %form{method: :get}
+          %select#locale_select{name: 'new_locale'}
+            - I18n.available_locales.each do |l|
+              - selected = (session[:content_locale] == l ? 'selected' : nil)
+              %option{value: l, selected: selected}= I18n.t(l)
         
       - unless content_class.include?('exercises')
         %a{href: "/#{locale}/exercises"}
@@ -17,12 +23,6 @@
           %i.fa.fa-book
           = I18n.t('views.session_links.edit')
           
-      %form{method: :get}
-        %select#locale_select{name: 'new_locale'}
-          - I18n.available_locales.each do |l|
-            - selected = (session[:content_locale] == l ? 'selected' : nil)
-            %option{value: l, selected: selected}= I18n.t(l)
-
     - unless content_class.include?('preferences')
       %a{href: "/#{locale}/preferences"}
         %i.fa.fa-cog{title: I18n.t('views.session_links.preferences')}
