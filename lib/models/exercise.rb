@@ -10,7 +10,7 @@ module Wordcabin
     belongs_to :content_fragment # optional...
     
     scope :ordered, -> do
-      joins(:content_fragment).merge(ContentFragment.ordered)
+      joins(:content_fragment).merge(ContentFragment.ordered).order(sort_order: :asc)
     end
     default_scope { ordered }
 
