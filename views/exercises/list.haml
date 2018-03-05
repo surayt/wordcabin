@@ -1,10 +1,11 @@
 %ul
-  - old_chapter = @exercises.first.content_fragment.chapter ; @exercises.each do |e|
-    - if old_chapter != e.content_fragment.chapter
-      %hr/
-      - old_chapter = e.content_fragment.chapter
-    %li
-      %a{href: "/#{e.locale}/exercises/#{e.id}", class: ('active' if params[:id] == e.id.to_s)}
-        %span= "#{e.content_fragment.chapter} - " if e.content_fragment_id
-        = "#{e.sort_order}. " if e.sort_order
-        = e.name
+  - if @exercises && @exercises.first && @exercises.first.content_fragment
+    - old_chapter = @exercises.first.content_fragment.chapter ; @exercises.each do |e|
+      - if old_chapter != e.content_fragment.chapter
+        %hr/
+        - old_chapter = e.content_fragment.chapter
+      %li
+        %a{href: "/#{e.locale}/exercises/#{e.id}", class: ('active' if params[:id] == e.id.to_s)}
+          %span= "#{e.content_fragment.chapter} - " if e.content_fragment_id
+          = "#{e.sort_order}. " if e.sort_order
+          = e.name
