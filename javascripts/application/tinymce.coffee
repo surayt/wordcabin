@@ -112,18 +112,19 @@ name = merge(common_settings,
   toolbar:  'undo redo code paste removeformat'
   height:   '5.25em'
   body_id:  'tinymce_name_instance')
-  
+
+html_style_formats = [
+  {title: 'Hidden', inline: 'span', classes: 'hidden'}
+  {title: 'Correct answer', inline: 'span', classes: 'correct_answer'}
+  {title: 'Incorrect answer', inline: 'span', classes: 'incorrect_answer'}
+  {title: 'Left column selected', inline: 'span', classes: 'selected_left'}
+  {title: 'Right column selected', inline: 'span', classes: 'selected_right'}
+].concat common_settings['style_formats']
 html = merge(common_settings,
   menubar:  false
   plugins:  'table directionality lists media link paste code image uploadfile insertexercise'
   selector: 'textarea.html'
-  style_formats: merge(common_settings['style_formats'], [
-    {title: 'Hidden', inline: 'span', classes: 'hidden'}
-    {title: 'Correct answer', inline: 'span', classes: 'correct_answer'}
-    {title: 'Incorrect answer', inline: 'span', classes: 'incorrect_answer'}
-    {title: 'Left column selected', inline: 'span', classes: 'selected_left'}
-    {title: 'Right column selected', inline: 'span', classes: 'selected_right'}
-  ])
+  style_formats: html_style_formats
   toolbar:  'undo redo code paste removeformat      |
              styleselect bold italic underline      |
              table alignleft aligncenter alignright |
