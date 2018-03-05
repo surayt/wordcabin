@@ -74,11 +74,14 @@ body.user #articles article section
       color: $red
   .selected_left
     &:before
-      content: '\f111 \f10c'
+      content: '  \f111       \f10c'
   .select_right
     &:before
-      content: '\f10c \f111'
+      content: '  \f10c       \f111'
   .selected_left, .selected_right
+    color: $white
+    &:before
+      width: 35pt
     &:hover:before
       color: $blue
   hr
