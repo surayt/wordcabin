@@ -78,6 +78,7 @@ common_settings =
     {title: 'Highlighted', inline: 'span', classes: 'highlight'}
     {title: 'Greyed out', inline: 'span', classes: 'greyed_out'}
     {title: 'Light-grey background', selector: '*', classes: 'grey_background'}
+    {title: 'With audio player (add to links that reference MP3 files)', selector: '*', classes: 'with_player'}
   ]
   
   content_css: [
@@ -109,7 +110,16 @@ name = merge(common_settings,
   menubar:  false
   plugins:  'directionality code paste'
   selector: 'textarea.name'
-  toolbar:  'undo redo code paste removeformat'
+  style_formats: [
+    {title: 'With audio player (add to links that reference MP3 files)', selector: '*', classes: 'with_player'}
+    {title: 'Languages', items: [
+      {title: 'English (the whole containing element)', selector: '*', attributes: {lang: 'en'}}
+      {title: 'English (just the selected text)', inline: 'span', attributes: {dir: 'ltr', lang: 'en'}}
+      {title: '(ܣܘܪܝܬ (ܐܘ ܡܩܛܥ ܟܐܡܝܠܐ', selector: '*', attributes: {lang: 'syr'}}
+      {title: 'ܣܘܪܝܬ (ܑܐܘ ܟ݂ܒܪܐ ܡܢܩܝܐ ܒܣ)', inline: 'span', attributes: {dir: 'rtl', lang: 'syr'}}
+    ]}
+  ]
+  toolbar:  'undo redo code paste removeformat | styleselect bold italic'
   height:   '5.25em'
   body_id:  'tinymce_name_instance')
 
