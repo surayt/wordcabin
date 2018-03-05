@@ -23,10 +23,9 @@ de:
     fragment_not_found: "Inhaltsfragment konnte nicht gefunden werden."
     fragment_destroyed: "Inhaltsfragment wurde gelöscht."
     fragment_cant_be_destroyed: "Inhaltsfragment konnte nicht gelöscht werden."
-    # TODO: translate!
-    no_such_exercise: "No such exercise."
-    could_not_publish: "Failed to declare book as published."
-    exercise_type_not_yet_fully_implemented: "Exercise type not yet fully implemented."
+    no_such_exercise: "Übung existiert nicht."
+    could_not_publish: "Buch konnte nicht als publiziert gesetzt werden."
+    exercise_type_not_yet_fully_implemented: "Übungstyp noch nicht vollständig implementiert."
     
   models:
     content_fragment:
@@ -68,13 +67,11 @@ de:
       edit: "Inhaltsfragment bearbeiten"
       logout: "Abmelden"
       login: "Anmelden"
-      # TODO: translate!
       preferences: "Einstellungen"
     exercise:
       info: "Übung ##{@exercise.id} wird hier sichtbar sein, sobald sie von einem Redakteur als publiziert gekennzeichnet wurde."
     fake:
-      # TODO: translate!
-      will_be_interactive: "Upcoming feature: we're working on making this an interactive exercise - stay tuned!"
+      will_be_interactive: "Wir arbeiten daran, diese Übung interaktiv zu machen!"
     drag_n_drop_cloze:
       instructions: "Benutzen Sie die Maus oder Ihren Finger um die Wörter an die richtige Stelle im Text zu ziehen. Klicken oder tippen Sie auf die Glühbirne, um den Antwortschlüssel zu sehen."
     questions_and_answers:
