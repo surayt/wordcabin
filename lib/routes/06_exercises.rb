@@ -54,7 +54,12 @@ module Wordcabin
     end
     
     get '/exercises/:id' do |id|
-      @exercise = Exercise.find(id)
+      begin
+        @exercise = Exercise.find(id)
+      rescue
+        flash[:error] = "No such exercise." # TODO: I18n!
+        redirect to("/#{locale}/exercises")
+      end
       @questions = @exercise.questions
       @text_fragments = @exercise.text_fragments
       if current_user.is_admin? && !request.xhr?
