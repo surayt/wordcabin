@@ -82,7 +82,7 @@ module Wordcabin
         db_file = project_root+'databases'+"#{Config.database}.sqlite3" 
       end
       db_file ||= Config.root+'db'+"#{environment}.sqlite3"
-      puts "Configuring database #{db_file}" # TODO: logger.debug?
+      puts "Configuring database #{db_file}".green
       db_config = begin
         YAML.load_file(Config.config+'db.yml')[Config.database]
       rescue
