@@ -1,0 +1,11 @@
+CREATE TABLE IF NOT EXISTS "file_attachments" ("id" INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, "filename" varchar, "content_type" varchar, "binary_data" blob);
+CREATE TABLE IF NOT EXISTS "users" ("id" INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, "email" varchar, "password_digest" varchar, "is_admin" boolean DEFAULT 'f', "preferred_locale" varchar);
+CREATE TABLE IF NOT EXISTS "schema_migrations" ("version" varchar NOT NULL PRIMARY KEY);
+CREATE TABLE IF NOT EXISTS "ar_internal_metadata" ("key" varchar NOT NULL PRIMARY KEY, "value" varchar, "created_at" datetime NOT NULL, "updated_at" datetime NOT NULL);
+CREATE UNIQUE INDEX "index_users_on_email" ON "users" ("email");
+CREATE TABLE IF NOT EXISTS "content_fragments" ("id" INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, "book" varchar DEFAULT NULL, "html" varchar DEFAULT NULL, "chapter" varchar DEFAULT NULL, "heading" varchar DEFAULT '<table><tr><td></td></tr></table>', "locale" varchar DEFAULT NULL, "chapter_padded" varchar DEFAULT NULL, "is_published" boolean DEFAULT 'f');
+CREATE INDEX "index_content_fragments_on_chapter_padded" ON "content_fragments" ("chapter_padded");
+CREATE TABLE IF NOT EXISTS "text_fragments" ("id" INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, "type" varchar DEFAULT NULL, "text_ltr" varchar DEFAULT NULL, "key_ltr" varchar DEFAULT NULL, "sort_order" integer DEFAULT NULL, "exercise_id" integer DEFAULT NULL, "question_id" integer DEFAULT NULL, "text_rtl" varchar, "key_rtl" varchar);
+CREATE INDEX "index_text_fragments_on_exercise_id" ON "text_fragments" ("exercise_id");
+CREATE INDEX "index_text_fragments_on_question_id" ON "text_fragments" ("question_id");
+CREATE TABLE IF NOT EXISTS "exercises" ("id" INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, "type" varchar DEFAULT NULL, "name" varchar DEFAULT NULL, "description" varchar DEFAULT NULL, "text_fragment_order" varchar DEFAULT NULL, "locale" varchar DEFAULT NULL, "content_fragment_id" integer, "sort_order" integer, "html" text, "will_be_interactive" boolean DEFAULT 't');
