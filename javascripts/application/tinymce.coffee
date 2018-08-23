@@ -77,6 +77,7 @@ common_settings =
     {title: 'Standard paragraph', format: 'p'}
     {title: 'Highlighted', inline: 'span', classes: 'highlight'}
     {title: 'Greyed out', inline: 'span', classes: 'greyed_out'}
+    {title: 'Hidden (e.g. for answers)', inline: 'span', classes: 'answer'}
     {title: 'Light-grey background', selector: '*', classes: 'grey_background'}
     {title: 'With audio player (add to links that reference MP3 files)', selector: '*', classes: 'with_player'}
   ]
