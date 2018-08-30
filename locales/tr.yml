@@ -64,6 +64,7 @@ tr:
     session_links:
       book_list: "Kitap listesi"
       manage_exercises: "Egzersizleri düzenle"
+      view_exercise_in_book: "View in Book" # TODO: @nicoatas?
       preview: "Fragmanı göster"
       edit: "Fragmanı düzenle"
       logout: "Oturumu kapat"

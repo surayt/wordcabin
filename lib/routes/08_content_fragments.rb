@@ -4,7 +4,7 @@ module Wordcabin
   class Server < Sinatra::Application
 
     # Careful with these as their order is important. This file must also be the last of the routing files!
-    # Otherwise basic CRUD here.    
+    # Otherwise basic CRUD here.
 
     get '/content_fragments/new' do
       params[:content_fragment] ||= {}

@@ -63,6 +63,7 @@ de:
     session_links:
       book_list: "Bücherliste"
       manage_exercises: "Übungen bearbeiten"
+      view_exercise_in_book: "Im Buch anschauen"
       preview: "Inhaltsfragment betrachten"
       edit: "Inhaltsfragment bearbeiten"
       logout: "Abmelden"

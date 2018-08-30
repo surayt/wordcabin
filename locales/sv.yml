@@ -64,6 +64,7 @@ sv:
     session_links:
       book_list: "Bok lista"
       manage_exercises: "Hantera övningar"
+      view_exercise_in_book: "View in Book" # TODO: @nicoatas?
       preview: "Förhandsgranska fragmentet"
       edit: "Redigera fragmentet"
       logout: "Logga ut"

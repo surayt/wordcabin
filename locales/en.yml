@@ -64,6 +64,7 @@ en:
     session_links:
       book_list: "Book List"
       manage_exercises: "Manage Exercises"
+      view_exercise_in_book: "View in Book"
       preview: "Preview Fragment"
       edit: "Edit Fragment"
       logout: "Logout"
