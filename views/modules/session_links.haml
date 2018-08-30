@@ -14,7 +14,7 @@
               %option{value: l, selected: selected}= I18n.t(l)
         
       - unless content_class.include?('exercises')
-        %a{href: "/#{locale}/exercises"}
+        %a{href: "/#{locale}/exercises/#{@fragment.first_exercise_id}"}
           %i.fa.fa-graduation-cap
           = I18n.t('views.session_links.manage_exercises')
         
