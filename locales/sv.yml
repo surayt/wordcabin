@@ -64,7 +64,7 @@ sv:
     session_links:
       book_list: "Bok lista"
       manage_exercises: "Hantera övningar"
-      view_exercise_in_book: "View in Book" # TODO: @nicoatas?
+      view_exercise_in_book: "Visa i boken" # TODO: @nicoatas?
       preview: "Förhandsgranska fragmentet"
       edit: "Redigera fragmentet"
       logout: "Logga ut"
@@ -81,7 +81,7 @@ sv:
     questions_and_answers:
       instructions: "Läs frågorna i antingen latinska eller syriska bokstäver och försök att tänka på ett lämpligt svar. Klicka eller tryck på en fråga för att visa ett exempelsvar."
     sorted_fragments:
-      instructions: "Dra och släpp orden i ordning tills du är nöjd med din mening i varje rad. Du kan antingen använda latin- eller syriac-skriven sidan av  tabellen.Tryck på glödlampan för att kontrollera dina svar eller avslöja den rätta."
+      instructions: "Dra och släpp orden i ordning tills du är nöjd med din mening i varje rad. Du kan antingen använda  surayt skriven med latinska eller syriska bookstäver.Tryck på glödlampan för att kontrollera dina svar eller avslöja den rätta."
     # TODO: translate!
     content_fragments:
       save_and_preview: "Spara och förhandsgranska"
