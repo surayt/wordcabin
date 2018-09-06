@@ -32,7 +32,7 @@
 	branch = master
 [submodule "static/tinymce_langs"]
 	path = static/tinymce_langs
-	url = https://github.com/surayt/tinymce_langs.git
+	url = git@github.com:surayt/tinymce_langs.git 
 	branch = master
 [submodule "static/font-awesome"]
 	path = static/font-awesome
