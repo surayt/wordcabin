@@ -103,13 +103,13 @@ body.index
         margin: 0 25px 0 0
         &:last-child
           margin-right: 0
-        
-  // Arabic-language version of the course; larger devices only
-  // ==========================================================
-  &:lang(ar)
-    +grid-media($medium-grid)
-      main 
-        h3
-          text-align: left
-        > ul
-          width: 25em
+      
+// Arabic-language version of the course
+          
+html[lang=ar] body.index
+  main > ul,
+  main p
+    width: 450px
+    margin-right: 25px
+    padding: .5em
+    background-color: rgba(255, 255, 255, 0.5)

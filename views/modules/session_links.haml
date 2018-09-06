@@ -13,8 +13,13 @@
               - selected = (session[:content_locale] == l ? 'selected' : nil)
               %option{value: l, selected: selected}= I18n.t(l)
         
-      - unless content_class.include?('exercises')
-        %a{href: "/#{locale}/exercises"}
+      - if content_class.include?('exercises')
+        - if @exercise
+          %a{href: @exercise.content_fragment.url_path}
+            %i.fa.fa-eye
+            = I18n.t('views.session_links.view_exercise_in_book')
+      - else
+        %a{href: "/#{locale}/exercises/#{@fragment.first_exercise_id}"}
           %i.fa.fa-graduation-cap
           = I18n.t('views.session_links.manage_exercises')
         

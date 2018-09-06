@@ -64,6 +64,7 @@ fr:
     session_links:
       book_list: "Liste de livres"
       manage_exercises: "Gérer les exercices"
+      view_exercise_in_book: "View in Book" # TODO: @nicoatas?
       preview: "Voir fragment"
       edit: "Editer fragment"
       logout: "Se déconnecter"

@@ -154,5 +154,9 @@ module Wordcabin
     def first_child_url_path
       "/#{[locale, book, first_child ? first_child.chapter : chapter].join '/'}".chomp '/'
     end
+    
+    def first_exercise_id
+      exercises.any? ? exercises.first.id : nil
+    end
   end
 end
