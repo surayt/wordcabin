@@ -1,0 +1,5 @@
+- if locals[:model] == :content_fragment
+  %form#search_form{method: :get, action: "/#{locale}/search"}
+    %input{type: :hidden, name: 'content_fragment[book]', value: @fragment.book}
+    -# TODO: i18n
+    %input{type: :search, name: :query, placeholder: "Enter search term...", value: params[:query]}

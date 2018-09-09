@@ -1,0 +1,8 @@
+%article.search_results
+
+-# TODO: i18n!
+%h1 Search Results:
+%ul
+  - @fragments.each do |fragment|
+    %li{class: "fragment_#{fragment.id}"}
+      %a{href: fragment.url_path}= fragment.heading_without_html

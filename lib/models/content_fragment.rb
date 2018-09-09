@@ -117,6 +117,16 @@ module Wordcabin
     scope :books, ->(locale) { empty_chapters.where(locale: locale) }
     scope :chapters, ->(locale, book) { non_empty_chapters.where(locale: locale, book: book) }
     
+    def self.search(locale, book, query)
+      puts "User is looking for [#{query}] in the [#{locale}] version of the [#{book}] book."
+      fragments = self.chapters(locale, book)
+      # TODO: Implement FTS5 searching so it can be used instead of this on
+      # systems where the FTS5 extension is available.
+      fragments = fragments.where("html LIKE :query OR heading LIKE :query", query: "%#{sanitize_sql_like(query)}%")
+      puts "Found #{fragments.count} results for that query."
+      fragments
+    end
+    
     def fill_sorting_column
       unless chapter.blank?
         lmnts = chapter.split '.'

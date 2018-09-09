@@ -1,4 +1,5 @@
 #session-links
+
   - if current_user && !current_user.new_record?
     - if current_user.is_admin?
     
@@ -6,6 +7,9 @@
         %a{href: '/'}
           %i.fa.fa-home
           = I18n.t('views.session_links.book_list')
+
+        - if content_class.include?('contents')
+          = haml :'modules/search_form', locals: locals
       
         %form{method: :get}
           %select#locale_select{name: 'new_locale'}
@@ -18,8 +22,8 @@
           %a{href: @exercise.content_fragment.url_path}
             %i.fa.fa-eye
             = I18n.t('views.session_links.view_exercise_in_book')
-      - else
-        %a{href: "/#{locale}/exercises/#{@fragment.first_exercise_id}"}
+      - elsif content_class.include?('contents')
+        %a{href: "/#{locale}/exercises/#{@fragment ? @fragment.first_exercise_id : nil}"}
           %i.fa.fa-graduation-cap
           = I18n.t('views.session_links.manage_exercises')
         

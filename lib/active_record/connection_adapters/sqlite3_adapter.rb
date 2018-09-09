@@ -27,6 +27,14 @@ module Wordcabin
        'PRAGMA main.temp_store = MEMORY;'].each do |tweak|
         connection.execute tweak
       end
+      
+      # TODO: finish this (need to figure out how to make
+      # make sure it's only done on systems that have FTS5
+      # compiled and available
+      #
+      # Enabling SQLite's FTS5 extension
+      # connection.enable_load_extension(1)
+      # load_extension("/usr/local/lib/libSqliteIcu.so")
     end
   end
 end

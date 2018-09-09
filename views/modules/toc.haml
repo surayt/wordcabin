@@ -1,0 +1,18 @@
+%nav#sidebar
+
+  - if locals[:model] == :content_fragment
+    -# The mobile version's nav menu
+    %a#mobile-menu-button= '<i class="fa fa-bars"></i>'
+  
+  -# Phrase "Table of contents" or "List of exercises",
+  -# then the list of items itself.  
+  - case locals[:model]
+  
+  - when :content_fragment
+    %heading#toc-heading= I18n.t('toc')
+    %section#toc= @toc.html(request.path_info) if @toc
+    
+  - when :exercise
+    %section#loe= haml :'exercises/list'
+    
+  = haml :'modules/new_item_form'
