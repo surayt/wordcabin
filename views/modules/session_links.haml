@@ -14,7 +14,7 @@
               %option{value: l, selected: selected}= I18n.t(l)
         
       - if content_class.include?('exercises')
-        - if @exercise
+        - if @exercise && @exercise.content_fragment
           %a{href: @exercise.content_fragment.url_path}
             %i.fa.fa-eye
             = I18n.t('views.session_links.view_exercise_in_book')
