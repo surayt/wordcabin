@@ -3,8 +3,21 @@ require 'colorize' # for debugging only
 module Wordcabin 
   class Server < Sinatra::Application
 
-    # Careful with these as their order is important. This file must also be the last of the routing files!
-    # Otherwise basic CRUD here.
+    # ----------------------------------------------------- #
+    # Careful with these as their order is important.       # 
+    # This file must also be the last of the routing files! #
+    # ----------------------------------------------------- #
+
+    get '/search' do # Example: GET /en/search?content_fragment%5Bbook%5D=Level+A&query=verbs"
+      begin
+        @fragment = ContentFragment.book(locale, params[:content_fragment][:book])
+        @toc = TOC.new(locale, @fragment.parent)
+        @fragments = ContentFragment.search(locale, params[:content_fragment][:book], params[:query])
+        haml :'contents', locals: {model: :content_fragment}
+      rescue
+        redirect to('/')
+      end
+    end
 
     get '/content_fragments/new' do
       params[:content_fragment] ||= {}

@@ -13,6 +13,8 @@ common_settings =
   # the global lang files instead.
   language_url: "/tinymce_langs/#{ui_locale}.js?#{(new Date).getTime()}"
   language: ui_locale
+
+  entity_encoding: "raw"
   
   statusbar: false
   branding: false
