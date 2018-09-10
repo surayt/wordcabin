@@ -156,6 +156,14 @@ module Wordcabin
         "/#{locale}/#{path}"
       end
     end
+    
+    def exercises_url_path
+      if first_exercise_id
+        "/#{locale}/exercises/#{first_exercise_id}"
+      else
+        "/#{locale}/exercises"
+      end
+    end
   
     def book_url_path
       "/#{[locale, book].join '/'}".chomp '/'

@@ -23,7 +23,7 @@
             %i.fa.fa-eye
             = I18n.t('views.session_links.view_exercise_in_book')
       - elsif content_class.include?('contents')
-        %a{href: "/#{locale}/exercises/#{@fragment ? @fragment.first_exercise_id : nil}"}
+        %a{href: @fragment.exercises_url_path}
           %i.fa.fa-graduation-cap
           = I18n.t('views.session_links.manage_exercises')
         
@@ -41,6 +41,9 @@
       = I18n.t('views.session_links.logout')
     
   - else
+
+    - if content_class.include?('contents')
+      = haml :'modules/search_form', locals: locals
   
     %a{href: "/#{locale}/login?referer=/#{locale}#{request.path_info}"}
       %i.fa.fa-sign-in
