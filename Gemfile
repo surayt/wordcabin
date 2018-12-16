@@ -13,7 +13,12 @@ gem 'sinatra-strong-params', require: 'sinatra/strong-params'
 gem 'sinatra-flash'
 gem 'semantic_logger'
 gem 'rerun'
+
+# TODO: Make this work as sass has been deprecated!
 gem 'sass'
+# gem 'sassc'
+# gem 'sassc-rails'
+
 gem 'autoprefixer-rails'
 gem 'hamlit'
 gem 'html2haml'

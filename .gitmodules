@@ -1,4 +1,4 @@
-[submodule "stylesheets/normalize-scss"]
+[submodule "stylesheets/lib/normalize-scss"]
 	path = stylesheets/lib/normalize-scss
 	url = https://github.com/surayt/normalize-scss.git
 	branch = master
@@ -6,11 +6,11 @@
 	path = javascripts/jquery-ujs
 	url = https://github.com/surayt/jquery-ujs.git
 	branch = master
-[submodule "stylesheets/bourbon"]
+[submodule "stylesheets/lib/bourbon"]
 	path = stylesheets/lib/bourbon
 	url = https://github.com/surayt/bourbon.git
 	branch = master
-[submodule "stylesheets/neat"]
+[submodule "stylesheets/lib/neat"]
 	path = stylesheets/lib/neat
 	url = https://github.com/surayt/neat.git
 	branch = master
