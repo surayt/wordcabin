@@ -6,26 +6,29 @@
 // =========
 // (No more Bitters as it was dirtying the whole namespace.)
 
-@import 'normalize-scss/fork-versions/default/normalize'
-@import 'bourbon/core/bourbon'
-@import 'modules/bourbon-defaults'
-@import 'neat/core/neat'
+@import 'lib/normalize-scss/fork-versions/default/normalize'
+@import 'lib/bourbon/core/bourbon'
+@import 'lib/neat/core/neat'
 
 // Basic setup
 // ===========
 // Nothing in this section may affect any elements either,
 // i.e. only variables, mixins, etc, with the exception of
-// applying i18n-related styles such as text-direction.
+// applying i18n-related styles such as (text) direction.
 
 @import 'modules/breakpoints'
 @import 'modules/colors'
-@import 'modules/fonts'
-@import 'modules/i18n'
+
+@import 'fonts/families'
+@import 'fonts/sizes'
+
+// Library setup (needs color variables, etc.)
+// ===========================================
+@import 'modules/bourbon_defaults'
 
 html, body
   height: 100%
 body
-  font-family: $font-stack-wordcabin-ui
   a
     color: $blue
     text-decoration: none
@@ -49,36 +52,45 @@ body
 // Anything that's UI in one way or another, and
 // which must not affect book contents in any way.
 
-@import 'modules/session_links'
-@import 'modules/search_form'
+@import 'modules/form_styles'
 @import 'modules/flash_messages'
-@import 'modules/toc'
 
-@import 'views/index'
-@import 'views/layout_user'
-@import 'views/login_form'
-@import 'views/error_screen'
-@import 'views/layout_editor'
-@import 'views/layout_editor_exercises'
-@import 'views/preferences'
+@import 'ui/layout/viewer'
+@import 'ui/layout/session_links'
+@import 'ui/layout/sidebar'
+@import 'ui/layout/editor'
 
-// Anything affecting the book contents themselves,
-// and which may not affect any UI elements in any
-// way.
+@import 'ui/views/index'
+@import 'ui/views/login_form'
+@import 'ui/views/error_screen'
+@import 'ui/views/preferences'
+
+@import 'fonts/rtl/syr'
+
+// Anything affecting the book contents themselves, and
+// which may not affect any of the UI elements in any way.
 
 // See comments at the top of both files!
-@import 'views/contents_editor'
-@import 'views/contents_user'
+// WIP: REFACTORING!
+//#content #articles
+//  display: none !important
+@import 'contents/editor'
+@import 'contents/viewer'
+@import 'contents/exercises'
 
-@import 'views/contents_user_and_editor_exercises'
+@import 'contents/features/icons_for_file_links'
+@import 'contents/features/titlepage_specifics'
+@import 'contents/features/audio_player'
 
-@import 'features/icons_for_file_links'
-@import 'features/titlepage_specifics'
-@import 'features/audio_player'
+// Overrides to turn the whole thing from left-to-right into right-to-left
+// =======================================================================
 
-// @import 'features/sidebar_delete_links'
+// WIP: REFACTORING!
+@import 'fonts/rtl/ar'
+@import 'ui/rtl/ar'
+@import 'contents/rtl/ar'
 
 // The standalone keyboard page
 // ============================
 
-@import 'views/keyboard'
+@import 'ui/views/keyboard'

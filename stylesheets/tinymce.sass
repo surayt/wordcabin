@@ -6,18 +6,28 @@
 // it must be decided if changes made to them there need to be reflected
 // here, as well.
 
-@import 'normalize-scss/fork-versions/default/normalize'
-@import 'bourbon/core/bourbon'
-@import 'modules/bourbon-defaults'
-@import 'neat/core/neat'
+@import 'lib/normalize-scss/fork-versions/default/normalize'
+@import 'lib/bourbon/core/bourbon'
+@import 'lib/neat/core/neat'
 
 @import 'modules/breakpoints'
 @import 'modules/colors'
-@import 'modules/fonts'
-@import 'modules/i18n'
+
+@import 'fonts/families'
+@import 'fonts/sizes'
+
+// WIP! Refactoring!
+@import 'fonts/rtl/ar'
+
+// Library setup (needs color variables, etc.)
+@import 'modules/bourbon_defaults'
 
 // Now this is what it's all about for the TinyMCE content <body>.
 // Note that contents_user.sass is NOT referenced here as it contains
 // styles that need not or should not be applied to the TinyMCE <body>.
 
-@import 'views/contents_editor'
+@import 'contents/editor'
+@import 'contents/features/titlepage_specifics'
+
+// WIP! Refactoring!
+@import 'contents/rtl/ar'

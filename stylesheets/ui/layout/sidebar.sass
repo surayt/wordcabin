@@ -1,0 +1,78 @@
+nav#sidebar
+
+  // Delete Links (currently disabled)
+    li
+      a.btn.delete
+        display: none
+        i
+          color: $white
+          &:hover
+            color: $black
+      &.level_2 li a.btn.delete
+        margin-left: 2em
+    &:hover
+      a.btn.delete
+        display: inline-block
+
+  #toc,
+  #loe
+
+    // Mobile devices
+    // ==============
+    position: absolute
+    width: 100%
+    height: 100%
+    min-height: 100%
+    top: 0
+    left: 0
+    background: $toc-orange
+    padding: 0
+    z-index: 2 // Getting above videos embedded in iframes
+    ul
+      list-style-type: none
+      padding: 0
+      li.level_1 > span
+        font-weight: bold
+        padding-bottom: .5em
+        display: inline-block
+      ul
+        li
+          padding-left: 1em
+          line-height: 1.5
+          a, span
+            color: $white
+            span.chapter
+              // display: none
+          a:hover,
+          a:hover span,
+          a.active,
+          a.active span
+            color: contrast-switch($toc-orange)
+            transition: color .5s
+          span
+            font-weight: bold
+          &.level_2
+            padding-left: 0
+          &.level_3
+            padding-left: 2.75em
+            text-indent: -1.75em
+    > ul
+      margin: 0
+      padding: .55em .5em 0 2.25em
+
+    // Larger devices
+    // ==============
+    +grid-media($medium-grid)
+      background-color: $orange
+      // start out by hiding everything but the top two levels
+      ul
+        &.level_2 ul
+          display: none
+      > ul
+        padding: .5em .5em 0 .35em
+        margin-top: 20px
+        overflow-y: auto
+        height: calc(100% - 95px)
+
+  span.translit
+    font-weight: normal !important

@@ -1,0 +1,23 @@
+@include font-face('ALW Piktograms', '/assets/alwpikto')
+
+@include font-face('Charis SIL', '/assets/CharisSIL-R')
+@include font-face('Charis SIL', '/assets/CharisSIL-B')
+  font-weight: bold
+@include font-face('Charis SIL', '/assets/CharisSIL-I')
+  font-style: italic
+@include font-face('Charis SIL', '/assets/CharisSIL-BI')
+  font-weight: bold
+  font-style: italic
+
+@include font-face('Serto Jerusalem', '/assets/SertoJerusalem')
+@include font-face('Serto Jerusalem', '/assets/SertoJerusalemBold')
+  font-weight: bold
+@include font-face('Serto Jerusalem', '/assets/SertoJerusalemItalic')
+  font-style: italic
+
+// Try to provide sensible fallbacks for even when things are not the way they should be,
+// which can easily happen by authors misclicking somewhere in the TinyMCE editor controls.
+
+$font-stack-wordcabin-ui-ltr: $font-stack-system, 'Charis SIL', 'Serto Jerusalem', 'FontAwesome'
+$font-stack-wordcabin-contents-latin: 'Charis SIL', 'Serto Jerusalem', 'FontAwesome'
+$font-stack-wordcabin-contents-syriac: 'Serto Jerusalem', 'Charis SIL', 'FontAwesome'

@@ -1,16 +1,21 @@
 -# A button for creating a new content fragment or exercise
 - if current_user && current_user.is_admin?
   %form{method: :get, action: "/#{locale}/#{locals[:model].to_s.en.plural}/new"}
-    %input{type: :hidden, name: :view_mode, value: :edit}
-    - case locals[:model]
-    - when :content_fragment
-      %input{type: :hidden, name: 'content_fragment[book]', value: @fragment.book}
-    - when :exercise
-      %input{type: :hidden, name: 'exercise[locale]', value: locale}
-      %input{type: :hidden, name: 'exercise[sort_order]', value: 1}
-      %select{name: 'exercise[type]'}
-        - @exercise_types.each do |t|
-          - exercise_type = (@exercise ? @exercise.type : (params[:exercise] ? params[:exercise][:type] : nil))
-          - selected = (exercise_type.to_s == t ? 'selected' : nil)
-          %option{value: t, selected: selected}= t.split('::').last
-    %input{type: :submit, value: '+', class: 'btn fa-input', id: 'new-item-button'}
+    %fieldset
+      %input{type: :hidden, name: :view_mode, value: :edit}
+      
+      - if locals[:model] == :content_fragment
+      
+        %input{type: :submit, value: I18n.t('views.new_item_form.new_fragment'), class: 'btn fa-input', id: 'new-item-button'}
+        %input{type: :hidden, name: 'content_fragment[book]', value: @fragment.book}
+        
+      - if locals[:model] == :exercise
+      
+        %input{type: :submit, value: I18n.t('views.new_item_form.new_exercise'), class: 'btn fa-input', id: 'new-item-button'}
+        %input{type: :hidden, name: 'exercise[locale]', value: locale}
+        %input{type: :hidden, name: 'exercise[sort_order]', value: 1}
+        %select{name: 'exercise[type]'}
+          - @exercise_types.each do |t|
+            - exercise_type = (@exercise ? @exercise.type : (params[:exercise] ? params[:exercise][:type] : nil))
+            - selected = (exercise_type.to_s == t ? 'selected' : nil)
+            %option{value: t, selected: selected}= t.split('::').last # Black magic. Be kind with me, I'm tired.

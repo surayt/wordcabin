@@ -1,0 +1,96 @@
+///////////////////
+// font families //
+///////////////////
+
+@include font-face('Amiri', '/assets/amiri-regular')
+@include font-face('Amiri', '/assets/amiri-regular')
+  font-weight: bold
+@include font-face('Amiri', '/assets/amiri-regular')
+  font-style: italic
+
+@include font-face('Scheherazade SIL', '/assets/Scheherazade-Regular')
+@include font-face('Scheherazade SIL', '/assets/Scheherazade-Regular')
+  font-weight: bold
+@include font-face('Scheherazade SIL', '/assets/Scheherazade-Regular')
+  font-style: italic
+  
+@include font-face('DejaVu Sans', '/assets/DejaVuSans')
+@include font-face('DejaVu Sans', '/assets/DejaVuSans-Bold')
+  font-weight: bold
+@include font-face('DejaVu Sans', '/assets/DejaVuSans-Oblique')
+  font-style: italic
+@include font-face('DejaVu Sans', '/assets/DejaVuSans-BoldOblique')
+  font-weight: bold
+  font-style: italic
+
+@include font-face('DejaVu Serif', '/assets/DejaVuSerif')
+@include font-face('DejaVu Serif', '/assets/DejaVuSerif-Bold')
+  font-weight: bold
+@include font-face('DejaVu Serif', '/assets/DejaVuSerif-Italic')
+  font-style: italic
+@include font-face('DejaVu Serif', '/assets/DejaVuSerif-BoldItalic')
+  font-weight: bold
+  font-style: italic
+
+// Try to provide sensible fallbacks for even when things are not the way they should be,
+// which can easily happen by authors misclicking somewhere in the TinyMCE editor controls.
+
+$font-stack-wordcabin-ui-rtl: 'DejaVu Sans', $font-stack-system, 'FontAwesome'
+$font-stack-wordcabin-contents-arabic: 'DejaVu Serif', 'Scheherazade SIL', $font-stack-system, 'FontAwesome'
+$font-stack-wordcabin-contents-arabic-headings: 'Amiri', 'DejaVu Serif', $font-stack-system, 'FontAwesome'
+
+////////////////
+// font sizes //
+////////////////
+
+$font-size-base-arabic: 112% // to compensate for the larger vertical space arabic tends to require
+
+//////////////////
+// global rules //
+//////////////////
+
+html[lang=ar]
+  font-family: $font-stack-wordcabin-ui-rtl
+  font-size: $font-size-base-arabic
+
+  /////////////////
+  // local rules //
+  /////////////////
+
+  #toc[lang=ar],
+  #content[lang=ar]
+    #articles
+      font-family: $font-stack-wordcabin-contents-arabic
+      font-size: $font-size-base-arabic
+
+//  body
+//    direction: rtl
+//    line-height: 1.5
+//    
+//    #toc
+//      font-size: 110%
+//      line-height: .1
+//      
+//    #contents
+//      
+//      // TODO: check if necessary?
+//      direction: rtl !important
+//      text-align: right !important
+//      
+//      h1, h2, h3, .h1, .h2, .h3, header
+//        font-family: $font-stack-wordcabin-contents-arabic-headings
+//        // TODO: find a better solution
+//        // (already solved now because of the refactoring?)
+//        font-size: 80% !important
+//
+// it's possible the author wants to use it inline
+// disabled for now as it caused problems!
+//  *[lang=ar]
+//    direction: rtl
+//    text-align: right
+//    font-family: $font-stack-wordcabin-contents-arabic
+//  // important for the Arabic version
+//  *[lang=en]
+//    // direction: ltr
+//    // text-align: left
+//    font-family: $font-stack-wordcabin-contents-latin

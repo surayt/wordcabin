@@ -1,5 +1,3 @@
-require 'colorize' # for debugging only
-
 module Wordcabin 
   class Server < Sinatra::Application
 
@@ -13,7 +11,7 @@ module Wordcabin
         @fragment = ContentFragment.book(locale, params[:content_fragment][:book])
         @toc = TOC.new(locale, @fragment.parent)
         @fragments = ContentFragment.search(locale, params[:content_fragment][:book], params[:query])
-        haml :'contents', locals: {model: :content_fragment}
+        haml :'content'
       rescue
         redirect to('/')
       end
@@ -24,7 +22,7 @@ module Wordcabin
       params[:content_fragment][:locale] ||= locale
       if @fragment = ContentFragment.new(params[:content_fragment])
         @toc = TOC.new(locale, @fragment.parent)
-        haml :'contents', locals: {model: :content_fragment}
+        haml :'contents'
       else
         # TODO: come up with more fitting error message.
         flash[:error] = I18n.t('routes.no_such_chapter')
@@ -101,11 +99,11 @@ module Wordcabin
       if @fragment = ContentFragment.chapter(locale, book, chapter)
         @toc = TOC.new(locale, @fragment.parent)
         if request.xhr?
-          # puts "content_fragments: Processing request as XHR, returning HTML without layout".green
+          d "routes/content_fragments: Processing request as XHR, returning HTML without layout"
           haml :'content_fragments/view', layout: false
         else
-          # puts "content_fragments: Processing request normally, returning HTML with layout".green
-          haml :'contents', locals: {model: :content_fragment}
+          d "routes/content_fragments: Processing request normally, returning HTML with layout"
+          haml :'contents'
         end
       else
         flash[:error] = I18n.t('routes.no_such_chapter')

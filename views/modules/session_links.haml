@@ -2,49 +2,44 @@
 
   - if current_user && !current_user.new_record?
     - if current_user.is_admin?
-    
+
       - unless content_class.include?('index')
         %a{href: '/'}
-          %i.fa.fa-home
-          = I18n.t('views.session_links.book_list')
+          = I18n.icon_t('home', 'views.session_links.book_list')
 
-        - if content_class.include?('contents')
+        - if content_class.include?('contents') && locals[:model] == :content_fragment
           = haml :'modules/search_form', locals: locals
-      
-        %form{method: :get}
-          %select#locale_select{name: 'new_locale'}
-            - I18n.available_locales.each do |l|
-              - selected = (session[:content_locale] == l ? 'selected' : nil)
-              %option{value: l, selected: selected}= I18n.t(l)
-        
+
+        - unless %w{index preferences}.any? {|word| content_class.include? word}
+          %form{method: :get}
+            %select#locale_select{name: 'new_locale'}
+              - I18n.available_locales.each do |l|
+                - selected = (session[:url_locale] == l ? 'selected' : nil)
+                %option{value: l, selected: selected}= I18n.t(l)
+
       - if content_class.include?('exercises')
         - if @exercise && @exercise.content_fragment
           %a{href: @exercise.content_fragment.url_path}
-            %i.fa.fa-eye
-            = I18n.t('views.session_links.view_exercise_in_book')
-      - elsif content_class.include?('contents')
+            = I18n.icon_t('eye', 'views.session_links.view_exercise_in_book')
+      - elsif content_class.include?('contents') && @fragment
         %a{href: @fragment.exercises_url_path}
-          %i.fa.fa-graduation-cap
-          = I18n.t('views.session_links.manage_exercises')
-        
-      - if !%w{index exercises}.any? {|word| content_class.include? word} && view_mode == :preview
+          = I18n.icon_t('graduation-cap', 'views.session_links.manage_exercises')
+
+      - if %w{content exercises}.any? {|word| content_class.include? word} && view_mode == :preview
         %a{href: '?view_mode=edit'}
-          %i.fa.fa-book
-          = I18n.t('views.session_links.edit')
-          
+          = I18n.icon_t('book', 'views.session_links.edit')
+
     - unless content_class.include?('preferences')
       %a{href: "/#{locale}/preferences"}
         %i.fa.fa-cog{title: I18n.t('views.session_links.preferences')}
-        
+
     %a{href: "/#{locale}/logout"}
-      %i.fa.fa-sign-out
-      = I18n.t('views.session_links.logout')
-    
+      = I18n.icon_t('sign-out', 'views.session_links.logout')
+
   - else
 
     - if content_class.include?('contents')
       = haml :'modules/search_form', locals: locals
-  
+
     %a{href: "/#{locale}/login?referer=/#{locale}#{request.path_info}"}
-      %i.fa.fa-sign-in
-      = I18n.t('views.session_links.login')
+      = I18n.icon_t('sign-in', 'views.session_links.login')

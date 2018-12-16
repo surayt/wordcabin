@@ -1,56 +1,30 @@
--# The below three things, the session_links, the logo,
--# and the sidebar, are only meant to be displayed in the
--# book viewer and book editor views. Hence they're not
--# in layout.haml but here.
--#
--# The first one, the session_links, are needed on the
--# front page as well, though, hence they're a template.
-
--# TODO: Can the sidebar PLEASE be a THING, HTML-wise?
--# The styles that keep it together visually are just horrible now.
-
-= haml :'modules/session_links', locals: locals
+= haml :'modules/session_links', locals: {model: :content_fragment}
 = haml :'modules/logo'
-= haml :'modules/toc', locals: locals
+= haml :'modules/sidebar', locals: {model: :content_fragment}
 
-#content
-  
-  -# TODO: All of the below has become really ugly. Refactor!
-  -# (Shouldn't this stuff be decided in the routing file???)
-  
-  - if ((content_class.include? 'editor') && (view_mode == :edit)) || locals[:model] == :exercise || locals[:model] == :user
-    
-    -# Editing areas for both content_fragments and exercises each
-    -# have their own templates.
-    
-    = haml :"#{locals[:model].to_s.en.plural}/edit"
-    
+#content{lang: locale}
+
+  - if ((content_class.include? 'editor') && (view_mode == :edit))
+
+    = haml :"content_fragments/edit"
+
   - else
 
-    -# Semantically, the handle would belong outside #content
-    -# and inside #sidebar, which would make the CSS and JS
-    -# unnecessarily more complicated, though.
-    
-    %a#sidebar-handle= '<i class="fa fa-chevron-left"></i>'
-    
-    %a.nav-links#prev{href: '#'}= '<i class="fa fa-angle-double-up"></i>'
-    
+    %a#sidebar-handle= icon("chevron-#{session[:ui_origin]}")
+    %a.nav-links#prev{href: '#'}= icon('angle-double-up')
+
     -# A search was performed; show its results
-    - if @fragments
-    
+    - if @fragments    
       %main#search_results
-        
         = haml :'content_fragments/search_results'
-    
     - else
-    
       %main#articles
-      
+
         -# The single line of code inside of article.haml is
         -# in a separate file so that more articles may continue 
         -# to be loaded via XMLHttpRequest (see eager_loading.coffee
         -# for where that occurs).
         
         = haml :'content_fragments/view'
-      
-    %a.nav-links#next{href: '#'}= '<i class="fa fa-angle-double-down"></i>'
+
+    %a.nav-links#next{href: '#'}= icon('angle-double-down')

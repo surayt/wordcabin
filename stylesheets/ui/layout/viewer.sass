@@ -1,4 +1,5 @@
-body.contents.user
+body.contents.user,
+body.preferences.user
 
   // Mobile devices
   // ==============
@@ -19,7 +20,6 @@ body.contents.user
       position: absolute
       top: .25em
       left: .25em
-      font-size: 1.65em
       cursor: pointer
       &.fixed
         position: fixed
@@ -35,7 +35,6 @@ body.contents.user
   #content
     main
       padding: .35em .35em 0 .35em // Important for Mobile, no effect on Desktop!
-      font-size: 10.5pt
       article:first-child
         padding-top: 2em // So it can be easily removed if there's no previous ContentFragment
       iframe, p img
@@ -43,8 +42,11 @@ body.contents.user
         z-index: 0
     a.nav-links
       +hcenter
-      font-size: 20pt
       opacity: .5
+      &#prev
+        margin-top: 35px
+      &#next
+        padding-bottom: 15px
 
   // Larger devices
   // ==============
@@ -75,7 +77,6 @@ body.contents.user
     #sidebar
       position: fixed
       top: 70px
-      font-size: 10pt
       height: 100%
       #mobile-menu-button
         display: none
@@ -111,11 +112,3 @@ body.contents.user
           padding-top: 4em // So it can be easily removed if there's no previous ContentFragment
       a.nav-links
         margin-left: calc(25%/2)
-        font-size: 35pt
-        
-  // Arabic-language version of the course; larger devices only
-  // ==========================================================
-  &:lang(ar)
-    +grid-media($medium-grid)
-      #sidebar-handle
-        padding: 8px 3px 4px 0

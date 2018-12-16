@@ -64,9 +64,9 @@ common_settings =
       {title: 'Column width: 80%', selector: 'td', classes: 'width_80_percent'}
     ]}
     {title: 'Languages', items: [
-      {title: 'English (the whole containing element)', selector: '*', attributes: {lang: 'en'}}
-      {title: 'English (just the selected text)', inline: 'span', attributes: {dir: 'ltr', lang: 'en'}}
-      {title: '(ܣܘܪܝܬ (ܐܘ ܡܩܛܥ ܟܐܡܝܠܐ', selector: '*', attributes: {lang: 'syr'}}
+      {title: 'Latin script (the whole containing element)', selector: '*', attributes: {dir: 'ltr', lang: 'en'}}
+      {title: 'Latin script (just the selected text)', inline: 'span', attributes: {dir: 'ltr', lang: 'en'}}
+      {title: '(ܣܘܪܝܬ (ܐܘ ܡܩܛܥ ܟܐܡܝܠܐ', selector: '*', attributes: {dir: 'rtl', lang: 'syr'}}
       {title: 'ܣܘܪܝܬ (ܑܐܘ ܟ݂ܒܪܐ ܡܢܩܝܐ ܒܣ)', inline: 'span', attributes: {dir: 'rtl', lang: 'syr'}}
     ]}
     {title: 'Images', items: [

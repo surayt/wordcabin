@@ -14,7 +14,7 @@ module Wordcabin
           Exercise.all.map {|e| {text: e.name, value: e.id}}.to_json
         else
           content_type :html
-          haml :'contents', locals: {model: :exercise}
+          haml :'exercises'
         end
       else
         redirect to('/')
@@ -25,7 +25,7 @@ module Wordcabin
       if current_user.is_admin?
         find_exercises
         if @exercise = Exercise.new(params[:exercise])
-          haml :'contents', locals: {model: :exercise}
+          haml :'exercises'
         else
           # TODO: come up with more fitting error message.
           flash[:error] = I18n.t('routes.no_such_exercise')
@@ -64,8 +64,10 @@ module Wordcabin
       @text_fragments = @exercise.text_fragments
       if current_user.is_admin? && !request.xhr?
         find_exercises
-        haml :'contents', locals: {model: :exercise}
+        d "routes/exercises: Returning exercise with layout"
+        haml :'exercises'
       else
+        d "routes/exercises: Returning exercise without layout"
         haml :"exercises/view", layout: false
       end
     end

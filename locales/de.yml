@@ -6,11 +6,11 @@ de:
   nl: "Niederländisch"
   sv: "Schwedisch"
   tr: "Türkisch"
-  
+
   toc: "Inhaltsverzeichnis"
   loe: "Übungsverzeichnis"
   level: "Niveau"
-  
+
   routes:
     welcome: "Herzlich willkommen, %{user}!"
     login_error: "E-Mail-Adresse oder Passwort falsch."
@@ -26,7 +26,7 @@ de:
     no_such_exercise: "Übung existiert nicht."
     could_not_publish: "Buch konnte nicht als publiziert gesetzt werden."
     exercise_type_not_yet_fully_implemented: "Übungstyp noch nicht vollständig implementiert."
-    
+
   models:
     content_fragment:
       book_must_be_present: "muss angegeben werden, auch für leere Kapitel."
@@ -44,11 +44,21 @@ de:
       must_be_present: 'muss angegeben werden.'
 
   views:
+    new_item_form:
+      new_exercise: 'Neue Übung'
+      new_fragment: 'Neues Inhaltsfragment'
+    user:
+      # TODO: i18n! (@sixtyfive)
+      preferred_language: 'Preferred language:'
+      email: 'E-Mail:'
+      password: 'Password (leave empty to keep):'
+      password_confirmation: 'Confirm password:'
+      submit: 'Update'
     index:
       choose_book: "Bitte wählen Sie unten das Buch aus, welches Sie anschauen oder bearbeiten möchten."
       green_books: "In Grün markierte Bücher wurden bereits publiziert und sind öffentlich sichtbar."
       choose_locale: "Bitte wählen Sie ihre gewünschte Unterrichtssprache aus."
-      alpha_version: "Bitte haben Sie noch ein wenig Geduld, derzeit befinden sich alle Kurse in einer Beta-Version."
+      alpha_version: "Achtung, an einigen der Inhalte arbeiten wir derzeit noch."
       preview_book: "%{book} in folgender Sprache anschauen:"
       read_book: "%{book} in folgender Sprache lesen:"
       keyboard_ad: "Wenn Sie einige Surayt-Buchstaben oder auch einen längeren Text eingeben müssen, aber keine Surayt-Tastatur besitzen oder nicht wissen, wie sich die entsprechenden Einstellungen auf Ihrem Computer anpassen lassen, können Sie unsere neue <a href='%{url}' title='On-Screen-Tastatur für Surayt'>On-Screen-Tastatur für Surayt</a> benutzen."
@@ -81,3 +91,5 @@ de:
       instructions: "Ziehen Sie die Wörter mit der Maus oder Ihrem Finger über den Bildschirm, bis ihre Reihenfolge in jeder Zeile eine sinnvolle Antwort ergibt. Sie können nach Belieben entweder die Seite mit lateinischen oder mit syrischen Buchstaben sortieren. Klicken oder tippen Sie auf die Glühbirne, um die korrekte Reihenfolge herzustellen."
     content_fragments:
       save_and_preview: "Speichern und zu Vorschau wechseln"
+    search_form:
+      placeholder: "Suchbegriff eingeben..."
