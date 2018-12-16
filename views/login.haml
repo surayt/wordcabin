@@ -1,7 +1,7 @@
 %form#login-form{action: "/#{locale}/login", method: 'post'}
   %p
     %label{for: :user_email}= I18n.t('views.login_form.email')
-    %input{type: :text, name: :user_email, id: :user_email, autofocus: true}
+    %input{type: :email, name: :user_email, id: :user_email, autofocus: true}
   %p
     %label{for: :user_password}= I18n.t('views.login_form.password')
     %input{type: :password, name: :user_password, id: :user_password}

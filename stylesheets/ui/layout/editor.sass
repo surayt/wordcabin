@@ -11,7 +11,6 @@ i.mce-i-fa-upload
     font-weight: lighter
     text-decoration: none
     color: $tinymce-icon-grey
-    font-size: .8em
     border: 1px solid $tinymce-icon-grey
     padding: 1px 4px
     margin-left: .5em
@@ -57,9 +56,24 @@ body.admin.exercises
         @supports (-moz-appearance:none) and (background-attachment:local) and (not (-moz-osx-font-smoothing:auto))
           @media not screen and (-moz-os-version)
             padding: 4px .25em 0px .25em
+    // both, the one below the toc/loe and
+    // the one below the tinymce instances
+    fieldset
+      position: fixed
+      bottom: 0
+      width: 100%
+      height: 40px
+      border: none
+      border-top: 1px solid shade($tinymce-grey, 50%)
+      padding: 0
+      display: table-cell
+      vertical-align: middle
+      line-height: 40px
+      input[type=checkbox]
+        vertical-align: -20%
     #sidebar
       +grid-column(3, $editor-grid)
-      background-color: shade($tinymce-grey, 35%)
+      background-color: shade($tinymce-grey, 50%)
       position: fixed
       overflow-y: auto
       border: none
@@ -72,66 +86,92 @@ body.admin.exercises
         a:hover
           color: black
         ul.level_1
-          padding: 0
-          background-color: shade($tinymce-grey, 50%)
+          margin: 0
+          padding: .25em 0 0 .25em
+          background-color: transparent
           li.level_1
-            padding: .25em .25em .25em .35em
             span
               color: contrast-switch($orange)
           ul.level_2
-            padding-top: .25em
-          li
-            padding-left: 1em
+      fieldset
+        height: 31px
+        line-height: 31px
     #content
       +grid-column(9, $editor-grid)
       margin: 0 0 0 calc(25%)
       position: fixed
       top: 0
+      // tinymce instances
       form
         min-width: 918px
+        // just the one below the tinymce instances
         fieldset
-          font-size: 10.5pt
-          border: none
-          border-top: 1px solid shade($tinymce-grey, 50%)
-          margin: 0
-          padding: 8px 4px 0 .5em
-          // Firefox on Linux
-          @supports (-moz-appearance:none) and (background-attachment:local) and (not (-moz-osx-font-smoothing:auto))
-            @media not screen and (-moz-os-version)
-              padding: 5px 4px 0 .5em
-          input[type=text]
-            font-size: 95%
+          padding-left: 10px
           input[type=submit]
-            +button
             font-weight: normal
-            float: right
             background-color: red
-            // Firefox on Linux
-            @supports (-moz-appearance:none) and (background-attachment:local) and (not (-moz-osx-font-smoothing:auto))
-              @media not screen and (-moz-os-version)
-              padding: 4px 6px 6px 6px
-          input, label
-            position: relative
-            display: inline-block
-            vertical-align: middle
-          label
-            vertical-align: baseline
+            position: fixed
+            right: 10px
+            bottom: 10px
+          input[type=text]
+            height: 15px !important
             
 body.contents,
 body.admin.exercises
   +grid-media($medium-grid)
     #sidebar
-      #new-item-button
-        +button
-        padding: 1px 6px 4px 6px !important
-        display: block
+      form fieldset
+        +grid-column(3, $editor-grid)
+        display: inline-block
         position: fixed
-        bottom: .5em
-        left: .5em
+        bottom: 0
+        left: 0
+        background-color: $black
+        margin: 0
+        padding: 5px 1px 5px 0
+        opacity: 1
         z-index: 2
-      select
-        position: fixed
-        bottom: .525em
-        left: 3.5em
-        font-size: 8pt
-        z-index: 2
+        border: 0
+        input[type=submit]
+          +button
+          margin-left: 8px
+          
+body.admin.exercises
+  #logo
+    img
+      height: 32px
+  #loe ul
+    margin-top: .35em
+    a
+      color: $white
+      &.active
+        color: black
+      span
+        font-weight: bold
+  #sidebar
+    ul
+      padding-top: 0
+      padding-bottom: 6em
+      hr
+        border-style: solid
+        border: none
+        border-bottom: 1px solid $grey
+  #content
+    top: 38px
+    // #tinymce_name_instance
+    // #tinymce_html_instance
+    form
+      // below the two tinymce instances
+      fieldset
+        background-color: tint($grey, 25%)
+        input[type=text]
+          width: 1.25em
+        select, input[type=text]
+          margin-left: 1em
+    p
+      margin: .5em 0 0 .5em
+  .exercise_type
+    p
+      font-weight: bold
+      margin: 0 0 .5em 0 !important
+    padding: .75em 1em 1em 1em

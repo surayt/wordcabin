@@ -6,11 +6,11 @@ tr:
   nl: "Hollandaca"
   sv: "İsveççe"
   tr: "Türkçe"
-  
+
   toc: "Table of contents"
   loe: "Egzersiz listesi"
   level: "Level"
-  
+
   routes:
     welcome: "Merhaba, %{user}!"
     login_error: "E-posta adresinizi ya da şifrenizi yanlış girdiniz."
@@ -27,7 +27,7 @@ tr:
     no_such_exercise: "No such exercise."
     could_not_publish: "Failed to declare book as published."
     exercise_type_not_yet_fully_implemented: "Exercise type not yet fully implemented."
-    
+
   models:
     content_fragment:
       book_must_be_present: "Bölüm içeriği boş olsa da, kitap mevcut olmalı."
@@ -45,6 +45,17 @@ tr:
       must_be_present: 'mevcut olmalı.'
 
   views:
+    new_item_form:
+      # TODO: i18n! (@soner)
+      new_exercise: 'New Exercise'
+      new_fragment: 'New Fragment'
+    user:
+      # TODO: i18n! (@soner)
+      preferred_language: 'Preferred language:'
+      email: 'E-Mail:'
+      password: 'Password (leave empty to keep):'
+      password_confirmation: 'Confirm password:'
+      submit: 'Update'
     index:
       choose_book: "Aşağıda görüntülemek veya düzenlemek istediğiniz kitabı seçin."
       green_books: "Yeşil renkte kitaplar okuyucularla halihazırda paylaşıldı!"
@@ -85,3 +96,5 @@ tr:
     # TODO: translate!
     content_fragments:
       save_and_preview: "Save and Preview"
+    search_form:
+      placeholder: "Enter search term..."

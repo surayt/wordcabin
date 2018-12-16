@@ -6,11 +6,11 @@ ar:
   nl: هولندي
   sv: سويدي
   tr: تركي
-  
+
   toc: "جدول المحتويات"
   loe: "جدول التمارين"
   level: "المستوى"
-  
+
   routes:
     welcome: "أهلًا وسهلًا, %{user}!"
     login_error: "المعذرة، البريد الإلكتروني أو كلمة السر غير صحيحة."
@@ -27,7 +27,7 @@ ar:
     could_not_publish: "Failed to declare book as published."
     no_such_exercise: "No such exercise."
     exercise_type_not_yet_fully_implemented: "Exercise type not yet fully implemented."
-    
+
   models:
     content_fragment:
       book_must_be_present: "بقاؤه إجباري، حتى وإن كان الفصل فارغًا."
@@ -45,6 +45,16 @@ ar:
       must_be_present: 'بقاؤه إجباري.'
 
   views:
+    new_item_form:
+      new_exercise: 'تمرين جديد'
+      new_fragment: 'جزء جديد'
+    user:
+      # TODO: bitte korrigieren! (@jean)
+      preferred_language: 'اللغة المفضلة:'
+      email: 'العنوان الإلكتروني:'
+      password: 'كلمة السر (إذا أردت تغييرها):'
+      password_confirmation: 'تأكيد كلمة السر:'
+      submit: 'احفظ'
     index:
       choose_book: "اختر الكتاب الذي تريد معاينته أو تعديله أدناه."
       green_books: "الكتب باللون الأخضر تم نشرها للقراء!"
@@ -84,4 +94,6 @@ ar:
       instructions: "اسحب الكلمات باستخدام الفأرة أو الاصبع إلى مكانها الصحيح حتى تكوّن جملة مفيدة. بإمكانك اختيار إحدى الكتابتين، السريانية أو اللاتينية. اضغط أو انقر على المصباح لمشاهدة التسلسل الصحيح للكلمات في الجملة."
     # TODO: translate!
     content_fragments:
-      save_and_preview: "Save and Preview"
+      save_and_preview: "و تم حفظ الجزء وشاهده"
+    search_form:
+      placeholder: "أدخل مصطلح البحث..."

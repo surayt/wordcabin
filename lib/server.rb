@@ -15,6 +15,8 @@ require 'sprockets'
 require 'hamlit' # Sinatra does know to require HAML, but not Hamlit!
 
 # Internal dependencies
+require_relative 'debugging'
+require_relative 'i18n'
 require_relative 'core/nil_class'
 require_relative 'core/string'
 require_relative 'core/integer'
@@ -26,6 +28,7 @@ require_relative 'models/toc'
 require_relative 'models/file_attachment'
 require_relative 'models/exercise'
 require_relative 'models/text_fragment'
+require_relative 'helpers'
 
 module Wordcabin 
   class Server < Sinatra::Application
@@ -82,7 +85,7 @@ module Wordcabin
         db_file = project_root+'databases'+"#{Config.database}.sqlite3" 
       end
       db_file ||= Config.root+'db'+"#{environment}.sqlite3"
-      puts "Configuring database #{db_file}".green
+      d "server: Configuring database #{db_file}"
       db_config = begin
         YAML.load_file(Config.config+'db.yml')[Config.database]
       rescue
@@ -101,84 +104,7 @@ module Wordcabin
       I18n.backend.load_translations
       I18n.default_locale = Config.default_locale
     end
-    
-    ###########################################################################
-    # Helper Methods                                                          #
-    ###########################################################################
 
-    helpers do
-      # Just some convenience (nicer to type current_user in views, etc.)
-      def current_user
-        (User.find(session[:user_id]) if session[:user_id]) || User.new
-      end
-      
-      def view_mode
-        unless request.path_info =~ /exercises/
-          if params[:view_mode]
-            params[:view_mode].to_sym
-          else
-            :preview
-          end
-        end
-      end
-
-      def locale
-        session[:content_locale] # Different from session[:ui_locale] which == I18n.locale! (see routes.rb)
-      end
-      
-      # TODO: Refactor this pile of uglyness together with
-      # that weird condition in views/contents.haml...
-      
-      def content_class
-        c = []
-        path_info = request.path_info.split('/')
-        
-        if current_user.is_admin?
-          c << :admin
-        end
-        
-        if path_info[1] != 'exercises'
-          if current_user.is_admin? && view_mode != :preview
-            c << :editor
-          else
-            c << :user
-          end
-        end
-        
-        if path_info.length < 2
-          c << :index 
-        else
-          c << case path_info[1]
-            when 'login'     then :login
-            when 'exercises' then :exercises
-            when 'keyboard'  then :keyboard
-                             else :contents
-          end
-        end
-        
-        if path_info[1] == 'preferences'
-          c << :preferences
-        end
-        
-        c.join(' ')
-      end
-    end
-    
-    private
-    
-    def extract_locale_from_accept_language_header
-      if accept_lang = request.env['HTTP_ACCEPT_LANGUAGE']
-        l = accept_lang.scan(/^[a-z]{2}/).first
-        # puts "as per HTTP_ACCEPT_LANGUAGE, selecting #{l} as locale"
-      else
-        l = I18n.default_locale
-        # puts "selecting default locale #{l}"
-      end
-      return l
-    end
-    
-    public
-    
     Dir[Config.lib + 'routes' + "*.rb"].sort.each {|routes_file| require routes_file}
     run! if app_file == $0
   end

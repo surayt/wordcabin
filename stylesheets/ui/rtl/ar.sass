@@ -1,0 +1,175 @@
+html[lang=ar]
+
+  ////////////////////
+  // layout changes //
+  ////////////////////
+
+  direction: rtl
+  // UI set to Arabic, but contents are LTR!
+  #toc:not([lang=ar])
+  #content:not([lang=ar])
+    direction: ltr
+  
+  // sidebar
+
+  #sidebar
+    +grid-media($medium-grid)
+      #toc, #loe
+        left: auto
+        right: 0
+        ul ul li
+          padding-left: 0
+          &.level_2
+            padding-left: 0
+          &.level_3
+            padding-left: 0
+            text-indent: 0
+            margin-right: 1em
+          &.level_4
+            margin-right: 2em
+        > ul
+          padding: .55em .45em 0 .5em
+
+  // layout_user
+  
+  body.contents.user,
+  body.preferences.user
+    +grid-media($medium-grid)
+      #sidebar-handle
+        padding: 8px 3px 4px 0
+        border-radius: 5px 0 0 5px
+        margin-right: calc(25%)
+        border: 1px solid shade($grey, 25%)
+        border-right: 1px solid $orange
+      #logo, #heading, #toc
+        border: none
+        border-left: 1px solid shade($grey, 25%)
+        box-shadow: -3px 0px 6px 0 rgba(85,85,85,0.5)
+      #logo, #mobile-menu-button, #sidebar-handle
+        left: auto
+        right: 0
+      #toc-heading
+        padding: 4px .35em 5px .75em
+      #content
+        margin-left: auto
+        margin-right: calc(25%)
+        a.nav-links
+          margin-left: auto
+          margin-right: calc(25%/2)
+          left: auto
+          right: 50%
+          transform: translate(50%, 0)
+          -webkit-transform: translate(50%, 0)
+        main
+          padding: 0 2.5em 0 .25em
+
+  // index
+
+  body.index
+    main > ul,
+    main p
+      width: 450px
+      margin-right: 32px
+      padding: .5em
+      background-color: rgba(255, 255, 255, 0.5)
+      
+  // layout_editor
+
+  body.contents,
+  body.admin.exercises
+    #sidebar form fieldset
+      left: auto
+      right: 0
+      text-align: left
+      
+  // layout_user
+
+  body.contents.user,
+  body.preferences.user
+    +grid-media($medium-grid)
+      #sidebar-handle
+        padding: 8px 3px 4px 0
+        border-radius: 5px 0 0 5px
+        margin-right: calc(25%)
+        border: 1px solid shade($grey, 25%)
+        border-right: 1px solid $orange
+      #logo, #heading, #toc
+        border: none
+        border-left: 1px solid shade($grey, 25%)
+        box-shadow: -3px 0px 6px 0 rgba(85,85,85,0.5)
+      #logo, #mobile-menu-button, #sidebar-handle
+        left: auto
+        right: 0
+      #toc-heading
+        padding: 4px .35em 5px .75em
+      #content
+        margin-left: auto
+        margin-right: calc(25%)
+        a.nav-links
+          margin-left: auto
+          margin-right: calc(25%/2)
+          left: auto
+          right: 50%
+          transform: translate(50%, 0)
+          -webkit-transform: translate(50%, 0)
+        main
+          padding: 0 2.5em 0 .25em
+          
+  // login_form
+
+  body.login
+    form#login-form
+      width: 360px
+      label
+        width: 137px
+      input[type=email],
+      input[type=password]
+        padding: 0
+        margin: 0
+        width: 200px
+      input[type=submit]
+        width: 100%
+
+  // preferences
+
+  body.preferences
+    div#logo
+      text-align: right !important
+      padding-right: .5em
+    form.user
+      select
+        min-width: 5em
+      input[type=email],
+      input[type=password]
+        padding: 0
+        margin: 0
+        width: 250px
+
+  // form elements
+  
+  form
+    input[type=email],
+    input[type=search],
+    input[type=text],
+    input[type=password]
+      height: 28px !important
+      font-size: 90%
+    select
+      background-position: left 5px center
+      height: 28px
+      padding: 0 1px 2px 3px
+
+  // session_links
+
+  #session-links
+    right: auto
+    left: 6px
+    input[type=search]
+      height: 27px !important
+    a, span, input
+      vertical-align: middle
+
+  // UI set to Arabic, but contents are LTR!
+  #toc:not([lang=ar]),
+  #content:not([lang=ar])
+    text-align: left

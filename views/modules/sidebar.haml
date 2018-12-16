@@ -1,0 +1,25 @@
+%nav#sidebar
+
+  - if locals[:model] == :content_fragment
+  
+    -# The mobile version's nav menu
+    
+    %a#mobile-menu-button= icon('bars')
+    
+    -# Phrase "Table of contents" or "List of exercises",
+    -# then the list of items itself.  
+
+    %heading#toc-heading= I18n.t('toc')
+    %section#toc{lang: locale}= @toc.html(request.path_info) if @toc
+    
+  - if locals[:model] == :exercise
+  
+    -# Like "table of contents", but "list of exercises"
+    
+    %section#loe{lang: locale}= haml :'exercises/list'  
+
+  - if %w{content_fragment exercise}.any? {|w| locals[:model] == w.to_sym}
+  
+    -# Quick-link to create a new item
+
+    = haml :'modules/new_item_form', locals: locals

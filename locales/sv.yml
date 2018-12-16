@@ -6,11 +6,11 @@ sv:
   nl: Holländska
   sv: Svenska
   tr: Turkiska
-  
+
   toc: "Innehållsförteckning"
   loe: "Lista över övningar"
   level: "Nivå"
-  
+
   routes:
     welcome: "Välkommen, %{user}!"
     login_error: "E-postadress eller lösenord ¨är felaktigt."
@@ -27,7 +27,7 @@ sv:
     no_such_exercise: "Ingen sådan övning."
     could_not_publish: "Misslyckades med att deklarera boken som publicerad."
     exercise_type_not_yet_fully_implemented: "Övningstypen är ännu inte fullt genomförd."
-    
+
   models:
     content_fragment:
       book_must_be_present: "måste vara närvarande, även om kapitlet är tomt."
@@ -45,6 +45,17 @@ sv:
       must_be_present: 'måste vara närvarande.'
 
   views:
+    new_item_form:
+      # TODO: i18n! (@soner)
+      new_exercise: 'New Exercise'
+      new_fragment: 'New Fragment'
+    user:
+      # TODO: i18n! (@soner)
+      preferred_language: 'Preferred language:'
+      email: 'E-Mail:'
+      password: 'Password (leave empty to keep):'
+      password_confirmation: 'Confirm password:'
+      submit: 'Update'
     index:
       choose_book: "Välj den bok du vill förhandsgranska eller redigera nedan."
       green_books: "Böcker i grön färg har redan publicerats till läsare!"
@@ -85,3 +96,5 @@ sv:
     # TODO: translate!
     content_fragments:
       save_and_preview: "Spara och förhandsgranska"
+    search_form:
+      placeholder: "Enter search term..."

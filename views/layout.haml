@@ -1,5 +1,5 @@
 !!!
-%html{lang: session[:ui_locale], 'data-ui-locale': session[:ui_locale]}
+%html{lang: session[:ui_locale], data: {ui_locale: session[:ui_locale]}}
 
   %head
     %meta{charset: 'utf-8'}/
@@ -9,23 +9,24 @@
     %link{href: '/assets/main.css', rel: :stylesheet, type: 'text/css'}/
     %link{href: '/keyboard/css/keyboard.css'}
     %title Šlomo Surayt
-    
-    -# TODO: should be moved into main.js...
+
+    -# TODO: should be moved into main.js - ??
     - if request.path_info.include? 'keyboard'
       %script{src: '/keyboard/js/jquery.keyboard.extension-all.js', type: 'text/javascript'}
-    
-  %body{dir: :auto, class: content_class, 'data-content-locale': locale}
+      %script{src: '/keyboard/js/jquery.keyboard.js', type: 'text/javascript'}
+      %script{src: '/keyboard/languages/syr.js', type: 'text/javascript'}
+      %script{src: '/keyboard/layouts/syriac.js', type: 'text/javascript'}
+      %script{src: '/assets/modules/keyboard.js', type: 'text/javascript'}
+
+  %body{class: content_class}
     = styled_flash
     %p#admin-size-info= I18n.t('views.layout.admin_size_info')
-    
+
     -# This is where the requested template is included,
     -# starting with index.haml for the front page or e.g.
     -# contents.haml for the book viewer / editor.
     
     #grid-container= yield
-    
+
     %script{src: '/tinymce-dist/tinymce.min.js', type: 'text/javascript'}
     %script{src: '/assets/main.js', type: 'text/javascript'}
-    %script{src: '/keyboard/js/jquery.keyboard.js', type: 'text/javascript'}
-    %script{src: '/keyboard/languages/syr.js', type: 'text/javascript'}
-    %script{src: '/keyboard/layouts/syriac.js', type: 'text/javascript'}

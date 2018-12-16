@@ -8,6 +8,10 @@
 // tuning of the reader-facing result can be found in a second file
 // named contents_user.sass.
 
+#content
+  article, textarea
+    font-family: $font-stack-wordcabin-contents-latin
+
 // Only the upper, narrower TinyMCE instances,
 // and "h1" as seen by the reader
 body#tinymce_heading_instance,
@@ -23,7 +27,6 @@ body.user #articles article header
       width: 100%
     td
       font-weight: bold
-      font-size: 16pt
       line-height: 1
   background-color: tint($blue, 35%)
 
@@ -33,7 +36,6 @@ body#tinymce_heading_instance table td,
 body#tinymce_section_instance,
 body#tinymce_html_instance,
 body.user #articles article
-  font-family: $font-stack-wordcabin-contents !important
   color: $black
 body#tinymce_heading_instance table td,
 body#tinymce_section_instance,
@@ -54,7 +56,6 @@ body.user #articles article section
       color: $blue
   .correct_answer, .incorrect_answer, .selected_left, .selected_right
     &:before
-      font-size: 14pt
       color: tint($red, 80%)
       background-color: tint($red, 80%)
       display: inline-block
@@ -93,12 +94,6 @@ body.user #articles article section
     height: auto !important
   h2, h3, h4
     font-weight: bold
-  h2
-    font-size: 14pt
-  h3
-    font-size: 13pt
-  h4
-    font-size: 12pt
   table, td, img
     a *
       color: $blue
@@ -188,14 +183,6 @@ body.user #articles article section
 // in a mixin which is then included twice.
 
 @mixin large_device_rules
-  font-size: 11.5pt
-  section
-    h2
-      font-size: 130%
-    h3
-      font-size: 120%
-    h4
-      font-size: 110%
 
 // Only the lower, taller TinyMCE instances,
 // and all content as seen by the reader

@@ -22,7 +22,7 @@ body.login
         clear: both
         width: 100%
         height: 2em
-        
+
   // Larger devices
   // ==============
   +grid-media($medium-grid)
@@ -30,11 +30,11 @@ body.login
     #login-form
       +hvcenter
       background-color: $orange
-      width: 320px
+      width: 340px
       label, input
         float: none
       label
-        min-width: 4.75em
+        min-width: 8em
       input
         margin-bottom: .25em
         width: 200px
@@ -42,12 +42,3 @@ body.login
           width: 100%
           margin-top: .25em
           margin-bottom: 0
-        
-// Arabic-language version of the course
-          
-html[lang=ar] body
-
-  #login-form
-    width: 337px
-    label
-      min-width: 6em

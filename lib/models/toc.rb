@@ -1,5 +1,4 @@
 require 'sanitize'
-require 'colorize'
 
 module Wordcabin
   class TOC
@@ -26,7 +25,7 @@ module Wordcabin
     def build_toc(book_level_fragments, url_path = nil)
       toc = ''; next_marker = false
       book_level_fragments.each do |f|
-        # puts "#{f.book} (#{f.id})".yellow
+        d? "#{f.book} (#{f.id})"
         link_path = URI.encode(f.url_path)
         link_class = link_class(link_path, url_path, next_marker)
         next_marker = true if link_class != '' # The current element is active, so we need to mark the next element soon!
@@ -60,14 +59,15 @@ module Wordcabin
         ul_spaces = ''; (display_depth-1).times {ul_spaces << '  '}
         toc << "#{ul_spaces}<ul class='level_#{display_depth}'>\n"
         children_fragments.each do |f|
-          # puts "#{"  "*(display_depth-1)}#{f['book']} - #{f['chapter']}".yellow
+          d? "#{"  "*(display_depth-1)}#{f['book']} - #{f['chapter']}"
           display_depth = f['chapter'].split('.').length + 1 # TODO: this too!
           li_spaces = ''; (display_depth).times {li_spaces << '  '}
           f['path'] = URI.encode("/#{[f['locale'], f['book'], f['chapter']].join('/')}")  
           chapter = f['chapter'].match(/^0.*/) ? f['chapter'].gsub(/^0\./, '').to_i.to_roman : f['chapter']
           heading = Sanitize.clean(f['heading']).gsub(/\n+/, ' ').strip
+					heading = check_whether_to_add_translit_markup(heading)
           f['name'] = if chapter.blank?
-            heading
+						heading
           else 
             ("<span class='chapter'>%s</span>&nbsp;%s" % [chapter, heading]).gsub(/\n/, '').strip
           end
@@ -82,6 +82,38 @@ module Wordcabin
       end
       toc
     end
+
+    # The Arabic language version looks bad with the Arabic
+    # font being used for transliteration symbols such as "ṯ".
+    # It's necessary to mark every that's not Arabic as such.
+    def check_whether_to_add_translit_markup(heading)
+      if heading.match /\p{Arabic}/
+        add_translit_markup(heading)
+      else
+        heading
+      end
+    end
+
+		def add_translit_markup(input)
+			span_open = false
+			output = ''
+
+			input.each_char do |c|
+				unless c.match /[\s\p{Punct}]/
+					if c.match /[\p{Arabic}\p{Syriac}]/
+						output += "</span>" if span_open
+						span_open = false
+					else
+						unless span_open
+							output += "<span class='translit'>"
+							span_open = true
+						end
+					end
+				end
+				output += c
+			end
+			return output
+		end
 
     def reduce_fragments(fragments, depth, parent)
       if parent

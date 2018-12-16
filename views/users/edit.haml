@@ -1,17 +1,17 @@
 %form.user{method: :post}
   %label{for: 'user[preferred_locale]'}
-    Preferred language:
+    = I18n.t('views.user.preferred_language')
     %select{name: 'user[preferred_locale]'}
       - @locales.each do |l|
         - selected = (@user.preferred_locale == l.to_s ? 'selected' : nil)
         %option{value: l, selected: selected}= I18n.t(l)
   %label{for: 'user[email]'}
-    E-Mail:
-    %input{type: :text, name: 'user[email]', value: @user.email}
+    = I18n.t('views.user.email')
+    %input{type: :email, name: 'user[email]', value: @user.email}
   %label{for: 'user[password]'}
-    Password (leave empty to keep):
+    = I18n.t('views.user.password')
     %input{type: :password, name: 'user[password]', value: ''}
   %label{for: 'user[password_confirmation]'}
-    Confirm password:
+    = I18n.t('views.user.password_confirmation')
     %input{type: :password, name: 'user[password_confirmation]', value: ''}
-  %input{type: :submit, value: 'Update'}
+  %input{type: :submit, value: I18n.t('views.user.submit')}

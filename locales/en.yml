@@ -7,11 +7,11 @@ en:
   nl: "Dutch"
   sv: "Swedish"
   tr: "Turkish"
-  
+
   toc: "Table of contents"
   loe: "List of exercises"
   level: "Level"
-  
+
   routes:
     welcome: "Welcome, %{user}!"
     login_error: "Sorry, email address or password must have been incorrect."
@@ -27,7 +27,7 @@ en:
     could_not_publish: "Failed to declare book as published."
     no_such_exercise: "No such exercise."
     exercise_type_not_yet_fully_implemented: "Exercise type not yet fully implemented."
-    
+
   models:
     content_fragment:
       book_must_be_present: "must be present, even when chapter is empty."
@@ -45,6 +45,15 @@ en:
       must_be_present: 'must be present.'
 
   views:
+    new_item_form:
+      new_exercise: 'New Exercise'
+      new_fragment: 'New Fragment'
+    user:
+      preferred_language: 'Preferred language:'
+      email: 'E-Mail:'
+      password: 'Password (leave empty to keep):'
+      password_confirmation: 'Confirm password:'
+      submit: 'Update'
     index:
       choose_book: "Choose the book you wish to preview or edit below."
       green_books: "Books in green colour have already been published to readers!"
@@ -82,3 +91,5 @@ en:
       instructions: "Drag and drop the words into order until you are satisfied to have a sensible sentence in each row. You may either sort the Latin or the Syriac script side of the table. Tap the light bulb to check your order or reveal the correct one."
     content_fragments:
       save_and_preview: "Save and Preview"
+    search_form:
+      placeholder: "Enter search term..."
