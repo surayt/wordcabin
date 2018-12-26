@@ -9,12 +9,9 @@
     font-size: 45pt !important
   h3
     font-size: 20pt !important
-    line-height: 5
   p
     &.copyright, &.editor
       font-variant: small-caps
-    &.copyright, &.level
-      line-height: 5
     &.level
       font-weight: bold
   table
@@ -26,7 +23,20 @@
       font-weight: normal !important
       text-align: left
       &:first-child
-        width: 292px
+        width: 290px
       &:last-child
-        font-size: 10pt
+        font-size: 4.3px !important
         line-height: 1
+
+  +grid-media($medium-grid)
+    h3
+      line-height: 5
+    p
+      &.copyright, &.level
+        line-height: 5
+    table
+      td
+        &:first-child
+          width: 292px
+        &:last-child
+          font-size: 10pt
