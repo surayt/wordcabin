@@ -1,7 +1,9 @@
 body.index
 
+  // ==========================================================================
   // Mobile devices
-  // ==============
+  // ==========================================================================
+  
   h3
     font-weight: bold
     background: linear-gradient(tint($blue, 75%), tint($grey, 75%))
@@ -27,31 +29,35 @@ body.index
       padding: .5em 0 .35em .35em
     ul
       padding: .25em 0 .4em .5em
-      background: linear-gradient(tint($blue, 50%), tint($blue, 0%))
-      columns: 3
+      columns: 1
       li
-        display: inline-block
-        padding: 0 0 .1em 0
+        display: block
+        padding: .5em
+        margin: .5em .5em 0 0
         min-width: 3em
+        background: linear-gradient(tint($blue, 50%), tint($blue, 0%))
         a
           text-decoration: none
           color: $white
           &:hover
             color: $orange
   p.keyboard
-    max-width: 32em
-    padding-top: 1em
-    margin-left: 2em
+    max-width: 30em
+    padding-top: 0
+    margin-left: 1em
+    font-size: 80%
   footer
-    margin-top: 2em
+    margin-top: 5em
     img
       width: 75%
       margin: 0 auto
       margin-top: -28px
       display: block
 
+  // ==========================================================================
   // Larger devices
-  // ==============
+  // ==========================================================================
+  
   +grid-media($medium-grid)
     #grid-container, main
       height: 100%
