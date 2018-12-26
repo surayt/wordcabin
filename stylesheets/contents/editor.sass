@@ -9,6 +9,8 @@
 // named contents_user.sass.
 
 #content
+  article
+    margin-right: .5em
   article, textarea
     font-family: $font-stack-wordcabin-contents-latin
 
@@ -183,6 +185,7 @@ body.user #articles article section
 // in a mixin which is then included twice.
 
 @mixin large_device_rules
+  margin-right: 0
 
 // Only the lower, taller TinyMCE instances,
 // and all content as seen by the reader
