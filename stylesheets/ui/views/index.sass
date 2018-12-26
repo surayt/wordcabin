@@ -35,7 +35,6 @@ body.index
         padding: .5em
         margin: .5em .5em 0 0
         min-width: 3em
-        background: linear-gradient(tint($blue, 50%), tint($blue, 0%))
         a
           text-decoration: none
           color: $white
@@ -86,12 +85,19 @@ body.index
           padding-left: .35em
           li
             display: inline
+            background: transparent
+            margin: 0
+            padding: 0
             a
               +button
+              padding: .5em 1em !important
               &.published
                 background-color: $green
               &.unpublished
                 background-color: tint($blue, 50%)
+      p.keyboard
+        margin-left: 2.25em
+        max-width: 48em
     footer	
       position: fixed
       bottom: 0
