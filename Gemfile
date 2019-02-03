@@ -32,9 +32,6 @@ gem 'whatlanguage'
 gem 'colorize'
 gem 'simple-random'
 gem 'linguistics'
-
 gem 'sprockets'
-# TODO: Make this work as sass has been deprecated!
-# gem 'sass'
 gem 'sassc'
 gem 'sassc-rails'
