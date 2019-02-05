@@ -21,10 +21,12 @@ module Wordcabin
       end
 
       def locale
-        session[:content_locale] # Different from session[:ui_locale] which == I18n.locale! (see routes.rb)
         # Required for swapping the UI around
-        session[:ui_origin] = :left
-        session[:ui_origin] = :right if session[:content_locale]
+        session[:ui_origin] = case session[:content_locale]
+          when :ar then :right
+          else :left
+        end
+        # Different from session[:ui_locale] which == I18n.locale! (see routes.rb)
         return session[:content_locale]
       end
       
