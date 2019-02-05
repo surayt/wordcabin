@@ -52,4 +52,4 @@
 	url = https://github.com/surayt/jquery-mobile-dist.git
 [submodule "static/keyboard"]
 	path = static/keyboard
-	url = https://github.com/surayt/Keyboard.git
+	url = git@github.com:surayt/Keyboard.git
