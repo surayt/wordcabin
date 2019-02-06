@@ -80,6 +80,7 @@ module Wordcabin
       assets.append_path project_root+'stylesheets'
       assets.append_path project_root+'images'
       assets.append_path project_root+'fonts'
+      assets.append_path Config.static_files
       # Database
       if Config.database && environment != :test
         db_file = project_root+'databases'+"#{Config.database}.sqlite3" 

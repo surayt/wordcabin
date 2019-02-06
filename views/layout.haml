@@ -7,16 +7,7 @@
     %link{rel: 'icon', href: '/assets/favicon.ico?v=1.0'}/
     %link{href: '/font-awesome/css/font-awesome.css', rel: :stylesheet, type: 'text/css'}/
     %link{href: '/assets/main.css', rel: :stylesheet, type: 'text/css'}/
-    %link{href: '/keyboard/css/keyboard.css'}
     %title Šlomo Surayt
-
-    -# TODO: should be moved into main.js - ??
-    - if request.path_info.include? 'keyboard'
-      %script{src: '/keyboard/js/jquery.keyboard.extension-all.js', type: 'text/javascript'}
-      %script{src: '/keyboard/js/jquery.keyboard.js', type: 'text/javascript'}
-      %script{src: '/keyboard/languages/syr.js', type: 'text/javascript'}
-      %script{src: '/keyboard/layouts/syriac.js', type: 'text/javascript'}
-      %script{src: '/assets/modules/keyboard.js', type: 'text/javascript'}
 
   %body{class: content_class}
     = styled_flash
@@ -25,8 +16,13 @@
     -# This is where the requested template is included,
     -# starting with index.haml for the front page or e.g.
     -# contents.haml for the book viewer / editor.
-    
-    #grid-container= yield
 
-    %script{src: '/tinymce-dist/tinymce.min.js', type: 'text/javascript'}
+    #grid-container= yield
+    
     %script{src: '/assets/main.js', type: 'text/javascript'}
+
+    -# TODO: think about whether a separate layout for
+    -# the editor would make sense? 
+    - if request.params['view_mode'] && request.params['view_mode'] == 'edit'
+      %script{src: '/tinymce-dist/tinymce.min.js', type: 'text/javascript'}
+      %script{src: '/assets/tinymce.js', type: 'text/javascript'}
