@@ -63,7 +63,7 @@ en:
       read_book: "Read %{book} in:"
       keyboard_ad: "Need to type some Surayt letters or even a longer text but you don't own a Surayt keyboard or don't know how to change your computer's settings? Try out our new <a href='%{url}' title='Surayt on-screen keyboard'>Surayt on-screen keyboard</a>!"
     keyboard:
-      placeholder: "Enter as much text as you would like, but don't forget to save it by selecting all text and hitting Ctrl-C"
+      placeholder: "Enter as much Surayt text here as you would like, but don't forget to \"save\" it by selecting everything (Ctrl-A) and then copying it to your computer's clipboard (Ctrl-C) as there is no built-in saving feature yet."
     layout:
       admin_size_info: "The editing screen requires at least 450 pixels of horizontal space. Please rotate your device or use one with a bigger screen."
     login_form:

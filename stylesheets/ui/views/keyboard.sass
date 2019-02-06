@@ -1,26 +1,47 @@
-body.keyboard
-  background-color: $grey
+body
+  text-align: center
   #grid-container
-    display: none
-  textarea
-    margin: 0
-    padding: 0
-    border: 0
-    width: 100%
-    height: 15em
-  #keyboard_keyboard
-    min-width: 48em
-    text-align: center
-    .ui-keyboard-button
-      height: 2.8em
-      min-width: 2.8em
-      margin: 0 .2em .4em .2em
-      cursor: pointer
-    .ui-keyboard-accept,
-    .ui-keyboard-cancel
+    textarea#paper
       display: none
-    .ui-keyboard-space
-      min-width: 15em
+  div#paper_keyboard
+    z-index: 10
+    background-color: $grey
+    position: absolute
+    margin: auto
+    top: 0
+    right: 0
+    left: 0
+    bottom: 0
+    button
+      height: 3em
+      font-family: $font-stack-wordcabin-contents-syriac
+    .ui-keyboard-preview-wrapper
+      height: 50%
+    textarea
+      margin-top: 1%
+      padding: .35em
+      border: 5px solid tint($grey, 50%)
+      width: 758px
+      height: 92%
+      resize: none
+      color: #000
+      font-size: 120%
+      direction: ltr !important
+      font-family: $font-stack-wordcabin-contents-latin !important
+      &:lang(syr)
+        direction: rtl !important
+        font-family: $font-stack-wordcabin-contents-syriac !important
     .ui-keyboard-keyset
-      width: 100%
-      padding: 1em 0 .5em 0
+      margin-top: 1px
+      padding: 1em
+      background-color: shade($grey, 50%)
+  p.back
+    position: absolute
+    left: 0
+    right: 0
+    bottom: 1em
+    z-index: 11
+    a
+      color: $blue
+      font-size: 120%
+      text-decoration: none

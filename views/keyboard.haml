@@ -1,1 +1,23 @@
-%textarea{id: :keyboard, placeholder: I18n.t('views.keyboard.placeholder'), lang: 'syr', dir: 'rtl'}
+!!!
+%html{lang: session[:ui_locale], data: {ui_locale: session[:ui_locale]}}
+  %head
+  
+    %meta{charset: 'utf-8'}/
+    %meta{name: 'viewport', content: 'width=device-width, initial-scale=1'}
+    
+    %link{rel: 'icon', href: '/assets/favicon.ico?v=1.0'}/
+    %link{href: '/font-awesome/css/font-awesome.css', rel: :stylesheet, type: 'text/css'}/
+    %link{href: '/assets/keyboard.css', rel: :stylesheet, type: 'text/css'}/
+    
+    %title Šlomo Surayt
+
+  %body{class: :keyboard}
+    #grid-container
+      %textarea{id: :paper,
+                placeholder: I18n.t('views.keyboard.placeholder'),
+                lang: locale}
+
+    %script{src: '/assets/keyboard.js', type: 'text/javascript'}
+    
+    %p.back
+      %a{href: '/'} Šlomo Surayt!

@@ -63,7 +63,7 @@ de:
       read_book: "%{book} in folgender Sprache lesen:"
       keyboard_ad: "Wenn Sie einige Surayt-Buchstaben oder auch einen längeren Text eingeben müssen, aber keine Surayt-Tastatur besitzen oder nicht wissen, wie sich die entsprechenden Einstellungen auf Ihrem Computer anpassen lassen, können Sie unsere neue <a href='%{url}' title='On-Screen-Tastatur für Surayt'>On-Screen-Tastatur für Surayt</a> benutzen."
     keyboard:
-      placeholder: "Geben Sie so viel Text ein wie Sie möchten, vergessen Sie aber nicht, diesen abzuspeichern, indem Sie ihn markieren und mit Strg-C kopieren"
+      placeholder: "Geben Sie hier so viel Surayt-Text ein wie Sie möchten, vergessen Sie aber nicht, diesen abzuspeichern, indem Sie alles markieren (Strg-Taste und 'a') und dann in die Zwischenablage Ihres Computers zu kopieren (Strg-Taste und 'c'), da es leider noch keine eingebaute Speicher-Funktion gibt."
     layout:
       admin_size_info: "Die Bearbeitungsansicht erfordert mindestens 450 Pixel Breite. Bitte drehen Sie Ihr Gerät um 90° oder benutzen ein Gerät mit größerem Bildschirm."
     login_form:
