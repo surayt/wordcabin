@@ -43,7 +43,7 @@ $font-stack-wordcabin-contents-arabic-headings: 'Amiri', 'DejaVu Serif', $font-s
 // font sizes //
 ////////////////
 
-$font-size-base-arabic: 112% // to compensate for the larger vertical space arabic tends to require
+$font-size-base-arabic: 16pt // to compensate for the larger vertical space arabic tends to require
 
 //////////////////
 // global rules //
@@ -53,44 +53,13 @@ html[lang=ar]
   font-family: $font-stack-wordcabin-ui-rtl
   font-size: $font-size-base-arabic
 
-  /////////////////
-  // local rules //
-  /////////////////
+/////////////////
+// local rules //
+/////////////////
 
-  #toc[lang=ar],
-  #content[lang=ar]
-    #articles
-      font-family: $font-stack-wordcabin-contents-arabic
-      font-size: $font-size-base-arabic
-
-//  body
-//    direction: rtl
-//    line-height: 1.5
-//    
-//    #toc
-//      font-size: 110%
-//      line-height: .1
-//      
-//    #contents
-//      
-//      // TODO: check if necessary?
-//      direction: rtl !important
-//      text-align: right !important
-//      
-//      h1, h2, h3, .h1, .h2, .h3, header
-//        font-family: $font-stack-wordcabin-contents-arabic-headings
-//        // TODO: find a better solution
-//        // (already solved now because of the refactoring?)
-//        font-size: 80% !important
-//
-// it's possible the author wants to use it inline
-// disabled for now as it caused problems!
-//  *[lang=ar]
-//    direction: rtl
-//    text-align: right
-//    font-family: $font-stack-wordcabin-contents-arabic
-//  // important for the Arabic version
-//  *[lang=en]
-//    // direction: ltr
-//    // text-align: left
-//    font-family: $font-stack-wordcabin-contents-latin
+#toc[lang=ar],
+#content[lang=ar]
+  #articles
+    direction: rtl
+    font-family: $font-stack-wordcabin-contents-arabic
+    font-size: $font-size-base-arabic
