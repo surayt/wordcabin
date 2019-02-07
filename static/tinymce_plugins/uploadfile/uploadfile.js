@@ -154,6 +154,7 @@
       }
 
       function handleError(error) {
+        console.log(error);
         var message = win.find(".error")[0].getEl();
 
         if(message)

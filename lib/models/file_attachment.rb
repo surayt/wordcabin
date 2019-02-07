@@ -1,8 +1,17 @@
 require 'rack/mime'
 
 module Wordcabin
+  class FileAttachmentValidator < ActiveModel::Validator
+    def validate(record)
+      if record.binary_data.nil? || record.content_type.nil? || record.filename.nil?
+        record.errors[:file] << I18n.t('models.file_attachment.must_be_present')
+      end
+    end
+  end
+
   class FileAttachment < ActiveRecord::Base
-    validates :binary_data, :content_type, presence: {message: I18n.t('models.file_attachment.must_be_present')}
+    include ActiveModel::Validations
+    validates_with FileAttachmentValidator
   
     attr_accessor :type, :tempfile, :name, :head    
     before_validation :read_tempfile_data, on: :create
@@ -11,7 +20,7 @@ module Wordcabin
       self.binary_data = File.binread(tempfile) if tempfile
     end
 
-    def extension
+    protected def extension
       ext = (Rack::Mime::MIME_TYPES.invert[content_type] || '.'+filename.split('.').last || '.')
         .gsub(/\./, '')
         .gsub('mpga', 'mp3') # What did the Rack people smoke?

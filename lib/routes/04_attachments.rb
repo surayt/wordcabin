@@ -15,7 +15,6 @@ module Wordcabin
       end
     end
     
-    # TODO: Uploads sind kaputt - incompatible encoding regexp match (UTF-8 regexp with ASCII-8BIT string)
     post '/files' do
       begin
         params[:document][:file][:content_type] = params[:document][:file][:type]
@@ -31,7 +30,7 @@ module Wordcabin
         end
       rescue => e
         msg = I18n.t('routes.file_upload_500', error: e)
-        json(error: {message: msg})
+        json(error: {message: msg}) 
       end
     end
   end
