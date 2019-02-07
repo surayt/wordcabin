@@ -1,5 +1,7 @@
 # See https://git.weitnahbei.de/aop/wordcabin/issues/70 for specs.
 
+require 'sanitize'
+
 module Wordcabin
   class Exercise < ActiveRecord::Base
     # id, type, name, description, text_fragment_order
@@ -31,6 +33,10 @@ module Wordcabin
         when :delete then "exercises/#{id}"
       end
       "/#{locale}/#{path}"
+    end
+    
+    def name_without_html
+      Sanitize.clean(name).gsub(/\n+/, ' ').strip
     end
   end
 

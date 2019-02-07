@@ -3,6 +3,5 @@
 = haml :'modules/sidebar', locals: {model: :exercise}
 
 #content{lang: locale}
-
-  - if ((content_class.include? 'editor') && (view_mode == :edit))
+  - if ((content_class.include? 'exercises') && (view_mode == :edit))
     = haml :"exercises/edit"

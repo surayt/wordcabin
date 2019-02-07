@@ -11,12 +11,10 @@ module Wordcabin
       end
       
       def view_mode
-        unless request.path_info =~ /exercises/
-          if params[:view_mode]
-            params[:view_mode].to_sym
-          else
-            :preview
-          end
+        if params[:view_mode]
+          params[:view_mode].to_sym
+        else
+          :preview
         end
       end
 

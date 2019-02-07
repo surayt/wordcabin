@@ -76,7 +76,7 @@ module Wordcabin
       @exercise = Exercise.find(id)
       if @exercise.update_attributes(params[:exercise])
         flash[:notice] = 'Exercise was updated.' # TODO: I18n!
-        redirect to(@exercise.url_path)
+        redirect to(@exercise.url_path+"?view_mode=edit")
       else
         flash[:error] = @exercise.errors.full_messages.join(', ')
         redirect back

@@ -8,4 +8,4 @@
         %a{href: "/#{e.locale}/exercises/#{e.id}?view_mode=edit", class: ('active' if params[:id] == e.id.to_s)}
           %span= "#{e.content_fragment.chapter} - " if e.content_fragment
           = "#{e.sort_order}. " if e.sort_order
-          = e.name
+          = e.name_without_html

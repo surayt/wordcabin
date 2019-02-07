@@ -19,7 +19,7 @@
 
       - if content_class.include?('exercises')
         - if @exercise && @exercise.content_fragment
-          %a{href: @exercise.content_fragment.url_path + '?view_mode=edit'}
+          %a{href: @exercise.content_fragment.url_path + '?view_mode=preview'}
             = I18n.icon_t('eye', 'views.session_links.view_exercise_in_book')
       - elsif content_class.include?('contents') && @fragment
         %a{href: @fragment.exercises_url_path  + '?view_mode=edit'}
