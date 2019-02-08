@@ -3,7 +3,6 @@
     font-family: $font-stack-wordcabin-contents-arabic
 
     #titlepage
-      direction: rtl !important
       h2
         font-size: 40pt !important
       h3
@@ -15,8 +14,8 @@
         td
           text-align: right
           vertical-align: middle
-          &:last-child p
-            font-size: 16pt
+          &:last-child
+            font-size: 10pt !important
             line-height: 18px
     
     *
@@ -32,7 +31,6 @@
         font-size: 110%
       *[lang=en]
         font-size: 90%
-      
-    
+
     ul li
       margin-right: 20px
