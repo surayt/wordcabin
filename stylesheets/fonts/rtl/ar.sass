@@ -36,14 +36,15 @@
 // which can easily happen by authors misclicking somewhere in the TinyMCE editor controls.
 
 $font-stack-wordcabin-ui-rtl: 'DejaVu Sans', $font-stack-system, 'FontAwesome'
-$font-stack-wordcabin-contents-arabic: 'DejaVu Sans', $font-stack-system, 'FontAwesome'
+$font-stack-wordcabin-contents-arabic: 'Times New Roman', $font-stack-system, 'DejaVu Sans', 'FontAwesome'
+$font-stack-wordcabin-contents-arabic-headlines: $font-stack-wordcabin-contents-arabic
 
 ////////////////
 // font sizes //
 ////////////////
 
 // to compensate for the larger vertical space arabic tends to require
-$font-size-base-arabic: 12pt
+$font-size-base-arabic: 12.5pt
 
 //////////////////
 // global rules //
@@ -63,11 +64,20 @@ html[lang=ar]
     direction: rtl
     font-family: $font-stack-wordcabin-contents-arabic
     font-size: $font-size-base-arabic
+  header table td,
+  .header_table td
+    font-family: $font-stack-wordcabin-contents-arabic-headlines
+    font-size: $font-size-base-arabic !important 
   header
     table td
-      font-size: 90% !important
       &[lang=syr]
         font-weight: bold !important
-        font-size: 120% !important
+        font-size: 110% !important
+  .header_table td.exercise_note
+    text-align: left
   .dmg
     font-family: $font-stack-wordcabin-contents-latin !important
+  table
+    tr:first-child
+      td
+        font-size: $font-size-base-arabic !important
