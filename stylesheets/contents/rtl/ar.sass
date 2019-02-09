@@ -3,20 +3,39 @@
     font-family: $font-stack-wordcabin-contents-arabic
 
     #titlepage
-      h2
+      font-family: 'Times New Roman', 'DejaVu Sans', sans-serif
+      h2, h3, p
+        line-height: 1 !important
+        font-size: 100% !important
+        margin: 0 !important
+        padding: 0 !important
+      .logo
+        margin-top: 20pt !important
+      .title-syriac
         font-size: 40pt !important
-      h3
+      .title-dmg
         font-size: 30pt !important
-      p
-        line-height: 20px
-        font-size: 20pt
+      .desc-ar
+        font-size: 20pt !important
+        line-height: 5 !important
+      .copyright
+        font-size: 12pt !important
+        line-height: 5 !important
+      .edited-by
+        font-size: 12pt !important
+      .editor
+        font-size: 12pt !important
+      .level
+        font-size: 12pt !important
+        line-height: 4 !important
       table
         td
           text-align: right
           vertical-align: middle
           &:last-child
-            font-size: 10pt !important
-            line-height: 18px
+            font-family: $font-stack-wordcabin-contents-arabic
+            font-size: 8.5pt !important
+            line-height: 1.5 !important
     
     *
       font-size: 105%
