@@ -68,7 +68,7 @@ namespace :wordcabin do
     # The latter won't work using backticks, only using system(), because it forks off.
     watchlist = %w{config lib locales views}.join(',')
     rackupcmd = "rackup -s puma -o #{Config.bind_address} -p #{Config.bind_port}"
-    system "killall stream_server"
+    system "killall -q stream_server"
     system "rerun --dir #{watchlist} --clear '#{rackupcmd}'"
   end
 
