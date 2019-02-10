@@ -1,4 +1,4 @@
-$(document).ready ->
+$ ->
   console.log 'surayt_reshaping'
   
   addZWJ = (html_string) ->

@@ -81,7 +81,7 @@ add_view_mode_to_chapter_links = ->
     $('#sidebar ul a').each ->
       $(this).attr('href', $(this).attr('href')+'&view_mode='+url('?view_mode'))
 
-$(document).ready ->
+$ ->
   console.log "sidebar"
   if $('#sidebar').length
     make_sidebar_hideable()

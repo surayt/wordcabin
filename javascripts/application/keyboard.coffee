@@ -1,4 +1,4 @@
-$(document).ready ->
+$ ->
   $('textarea#paper').focus ->
     if $(this).attr('lang') != 'syr'
       $(this).removeAttr('placeholder')
