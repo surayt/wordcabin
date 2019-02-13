@@ -82,6 +82,8 @@ fr:
       login: "Se connecter"
       # TODO: translate!
       preferences: "Preferences"
+      # TODO: translate!
+      view_book: "View book"
     exercise:
       info: "L'exercice ##{@exercise.id} apparaîtra ici quand il aura été corrigé par les éditeurs."
     fake:

@@ -81,6 +81,8 @@ ar:
       login: "تسجيل الدخول"
       # TODO: translate!
       preferences: "Preferences"
+      # TODO: translate!
+      view_book: "View book"
     exercise:
       info: "سيظهر التمرين ##{@exercise.id} هنا فور موافقة أحد المحررين على نشره"
     fake:

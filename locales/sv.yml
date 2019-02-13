@@ -82,6 +82,8 @@ sv:
       login: "Logga in"
       # TODO: translate!
       preferences: "Inställningar"
+      # TODO: translate!
+      view_book: "View book"
     exercise:
       info: "Övningen ##{@exercise.id} kommer att visas här när det har rensats av redaktörerna."
     fake:

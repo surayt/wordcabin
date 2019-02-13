@@ -1,5 +1,3 @@
--# TODO: i18n!
-
 - if @exercise && @exercise.type
   %form{method: :post, action: @exercise.url_path(:post)}
     %input{type: :hidden, name: 'exercise[locale]', value: @exercise.locale}
@@ -17,8 +15,8 @@
       %label{for: 'exercise[content_fragment_id]'}
         %select{name: 'exercise[content_fragment_id]'}
           - @content_fragments.each do |cf|
-            - cf_id = (params[:exercise][:content_fragment_id] if params[:exercise]) || @exercise.content_fragment_id || nil
-            - selected = (cf_id.to_s == cf.id.to_s)
+            - cf_id = @content_fragment.id
+            - selected = (cf_id == cf.id)
             %option{value: cf.id, selected: selected}= "#{cf.chapter} - #{cf.heading}"
         Assign to chapter, if any?
         

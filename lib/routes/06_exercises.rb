@@ -24,7 +24,7 @@ module Wordcabin
     get '/exercises/new' do
       if current_user.is_admin?
         find_exercises
-        if @exercise = Exercise.new(params[:exercise])
+        if new_exercise 
           haml :'exercises'
         else
           # TODO: come up with more fitting error message.
@@ -38,15 +38,7 @@ module Wordcabin
       @exercise = Exercise.new(params[:exercise])
       if @exercise.save
         flash[:notice] = 'Exercise created.' # TODO: I18n!
-        redirect_opts = {
-          locale: @exercise.locale,
-          type: @exercise.type, 
-          content_fragment_id: @exercise.content_fragment_id,
-          sort_order: @exercise.sort_order ? @exercise.sort_order+1 : 1
-        }
-        redirect_opts = redirect_opts.map {|k,v| "exercise[#{k}]=#{v}"}.join('&')
-        redirect_string = "/#{@exercise.locale}/exercises/new?#{redirect_opts}"
-        redirect to(redirect_string)
+        redirect to("/#{@exercise.locale}/exercises/new?view_mode=edit")
       else
         flash[:error] = @exercise.errors.full_messages.join(', ')
         redirect back
@@ -93,9 +85,36 @@ module Wordcabin
     private
     
     def find_exercises
-      @exercises = Exercise.where(locale: session[:content_locale])
+      # all exercise types that are technically available
       @exercise_types = Exercise.types
+
+      # the list of exercises to be displayed
+      @exercises = Exercise.where(locale: session[:content_locale])
+      @book = ContentFragment.books(session[:content_locale]).first
+      
+      # the list of content fragments an exercise could be attached to, if desired
       @content_fragments = ContentFragment.where(locale: session[:content_locale])
+
+      # what content fragment is the last exercise in the current list attached to?
+      # or even better: which one did the last exercise freshly created get attached to?
+      # TODO: this is ugly. it should not be
+      @content_fragment = ContentFragment.find(
+        (params[:exercise] && params[:exercise][:content_fragment_id]) \
+          ? params[:exercise][:content_fragment_id]                    \
+          : (@exercises.last.content_fragment_id || nil)
+      )
+    end
+
+    def new_exercise
+      # TODO: this is ugly. it should not be
+      @exercise = Exercise.new(
+        type: ExerciseTypes::Fake,
+        locale: session[:content_locale],
+        content_fragment_id: @content_fragment.id, 
+        sort_order: @exercises.last                                             \
+          ? (@exercises.last.sort_order ? @exercises.last.sort_order + 1 : nil) \
+          : nil
+      )
     end
   end
 end

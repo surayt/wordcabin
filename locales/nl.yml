@@ -82,6 +82,8 @@ nl:
       login: "Login"
       # TODO: translate!
       preferences: "Preferences"
+      # TODO: translate!
+      view_book: "View book"
     exercise:
       info: "Exercise ##{@exercise.id} will appear here once it has been cleared by the editors."
     fake:

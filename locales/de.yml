@@ -79,6 +79,7 @@ de:
       logout: "Abmelden"
       login: "Anmelden"
       preferences: "Einstellungen"
+      view_book: "Buch betrachten"
     exercise:
       info: "Übung ##{@exercise.id} wird hier sichtbar sein, sobald sie von einem Redakteur als publiziert gekennzeichnet wurde."
     fake:

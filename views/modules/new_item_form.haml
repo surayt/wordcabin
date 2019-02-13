@@ -13,9 +13,9 @@
       
         %input{type: :submit, value: I18n.t('views.new_item_form.new_exercise'), class: 'btn fa-input', id: 'new-item-button'}
         %input{type: :hidden, name: 'exercise[locale]', value: locale}
-        %input{type: :hidden, name: 'exercise[sort_order]', value: 1}
+        %input{type: :hidden, name: 'exercise[sort_order]', value: @exercise.sort_order}
         %select{name: 'exercise[type]'}
           - @exercise_types.each do |t|
-            - exercise_type = (@exercise ? @exercise.type : (params[:exercise] ? params[:exercise][:type] : nil))
-            - selected = (exercise_type.to_s == t ? 'selected' : nil)
-            %option{value: t, selected: selected}= t.split('::').last # Black magic. Be kind with me, I'm tired.
+            - exercise_type = @exercise.type.to_s
+            - selected = (exercise_type == t ? 'selected' : nil)
+            %option{value: t, selected: selected}= t.split('::').last # Black magic, yes. Be kind with me, I'm tired.

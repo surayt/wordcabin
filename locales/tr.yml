@@ -82,6 +82,8 @@ tr:
       login: "Oturum aç"
       # TODO: translate!
       preferences: "Preferences"
+      # TODO: translate!
+      view_book: "View book"
     exercise:
       info: "Egzersiz, ##{@exercise.id}  editörlerce düzenlemesi yapıldıktan sonra burada görünecektir."
     fake:

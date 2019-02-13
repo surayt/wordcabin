@@ -135,7 +135,7 @@ html_style_formats = [
 ].concat common_settings['style_formats']
 html = merge(common_settings,
   menubar:  false
-  plugins:  'table directionality lists media link paste code image uploadfile insertexercise'
+  plugins:  'table directionality lists media link paste code image autoheight uploadfile insertexercise'
   selector: 'textarea.html'
   style_formats: html_style_formats
   toolbar:  'undo redo code paste removeformat      |
@@ -143,7 +143,6 @@ html = merge(common_settings,
              table alignleft aligncenter alignright |
              bullist numlist outdent indent         |
              link unlink image media uploadfile'
-  height:   '450px'
   body_id:  'tinymce_html_instance')
   
 console.log "tinymce heading editor"
