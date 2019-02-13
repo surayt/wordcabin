@@ -1,4 +1,4 @@
-$(document).ready ->
+$ ->
 
   # Dirty, dirty hack to get rid of those terrible &nbsp; entities 
   # TinyMCE throws into everything like a witch throws everything

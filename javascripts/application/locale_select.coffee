@@ -1,4 +1,4 @@
-$(document).ready ->
+$ ->
   $('#locale_select').change ->
     current_locale = $('#content').attr('lang')
     new_locale = $(this).val()

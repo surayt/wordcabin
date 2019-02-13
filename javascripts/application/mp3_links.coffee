@@ -1,4 +1,4 @@
-$(document).ready ->
+$ ->
   console.log 'mp3_links'
   # Can't use $().click() directly because most of the links will be in
   # dynamically loaded articles which are only accessible via their parent.

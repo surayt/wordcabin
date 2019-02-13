@@ -1,4 +1,4 @@
-$(document).ready ->
+$ ->
   console.log "mobile_menu_button"
   $('#mobile-menu-button').click (e) ->
     e.preventDefault()

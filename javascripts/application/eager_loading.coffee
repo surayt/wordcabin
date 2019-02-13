@@ -1,4 +1,4 @@
-$(document).ready ->
+$ ->
   console.log 'eager_loading'
 
   # Exercises in statically loaded <article>.
