@@ -11,8 +11,9 @@ common_settings =
   # Having to specify a language_url unfortunately means that plugin
   # lang files can't be used and so their contents must be appended to
   # the global lang files instead.
-  language_url: "/tinymce_langs/#{ui_locale}.js?#{(new Date).getTime()}"
-  language: ui_locale
+  # TODO: fix and re-enable
+  # language_url: "/tinymce_langs/#{ui_locale}.js?#{(new Date).getTime()}"
+  # language: ui_locale
 
   entity_encoding: "raw"
   
@@ -84,9 +85,13 @@ common_settings =
     {title: 'With audio player (add to links that reference MP3 files)', selector: '*', classes: 'with_player'}
   ]
   
+  # TODO: fix and re-enable
+  # ?' + (new Date).getTime(),
+  # ?' + (new Date).getTime()]
   content_css: [
-    '/font-awesome/css/font-awesome.css?' + (new Date).getTime(),
-    '/assets/tinymce.css?' + (new Date).getTime()]
+    '/font-awesome/css/font-awesome.css',
+    '/assets/tinymce.css']
+
 
 heading = merge(common_settings,
   menubar:  false
