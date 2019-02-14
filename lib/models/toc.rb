@@ -25,7 +25,7 @@ module Wordcabin
     def build_toc(book_level_fragments, url_path = nil)
       toc = ''; next_marker = false
       book_level_fragments.each do |f|
-        d? "#{f.book} (#{f.id})"
+        d? "#{f.book} (##{f.id}), full TOC output suppressed; enable in models/toc.rb."
         link_path = URI.encode(f.url_path)
         link_class = link_class(link_path, url_path, next_marker)
         next_marker = true if link_class != '' # The current element is active, so we need to mark the next element soon!
@@ -59,7 +59,8 @@ module Wordcabin
         ul_spaces = ''; (display_depth-1).times {ul_spaces << '  '}
         toc << "#{ul_spaces}<ul class='level_#{display_depth}'>\n"
         children_fragments.each do |f|
-          d? "#{"  "*(display_depth-1)}#{f['book']} - #{f['chapter']}"
+          # Output full TOC for debugging like so:
+          # d? "#{"  "*(display_depth-1)}#{f['book']} - #{f['chapter']}"
           display_depth = f['chapter'].split('.').length + 1 # TODO: this too!
           li_spaces = ''; (display_depth).times {li_spaces << '  '}
           f['path'] = URI.encode("/#{[f['locale'], f['book'], f['chapter']].join('/')}")  
