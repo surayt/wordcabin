@@ -21,8 +21,12 @@
     
     %script{src: '/assets/main.js', type: 'text/javascript'}
 
-    -# TODO: think about whether a separate layout for
-    -# the editor would make sense? 
     - if request.params['view_mode'] && request.params['view_mode'] == 'edit'
+      -# TODO: think about whether a separate layout for
+      -# the editor would make sense? 
       %script{src: '/tinymce-dist/tinymce.min.js', type: 'text/javascript'}
       %script{src: '/assets/tinymce.js', type: 'text/javascript'}
+    - else
+      -# only needed outside the editor
+      #swipeleft.swipe
+      #swiperight.swipe
