@@ -8,7 +8,7 @@ module Wordcabin
     
     get '/exercises' do
       if current_user.is_admin?
-        find_exercises
+        find_exercises; new_exercise
         if request.xhr?
           content_type :json
           Exercise.all.map {|e| {text: e.name, value: e.id}}.to_json

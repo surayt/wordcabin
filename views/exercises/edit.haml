@@ -1,4 +1,4 @@
-- if @exercise && @exercise.type
+- if @exercise && request.path_info.match(/new|\/\d+/)
   %form{method: :post, action: @exercise.url_path(:post)}
     %input{type: :hidden, name: 'exercise[locale]', value: @exercise.locale}
     %input{type: :hidden, name: 'exercise[type]', value: @exercise.type}
