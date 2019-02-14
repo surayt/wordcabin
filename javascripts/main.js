@@ -7,6 +7,5 @@
 //= require jquery-ujs/src/rails
 //= require js-url/url
 //= require jquery-mobile-dist/jquery.mobile.custom.js
-//= require jquerymobile-swipeupdown/lib/jquerymobile-swipeupdown.js
 
 //= require_directory ./application
