@@ -105,12 +105,12 @@ heading = merge(common_settings,
 
 text = merge(common_settings,
   menubar:  false
-  plugins:  'table directionality lists media link paste code image autoheight uploadfile insertexercise'
+  plugins:  'table directionality lists media link paste code image autoheight uploadfile insertexercise nonbreaking'
   selector: 'textarea.text'
-  toolbar:  'undo redo code paste removeformat      |
-             styleselect bold italic underline      |
-             table alignleft aligncenter alignright |
-             bullist numlist outdent indent         |
+  toolbar:  'undo redo code paste removeformat          |
+             styleselect bold italic underline          |
+             table alignleft aligncenter alignright     |
+             bullist numlist outdent indent nonbreaking |
              link unlink image media insertexercise uploadfile'
   body_id:  'tinymce_section_instance')
   
