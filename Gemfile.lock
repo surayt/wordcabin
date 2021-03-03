@@ -114,7 +114,7 @@ GEM
       listen (~> 3.0)
     ruby_parser (3.14.1)
       sexp_processor (~> 4.9)
-    sanitize (5.1.0)
+    sanitize (5.2.1)
       crass (~> 1.0.2)
       nokogiri (>= 1.8.0)
       nokogumbo (~> 2.0)
